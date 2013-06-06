@@ -11,6 +11,8 @@
 		F702771B175D897A0095D7E4 /* MDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F702771A175D897A0095D7E4 /* MDMessage.m */; };
 		F702771E175DB62B0095D7E4 /* MDGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = F702771D175DB62B0095D7E4 /* MDGroup.m */; };
 		F714890A17601E3D003827D1 /* MDTaskReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F714890917601E3D003827D1 /* MDTaskReplyment.m */; };
+		F714890D17605762003827D1 /* MDPost.m in Sources */ = {isa = PBXBuildFile; fileRef = F714890C17605762003827D1 /* MDPost.m */; };
+		F7148910176062A3003827D1 /* MDPostReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F714890F176062A2003827D1 /* MDPostReplyment.m */; };
 		F776CC5D175F03460010A990 /* MDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F776CC5C175F03460010A990 /* MDEvent.m */; };
 		F776CC60175F1A880010A990 /* MDTask.m in Sources */ = {isa = PBXBuildFile; fileRef = F776CC5F175F1A880010A990 /* MDTask.m */; };
 		F776CC63175F1E0F0010A990 /* MDProject.m in Sources */ = {isa = PBXBuildFile; fileRef = F776CC62175F1E0F0010A990 /* MDProject.m */; };
@@ -46,6 +48,10 @@
 		F702771D175DB62B0095D7E4 /* MDGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDGroup.m; sourceTree = "<group>"; };
 		F714890817601E3D003827D1 /* MDTaskReplyment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskReplyment.h; sourceTree = "<group>"; };
 		F714890917601E3D003827D1 /* MDTaskReplyment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskReplyment.m; sourceTree = "<group>"; };
+		F714890B17605762003827D1 /* MDPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPost.h; sourceTree = "<group>"; };
+		F714890C17605762003827D1 /* MDPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPost.m; sourceTree = "<group>"; };
+		F714890E176062A2003827D1 /* MDPostReplyment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPostReplyment.h; sourceTree = "<group>"; };
+		F714890F176062A2003827D1 /* MDPostReplyment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPostReplyment.m; sourceTree = "<group>"; };
 		F776CC5B175F03460010A990 /* MDEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDEvent.h; sourceTree = "<group>"; };
 		F776CC5C175F03460010A990 /* MDEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDEvent.m; sourceTree = "<group>"; };
 		F776CC5E175F1A880010A990 /* MDTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTask.h; sourceTree = "<group>"; };
@@ -202,6 +208,10 @@
 				F776CC62175F1E0F0010A990 /* MDProject.m */,
 				F714890817601E3D003827D1 /* MDTaskReplyment.h */,
 				F714890917601E3D003827D1 /* MDTaskReplyment.m */,
+				F714890B17605762003827D1 /* MDPost.h */,
+				F714890C17605762003827D1 /* MDPost.m */,
+				F714890E176062A2003827D1 /* MDPostReplyment.h */,
+				F714890F176062A2003827D1 /* MDPostReplyment.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -314,6 +324,8 @@
 				F776CC60175F1A880010A990 /* MDTask.m in Sources */,
 				F776CC63175F1E0F0010A990 /* MDProject.m in Sources */,
 				F714890A17601E3D003827D1 /* MDTaskReplyment.m in Sources */,
+				F714890D17605762003827D1 /* MDPost.m in Sources */,
+				F7148910176062A3003827D1 /* MDPostReplyment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

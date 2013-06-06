@@ -14,6 +14,8 @@
 #import "MDEvent.h"
 #import "MDTask.h"
 #import "MDTaskReplyment.h"
+#import "MDPost.h"
+#import "MDPostReplyment.h"
 
 typedef void (^MDAPIBoolHandler)(BOOL success, NSError *error);
 typedef void (^MDAPIObjectHandler)(id object, NSError *error);

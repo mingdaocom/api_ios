@@ -1169,6 +1169,8 @@ static MDAPIManager *sharedManager = nil;
         
         NSMutableArray *returnEvents = [NSMutableArray array];
         for (NSDictionary *aDic in [dic objectForKey:@"calendars"]) {
+            if (![aDic isKindOfClass:[NSDictionary class]])
+                continue;
             MDEvent *aEvent = [[MDEvent alloc] initWithDictionary:aDic];
             [returnEvents addObject:aEvent];
         }
@@ -1202,6 +1204,8 @@ static MDAPIManager *sharedManager = nil;
         
         NSMutableArray *returnEvents = [NSMutableArray array];
         for (NSDictionary *aDic in [dic objectForKey:@"calendars"]) {
+            if (![aDic isKindOfClass:[NSDictionary class]])
+                continue;
             MDEvent *aEvent = [[MDEvent alloc] initWithDictionary:aDic];
             [returnEvents addObject:aEvent];
         }
@@ -1232,6 +1236,8 @@ static MDAPIManager *sharedManager = nil;
         
         NSMutableArray *returnEvents = [NSMutableArray array];
         for (NSDictionary *aDic in [dic objectForKey:@"calendars"]) {
+            if (![aDic isKindOfClass:[NSDictionary class]])
+                continue;
             MDEvent *aEvent = [[MDEvent alloc] initWithDictionary:aDic];
             [returnEvents addObject:aEvent];
         }
@@ -1743,7 +1749,6 @@ static MDAPIManager *sharedManager = nil;
     [req setHTTPMethod:@"POST"];
     
     if (image) {
-        [urlString appendFormat:@"&r_img=%@", UIImageJPEGRepresentation(image, 0.5)];
         NSString *boundary = @"-----------------MINGDAO-----------------";
         NSString *filename = @"photo.jpg";
         
@@ -1943,6 +1948,743 @@ static MDAPIManager *sharedManager = nil;
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         [self handlerBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+#pragma mark - 动态接口
+
+- (MDURLConnection *)loadFollowedPostsWithKeywords:(NSString *)keywords
+                                           sinceID:(NSString *)sinceID
+                                             maxID:(NSString *)maxID
+                                          pagesize:(NSInteger)size
+                                           handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/followed?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    if (sinceID && sinceID.length > 0)
+        [urlString appendFormat:@"&since_id=%@", sinceID];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadAllPostsWithKeywords:(NSString *)keywords
+                                      sinceID:(NSString *)sinceID
+                                        maxID:(NSString *)maxID
+                                     pagesize:(NSInteger)size
+                                      handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/all?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    if (sinceID && sinceID.length > 0)
+        [urlString appendFormat:@"&since_id=%@", sinceID];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadFavouritedPostsWithKeywords:(NSString *)keywords
+                                             sinceID:(NSString *)sinceID
+                                               maxID:(NSString *)maxID
+                                            pagesize:(NSInteger)size
+                                             handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/favorite?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    if (sinceID && sinceID.length > 0)
+        [urlString appendFormat:@"&since_id=%@", sinceID];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadReplyMePostsWithKeywords:(NSString *)keywords
+                                            maxID:(NSString *)maxID
+                                         pagesize:(NSInteger)size
+                                          handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/replyme?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
+                                         maxID:(NSString *)maxID
+                                      pagesize:(NSInteger)size
+                                       handler:(MDAPINSArrayHandler)handler
+{
+    
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/atme?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+
+}
+
+- (MDURLConnection *)loadMyPostsWithKeywords:(NSString *)keywords
+                                       maxID:(NSString *)maxID
+                                    pagesize:(NSInteger)size
+                                     handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/my?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0) 
+        [urlString appendFormat:@"&pagesize=%d", size];
+
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadUserPostsWithUserID:(NSString *)userID
+                                       maxID:(NSString *)maxID
+                                    pagesize:(NSInteger)size
+                                     handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/user?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&u_id=%@", userID];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadGroupPostsWithGroupID:(NSString *)groupID
+                                      Keywords:(NSString *)keywords
+                                         maxID:(NSString *)maxID
+                                      pagesize:(NSInteger)size
+                                       handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/group?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&g_id=%@", groupID];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadDocumentPostsWithGroupID:(NSString *)groupID
+                                         Keywords:(NSString *)keywords
+                                          sinceID:(NSString *)sinceID
+                                            maxID:(NSString *)maxID
+                                         pagesize:(NSInteger)size
+                                          handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/doc?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (groupID && groupID.length > 0)
+        [urlString appendFormat:@"&g_id=%@", groupID];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    if (sinceID && sinceID.length > 0)
+        [urlString appendFormat:@"&since_id=%@", sinceID];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadImagePostsWithGroupID:(NSString *)groupID
+                                       sinceID:(NSString *)sinceID
+                                         maxID:(NSString *)maxID
+                                      pagesize:(NSInteger)size
+                                       handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/img?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (groupID && groupID.length > 0)
+        [urlString appendFormat:@"&g_id=%@", groupID];
+    if (sinceID && sinceID.length > 0)
+        [urlString appendFormat:@"&since_id=%@", sinceID];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadFAQPostsWithGroupID:(NSString *)groupID
+                                     sinceID:(NSString *)sinceID
+                                       maxID:(NSString *)maxID
+                                    pagesize:(NSInteger)size
+                                     handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/faq?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (groupID && groupID.length > 0)
+        [urlString appendFormat:@"&g_id=%@", groupID];
+    if (sinceID && sinceID.length > 0)
+        [urlString appendFormat:@"&since_id=%@", sinceID];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadPostWithPostID:(NSString *)pID handler:(MDAPIObjectHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/detail?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSDictionary *postDic = [dic objectForKey:@"post"];
+        MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+        handler(post, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadPostReplymentsWithPostID:(NSString *)pID handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/reply?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *replymentDics = [dic objectForKey:@"replyments"];
+        NSMutableArray *replies = [NSMutableArray array];
+        for (NSDictionary *replymentDic in replymentDics) {
+            if (![replymentDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPostReplyment *reply = [[MDPostReplyment alloc] initWithDictionary:replymentDic];
+            [replies addObject:reply];
+        }
+        handler(replies, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)createTextPostWithText:(NSString *)text
+                                   groupIDs:(NSArray *)groupIDs
+                                  shareType:(NSInteger)shareType
+                                    handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/update?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (groupIDs && groupIDs.count > 0)
+        [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
+    [urlString appendFormat:@"&p_msg=%@", text];
+    [urlString appendFormat:@"&s_type=%d", shareType];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSString *postID = [dic objectForKey:@"post"];
+        handler(postID, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)createURLPostWithText:(NSString *)text
+                                  urlTitle:(NSString *)title
+                                   urlLink:(NSString *)link
+                                  groupIDs:(NSArray *)groupIDs
+                                 shareType:(NSInteger)shareType
+                                   handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/update?format=json"];
+    [urlString appendFormat:@"&access_token=%@&p_type=1", self.accessToken];
+    if (groupIDs && groupIDs.count > 0)
+        [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
+    [urlString appendFormat:@"&l_title=%@", title];
+    [urlString appendFormat:@"&l_uri=%@", link];
+    [urlString appendFormat:@"&p_msg=%@", text];
+    [urlString appendFormat:@"&s_type=%d", shareType];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSString *postID = [dic objectForKey:@"post"];
+        handler(postID, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)createFAQPostWithText:(NSString *)text
+                                  groupIDs:(NSArray *)groupIDs
+                                 shareType:(NSInteger)shareType
+                                   handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/update?format=json"];
+    [urlString appendFormat:@"&access_token=%@&p_type=4", self.accessToken];
+    if (groupIDs && groupIDs.count > 0)
+        [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
+    [urlString appendFormat:@"&p_msg=%@", text];
+    [urlString appendFormat:@"&s_type=%d", shareType];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSString *postID = [dic objectForKey:@"post"];
+        handler(postID, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)createImagePostWithText:(NSString *)text
+                                       image:(UIImage *)image
+                                    groupIDs:(NSArray *)groupIDs
+                                   shareType:(NSInteger)shareType
+                                     handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/upload?format=json"];
+    [urlString appendFormat:@"&access_token=%@&f_type=picture", self.accessToken];
+    if (groupIDs && groupIDs.count > 0)
+        [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
+    [urlString appendFormat:@"&p_msg=%@", text];
+    [urlString appendFormat:@"&s_type=%d", shareType];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    NSString *boundary = @"-----------------MINGDAO-----------------";
+    NSString *filename = @"photo.jpg";
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
+    [req setValue:contentType forHTTPHeaderField:@"Content-type"];
+    
+    //准备数据
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+    
+    //adding the body:
+    NSMutableData *postBody = [NSMutableData data];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"p_img\"; filename=\"%@\"\r\n", filename] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"Content-Type: application/octet-stream; charset=UTF-8\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"Content-Transfer-Encoding: binary\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:imageData];
+    [postBody appendData:[[NSString stringWithFormat:@"\r\n%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [req setHTTPBody:postBody];
+
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSString *postID = [dic objectForKey:@"post"];
+        handler(postID, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)createRepostWithText:(NSString *)text
+                                   postID:(NSString *)postID
+                                 groupIDs:(NSArray *)groupIDs
+                                shareType:(NSInteger)shareType
+                                  handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/repost?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (groupIDs && groupIDs.count > 0)
+        [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
+    [urlString appendFormat:@"&p_msg=%@", text];
+    [urlString appendFormat:@"&re_p_id=%@", postID];
+    [urlString appendFormat:@"&s_type=%d", shareType];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSString *postID = [dic objectForKey:@"post"];
+        handler(postID, error);
     }];
     return connection;
 }

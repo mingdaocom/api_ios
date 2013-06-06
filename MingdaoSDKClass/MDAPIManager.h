@@ -585,4 +585,124 @@
 - (MDURLConnection *)deleteMemberFromeTaskWithTaskID:(NSString *)tID
                               memberID:(NSString *)memberID
                                handler:(MDAPIBoolHandler)handler;
+
+#pragma mark - 动态接口
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 按需获取动态更新列表
+ @parmas:
+ keywords - 关键词
+ userID - 用户编号
+ groupID - 群组编号
+ sinceID - 若指定此参数，则只返回ID比since_id大的动态更新（即比since_id发表时间晚的动态更新）
+ maxID - 若指定此参数，则只返回ID比max_id小的动态更新（即比max_id发表时间早的动态更新
+ size - 指定要返回的记录条数
+ handler - 包含多个MDPost的NSArray
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)loadFollowedPostsWithKeywords:(NSString *)keywords
+                                           sinceID:(NSString *)sinceID
+                                             maxID:(NSString *)maxID
+                                          pagesize:(NSInteger)size
+                                           handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadAllPostsWithKeywords:(NSString *)keywords
+                                      sinceID:(NSString *)sinceID
+                                        maxID:(NSString *)maxID
+                                     pagesize:(NSInteger)size
+                                      handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadFavouritedPostsWithKeywords:(NSString *)keywords
+                                             sinceID:(NSString *)sinceID
+                                               maxID:(NSString *)maxID
+                                            pagesize:(NSInteger)size
+                                             handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadReplyMePostsWithKeywords:(NSString *)keywords
+                                               maxID:(NSString *)maxID
+                                            pagesize:(NSInteger)size
+                                             handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
+                                            maxID:(NSString *)maxID
+                                         pagesize:(NSInteger)size
+                                          handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadMyPostsWithKeywords:(NSString *)keywords
+                                         maxID:(NSString *)maxID
+                                      pagesize:(NSInteger)size
+                                       handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadUserPostsWithUserID:(NSString *)userID
+                                       maxID:(NSString *)maxID
+                                    pagesize:(NSInteger)size
+                                     handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadGroupPostsWithGroupID:(NSString *)groupID
+                                      Keywords:(NSString *)keywords
+                                         maxID:(NSString *)maxID
+                                      pagesize:(NSInteger)size
+                                       handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadDocumentPostsWithGroupID:(NSString *)groupID
+                                         Keywords:(NSString *)keywords
+                                          sinceID:(NSString *)sinceID
+                                            maxID:(NSString *)maxID
+                                         pagesize:(NSInteger)size
+                                          handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadImagePostsWithGroupID:(NSString *)groupID
+                                          sinceID:(NSString *)sinceID
+                                            maxID:(NSString *)maxID
+                                         pagesize:(NSInteger)size
+                                          handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadFAQPostsWithGroupID:(NSString *)groupID
+                                     sinceID:(NSString *)sinceID
+                                       maxID:(NSString *)maxID
+                                    pagesize:(NSInteger)size
+                                     handler:(MDAPINSArrayHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 根据动态更新编号获取单条动态更新内容
+ @parmas:
+ pID - 动态编号
+ handler - 处理MDpost
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)loadPostWithPostID:(NSString *)pID handler:(MDAPIObjectHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 根据动态更新编号获取某条动态更新的回复列表信息
+ @parmas:
+ pID - 动态编号
+ handler - 处理包含多个MDPostReplyment的NSArray
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)loadPostReplymentsWithPostID:(NSString *)pID handler:(MDAPINSArrayHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 按需求发布一条动态更新
+ @parmas:
+ text - 文字消息
+ groupIDs - 接受对象编号数组
+ shareType - int -1表示系统分享；2表示群内分享；3表示分享给自己；其他表示分享给关注的人
+ handler - 返回创建后的编号
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)createTextPostWithText:(NSString *)text
+                                   groupIDs:(NSArray *)groupIDs
+                                  shareType:(NSInteger)shareType
+                                    handler:(MDAPINSStringHandler)handler;
+- (MDURLConnection *)createURLPostWithText:(NSString *)text
+                                  urlTitle:(NSString *)title
+                                   urlLink:(NSString *)link
+                                   groupIDs:(NSArray *)groupIDs
+                                  shareType:(NSInteger)shareType
+                                    handler:(MDAPINSStringHandler)handler;
+- (MDURLConnection *)createFAQPostWithText:(NSString *)text
+                                   groupIDs:(NSArray *)groupIDs
+                                  shareType:(NSInteger)shareType
+                                    handler:(MDAPINSStringHandler)handler;
+- (MDURLConnection *)createImagePostWithText:(NSString *)text
+                                       image:(UIImage *)image
+                                  groupIDs:(NSArray *)groupIDs
+                                 shareType:(NSInteger)shareType
+                                   handler:(MDAPINSStringHandler)handler;
+- (MDURLConnection *)createRepostWithText:(NSString *)text
+                                   postID:(NSString *)postID
+                                 groupIDs:(NSArray *)groupIDs
+                                shareType:(NSInteger)shareType
+                                  handler:(MDAPINSStringHandler)handler;
+
 @end

@@ -29,12 +29,18 @@
                                             handler:^(BOOL succeed, NSError *error){
                                                 NSLog(@"login succeeded");
                                                 
-                                                [[[MDAPIManager sharedManager] createTaskWithTaskName:@"APITeST" description:nil endDateString:@"2013-6-7" chargerID:nil memberIDs:nil projectID:nil handler:^(NSString *tID, NSError *error){
+                                                [[[MDAPIManager sharedManager] createTextPostWithText:@"API TEST" groupIDs:nil shareType:3 handler:^(NSString *pID, NSError *error){
+                                                    NSLog(@"%@", pID);
+                                                    [[[MDAPIManager sharedManager] createRepostWithText:@"repost" postID:pID groupIDs:@[@"bfe89b87-393d-447d-9540-0374f3d77760"] shareType:3 handler:^(NSString *rID, NSError *error){
+                                                        NSLog(@"%@", rID);
+                                                    }] start];
+                                                }] start];
+                                                /*[[[MDAPIManager sharedManager] createTaskWithTaskName:@"APITeST" description:nil endDateString:@"2013-6-7" chargerID:nil memberIDs:nil projectID:nil handler:^(NSString *tID, NSError *error){
                                                     NSLog(@"%@", tID);
                                                     [[[MDAPIManager sharedManager] createTaskReplymentOnTaskWithTaskID:tID message:@"test" replyToReplymentWithRID:nil image:[UIImage imageNamed:@"Default-568h@2x.png"] handler:^(NSString *trID, NSError *error){
                                                         NSLog(@"%@", trID);
                                                     }] start];
-                                                }] start];
+                                                }] start];*/
                                                 /*[[[MDAPIManager sharedManager] loadCurrentUserJoinedTasksWithKeywords:nil allOrUnfinished:YES handler:^(NSArray *tasks, NSError *error){
                                                     for (MDTask *t in tasks) {
                                                         NSLog(@"%@", t.objectName);
