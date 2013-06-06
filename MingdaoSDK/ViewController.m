@@ -28,17 +28,29 @@
                                      }
                                             handler:^(BOOL succeed, NSError *error){
                                                 NSLog(@"login succeeded");
-                                                [[[MDAPIManager sharedManager] loadCurrentUserJoinedTasksWithKeywords:nil allOrUnfinished:YES handler:^(NSArray *tasks, NSError *error){
+                                                
+                                                [[[MDAPIManager sharedManager] createTaskWithTaskName:@"APITeST" description:nil endDateString:@"2013-6-7" chargerID:nil memberIDs:nil projectID:nil handler:^(NSString *tID, NSError *error){
+                                                    NSLog(@"%@", tID);
+                                                    [[[MDAPIManager sharedManager] createTaskReplymentOnTaskWithTaskID:tID message:@"test" replyToReplymentWithRID:nil image:[UIImage imageNamed:@"Default-568h@2x.png"] handler:^(NSString *trID, NSError *error){
+                                                        NSLog(@"%@", trID);
+                                                    }] start];
+                                                }] start];
+                                                /*[[[MDAPIManager sharedManager] loadCurrentUserJoinedTasksWithKeywords:nil allOrUnfinished:YES handler:^(NSArray *tasks, NSError *error){
                                                     for (MDTask *t in tasks) {
                                                         NSLog(@"%@", t.objectName);
                                                         [[[MDAPIManager sharedManager] loadTaskWithTaskID:t.objectID handler:^(MDTask *t, NSError *error){
                                                             for (MDUser *u in t.members) {
                                                                 NSLog(@"%@", u.objectName);
+                                                                [[[MDAPIManager sharedManager] loadTaskReplymentsWithTaskID:t.objectID maxID:nil pageSize:20 handler:^(NSArray *rs, NSError *error){
+                                                                    for (MDTaskReplyment *r in rs) {
+                                                                        NSLog(@"%@", r.text);
+                                                                    }
+                                                                }] start];
                                                             }
                                                         }] start];
                                                         break;
                                                     }
-                                                }] start];
+                                                }] start];*/
                                             }] start];
 }
 

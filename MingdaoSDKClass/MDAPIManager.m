@@ -1611,4 +1611,339 @@ static MDAPIManager *sharedManager = nil;
     }];
     return connection;
 }
+
+- (MDURLConnection *)loadTaskReplymentsWithTaskID:(NSString *)tID maxID:(NSString *)maxTID pageSize:(NSInteger)size handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"task/reply?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    if (maxTID)
+        [urlString appendFormat:@"&max_id=%@", maxTID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *replyDics = [dic objectForKey:@"replyments"];
+        NSMutableArray *replies = [NSMutableArray array];
+        for (NSDictionary *replyDic in replyDics) {
+            if (![replyDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDTaskReplyment *reply = [[MDTaskReplyment alloc] initWithDictionary:replyDic];
+            [replies addObject:reply];
+        }
+        handler(replies, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)createTaskWithTaskName:(NSString *)name
+                                description:(NSString *)des
+                              endDateString:(NSString *)endDateString
+                                  chargerID:(NSString *)chargerID
+                                  memberIDs:(NSArray *)memberIDs
+                                  projectID:(NSString *)projectID
+                                    handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"task/create?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_title=%@", name];
+    [urlString appendFormat:@"&t_ed=%@", endDateString];
+    
+    if (des && des.length > 0)
+        [urlString appendFormat:@"&t_des=%@", des];
+    if (memberIDs && memberIDs.count > 0)
+        [urlString appendFormat:@"&t_mids=%@", [memberIDs componentsJoinedByString:@","]];
+    if (chargerID && chargerID.length > 0)
+        [urlString appendFormat:@"&u_id=%@", chargerID];
+    if (projectID && projectID.length > 0)
+        [urlString appendFormat:@"&t_pid=%@", projectID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSString *taskID = [dic objectForKey:@"task"];
+        handler(taskID, nil);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)createProjectWithName:(NSString *)name handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"task/add_project?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&title=%@", name];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSString *projectID = [dic objectForKey:@"project"];
+        handler(projectID, nil);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)createTaskReplymentOnTaskWithTaskID:(NSString *)tID
+                                                 message:(NSString *)message
+                                 replyToReplymentWithRID:(NSString *)rID
+                                                   image:(UIImage *)image
+                                                 handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"task/addreply?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&r_msg=%@", message];
+    if (rID && rID.length > 0)
+        [urlString appendFormat:@"&r_id=%@", rID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    if (image) {
+        [urlString appendFormat:@"&r_img=%@", UIImageJPEGRepresentation(image, 0.5)];
+        NSString *boundary = @"-----------------MINGDAO-----------------";
+        NSString *filename = @"photo.jpg";
+        
+        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
+        [req setValue:contentType forHTTPHeaderField:@"Content-type"];
+        
+        //准备数据
+        NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+        
+        //adding the body:
+        NSMutableData *postBody = [NSMutableData data];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"r_img\"; filename=\"%@\"\r\n", filename] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[@"Content-Type: application/octet-stream; charset=UTF-8\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[@"Content-Transfer-Encoding: binary\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:imageData];
+        [postBody appendData:[[NSString stringWithFormat:@"\r\n%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [req setHTTPBody:postBody];
+    }
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSString *taskID = [dic objectForKey:@"replyment"];
+        handler(taskID, nil);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)finishTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"task/finish?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handlerBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)deleteTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"task/delete?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handlerBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                                  title:(NSString *)title
+                                handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"task/edit_title?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&t_title=%@", title];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handlerBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                                    des:(NSString *)des
+                                handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"task/edit_des?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&des=%@", des];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handlerBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                              chargerID:(NSString *)chargerID
+                                handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"task/edit_charge?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&u_id=%@", chargerID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handlerBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                          endDateString:(NSString *)endDateString
+                                handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"task/edit_expiredate?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&expiredate=%@", endDateString];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handlerBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                              projectID:(NSString *)projectID
+                                handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"task/edit_project?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&p_id=%@", projectID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handlerBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)addMemberToTaskWithTaskID:(NSString *)tID
+                                      memberID:(NSString *)memberID
+                                       handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"task/add_member?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&u_id=%@", memberID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handlerBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)deleteMemberFromeTaskWithTaskID:(NSString *)tID
+                                            memberID:(NSString *)memberID
+                                             handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"task/delete_member?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&u_id=%@", memberID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handlerBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
 @end

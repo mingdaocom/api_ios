@@ -495,4 +495,94 @@
  handler - 处理MDTask
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loadTaskWithTaskID:(NSString *)tID handler:(MDAPIObjectHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 根据任务编号获取单条任务的讨论列表信息
+ @parmas:
+ tID - 任务编号
+ maxTID - 若指定此参数，则只返回ID比max_id小的动态更新（即比max_id发表时间早的动态更新）
+ size - 指定要返回的记录条数 int默认值20，最大值100
+ handler - 处理MDTask
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)loadTaskReplymentsWithTaskID:(NSString *)tID
+                                            maxID:(NSString *)maxTID
+                                         pageSize:(NSInteger)size
+                                          handler:(MDAPINSArrayHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 创建一个新的任务
+ @parmas:
+ name    - 任务名称 必须
+ eDateString - 任务截止日期，yyyy-MM-dd形式 必须
+ des - 任务描述
+ chargerID - 指定的任务负责人
+ memberIDs - 指定的任务成员 (多个成员用逗号隔开)
+ handler - 创建成功返回任务编号
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)createTaskWithTaskName:(NSString *)name
+                                description:(NSString *)des
+                              endDateString:(NSString *)endDateString
+                                  chargerID:(NSString *)chargerID
+                                  memberIDs:(NSArray *)memberIDs
+                                  projectID:(NSString *)projectID
+                                    handler:(MDAPINSStringHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 创建一个新的任务隶属的项目
+ @parmas:
+ name    - 项目名称 必须
+ handler - 创建成功返回任务编号
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)createProjectWithName:(NSString *)name
+                                    handler:(MDAPINSStringHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 增加一个任务的讨论
+ @parmas:
+ tID    -  回复的任务ID 必须
+ rID    -  回复某条回复的ID 可选
+ message - 回复内容 必须
+ image   - 附带回复图片 可选
+ handler - 创建成功返回回复编号
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)createTaskReplymentOnTaskWithTaskID:(NSString *)tID
+                                                 message:(NSString *)message
+                                 replyToReplymentWithRID:(NSString *)rID
+                                                   image:(UIImage *)image
+                                                 handler:(MDAPINSStringHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 完成/删除/编辑任务
+ @parmas:
+ tID    -  回复的任务ID 必须
+ handler - 创建成功返回回复编号
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)finishTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)deleteTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                                  title:(NSString *)title
+                                handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                                    des:(NSString *)des
+                                handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                              chargerID:(NSString *)chargerID
+                                handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                          endDateString:(NSString *)endDateString
+                                handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                              projectID:(NSString *)projectID
+                                handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)addMemberToTaskWithTaskID:(NSString *)tID
+                              memberID:(NSString *)memberID
+                               handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)deleteMemberFromeTaskWithTaskID:(NSString *)tID
+                              memberID:(NSString *)memberID
+                               handler:(MDAPIBoolHandler)handler;
 @end

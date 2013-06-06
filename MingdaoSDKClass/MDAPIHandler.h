@@ -13,6 +13,7 @@
 #import "MDGroup.h"
 #import "MDEvent.h"
 #import "MDTask.h"
+#import "MDTaskReplyment.h"
 
 typedef void (^MDAPIBoolHandler)(BOOL success, NSError *error);
 typedef void (^MDAPIObjectHandler)(id object, NSError *error);
