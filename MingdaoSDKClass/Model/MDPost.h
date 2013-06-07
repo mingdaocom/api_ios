@@ -11,6 +11,25 @@
 #import "MDGroup.h"
 #import "MDTag.h"
 
+@interface MDVoteOption : NSObject
+@property (strong, nonatomic) NSArray *members;
+@property (strong, nonatomic) NSString *objectName;
+@property (assign, nonatomic) NSInteger voteCount;
+- (MDVoteOption *)initWithDictionary:(NSDictionary *)dic;
+@end
+
+@interface MDPostDetail : NSObject
+@property (assign, nonatomic) BOOL isAnonymous, isVisble;
+@property (assign, nonatomic) NSInteger maxChoiceCount;
+@property (strong, nonatomic) NSString *deadLineString;
+@property (strong, nonatomic) NSString *postGUID;
+@property (assign, nonatomic) BOOL isInCenter;
+@property (strong, nonatomic) NSString *linkDes, *linkTitle, *linkURL;
+@property (strong, nonatomic) NSString *middlePic, *originalPic, *thumbnailPic, *originalDoc;
+@property (strong, nonatomic) NSArray *voteOptions;
+- (MDPostDetail *)initWithDictionary:(NSDictionary *)dic;
+@end
+
 @interface MDPost : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *autoID;
