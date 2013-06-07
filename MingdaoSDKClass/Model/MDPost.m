@@ -119,4 +119,12 @@
     }
     return self;
 }
+
+- (MDPostDetail *)firstDetail
+{
+    if (self.details.count > 0) {
+        return [self.details objectAtIndex:0];
+    }
+    return nil;
+}
 @end

@@ -46,6 +46,21 @@
 
 #import <Foundation/Foundation.h>
 
+enum {
+    MDUserLicenceNomalUser = -1,
+    MDUserLicenceAdminAndAnnouncer = 0,
+    MDUserLicenceAdmin = 1,
+    MDUserLicenceAnnouncer = 2
+};
+typedef NSInteger MDUserLicence;
+
+enum {
+    MDUserGenderUnknown = 0,
+    MDUserGenderMale = 1,
+    MDUserGenderFemail = 2
+};
+typedef NSInteger MDUserGender;
+
 @interface MDUser : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
@@ -54,14 +69,14 @@
 @property (strong, nonatomic) NSString *grade;
 @property (strong, nonatomic) NSString *mark;
 @property (strong, nonatomic) NSString *birth;
-@property (assign, nonatomic) NSInteger gender;
+@property (assign, nonatomic) MDUserGender gender;
 @property (strong, nonatomic) NSString *company;
 @property (strong, nonatomic) NSString *department;
 @property (strong, nonatomic) NSString *job;
 @property (strong, nonatomic) NSString *mobilePhoneNumber;
 @property (strong, nonatomic) NSString *workPhoneNumber;
 @property (assign, nonatomic) BOOL isFollowed;
-@property (assign, nonatomic) NSInteger licence;
+@property (assign, nonatomic) MDUserLicence licence;
 @property (assign, nonatomic) NSInteger status;
 @property (strong, nonatomic) NSArray *jobs;
 @property (strong, nonatomic) NSArray *educations;

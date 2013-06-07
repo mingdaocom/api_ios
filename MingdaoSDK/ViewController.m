@@ -28,11 +28,11 @@
                                      }
                                             handler:^(BOOL succeed, NSError *error){
                                                 NSLog(@"login succeeded");
-                                                /*[[[MDAPIManager sharedManager] loadAllVotessWithPageIndex:0 pagesize:0 handler:^(NSArray *votes, NSError *error){
+                                                [[[MDAPIManager sharedManager] loadAllVotessWithPageIndex:0 pagesize:0 handler:^(NSArray *votes, NSError *error){
                                                     for (MDPost *p in votes) {
                                                         NSLog(@"%@", p.text);
                                                     }
-                                                }] start];*/
+                                                }] start];
                                                 
                                                 /*[[[MDAPIManager sharedManager] createImagePostWithText:@"API TEST" image:[UIImage imageNamed:@"Default-568h@2x.png"] groupIDs:nil shareType:3 handler:^(NSString *pID, NSError *error){
                                                     NSLog(@"%@", pID);

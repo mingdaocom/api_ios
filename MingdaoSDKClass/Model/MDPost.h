@@ -30,6 +30,26 @@
 - (MDPostDetail *)initWithDictionary:(NSDictionary *)dic;
 @end
 
+enum {
+    MDPostShareTypeSystem = -1,
+    MDPostShareTypeFollowed = 0,
+    MDPostShareTypeGroups = 1,
+    MDPostShareTypeFollowedAndGroups = 2,
+    MDPostShareTypeSelf = 3,
+    MDPostShareTypeAll = 4
+};
+typedef NSInteger MDPostShareType;
+
+enum {
+    MDPostTypeText = 0,
+    MDPostTypeLink = 1,
+    MDPostTypeImage = 2,
+    MDPostTypeDocument = 3,
+    MDPostTypeFAQ = 4,
+    MDPostTypeVote = 7
+};
+typedef NSInteger MDPostType;
+
 @interface MDPost : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *autoID;
@@ -41,12 +61,15 @@
 @property (assign, nonatomic) NSInteger likeCount;
 @property (assign, nonatomic) BOOL isFavourited;
 @property (assign, nonatomic) BOOL isLiked;
-@property (assign, nonatomic) NSInteger type;
-@property (assign, nonatomic) NSInteger shareType;
-@property (assign, nonatomic) NSArray *details; // not done
+@property (assign, nonatomic) MDPostType type;
+@property (assign, nonatomic) MDPostShareType shareType;
+@property (assign, nonatomic) NSArray *details;
 @property (strong, nonatomic) NSDictionary *textAttribute;
 @property (strong, nonatomic) NSArray *groups;
 @property (strong, nonatomic) MDUser *creator;
 @property (strong, nonatomic) MDPost *repost;
+
+@property (readonly, nonatomic) MDPostDetail *firstDetail;
+
 - (MDPost *)initWithDictionary:(NSDictionary *)aDic;
 @end
