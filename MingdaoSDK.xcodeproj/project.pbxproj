@@ -29,7 +29,6 @@
 		F7B43E8A175C2A6400C390A1 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7B43E88175C2A6400C390A1 /* MainStoryboard_iPad.storyboard */; };
 		F7B43E8D175C2A6400C390A1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B43E8C175C2A6400C390A1 /* ViewController.m */; };
 		F7B43E99175C2BCE00C390A1 /* MDURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B43E96175C2BCE00C390A1 /* MDURLConnection.m */; };
-		F7B43E9A175C2BCE00C390A1 /* MDAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B43E98175C2BCE00C390A1 /* MDAPIManager.m */; };
 		F7B43EA3175C377300C390A1 /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B43EA0175C377300C390A1 /* NSString+MD5Addition.m */; };
 		F7B43EA4175C377300C390A1 /* UIDevice+IdentifierAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B43EA2175C377300C390A1 /* UIDevice+IdentifierAddition.m */; };
 		F7B43EAA175C5ED200C390A1 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = F7B43EA6175C5ED200C390A1 /* CHANGELOG.md */; };
@@ -38,6 +37,7 @@
 		F7B43EAF175C6EF800C390A1 /* MDCompany.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B43EAE175C6EF800C390A1 /* MDCompany.m */; };
 		F7B43EB2175C804B00C390A1 /* MDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B43EB1175C804B00C390A1 /* MDUser.m */; };
 		F7B95F2B176175A100DE0047 /* MDTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B95F2A176175A100DE0047 /* MDTag.m */; };
+		F7B95F301761D5FB00DE0047 /* MDAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B95F2F1761D5FB00DE0047 /* MDAPIManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,9 +78,6 @@
 		F7B43E8C175C2A6400C390A1 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		F7B43E95175C2BCE00C390A1 /* MDURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDURLConnection.h; sourceTree = "<group>"; };
 		F7B43E96175C2BCE00C390A1 /* MDURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDURLConnection.m; sourceTree = "<group>"; };
-		F7B43E97175C2BCE00C390A1 /* MDAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAPIManager.h; sourceTree = "<group>"; };
-		F7B43E98175C2BCE00C390A1 /* MDAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAPIManager.m; sourceTree = "<group>"; };
-		F7B43E9C175C2E3400C390A1 /* MDAPIHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAPIHandler.h; sourceTree = "<group>"; };
 		F7B43E9F175C377300C390A1 /* NSString+MD5Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5Addition.h"; sourceTree = "<group>"; };
 		F7B43EA0175C377300C390A1 /* NSString+MD5Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5Addition.m"; sourceTree = "<group>"; };
 		F7B43EA1175C377300C390A1 /* UIDevice+IdentifierAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+IdentifierAddition.h"; sourceTree = "<group>"; };
@@ -95,6 +92,9 @@
 		F7B43EB1175C804B00C390A1 /* MDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDUser.m; sourceTree = "<group>"; };
 		F7B95F29176175A100DE0047 /* MDTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTag.h; sourceTree = "<group>"; };
 		F7B95F2A176175A100DE0047 /* MDTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTag.m; sourceTree = "<group>"; };
+		F7B95F2D1761D5FB00DE0047 /* MDAPIHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAPIHandler.h; sourceTree = "<group>"; };
+		F7B95F2E1761D5FB00DE0047 /* MDAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAPIManager.h; sourceTree = "<group>"; };
+		F7B95F2F1761D5FB00DE0047 /* MDAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAPIManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,9 +173,7 @@
 			children = (
 				F7B43E9D175C34D500C390A1 /* Model */,
 				F7B43E94175C2BCE00C390A1 /* Helper */,
-				F7B43E9C175C2E3400C390A1 /* MDAPIHandler.h */,
-				F7B43E97175C2BCE00C390A1 /* MDAPIManager.h */,
-				F7B43E98175C2BCE00C390A1 /* MDAPIManager.m */,
+				F7B95F2C1761D5FA00DE0047 /* API */,
 			);
 			path = MingdaoSDKClass;
 			sourceTree = "<group>";
@@ -241,6 +239,16 @@
 				F7B43EA9175C5ED200C390A1 /* README.md */,
 			);
 			path = JSONKit;
+			sourceTree = "<group>";
+		};
+		F7B95F2C1761D5FA00DE0047 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				F7B95F2D1761D5FB00DE0047 /* MDAPIHandler.h */,
+				F7B95F2E1761D5FB00DE0047 /* MDAPIManager.h */,
+				F7B95F2F1761D5FB00DE0047 /* MDAPIManager.m */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,7 +324,6 @@
 				F7B43E7E175C2A6400C390A1 /* AppDelegate.m in Sources */,
 				F7B43E8D175C2A6400C390A1 /* ViewController.m in Sources */,
 				F7B43E99175C2BCE00C390A1 /* MDURLConnection.m in Sources */,
-				F7B43E9A175C2BCE00C390A1 /* MDAPIManager.m in Sources */,
 				F7B43EA3175C377300C390A1 /* NSString+MD5Addition.m in Sources */,
 				F7B43EA4175C377300C390A1 /* UIDevice+IdentifierAddition.m in Sources */,
 				F7B43EAB175C5ED200C390A1 /* JSONKit.m in Sources */,
@@ -332,6 +339,7 @@
 				F714890D17605762003827D1 /* MDPost.m in Sources */,
 				F7148910176062A3003827D1 /* MDPostReplyment.m in Sources */,
 				F7B95F2B176175A100DE0047 /* MDTag.m in Sources */,
+				F7B95F301761D5FB00DE0047 /* MDAPIManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
