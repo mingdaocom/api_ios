@@ -16,7 +16,15 @@
         self.objectID = [aDic objectForKey:@"guid"];
         self.autoID = [aDic objectForKey:@"id"];
         self.text = [aDic objectForKey:@"text"];
-        self.tags = [aDic objectForKey:@"tags"];
+        NSArray *tagDics = [aDic objectForKey:@"tags"];
+        NSMutableArray *tags = [NSMutableArray array];
+        for (NSDictionary *tagDic in tagDics) {
+            if ([tagDic isKindOfClass:[NSDictionary class]]) {
+                MDTag *tag = [[MDTag alloc] initWithDictionary:tagDic];
+                [tags addObject:tag];
+            }
+        }
+        self.tags = tags;
         self.createTime = [aDic objectForKey:@"create_time"];
         self.source = [aDic objectForKey:@"source"];
         self.replyCount = [[aDic objectForKey:@"reply_count"] integerValue];

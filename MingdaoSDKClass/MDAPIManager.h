@@ -595,8 +595,8 @@
  keywords - 关键词
  userID - 用户编号
  groupID - 群组编号
- sinceID - 若指定此参数，则只返回ID比since_id大的动态更新（即比since_id发表时间晚的动态更新）
- maxID - 若指定此参数，则只返回ID比max_id小的动态更新（即比max_id发表时间早的动态更新
+ sinceID - 若指定此参数，则只返回ID比since_id大的动态更新（即比since_id发表时间晚的动态更新）为MDPost.autoID
+ maxID - 若指定此参数，则只返回ID比max_id小的动态更新（即比max_id发表时间早的动态更新) 为MDPost.autoID
  size - 指定要返回的记录条数
  handler - 包含多个MDPost的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
@@ -605,6 +605,11 @@
                                              maxID:(NSString *)maxID
                                           pagesize:(NSInteger)size
                                            handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadPostWithTagName:(NSString *)tagName
+                                keywords:(NSString *)keywords
+                                   maxID:(NSString *)maxID
+                                pageSize:(NSInteger)size
+                                 handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadAllPostsWithKeywords:(NSString *)keywords
                                       sinceID:(NSString *)sinceID
                                         maxID:(NSString *)maxID
@@ -705,4 +710,128 @@
                                 shareType:(NSInteger)shareType
                                   handler:(MDAPINSStringHandler)handler;
 
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 根据动态更新编号删除一条动态更新
+ @parmas:
+ pID - 动态编号
+ handler - 处理删除结果
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)deletePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 增加一条动态更新的回复
+ @parmas:
+ pID - 回复的动态更新编号
+ rID - 回复编号（可以对别人的回复进行回复）[可选]
+ msg - 回复的消息内容
+ handler - 返回创建成功后的编号
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)createPostReplymentOnPostWithPostID:(NSString *)pID
+                         replyToReplymentWithReplymentID:(NSString *)rID
+                                                 message:(NSString *)msg
+                                                 handler:(MDAPINSStringHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 根据回复编号删除一条回复
+ @parmas:
+ pID - 动态编号 必须
+ rID - 回复编号 必须（必须是当前登录用户自己创建的回复）
+ handler - 处理删除结果
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)deletePostReplymentWithPostID:(NSString *)pID
+                                       replymentID:(NSString *)rID
+                                           handler:(MDAPIBoolHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 增加/删除当前登录用户的一条动态更新收藏
+ @parmas:
+ pID - 动态编号 必须
+ handler - 处理收藏结果
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)favouritePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)unFavouritePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 增加/删除当前登录用户喜欢的一条动态更新
+ @parmas:
+ pID - 动态编号 必须
+ handler - 处理收藏结果
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)likePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)unLikePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 获取当前企业动态更新标签信息
+ @parmas:
+ keywords - 关键词模糊搜索
+ pageindex - 指定当前的页码
+ pagesize - 默认值20，最大值100 指定要返回的记录条数
+ handler - 处理包含多个MDTag的NSArray
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)loadAllTagsWithKeywords:(NSString *)keywords
+                                    pagesize:(NSInteger)size
+                                        page:(NSInteger)page
+                                     handler:(MDAPINSArrayHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 增加/删除一条动态更新的标签
+ @parmas:
+ pID - 动态编号 必须
+ tagName - 标签名称
+ handler - 处理收藏结果
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)addTagToPostWithPostID:(NSString *)pID
+                                    tagName:(NSString *)tagName
+                                    handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)deleteTagFromPostWithPostID:(NSString *)pID
+                                         tagName:(NSString *)tagName
+                                         handler:(MDAPIBoolHandler)handler;
+
+#pragma mark - 投票接口
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 按需获取当前登录用户参与的投票列表
+ @parmas:
+ page - 指定当前的页码
+ size - int默认值20，最大值100	指定要返回的记录条数
+ handler - 包含多个MDPost的NSArray
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)loadCurrentUserJoinedVotessWithPageIndex:(NSInteger)page
+                                                     pagesize:(NSInteger)size
+                                                      handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadCurrentUserCreatedVotessWithPageIndex:(NSInteger)page
+                                                      pagesize:(NSInteger)size
+                                                       handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadAllVotessWithPageIndex:(NSInteger)page
+                                       pagesize:(NSInteger)size
+                                        handler:(MDAPINSArrayHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 根据投票编号（动态更新编号）获取单条投票内容
+ @parmas:
+ pID - 动态更新编号
+ handler - 包含多个MDPost的NSArray
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)loadVoteWithVoteID:(NSString *)pID handler:(MDAPIObjectHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 增加当前登录用户对某投票的投票
+ @parmas:
+ pID - 动态更新编号
+ optionString - 投票选项，如：1|3,表示选择第1、3两项
+ handler - 包含多个MDPost的NSArray
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)castOptionOnVoteWithVoteID:(NSString *)pID
+                                   optionString:(NSString *)optionString
+                                        handler:(MDAPIBoolHandler)handler;
 @end

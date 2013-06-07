@@ -28,13 +28,18 @@
                                      }
                                             handler:^(BOOL succeed, NSError *error){
                                                 NSLog(@"login succeeded");
+                                                /*[[[MDAPIManager sharedManager] loadAllVotessWithPageIndex:0 pagesize:0 handler:^(NSArray *votes, NSError *error){
+                                                    for (MDPost *p in votes) {
+                                                        NSLog(@"%@", p.text);
+                                                    }
+                                                }] start];*/
                                                 
-                                                [[[MDAPIManager sharedManager] createTextPostWithText:@"API TEST" groupIDs:nil shareType:3 handler:^(NSString *pID, NSError *error){
+                                                /*[[[MDAPIManager sharedManager] createImagePostWithText:@"API TEST" image:[UIImage imageNamed:@"Default-568h@2x.png"] groupIDs:nil shareType:3 handler:^(NSString *pID, NSError *error){
                                                     NSLog(@"%@", pID);
-                                                    [[[MDAPIManager sharedManager] createRepostWithText:@"repost" postID:pID groupIDs:@[@"bfe89b87-393d-447d-9540-0374f3d77760"] shareType:3 handler:^(NSString *rID, NSError *error){
+                                                    [[[MDAPIManager sharedManager] createRepostWithText:@"repost" postID:pID groupIDs:nil shareType:3 handler:^(NSString *rID, NSError *error){
                                                         NSLog(@"%@", rID);
                                                     }] start];
-                                                }] start];
+                                                }] start];*/
                                                 /*[[[MDAPIManager sharedManager] createTaskWithTaskName:@"APITeST" description:nil endDateString:@"2013-6-7" chargerID:nil memberIDs:nil projectID:nil handler:^(NSString *tID, NSError *error){
                                                     NSLog(@"%@", tID);
                                                     [[[MDAPIManager sharedManager] createTaskReplymentOnTaskWithTaskID:tID message:@"test" replyToReplymentWithRID:nil image:[UIImage imageNamed:@"Default-568h@2x.png"] handler:^(NSString *trID, NSError *error){

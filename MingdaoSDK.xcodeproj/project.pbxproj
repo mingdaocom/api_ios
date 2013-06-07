@@ -37,6 +37,7 @@
 		F7B43EAC175C5ED200C390A1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F7B43EA9175C5ED200C390A1 /* README.md */; };
 		F7B43EAF175C6EF800C390A1 /* MDCompany.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B43EAE175C6EF800C390A1 /* MDCompany.m */; };
 		F7B43EB2175C804B00C390A1 /* MDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B43EB1175C804B00C390A1 /* MDUser.m */; };
+		F7B95F2B176175A100DE0047 /* MDTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B95F2A176175A100DE0047 /* MDTag.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +93,8 @@
 		F7B43EAE175C6EF800C390A1 /* MDCompany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCompany.m; sourceTree = "<group>"; };
 		F7B43EB0175C804B00C390A1 /* MDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDUser.h; sourceTree = "<group>"; };
 		F7B43EB1175C804B00C390A1 /* MDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDUser.m; sourceTree = "<group>"; };
+		F7B95F29176175A100DE0047 /* MDTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTag.h; sourceTree = "<group>"; };
+		F7B95F2A176175A100DE0047 /* MDTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTag.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +215,8 @@
 				F714890C17605762003827D1 /* MDPost.m */,
 				F714890E176062A2003827D1 /* MDPostReplyment.h */,
 				F714890F176062A2003827D1 /* MDPostReplyment.m */,
+				F7B95F29176175A100DE0047 /* MDTag.h */,
+				F7B95F2A176175A100DE0047 /* MDTag.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -326,6 +331,7 @@
 				F714890A17601E3D003827D1 /* MDTaskReplyment.m in Sources */,
 				F714890D17605762003827D1 /* MDPost.m in Sources */,
 				F7148910176062A3003827D1 /* MDPostReplyment.m in Sources */,
+				F7B95F2B176175A100DE0047 /* MDTag.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

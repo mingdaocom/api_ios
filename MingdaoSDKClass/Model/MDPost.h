@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MDUser.h"
 #import "MDGroup.h"
+#import "MDTag.h"
 
 @interface MDPost : NSObject
 @property (strong, nonatomic) NSString *objectID;

@@ -31,12 +31,6 @@ static MDAPIManager *sharedManager = nil;
     return sharedManager;
 }
 
-+ (NSString *)encodeUrl:(NSString *)str
-{
-    __autoreleasing NSString *outputStr = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)str, NULL, (CFStringRef) @"%&()?\"+,/:;=@ \t#<>\n!^~`!$.*-[]_{}|", kCFStringEncodingUTF8);
-    return outputStr;
-}
-
 - (NSString *)serverAddress
 {
     if (!_serverAddress) {
@@ -45,7 +39,7 @@ static MDAPIManager *sharedManager = nil;
     return _serverAddress;
 }
 
-- (void)handlerBoolData:(NSData *)data error:(NSError *)error handler:(MDAPIBoolHandler)handler
+- (void)handleBoolData:(NSData *)data error:(NSError *)error handler:(MDAPIBoolHandler)handler
 {
     NSDictionary *dic = [data objectFromJSONData];
     if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
@@ -65,20 +59,20 @@ static MDAPIManager *sharedManager = nil;
     }
 }
 
+
 #pragma mark - 登录/验证接口
 - (MDURLConnection *)loginWithUsername:(NSString *)username
                  password:(NSString *)password
            projectHandler:(MDAPINSArrayHandler)pHandler
                   handler:(MDAPIBoolHandler)sHandler
-{
-    NSString *userNameTmp = [[self class] encodeUrl:[NSMutableString stringWithString:username]];
-    NSString *passwordTmp = [[self class] encodeUrl:[NSMutableString stringWithString:password]];
-    
+{    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"oauth2/access_token?format=json"];
     [urlString appendFormat:@"&app_key=%@&app_secret=%@", @"935527504", [[UIDevice currentDevice] uniqueDeviceIdentifier]];
-    [urlString appendFormat:@"&grant_type=password&username=%@&password=%@", userNameTmp, passwordTmp];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
+    [urlString appendFormat:@"&grant_type=password&username=%@&password=%@", username, password];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             NSLog(@"JSON ERROR");
@@ -119,21 +113,20 @@ static MDAPIManager *sharedManager = nil;
                  password:(NSString *)password
                 projectID:(NSString *)projectID
                   handler:(MDAPIBoolHandler)handler
-{
-    NSString *userNameTmp = [[self class] encodeUrl:[NSMutableString stringWithString:username]];
-    NSString *passwordTmp = [[self class] encodeUrl:[NSMutableString stringWithString:password]];
-    
+{    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"oauth2/access_token?format=json"];
     [urlString appendFormat:@"&app_key=%@&app_secret=%@", @"935527504", [[UIDevice currentDevice] uniqueDeviceIdentifier]];
-    [urlString appendFormat:@"&grant_type=password&username=%@&password=%@", userNameTmp, passwordTmp];
+    [urlString appendFormat:@"&grant_type=password&username=%@&password=%@", username, password];
     if (projectID && projectID.length > 0)
     {
         [urlString appendFormat:@"&p_signature=%@", projectID];
     } else {
         NSLog(@"[error]ProjectID can not be nil![error]");
     }
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             NSLog(@"JSON ERROR");
@@ -212,7 +205,7 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -245,7 +238,7 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&gender=%d", gender];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -280,7 +273,7 @@ static MDAPIManager *sharedManager = nil;
     [req setHTTPBody:postBody];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -395,7 +388,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -409,7 +402,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -577,7 +570,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -592,7 +585,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -607,7 +600,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -622,7 +615,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -637,7 +630,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -680,10 +673,11 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"group/invite?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", gID];
-    [urlString appendFormat:@"&email=%@", [[self class] encodeUrl:email]];
+    [urlString appendFormat:@"&email=%@", email];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -858,7 +852,7 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&u_id=%@", userID];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -871,7 +865,7 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&u_id=%@", userID];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -886,15 +880,15 @@ static MDAPIManager *sharedManager = nil;
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"user/invite?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&email=%@", [[self class] encodeUrl:email]];
+    [urlString appendFormat:@"&email=%@", email];
     [urlString appendFormat:@"&fullname=%@", [fullname stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     [urlString appendFormat:@"&msg=%@", [msg?msg:@"" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (type == 0 || type == 1)
         [urlString appendFormat:@"&type=%d", type];
-
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -906,7 +900,8 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"user/frequent?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             NSLog(@"JSON ERROR");
@@ -938,8 +933,9 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"user/add_frequent?format=json"];
     [urlString appendFormat:@"&u_id=%@", uID];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -950,8 +946,9 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"user/delete_frequent?format=json"];
     [urlString appendFormat:@"&u_id=%@", uID];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -963,6 +960,7 @@ static MDAPIManager *sharedManager = nil;
     NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/todo?u_key=%@&rssCal=1&format=json"
                         , self.serverAddress
                         , self.accessToken];
+    
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){        
         NSDictionary *dic = [data objectFromJSONData];
@@ -1056,7 +1054,7 @@ static MDAPIManager *sharedManager = nil;
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1075,7 +1073,7 @@ static MDAPIManager *sharedManager = nil;
                         ];
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1092,9 +1090,10 @@ static MDAPIManager *sharedManager = nil;
                         , uIDs.count > 0 ? [uIDs componentsJoinedByString:@","] : @""
                         , emails.count > 0 ? [emails componentsJoinedByString:@","] : @""
                         ];
+    
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1111,9 +1110,10 @@ static MDAPIManager *sharedManager = nil;
                         , uIDs.count > 0 ? [uIDs componentsJoinedByString:@","] : @""
                         , emails.count > 0 ? [emails componentsJoinedByString:@","] : @""
                         ];
+    
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1124,6 +1124,7 @@ static MDAPIManager *sharedManager = nil;
                         , self.serverAddress
                         , self.accessToken
                         ];
+    
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
@@ -1280,9 +1281,10 @@ static MDAPIManager *sharedManager = nil;
                         , self.serverAddress
                         , self.accessToken
                         , objectID];
+    
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1294,9 +1296,10 @@ static MDAPIManager *sharedManager = nil;
                         , self.serverAddress
                         , self.accessToken
                         , objectID];
+    
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1307,9 +1310,10 @@ static MDAPIManager *sharedManager = nil;
                         , self.serverAddress
                         , self.accessToken
                         , objectID];
+    
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1320,9 +1324,10 @@ static MDAPIManager *sharedManager = nil;
                         , self.serverAddress
                         , self.accessToken
                         , objectID];
+    
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1563,7 +1568,6 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
-
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -1669,7 +1673,6 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_title=%@", name];
     [urlString appendFormat:@"&t_ed=%@", endDateString];
-    
     if (des && des.length > 0)
         [urlString appendFormat:@"&t_des=%@", des];
     if (memberIDs && memberIDs.count > 0)
@@ -1781,8 +1784,8 @@ static MDAPIManager *sharedManager = nil;
             return;
         }
         
-        NSString *taskID = [dic objectForKey:@"replyment"];
-        handler(taskID, nil);
+        NSString *replementID = [dic objectForKey:@"replyment"];
+        handler(replementID, nil);
     }];
     return connection;
 }
@@ -1798,7 +1801,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1814,7 +1817,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1833,7 +1836,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1852,7 +1855,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1871,7 +1874,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1890,7 +1893,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1909,7 +1912,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1928,7 +1931,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1947,7 +1950,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handlerBoolData:data error:error handler:handler];
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
@@ -1967,6 +1970,49 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&keywords=%@", keywords];
     if (sinceID && sinceID.length > 0)
         [urlString appendFormat:@"&since_id=%@", sinceID];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadPostWithTagName:(NSString *)tagName
+                                keywords:(NSString *)keywords
+                                   maxID:(NSString *)maxID
+                                pageSize:(NSInteger)size
+                                 handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/tag?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&tag=%@", tagName];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
@@ -2671,7 +2717,10 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&s_type=%d", shareType];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             NSLog(@"JSON ERROR");
@@ -2685,6 +2734,361 @@ static MDAPIManager *sharedManager = nil;
         
         NSString *postID = [dic objectForKey:@"post"];
         handler(postID, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)deletePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/delete?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)createPostReplymentOnPostWithPostID:(NSString *)pID
+                         replyToReplymentWithReplymentID:(NSString *)rID
+                                                 message:(NSString *)msg
+                                                 handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/add_reply?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    [urlString appendFormat:@"&r_msg=%@", msg];
+    if (rID && rID.length > 0)
+        [urlString appendFormat:@"&r_id=%@", rID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSString *replymentID = [dic objectForKey:@"replyment"];
+        handler(replymentID, nil);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)deletePostReplymentWithPostID:(NSString *)pID
+                                       replymentID:(NSString *)rID
+                                           handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/delete_reply?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    [urlString appendFormat:@"&r_id=%@", rID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+
+- (MDURLConnection *)favouritePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/add_favorite?format=json"];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)unFavouritePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/delete_favorite?format=json"];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)likePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/add_like?format=json"];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)unLikePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/delete_like?format=json"];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadAllTagsWithKeywords:(NSString *)keywords
+                                    pagesize:(NSInteger)size
+                                        page:(NSInteger)page
+                                     handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/list_tag?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    if (page > 0)
+        [urlString appendFormat:@"&pageindex=%d", page];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *tagDics = [dic objectForKey:@"tags"];
+        NSMutableArray *tags = [NSMutableArray array];
+        for (NSDictionary *tagDic in tagDics) {
+            if (![tagDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDTag *tag = [[MDTag alloc] initWithDictionary:tagDic];
+            [tags addObject:tag];
+        }
+        handler(tags, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)addTagToPostWithPostID:(NSString *)pID
+                                    tagName:(NSString *)tagName
+                                    handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/add_tag?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    [urlString appendFormat:@"&tag=%@", tagName];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)deleteTagFromPostWithPostID:(NSString *)pID
+                                         tagName:(NSString *)tagName
+                                         handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"post/delete_tag?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    [urlString appendFormat:@"&tag=%@", tagName];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error handler:handler];
+    }];
+    return connection;
+}
+
+#pragma mark - 投票接口
+- (MDURLConnection *)loadCurrentUserJoinedVotessWithPageIndex:(NSInteger)page
+                                                     pagesize:(NSInteger)size
+                                                      handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"vote/my_joined?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (page > 0)
+        [urlString appendFormat:@"&pageindex=%d", page];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+
+}
+
+- (MDURLConnection *)loadCurrentUserCreatedVotessWithPageIndex:(NSInteger)page
+                                                      pagesize:(NSInteger)size
+                                                       handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"vote/my_create?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (page > 0)
+        [urlString appendFormat:@"&pageindex=%d", page];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadAllVotessWithPageIndex:(NSInteger)page
+                                       pagesize:(NSInteger)size
+                                        handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"vote/all?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (page > 0)
+        [urlString appendFormat:@"&pageindex=%d", page];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadVoteWithVoteID:(NSString *)pID handler:(MDAPIObjectHandler)handler
+{
+    
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"vote/detail?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"JSON ERROR");
+            return ;
+        }
+        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
+        if (errorDic) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+            return;
+        }
+        
+        NSDictionary *postDic = [dic objectForKey:@"post"];
+        MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+        handler(post, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)castOptionOnVoteWithVoteID:(NSString *)pID
+                                   optionString:(NSString *)optionString
+                                        handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"vote/cast_options?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    [urlString appendFormat:@"&options=%@", optionString];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error handler:handler];
     }];
     return connection;
 }
