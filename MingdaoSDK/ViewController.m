@@ -21,8 +21,8 @@
 }
 
 - (IBAction)loginBtnPressed:(id)sender {
-    [[[MDAPIManager sharedManager] loginWithUsername:@"weetom.wang@meihua.info"
-                                           password:@"882825"
+    [[[MDAPIManager sharedManager] loginWithUsername:self.usernameField.text
+                                           password:self.passwordField.text
                                      projectHandler:^(NSArray *projects, NSError *error){
                                          NSLog(@"%d Projects", projects.count);
                                      }
