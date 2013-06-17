@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "MDAPIManager.h"
+#import "UIDevice+IdentifierAddition.h"
 
 @interface ViewController ()
 
@@ -21,19 +22,35 @@
 }
 
 - (IBAction)loginBtnPressed:(id)sender {
-    [[[MDAPIManager sharedManager] loginWithUsername:self.usernameField.text
+    [MDAPIManager setAppKey:@"935527504"];
+    [MDAPIManager setAppSecret:[[UIDevice currentDevice] uniqueGlobalDeviceIdentifier]];
+#warning setAppkey and setAppSecet before use
+    /*
+     @must
+     [MDAPIManager setAppKey:@""];
+     [MDAPIManager setAppSecret:@""];
+     
+     @optional, default http://api.mingdao.com/
+     [MDAPIManager setServerAddress:@""];
+     */
+    MDURLConnection *c =  [[MDAPIManager sharedManager] loginWithUsername:self.usernameField.text
                                            password:self.passwordField.text
                                      projectHandler:^(NSArray *projects, NSError *error){
                                          NSLog(@"%d Projects", projects.count);
                                      }
                                             handler:^(BOOL succeed, NSError *error){
-                                                NSLog(@"login succeeded");
-                                                [[[MDAPIManager sharedManager] loadAllVotessWithPageIndex:0 pagesize:0 handler:^(NSArray *votes, NSError *error){
+                                                if (succeed) {
+                                                    NSLog(@"login succeeded");
+                                                } else {
+                                                    NSLog(@"%@", error.userInfo);
+                                                    NSLog(@"%@", [error.userInfo objectForKey:@"error"]);
+                                                }
+                                                
+                                                /*[[[MDAPIManager sharedManager] loadAllVotessWithPageIndex:0 pagesize:0 handler:^(NSArray *votes, NSError *error){
                                                     for (MDPost *p in votes) {
                                                         NSLog(@"%@", p.text);
                                                     }
-                                                }] start];
-                                                
+                                                }] start];*/
                                                 /*[[[MDAPIManager sharedManager] createImagePostWithText:@"API TEST" image:[UIImage imageNamed:@"Default-568h@2x.png"] groupIDs:nil shareType:3 handler:^(NSString *pID, NSError *error){
                                                     NSLog(@"%@", pID);
                                                     [[[MDAPIManager sharedManager] createRepostWithText:@"repost" postID:pID groupIDs:nil shareType:3 handler:^(NSString *rID, NSError *error){
@@ -62,7 +79,11 @@
                                                         break;
                                                     }
                                                 }] start];*/
-                                            }] start];
+                                            }];
+    // use start when you are ready to request, it will not start automatically
+    [c start];
+    // use cancel if you want to stop
+    //[c cancel];
 }
 
 - (void)didReceiveMemoryWarning

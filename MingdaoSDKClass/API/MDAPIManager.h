@@ -15,7 +15,9 @@
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  设置私有部署API地址，默认为:https://api.mingdao.com/
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (void)setServerAddress:(NSString *)serverAddress;
++ (void)setServerAddress:(NSString *)serverAddress;
++ (void)setAppKey:(NSString *)appKey;
++ (void)setAppSecret:(NSString *)appSecret;
 
 #pragma mark - 登录/验证接口
 

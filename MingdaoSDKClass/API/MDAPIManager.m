@@ -8,12 +8,14 @@
 
 #import "MDAPIManager.h"
 #import "UIDevice+IdentifierAddition.h"
+#import "MDErrorParser.h"
 #import "JSONKit.h"
 
 #define MDAPIErrorDomain @"MDAPIErrorDomain"
 
 @interface MDAPIManager ()
 @property (strong, nonatomic) NSString *serverAddress;
+@property (strong, nonatomic) NSString *appKey, *appSecret;
 @property (strong, nonatomic) NSString *accessToken;
 @end
 
@@ -31,6 +33,21 @@ static MDAPIManager *sharedManager = nil;
     return sharedManager;
 }
 
++ (void)setServerAddress:(NSString *)serverAddress
+{
+    [[self sharedManager] setServerAddress:serverAddress];
+}
+
++ (void)setAppKey:(NSString *)appKey
+{
+    [[self sharedManager] setAppKey:appKey];
+}
+
++ (void)setAppSecret:(NSString *)appSecret
+{
+    [[self sharedManager] setAppSecret:appSecret];
+}
+
 - (NSString *)serverAddress
 {
     if (!_serverAddress) {
@@ -43,12 +60,12 @@ static MDAPIManager *sharedManager = nil;
 {
     NSDictionary *dic = [data objectFromJSONData];
     if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-        NSLog(@"JSON ERROR");
+        handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
         return ;
     }
-    NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-    if (errorDic) {
-        handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+    NSString *errorCode = [dic objectForKey:@"error_code"];
+    if (errorCode) {
+        handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
         return;
     }
     
@@ -68,19 +85,19 @@ static MDAPIManager *sharedManager = nil;
 {    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"oauth2/access_token?format=json"];
-    [urlString appendFormat:@"&app_key=%@&app_secret=%@", @"935527504", [[UIDevice currentDevice] uniqueDeviceIdentifier]];
+    [urlString appendFormat:@"&app_key=%@&app_secret=%@",  self.appKey, self.appSecret];
     [urlString appendFormat:@"&grant_type=password&username=%@&password=%@", username, password];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            sHandler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            sHandler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            sHandler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -116,7 +133,7 @@ static MDAPIManager *sharedManager = nil;
 {    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"oauth2/access_token?format=json"];
-    [urlString appendFormat:@"&app_key=%@&app_secret=%@", @"935527504", [[UIDevice currentDevice] uniqueDeviceIdentifier]];
+    [urlString appendFormat:@"&app_key=%@&app_secret=%@", self.appKey, self.appSecret];
     [urlString appendFormat:@"&grant_type=password&username=%@&password=%@", username, password];
     if (projectID && projectID.length > 0)
     {
@@ -129,12 +146,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -160,12 +177,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -184,12 +201,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -287,12 +304,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -324,12 +341,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -363,12 +380,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -418,12 +435,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -449,12 +466,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -480,12 +497,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -512,12 +529,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -537,12 +554,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -642,12 +659,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -684,12 +701,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -724,12 +741,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -756,12 +773,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -782,12 +799,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -813,12 +830,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -895,12 +912,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -956,12 +973,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){        
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1003,12 +1020,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1120,12 +1137,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1150,12 +1167,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1185,12 +1202,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1217,12 +1234,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1250,12 +1267,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONDataWithParseOptions:JKParseOptionLooseUnicode];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1340,12 +1357,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1378,12 +1395,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1416,12 +1433,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1454,12 +1471,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1492,12 +1509,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1530,12 +1547,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1564,12 +1581,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1597,12 +1614,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1629,12 +1646,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1680,12 +1697,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1709,12 +1726,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1766,12 +1783,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -1970,12 +1987,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2013,12 +2030,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2057,12 +2074,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2101,12 +2118,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2142,12 +2159,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2184,12 +2201,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2226,12 +2243,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2267,12 +2284,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2310,12 +2327,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2357,12 +2374,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2401,12 +2418,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2445,12 +2462,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2478,12 +2495,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2505,12 +2522,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2547,12 +2564,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2586,12 +2603,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2621,12 +2638,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2677,12 +2694,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2714,12 +2731,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2763,12 +2780,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2867,12 +2884,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2940,12 +2957,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -2979,12 +2996,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -3017,12 +3034,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         
@@ -3051,12 +3068,12 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"JSON ERROR");
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
             return ;
         }
-        NSDictionary *errorDic = [dic objectForKey:@"error_code"];
-        if (errorDic) {
-            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:errorDic]);
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
             return;
         }
         

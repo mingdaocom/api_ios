@@ -13,6 +13,7 @@
 		F714890A17601E3D003827D1 /* MDTaskReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F714890917601E3D003827D1 /* MDTaskReplyment.m */; };
 		F714890D17605762003827D1 /* MDPost.m in Sources */ = {isa = PBXBuildFile; fileRef = F714890C17605762003827D1 /* MDPost.m */; };
 		F7148910176062A3003827D1 /* MDPostReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F714890F176062A2003827D1 /* MDPostReplyment.m */; };
+		F73E98F6176F09C600EE9478 /* MDErrorParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F73E98F5176F09C600EE9478 /* MDErrorParser.m */; };
 		F776CC5D175F03460010A990 /* MDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F776CC5C175F03460010A990 /* MDEvent.m */; };
 		F776CC60175F1A880010A990 /* MDTask.m in Sources */ = {isa = PBXBuildFile; fileRef = F776CC5F175F1A880010A990 /* MDTask.m */; };
 		F776CC63175F1E0F0010A990 /* MDProject.m in Sources */ = {isa = PBXBuildFile; fileRef = F776CC62175F1E0F0010A990 /* MDProject.m */; };
@@ -53,6 +54,8 @@
 		F714890C17605762003827D1 /* MDPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPost.m; sourceTree = "<group>"; };
 		F714890E176062A2003827D1 /* MDPostReplyment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPostReplyment.h; sourceTree = "<group>"; };
 		F714890F176062A2003827D1 /* MDPostReplyment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPostReplyment.m; sourceTree = "<group>"; };
+		F73E98F4176F09C600EE9478 /* MDErrorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDErrorParser.h; sourceTree = "<group>"; };
+		F73E98F5176F09C600EE9478 /* MDErrorParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDErrorParser.m; sourceTree = "<group>"; };
 		F776CC5B175F03460010A990 /* MDEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDEvent.h; sourceTree = "<group>"; };
 		F776CC5C175F03460010A990 /* MDEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDEvent.m; sourceTree = "<group>"; };
 		F776CC5E175F1A880010A990 /* MDTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTask.h; sourceTree = "<group>"; };
@@ -184,6 +187,8 @@
 				F7B43E9E175C377300C390A1 /* IdentifierAddition */,
 				F7B43E95175C2BCE00C390A1 /* MDURLConnection.h */,
 				F7B43E96175C2BCE00C390A1 /* MDURLConnection.m */,
+				F73E98F4176F09C600EE9478 /* MDErrorParser.h */,
+				F73E98F5176F09C600EE9478 /* MDErrorParser.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -325,6 +330,7 @@
 				F7B43E8D175C2A6400C390A1 /* ViewController.m in Sources */,
 				F7B43E99175C2BCE00C390A1 /* MDURLConnection.m in Sources */,
 				F7B43EA3175C377300C390A1 /* NSString+MD5Addition.m in Sources */,
+				F73E98F6176F09C600EE9478 /* MDErrorParser.m in Sources */,
 				F7B43EA4175C377300C390A1 /* UIDevice+IdentifierAddition.m in Sources */,
 				F7B43EAB175C5ED200C390A1 /* JSONKit.m in Sources */,
 				F7B43EAF175C6EF800C390A1 /* MDCompany.m in Sources */,
