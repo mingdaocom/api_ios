@@ -245,7 +245,6 @@ static MDAPIManager *sharedManager = nil;
 
 - (MDURLConnection *)saveUserWithAvatar:(UIImage *)avatarImg handler:(MDAPIBoolHandler)handler
 {
-#warning NOT TESTED
     NSString *boundary = @"-----------------MINGDAO-----------------";
     NSString *filename = @"photo.jpg";
     
@@ -562,7 +561,6 @@ static MDAPIManager *sharedManager = nil;
 
 - (MDURLConnection *)exitGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
 {
-#warning NOT TESTED
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"group/exit?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
@@ -577,7 +575,6 @@ static MDAPIManager *sharedManager = nil;
 
 - (MDURLConnection *)joinGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
 {
-#warning NOT TESTED
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"group/join?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
@@ -592,7 +589,6 @@ static MDAPIManager *sharedManager = nil;
 
 - (MDURLConnection *)closeGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
 {
-#warning NOT TESTED
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"group/close?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
@@ -607,7 +603,6 @@ static MDAPIManager *sharedManager = nil;
 
 - (MDURLConnection *)openGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
 {
-#warning NOT TESTED
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"group/open?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
@@ -622,7 +617,6 @@ static MDAPIManager *sharedManager = nil;
 
 - (MDURLConnection *)deleteGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
 {
-#warning NOT TESTED
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"group/delete?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
@@ -639,7 +633,6 @@ static MDAPIManager *sharedManager = nil;
                         isPublic:(BOOL)isPub
                          handler:(MDAPIObjectHandler)handler
 {
-#warning NOT TESTED
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"group/create?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
@@ -668,7 +661,6 @@ static MDAPIManager *sharedManager = nil;
                                email:(NSString *)email
                              handler:(MDAPIBoolHandler)handler
 {
-#warning NOT TESTED
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"group/invite?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
@@ -876,7 +868,6 @@ static MDAPIManager *sharedManager = nil;
                                 type:(NSInteger)type
                              handler:(MDAPIBoolHandler)handler
 {
-#warning NOT TESTED
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"user/invite?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
