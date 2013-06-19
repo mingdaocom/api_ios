@@ -50,7 +50,7 @@ static MDAPIManager *sharedManager = nil;
 - (NSString *)serverAddress
 {
     if (!_serverAddress) {
-        return @"https://api.mingdao.com/";
+        return @"https://api.mingdao.com";
     }
     return _serverAddress;
 }
@@ -83,7 +83,7 @@ static MDAPIManager *sharedManager = nil;
                   handler:(MDAPIBoolHandler)sHandler
 {    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"oauth2/access_token?format=json"];
+    [urlString appendString:@"/oauth2/access_token?format=json"];
     [urlString appendFormat:@"&app_key=%@&app_secret=%@",  self.appKey, self.appSecret];
     [urlString appendFormat:@"&grant_type=password&username=%@&password=%@", username, password];
     
@@ -131,7 +131,7 @@ static MDAPIManager *sharedManager = nil;
                   handler:(MDAPIBoolHandler)handler
 {    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"oauth2/access_token?format=json"];
+    [urlString appendString:@"/oauth2/access_token?format=json"];
     [urlString appendFormat:@"&app_key=%@&app_secret=%@", self.appKey, self.appSecret];
     [urlString appendFormat:@"&grant_type=password&username=%@&password=%@", username, password];
     if (projectID && projectID.length > 0)
@@ -170,7 +170,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadCurrentUserDetailWithHandler:(MDAPIObjectHandler)handler
 {    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"passport/detail?format=json"];
+    [urlString appendString:@"/passport/detail?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
 
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
@@ -194,7 +194,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadCurrentUserUnreadCountWithHandler:(MDAPINSDictionaryHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"passport/unreadcount?format=json"];
+    [urlString appendString:@"/passport/unreadcount?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
@@ -217,7 +217,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)logoutWithHandler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"passport/logout?format=json"];
+    [urlString appendString:@"/passport/logout?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
@@ -236,7 +236,7 @@ static MDAPIManager *sharedManager = nil;
                  handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"passport/edit?format=json"];
+    [urlString appendString:@"/passport/edit?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (name && name.length > 0)
         [urlString appendFormat:@"&name=%@", [name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -297,7 +297,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadCurrentUserMessagesWithHandler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"message/all?format=json"];
+    [urlString appendString:@"/message/all?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
@@ -331,7 +331,7 @@ static MDAPIManager *sharedManager = nil;
                        handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"message/list?format=json"];
+    [urlString appendString:@"/message/list?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&u_id=%@", userID];
     [urlString appendFormat:@"&pageindex=%d", pages];
@@ -368,7 +368,7 @@ static MDAPIManager *sharedManager = nil;
                     handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"message/create?format=json"];
+    [urlString appendString:@"/message/create?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&u_id=%@", userID];
     [urlString appendFormat:@"&msg=%@", [text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -397,7 +397,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)deleteMessageWithMessageID:(NSString *)mID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"message/delete?format=json"];
+    [urlString appendString:@"/message/delete?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&m_id=%@", mID];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
@@ -411,7 +411,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)markMessageAsReadWithMessageID:(NSString *)mID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"message/read?format=json"];
+    [urlString appendString:@"/message/read?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&m_id=%@", mID];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
@@ -426,7 +426,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadAllGroupsWithKeywords:(NSString *)keywords handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"group/all?format=json"];
+    [urlString appendString:@"/group/all?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -459,7 +459,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadCurrentUserCreatedGroupsWithHandler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"group/my_created?format=json"];
+    [urlString appendString:@"/group/my_created?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
@@ -490,7 +490,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadCurrentUserJoinedGroupsWithHandler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"group/my_joined?format=json"];
+    [urlString appendString:@"/group/my_joined?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
@@ -521,7 +521,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadGroupsWithGroupID:(NSString *)gID handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"group/detail?format=json"];
+    [urlString appendString:@"/group/detail?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", gID];
     
@@ -546,7 +546,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadGroupMembersWithGroupID:(NSString *)gID handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"group/user?format=json"];
+    [urlString appendString:@"/group/user?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", gID];
 
@@ -578,7 +578,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)exitGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"group/exit?format=json"];
+    [urlString appendString:@"/group/exit?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", gID];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
@@ -592,7 +592,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)joinGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"group/join?format=json"];
+    [urlString appendString:@"/group/join?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", gID];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
@@ -606,7 +606,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)closeGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"group/close?format=json"];
+    [urlString appendString:@"/group/close?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", gID];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
@@ -620,7 +620,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)openGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"group/open?format=json"];
+    [urlString appendString:@"/group/open?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", gID];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
@@ -634,7 +634,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)deleteGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"group/delete?format=json"];
+    [urlString appendString:@"/group/delete?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", gID];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
@@ -650,7 +650,7 @@ static MDAPIManager *sharedManager = nil;
                          handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"group/create?format=json"];
+    [urlString appendString:@"/group/create?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_name=%@", gName];
     [urlString appendFormat:@"&is_public=%d", isPub?1:0];
@@ -678,7 +678,7 @@ static MDAPIManager *sharedManager = nil;
                              handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"group/invite?format=json"];
+    [urlString appendString:@"/group/invite?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", gID];
     [urlString appendFormat:@"&email=%@", email];
@@ -694,7 +694,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadAllUsersWithHandler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"user/all?format=json"];
+    [urlString appendString:@"/user/all?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
@@ -728,7 +728,7 @@ static MDAPIManager *sharedManager = nil;
                       handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"user/search?format=json"];
+    [urlString appendString:@"/user/search?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -765,7 +765,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadUserWithUserID:(NSString *)uID handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"user/detail?format=json"];
+    [urlString appendString:@"/user/detail?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&u_id=%@", uID];
     
@@ -791,7 +791,7 @@ static MDAPIManager *sharedManager = nil;
                                  handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"user/followed?format=json"];
+    [urlString appendString:@"/user/followed?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&u_id=%@", uID];
     
@@ -823,7 +823,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadAllDepartmentsWithHandler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"user/department?format=json"];
+    [urlString appendString:@"/user/department?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
@@ -855,7 +855,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)followUserWithUserID:(NSString *)userID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"user/add_followed?format=json"];
+    [urlString appendString:@"/user/add_followed?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&u_id=%@", userID];
     
@@ -868,7 +868,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)unfollowUserWithUserID:(NSString *)userID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"user/delete_followed?format=json"];
+    [urlString appendString:@"/user/delete_followed?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&u_id=%@", userID];
     
@@ -885,7 +885,7 @@ static MDAPIManager *sharedManager = nil;
                              handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"user/invite?format=json"];
+    [urlString appendString:@"/user/invite?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&email=%@", email];
     [urlString appendFormat:@"&fullname=%@", [fullname stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -904,7 +904,7 @@ static MDAPIManager *sharedManager = nil;
 {
     
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"user/frequent?format=json"];
+    [urlString appendString:@"/user/frequent?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -937,7 +937,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)favouriteUserWithUserID:(NSString *)uID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"user/add_frequent?format=json"];
+    [urlString appendString:@"/user/add_frequent?format=json"];
     [urlString appendFormat:@"&u_id=%@", uID];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -950,7 +950,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)unfavouriteUserWithUserID:(NSString *)uID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"user/delete_frequent?format=json"];
+    [urlString appendString:@"/user/delete_frequent?format=json"];
     [urlString appendFormat:@"&u_id=%@", uID];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -999,7 +999,7 @@ static MDAPIManager *sharedManager = nil;
                          handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"calendar/create?format=json"];
+    [urlString appendString:@"/calendar/create?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&c_name=%@", name];
     [urlString appendFormat:@"&c_stime=%@", sDateString];
@@ -1047,7 +1047,7 @@ static MDAPIManager *sharedManager = nil;
                      handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"calendar/edit?format=json"];
+    [urlString appendString:@"/calendar/edit?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&c_id=%@", eID];
     [urlString appendFormat:@"&c_name=%@", name];
@@ -1161,7 +1161,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadEventsForDay:(NSString *)yearMonthAndDay handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"calendar/day?format=json"];
+    [urlString appendString:@"/calendar/day?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&date=%@", yearMonthAndDay];
     
@@ -1196,7 +1196,7 @@ static MDAPIManager *sharedManager = nil;
                   handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"calendar/week?format=json"];
+    [urlString appendString:@"/calendar/week?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&year=%d", year];
     [urlString appendFormat:@"&week=%d", week];    
@@ -1230,7 +1230,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadEventsForMonth:(NSString *)yearAndMonth handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"calendar/month?format=json"];
+    [urlString appendString:@"/calendar/month?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&date=%@", yearAndMonth];
     
@@ -1350,7 +1350,7 @@ static MDAPIManager *sharedManager = nil;
                                                     handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/my_joined?format=json"];
+    [urlString appendString:@"/task/my_joined?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -1388,7 +1388,7 @@ static MDAPIManager *sharedManager = nil;
                                                       handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/my_joined_finished?format=json"];
+    [urlString appendString:@"/task/my_joined_finished?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];
@@ -1426,7 +1426,7 @@ static MDAPIManager *sharedManager = nil;
                                                       handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/my_assign?format=json"];
+    [urlString appendString:@"/task/my_assign?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -1464,7 +1464,7 @@ static MDAPIManager *sharedManager = nil;
                                                               handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/my_assign_finished?format=json"];
+    [urlString appendString:@"/task/my_assign_finished?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];
@@ -1502,7 +1502,7 @@ static MDAPIManager *sharedManager = nil;
                                                      handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/my_charge?format=json"];
+    [urlString appendString:@"/task/my_charge?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -1540,7 +1540,7 @@ static MDAPIManager *sharedManager = nil;
                                                              handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/my_charge_finished?format=json"];
+    [urlString appendString:@"/task/my_charge_finished?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];
@@ -1576,7 +1576,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadProjectsWithKeywords:(NSString *)keywords handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/project?format=json"];
+    [urlString appendString:@"/task/project?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -1610,7 +1610,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadTaskWithTaskID:(NSString *)tID handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/detail?format=json"];
+    [urlString appendString:@"/task/detail?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     
@@ -1637,7 +1637,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadTaskReplymentsWithTaskID:(NSString *)tID maxID:(NSString *)maxTID pageSize:(NSInteger)size handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/reply?format=json"];
+    [urlString appendString:@"/task/reply?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     if (maxTID)
@@ -1681,7 +1681,7 @@ static MDAPIManager *sharedManager = nil;
                                     handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/create?format=json"];
+    [urlString appendString:@"/task/create?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_title=%@", name];
     [urlString appendFormat:@"&t_ed=%@", endDateString];
@@ -1719,7 +1719,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)createProjectWithName:(NSString *)name handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/add_project?format=json"];
+    [urlString appendString:@"/task/add_project?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&title=%@", name];
     
@@ -1752,7 +1752,7 @@ static MDAPIManager *sharedManager = nil;
                                                  handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/addreply?format=json"];
+    [urlString appendString:@"/task/addreply?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     [urlString appendFormat:@"&r_msg=%@", message];
@@ -1805,7 +1805,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)finishTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/finish?format=json"];
+    [urlString appendString:@"/task/finish?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     
@@ -1821,7 +1821,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)deleteTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/delete?format=json"];
+    [urlString appendString:@"/task/delete?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     
@@ -1839,7 +1839,7 @@ static MDAPIManager *sharedManager = nil;
                                 handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/edit_title?format=json"];
+    [urlString appendString:@"/task/edit_title?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     [urlString appendFormat:@"&t_title=%@", title];
@@ -1858,7 +1858,7 @@ static MDAPIManager *sharedManager = nil;
                                 handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/edit_des?format=json"];
+    [urlString appendString:@"/task/edit_des?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     [urlString appendFormat:@"&des=%@", des];
@@ -1877,7 +1877,7 @@ static MDAPIManager *sharedManager = nil;
                                 handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/edit_charge?format=json"];
+    [urlString appendString:@"/task/edit_charge?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     [urlString appendFormat:@"&u_id=%@", chargerID];
@@ -1896,7 +1896,7 @@ static MDAPIManager *sharedManager = nil;
                                 handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/edit_expiredate?format=json"];
+    [urlString appendString:@"/task/edit_expiredate?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     [urlString appendFormat:@"&expiredate=%@", endDateString];
@@ -1915,7 +1915,7 @@ static MDAPIManager *sharedManager = nil;
                                 handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/edit_project?format=json"];
+    [urlString appendString:@"/task/edit_project?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     [urlString appendFormat:@"&p_id=%@", projectID];
@@ -1934,7 +1934,7 @@ static MDAPIManager *sharedManager = nil;
                                        handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/add_member?format=json"];
+    [urlString appendString:@"/task/add_member?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     [urlString appendFormat:@"&u_id=%@", memberID];
@@ -1953,7 +1953,7 @@ static MDAPIManager *sharedManager = nil;
                                              handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"task/delete_member?format=json"];
+    [urlString appendString:@"/task/delete_member?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     [urlString appendFormat:@"&u_id=%@", memberID];
@@ -1976,7 +1976,7 @@ static MDAPIManager *sharedManager = nil;
                                            handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/followed?format=json"];
+    [urlString appendString:@"/post/followed?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -2020,7 +2020,7 @@ static MDAPIManager *sharedManager = nil;
                                  handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/tag?format=json"];
+    [urlString appendString:@"/post/tag?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&tag=%@", tagName];
     if (keywords && keywords.length > 0)
@@ -2063,7 +2063,7 @@ static MDAPIManager *sharedManager = nil;
                                       handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/all?format=json"];
+    [urlString appendString:@"/post/all?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -2107,7 +2107,7 @@ static MDAPIManager *sharedManager = nil;
                                              handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/favorite?format=json"];
+    [urlString appendString:@"/post/favorite?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -2150,7 +2150,7 @@ static MDAPIManager *sharedManager = nil;
                                           handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/replyme?format=json"];
+    [urlString appendString:@"/post/replyme?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -2192,7 +2192,7 @@ static MDAPIManager *sharedManager = nil;
 {
     
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/atme?format=json"];
+    [urlString appendString:@"/post/atme?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -2234,7 +2234,7 @@ static MDAPIManager *sharedManager = nil;
                                      handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/my?format=json"];
+    [urlString appendString:@"/post/my?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -2275,7 +2275,7 @@ static MDAPIManager *sharedManager = nil;
                                      handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/user?format=json"];
+    [urlString appendString:@"/post/user?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&u_id=%@", userID];
     if (maxID && maxID.length > 0)
@@ -2317,7 +2317,7 @@ static MDAPIManager *sharedManager = nil;
                                        handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/group?format=json"];
+    [urlString appendString:@"/post/group?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", groupID];
     if (keywords && keywords.length > 0)
@@ -2361,7 +2361,7 @@ static MDAPIManager *sharedManager = nil;
                                           handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/doc?format=json"];
+    [urlString appendString:@"/post/doc?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (groupID && groupID.length > 0)
         [urlString appendFormat:@"&g_id=%@", groupID];
@@ -2407,7 +2407,7 @@ static MDAPIManager *sharedManager = nil;
                                        handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/img?format=json"];
+    [urlString appendString:@"/post/img?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (groupID && groupID.length > 0)
         [urlString appendFormat:@"&g_id=%@", groupID];
@@ -2451,7 +2451,7 @@ static MDAPIManager *sharedManager = nil;
                                      handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/faq?format=json"];
+    [urlString appendString:@"/post/faq?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (groupID && groupID.length > 0)
         [urlString appendFormat:@"&g_id=%@", groupID];
@@ -2491,7 +2491,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadPostWithPostID:(NSString *)pID handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/detail?format=json"];
+    [urlString appendString:@"/post/detail?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     
@@ -2518,7 +2518,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loadPostReplymentsWithPostID:(NSString *)pID handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/reply?format=json"];
+    [urlString appendString:@"/post/reply?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     
@@ -2554,7 +2554,7 @@ static MDAPIManager *sharedManager = nil;
                                     handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/update?format=json"];
+    [urlString appendString:@"/post/update?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
@@ -2591,7 +2591,7 @@ static MDAPIManager *sharedManager = nil;
                                    handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/update?format=json"];
+    [urlString appendString:@"/post/update?format=json"];
     [urlString appendFormat:@"&access_token=%@&p_type=1", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
@@ -2628,7 +2628,7 @@ static MDAPIManager *sharedManager = nil;
                                    handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/update?format=json"];
+    [urlString appendString:@"/post/update?format=json"];
     [urlString appendFormat:@"&access_token=%@&p_type=4", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
@@ -2664,7 +2664,7 @@ static MDAPIManager *sharedManager = nil;
                                      handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/upload?format=json"];
+    [urlString appendString:@"/post/upload?format=json"];
     [urlString appendFormat:@"&access_token=%@&f_type=picture", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
@@ -2720,7 +2720,7 @@ static MDAPIManager *sharedManager = nil;
                                   handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/repost?format=json"];
+    [urlString appendString:@"/post/repost?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
@@ -2753,7 +2753,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)deletePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/delete?format=json"];
+    [urlString appendString:@"/post/delete?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     
@@ -2770,7 +2770,7 @@ static MDAPIManager *sharedManager = nil;
                                                  handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/add_reply?format=json"];
+    [urlString appendString:@"/post/add_reply?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     [urlString appendFormat:@"&r_msg=%@", msg];
@@ -2804,7 +2804,7 @@ static MDAPIManager *sharedManager = nil;
                                            handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/delete_reply?format=json"];
+    [urlString appendString:@"/post/delete_reply?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     [urlString appendFormat:@"&r_id=%@", rID];
@@ -2820,7 +2820,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)favouritePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/add_favorite?format=json"];
+    [urlString appendString:@"/post/add_favorite?format=json"];
     [urlString appendFormat:@"&p_id=%@", pID];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
@@ -2833,7 +2833,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)unFavouritePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/delete_favorite?format=json"];
+    [urlString appendString:@"/post/delete_favorite?format=json"];
     [urlString appendFormat:@"&p_id=%@", pID];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
@@ -2846,7 +2846,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)likePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/add_like?format=json"];
+    [urlString appendString:@"/post/add_like?format=json"];
     [urlString appendFormat:@"&p_id=%@", pID];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
@@ -2859,7 +2859,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)unLikePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/delete_like?format=json"];
+    [urlString appendString:@"/post/delete_like?format=json"];
     [urlString appendFormat:@"&p_id=%@", pID];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
@@ -2875,7 +2875,7 @@ static MDAPIManager *sharedManager = nil;
                                      handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/list_tag?format=json"];
+    [urlString appendString:@"/post/list_tag?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -2915,7 +2915,7 @@ static MDAPIManager *sharedManager = nil;
                                     handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/add_tag?format=json"];
+    [urlString appendString:@"/post/add_tag?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     [urlString appendFormat:@"&tag=%@", tagName];
@@ -2932,7 +2932,7 @@ static MDAPIManager *sharedManager = nil;
                                          handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"post/delete_tag?format=json"];
+    [urlString appendString:@"/post/delete_tag?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     [urlString appendFormat:@"&tag=%@", tagName];
@@ -2950,7 +2950,7 @@ static MDAPIManager *sharedManager = nil;
                                                       handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"vote/my_joined?format=json"];
+    [urlString appendString:@"/vote/my_joined?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (page > 0)
         [urlString appendFormat:@"&pageindex=%d", page];
@@ -2989,7 +2989,7 @@ static MDAPIManager *sharedManager = nil;
                                                        handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"vote/my_create?format=json"];
+    [urlString appendString:@"/vote/my_create?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (page > 0)
         [urlString appendFormat:@"&pageindex=%d", page];
@@ -3027,7 +3027,7 @@ static MDAPIManager *sharedManager = nil;
                                         handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"vote/all?format=json"];
+    [urlString appendString:@"/vote/all?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (page > 0)
         [urlString appendFormat:@"&pageindex=%d", page];
@@ -3064,7 +3064,7 @@ static MDAPIManager *sharedManager = nil;
 {
     
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"vote/detail?format=json"];
+    [urlString appendString:@"/vote/detail?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     
@@ -3093,7 +3093,7 @@ static MDAPIManager *sharedManager = nil;
                                         handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"vote/cast_options?format=json"];
+    [urlString appendString:@"/vote/cast_options?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     [urlString appendFormat:@"&options=%@", optionString];
