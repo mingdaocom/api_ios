@@ -1000,6 +1000,7 @@ static MDAPIManager *sharedManager = nil;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"calendar/create?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&c_name=%@", name];
     [urlString appendFormat:@"&c_stime=%@", sDateString];
     [urlString appendFormat:@"&c_etime=%@", eDateString];
@@ -1047,6 +1048,7 @@ static MDAPIManager *sharedManager = nil;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"calendar/edit?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&c_id=%@", eID];
     [urlString appendFormat:@"&c_name=%@", name];
     [urlString appendFormat:@"&c_stime=%@", sDateString];

@@ -34,4 +34,16 @@
     }
     return self;
 }
+
+- (BOOL)isEqual:(id)object
+{
+    if ([object isKindOfClass:[self class]]) {
+        MDUser *aUser = (MDUser *)object;
+        if ([self.objectID isEqualToString:aUser.objectID]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
 @end

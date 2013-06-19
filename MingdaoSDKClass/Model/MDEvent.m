@@ -129,7 +129,7 @@
 
 - (void)setAddress:(NSString *)c_address
 {
-    if (!_address) {
+    if (!c_address) {
         _address = @"";
         return;
     }
