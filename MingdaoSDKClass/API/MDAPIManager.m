@@ -16,7 +16,6 @@
 @interface MDAPIManager ()
 @property (strong, nonatomic) NSString *serverAddress;
 @property (strong, nonatomic) NSString *appKey, *appSecret;
-@property (strong, nonatomic) NSString *accessToken;
 @end
 
 @implementation MDAPIManager
@@ -1161,6 +1160,7 @@ static MDAPIManager *sharedManager = nil;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"calendar/day?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&date=%@", yearMonthAndDay];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -1195,6 +1195,7 @@ static MDAPIManager *sharedManager = nil;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"calendar/week?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&year=%d", year];
     [urlString appendFormat:@"&week=%d", week];    
     
@@ -1228,6 +1229,7 @@ static MDAPIManager *sharedManager = nil;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"calendar/month?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&date=%@", yearAndMonth];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

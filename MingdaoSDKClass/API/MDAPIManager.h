@@ -10,6 +10,8 @@
 #import "MDAPIHandler.h"
 
 @interface MDAPIManager : NSObject
+@property (strong, nonatomic) NSString *accessToken;
+
 + (MDAPIManager *)sharedManager;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
