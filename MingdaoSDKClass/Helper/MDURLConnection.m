@@ -42,11 +42,21 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     self.currentLength += [data length];
-    NSLog(@"%f", self.currentLength/(float)self.totalLength);
-    if (self.pHandler) {
-        self.pHandler(self.currentLength/(float)self.totalLength);
+    if (self.downloadProgressHandler) {
+        self.downloadProgressHandler(self.currentLength/(float)self.totalLength);
     }
     [self.appendingData appendData:data];
+}
+
+- (void)connection:(NSURLConnection *)connection   didSendBodyData:(NSInteger)bytesWritten
+                                                 totalBytesWritten:(NSInteger)totalBytesWritten
+                                         totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
+{
+    if (self.uploadProgressHandler) {
+        float progress = [[NSNumber numberWithInteger:totalBytesWritten] floatValue];
+        float total = [[NSNumber numberWithInteger: totalBytesExpectedToWrite] floatValue];
+        self.uploadProgressHandler(progress/total);
+    }
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection

@@ -13,7 +13,7 @@ typedef void (^MDAPICGFloatHandler)(CGFloat fValue);
 
 @interface MDURLConnection : NSObject
 - (MDURLConnection *)initWithRequest:(NSURLRequest *)request handler:(MDAPINSDataHandler)handler;
-@property (copy, nonatomic) MDAPICGFloatHandler pHandler;
+@property (copy, nonatomic) MDAPICGFloatHandler downloadProgressHandler, uploadProgressHandler;
 - (void)start;
 - (void)cancel;
 @end
