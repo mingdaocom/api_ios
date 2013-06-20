@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSURLConnection *connection;
 @property (strong, nonatomic) NSMutableData *appendingData;
 @property (copy,   nonatomic) MDAPINSDataHandler handler;
+@property (assign, nonatomic) long long totalLength, currentLength;
 @end
 
 @implementation MDURLConnection
@@ -27,6 +28,12 @@
     return self;
 }
 
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    self.totalLength = [response expectedContentLength];
+    self.currentLength = 0;
+}
+
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     self.handler(nil, error);
@@ -34,6 +41,11 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
+    self.currentLength += [data length];
+    NSLog(@"%f", self.currentLength/(float)self.totalLength);
+    if (self.pHandler) {
+        self.pHandler(self.currentLength/(float)self.totalLength);
+    }
     [self.appendingData appendData:data];
 }
 
