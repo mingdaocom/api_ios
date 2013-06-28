@@ -37,6 +37,7 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     self.handler(nil, error);
+    self.handler = nil;
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
@@ -62,6 +63,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     self.handler(self.appendingData, nil);
+    self.handler = nil;
 }
 
 - (void)start
@@ -81,5 +83,13 @@
         self.connection = nil;
         self.appendingData = nil;
     }
+}
+
+- (void)dealloc
+{
+    self.req = nil;
+    self.connection = nil;
+    self.handler = nil;
+    self.appendingData = nil;
 }
 @end
