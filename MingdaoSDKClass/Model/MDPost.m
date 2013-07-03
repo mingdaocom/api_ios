@@ -92,7 +92,7 @@
         NSMutableArray *groups = [NSMutableArray array];
         NSArray *groupDics = [aDic objectForKey:@"groups"];
         for (NSDictionary *groupDic in groupDics) {
-            if ([groupDics isKindOfClass:[NSDictionary class]]) {
+            if ([groupDic isKindOfClass:[NSDictionary class]]) {
                 MDGroup *group = [[MDGroup alloc] initWithDictionary:groupDic];
                 [groups addObject:group];
             }
