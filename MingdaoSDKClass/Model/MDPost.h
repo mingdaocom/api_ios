@@ -25,7 +25,7 @@
 @property (strong, nonatomic) NSString *postGUID;
 @property (assign, nonatomic) BOOL isInCenter;
 @property (strong, nonatomic) NSString *linkDes, *linkTitle, *linkURL;
-@property (strong, nonatomic) NSString *middlePic, *originalPic, *thumbnailPic, *originalDoc;
+@property (strong, nonatomic) NSString *middlePic, *originalPic, *fileName, *thumbnailPic, *originalDoc;
 @property (strong, nonatomic) NSArray *voteOptions;
 - (MDPostDetail *)initWithDictionary:(NSDictionary *)dic;
 @end
@@ -63,7 +63,7 @@ typedef NSInteger MDPostType;
 @property (assign, nonatomic) BOOL isLiked;
 @property (assign, nonatomic) MDPostType type;
 @property (assign, nonatomic) MDPostShareType shareType;
-@property (assign, nonatomic) NSArray *details;
+@property (strong, nonatomic) NSArray *details;
 @property (strong, nonatomic) NSDictionary *textAttribute;
 @property (strong, nonatomic) NSArray *groups;
 @property (strong, nonatomic) MDUser *creator;

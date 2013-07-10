@@ -18,7 +18,7 @@
         self.createTime = [aDic objectForKey:@"create_time"];
         self.creator = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"user"]];
         NSDictionary *replyToDic = [aDic objectForKey:@"ref"];
-        if (replyToDic) {
+        if (replyToDic && replyToDic.allKeys.count > 0) {
             self.replyTo = [[MDPostReplyment alloc] initWithDictionary:[replyToDic objectForKey:@"replyment"]];
         }
     }

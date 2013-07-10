@@ -45,6 +45,7 @@
         self.originalPic = [dic objectForKey:@"original_pic"];
         self.originalDoc = [dic objectForKey:@"original_file"];
         self.thumbnailPic = [dic objectForKey:@"thumbnail_pic"];
+        self.fileName = [dic objectForKey:@"original_filename"];
         self.isVisble = [[dic objectForKey:@"Visble"] boolValue];
         NSArray *voteOptionDics = [dic objectForKey:@"options"];
         if (voteOptionDics && voteOptionDics.count > 0) {
@@ -70,6 +71,9 @@
         self.objectID = [aDic objectForKey:@"guid"];
         self.autoID = [aDic objectForKey:@"id"];
         self.text = [aDic objectForKey:@"text"];
+        if (!self.text)
+            self.text = @"";
+        
         NSArray *tagDics = [aDic objectForKey:@"tags"];
         NSMutableArray *tags = [NSMutableArray array];
         for (NSDictionary *tagDic in tagDics) {
@@ -92,7 +96,7 @@
         NSMutableArray *groups = [NSMutableArray array];
         NSArray *groupDics = [aDic objectForKey:@"groups"];
         for (NSDictionary *groupDic in groupDics) {
-            if ([groupDics isKindOfClass:[NSDictionary class]]) {
+            if ([groupDic isKindOfClass:[NSDictionary class]]) {
                 MDGroup *group = [[MDGroup alloc] initWithDictionary:groupDic];
                 [groups addObject:group];
             }

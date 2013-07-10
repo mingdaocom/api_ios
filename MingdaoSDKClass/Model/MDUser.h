@@ -57,7 +57,7 @@ typedef NSInteger MDUserLicence;
 enum {
     MDUserGenderUnknown = 0,
     MDUserGenderMale = 1,
-    MDUserGenderFemail = 2
+    MDUserGenderFemale = 2
 };
 typedef NSInteger MDUserGender;
 
