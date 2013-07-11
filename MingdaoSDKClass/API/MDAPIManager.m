@@ -2821,6 +2821,7 @@ static MDAPIManager *sharedManager = nil;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/post/add_favorite?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
@@ -2834,6 +2835,7 @@ static MDAPIManager *sharedManager = nil;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/post/delete_favorite?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
@@ -2847,6 +2849,7 @@ static MDAPIManager *sharedManager = nil;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/post/add_like?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
@@ -2860,6 +2863,7 @@ static MDAPIManager *sharedManager = nil;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/post/delete_like?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
