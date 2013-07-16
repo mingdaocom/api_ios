@@ -15,6 +15,8 @@
 @property (strong, nonatomic) NSArray *members;
 @property (strong, nonatomic) NSString *objectName;
 @property (assign, nonatomic) NSInteger voteCount;
+@property (strong, nonatomic) NSString *originalPic, *thumbnailPic;
+@property (assign, nonatomic) BOOL selected;
 - (MDVoteOption *)initWithDictionary:(NSDictionary *)dic;
 @end
 
@@ -57,8 +59,7 @@ typedef NSInteger MDPostType;
 @property (strong, nonatomic) NSArray *tags;
 @property (strong, nonatomic) NSString *createTime;
 @property (strong, nonatomic) NSString *source;
-@property (assign, nonatomic) NSInteger replyCount;
-@property (assign, nonatomic) NSInteger likeCount;
+@property (assign, nonatomic) NSInteger replyCount, likeCount, repostCount;
 @property (assign, nonatomic) BOOL isFavourited;
 @property (assign, nonatomic) BOOL isLiked;
 @property (assign, nonatomic) MDPostType type;

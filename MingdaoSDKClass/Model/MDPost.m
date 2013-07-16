@@ -15,6 +15,9 @@
     if (self) {
         self.objectName = [dic objectForKey:@"name"];
         self.voteCount = [[dic objectForKey:@"value"] integerValue];
+        self.selected = [[dic objectForKey:@"selected"] boolValue];
+        self.originalPic = [dic objectForKey:@"original_pic"];
+        self.thumbnailPic = [dic objectForKey:@"thumbnail_pic"];
         NSMutableArray *members = [NSMutableArray array];
         NSArray *memberDics = [dic objectForKey:@"members"];
         for (NSDictionary *memberDic in memberDics) {
@@ -87,6 +90,7 @@
         self.source = [aDic objectForKey:@"source"];
         self.replyCount = [[aDic objectForKey:@"reply_count"] integerValue];
         self.likeCount = [[aDic objectForKey:@"like_count"] integerValue];
+        self.repostCount = [[aDic objectForKey:@"reshared_count"] integerValue];
         self.isFavourited = [[aDic objectForKey:@"favorite"] boolValue];
         self.isLiked = [[aDic objectForKey:@"like"] boolValue];
         self.type = [[aDic objectForKey:@"type"] integerValue];

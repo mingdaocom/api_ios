@@ -25,12 +25,12 @@
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
- 通过用户名密码登陆，可能返回多个MDProject，如果只有一个，则登陆成功或失败
+ 通过用户名密码登录，可能返回多个MDProject，如果只有一个，则登录成功或失败
  @parmas:
  username - 用户登录名
- password - 用户登陆密码
+ password - 用户登录密码
  pHandler - 处理存在多网络的情况，返回包含多个MDProject的NSArray
- sHandler - 处理仅存在一个网络时登陆结果
+ sHandler - 处理仅存在一个网络时登录结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loginWithUsername:(NSString *)username
                  password:(NSString *)password
@@ -39,12 +39,12 @@
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
- 通过用户名密码以及选定的MDProject.objectID来登陆，projectID为必填
+ 通过用户名密码以及选定的MDProject.objectID来登录，projectID为必填
  @parmas:
  username  - 用户登录名
- password  - 用户登陆密码
- projectID - 登陆的网络ID，ID(MDProject.objectID)可从上方的方法获取
- handler   - 处理登陆结果
+ password  - 用户登录密码
+ projectID - 登录的网络ID，ID(MDProject.objectID)可从上方的方法获取
+ handler   - 处理登录结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loginWithUsername:(NSString *)username
                  password:(NSString *)password

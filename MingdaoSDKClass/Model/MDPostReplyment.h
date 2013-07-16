@@ -9,11 +9,26 @@
 #import <Foundation/Foundation.h>
 #import "MDUser.h"
 
+enum {
+    MDPostReplymentTypeText = 0,
+    MDPostReplymentTypeImage = 2,
+    MDPostReplymentTypeDocument = 3
+};
+typedef NSInteger MDPostReplymentType;
+
+@interface MDPostReplymentDetail : NSObject
+@property (strong, nonatomic) NSString *middlePic, *originalPic, *fileName, *thumbnailPic, *originalDoc;
+- (MDPostReplymentDetail *)initWithDictionary:(NSDictionary *)aDic;
+@end
+
 @interface MDPostReplyment : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *text;
 @property (strong, nonatomic) NSString *createTime;
 @property (strong, nonatomic) MDUser *creator;
 @property (strong, nonatomic) MDPostReplyment *replyTo;
+@property (assign, nonatomic) MDPostReplymentType type;
+@property (strong, nonatomic) NSArray *details;
+
 - (MDPostReplyment *)initWithDictionary:(NSDictionary *)aDic;
 @end
