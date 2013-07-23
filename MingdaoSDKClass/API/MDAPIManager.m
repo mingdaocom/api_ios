@@ -1970,6 +1970,7 @@ static MDAPIManager *sharedManager = nil;
 #pragma mark - 动态接口
 
 - (MDURLConnection *)loadFollowedPostsWithKeywords:(NSString *)keywords
+                                          postType:(MDPostType)type
                                            sinceID:(NSString *)sinceID
                                              maxID:(NSString *)maxID
                                           pagesize:(NSInteger)size
@@ -1986,6 +1987,9 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];
+    if (type != -1) {
+        [urlString appendFormat:@"&post_type=%d", type];
+    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -2057,6 +2061,7 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)loadAllPostsWithKeywords:(NSString *)keywords
+                                     postType:(MDPostType)type
                                       sinceID:(NSString *)sinceID
                                         maxID:(NSString *)maxID
                                      pagesize:(NSInteger)size
@@ -2073,6 +2078,9 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];
+    if (type != -1) {
+        [urlString appendFormat:@"&post_type=%d", type];
+    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -2101,6 +2109,7 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)loadFavouritedPostsWithKeywords:(NSString *)keywords
+                                            postType:(MDPostType)type
                                              sinceID:(NSString *)sinceID
                                                maxID:(NSString *)maxID
                                             pagesize:(NSInteger)size
@@ -2117,6 +2126,9 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];
+    if (type != -1) {
+        [urlString appendFormat:@"&post_type=%d", type];
+    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -2186,6 +2198,7 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
+                                      postType:(MDPostType)type
                                          maxID:(NSString *)maxID
                                       pagesize:(NSInteger)size
                                        handler:(MDAPINSArrayHandler)handler
@@ -2200,6 +2213,9 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];
+    if (type != -1) {
+        [urlString appendFormat:@"&post_type=%d", type];
+    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -2229,6 +2245,7 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)loadMyPostsWithKeywords:(NSString *)keywords
+                                    postType:(MDPostType)type
                                        maxID:(NSString *)maxID
                                     pagesize:(NSInteger)size
                                      handler:(MDAPINSArrayHandler)handler
@@ -2242,7 +2259,10 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0) 
         [urlString appendFormat:@"&pagesize=%d", size];
-
+    if (type != -1) {
+        [urlString appendFormat:@"&post_type=%d", type];
+    }
+    
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
@@ -3033,7 +3053,7 @@ static MDAPIManager *sharedManager = nil;
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/vote/all?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (page > 0)
+    if (page > 1)
         [urlString appendFormat:@"&pageindex=%d", page];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];

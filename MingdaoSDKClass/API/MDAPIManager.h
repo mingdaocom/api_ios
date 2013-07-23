@@ -605,6 +605,7 @@
  handler - 包含多个MDPost的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loadFollowedPostsWithKeywords:(NSString *)keywords
+                                          postType:(MDPostType)type
                                            sinceID:(NSString *)sinceID
                                              maxID:(NSString *)maxID
                                           pagesize:(NSInteger)size
@@ -615,11 +616,13 @@
                                 pageSize:(NSInteger)size
                                  handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadAllPostsWithKeywords:(NSString *)keywords
+                                     postType:(MDPostType)type
                                       sinceID:(NSString *)sinceID
                                         maxID:(NSString *)maxID
                                      pagesize:(NSInteger)size
                                       handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadFavouritedPostsWithKeywords:(NSString *)keywords
+                                            postType:(MDPostType)type
                                              sinceID:(NSString *)sinceID
                                                maxID:(NSString *)maxID
                                             pagesize:(NSInteger)size
@@ -629,10 +632,12 @@
                                             pagesize:(NSInteger)size
                                              handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
+                                      postType:(MDPostType)type
                                             maxID:(NSString *)maxID
                                          pagesize:(NSInteger)size
                                           handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadMyPostsWithKeywords:(NSString *)keywords
+                                    postType:(MDPostType)type
                                          maxID:(NSString *)maxID
                                       pagesize:(NSInteger)size
                                        handler:(MDAPINSArrayHandler)handler;
