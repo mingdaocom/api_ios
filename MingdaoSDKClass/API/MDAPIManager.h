@@ -710,8 +710,9 @@
                                     handler:(MDAPINSStringHandler)handler;
 - (MDURLConnection *)createImagePostWithText:(NSString *)text
                                        image:(UIImage *)image
-                                  groupIDs:(NSArray *)groupIDs
-                                 shareType:(NSInteger)shareType
+                                    groupIDs:(NSArray *)groupIDs
+                                   shareType:(NSInteger)shareType
+                                    toCenter:(BOOL)toCenter
                                    handler:(MDAPINSStringHandler)handler;
 - (MDURLConnection *)createRepostWithText:(NSString *)text
                                    postID:(NSString *)postID
@@ -740,6 +741,7 @@
 - (MDURLConnection *)createPostReplymentOnPostWithPostID:(NSString *)pID
                          replyToReplymentWithReplymentID:(NSString *)rID
                                                  message:(NSString *)msg
+                                                   image:(UIImage *)image
                                                  handler:(MDAPINSStringHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
