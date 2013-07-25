@@ -715,10 +715,12 @@
                                     toCenter:(BOOL)toCenter
                                    handler:(MDAPINSStringHandler)handler;
 - (MDURLConnection *)createRepostWithText:(NSString *)text
+                                    image:(UIImage *)image
                                    postID:(NSString *)postID
                                  groupIDs:(NSArray *)groupIDs
                                 shareType:(NSInteger)shareType
                                   handler:(MDAPINSStringHandler)handler;
+
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:

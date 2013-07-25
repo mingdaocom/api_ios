@@ -2738,6 +2738,7 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)createRepostWithText:(NSString *)text
+                                    image:(UIImage *)image
                                    postID:(NSString *)postID
                                  groupIDs:(NSArray *)groupIDs
                                 shareType:(NSInteger)shareType
@@ -2751,10 +2752,34 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&p_msg=%@", text];
     [urlString appendFormat:@"&re_p_id=%@", postID];
     [urlString appendFormat:@"&s_type=%d", shareType];
+    if (image) {
+        [urlString appendFormat:@"&f_type=%@", @"picture"];
+    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
+    
+    if (image) {
+        NSString *boundary = @"-----------------MINGDAO-----------------";
+        NSString *filename = @"photo.jpg";
+        
+        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
+        [req setValue:contentType forHTTPHeaderField:@"Content-type"];
+        
+        //准备数据
+        NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+        
+        //adding the body:
+        NSMutableData *postBody = [NSMutableData data];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"p_img\"; filename=\"%@\"\r\n", filename] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[@"Content-Type: application/octet-stream; charset=UTF-8\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[@"Content-Transfer-Encoding: binary\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:imageData];
+        [postBody appendData:[[NSString stringWithFormat:@"\r\n%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [req setHTTPBody:postBody];
+    }
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         NSDictionary *dic = [data objectFromJSONData];
