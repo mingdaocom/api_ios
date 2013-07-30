@@ -719,6 +719,7 @@
                                    postID:(NSString *)postID
                                  groupIDs:(NSArray *)groupIDs
                                 shareType:(NSInteger)shareType
+                    commentToOriginalPost:(BOOL)yesOrNo
                                   handler:(MDAPINSStringHandler)handler;
 
 

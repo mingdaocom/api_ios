@@ -2742,6 +2742,7 @@ static MDAPIManager *sharedManager = nil;
                                    postID:(NSString *)postID
                                  groupIDs:(NSArray *)groupIDs
                                 shareType:(NSInteger)shareType
+                    commentToOriginalPost:(BOOL)yesOrNo
                                   handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -2754,6 +2755,9 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&s_type=%d", shareType];
     if (image) {
         [urlString appendFormat:@"&f_type=%@", @"picture"];
+    }
+    if (yesOrNo) {
+        [urlString appendString:@"&withComment=1"];
     }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
