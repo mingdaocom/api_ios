@@ -64,7 +64,7 @@ typedef NSInteger MDUserGender;
 @interface MDUser : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
-@property (strong, nonatomic) NSString *avatar;
+@property (strong, nonatomic) NSString *avatar, *avatar100;
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *grade;
 @property (strong, nonatomic) NSString *mark;

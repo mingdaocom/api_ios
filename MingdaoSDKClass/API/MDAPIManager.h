@@ -745,6 +745,9 @@
                          replyToReplymentWithReplymentID:(NSString *)rID
                                                  message:(NSString *)msg
                                                    image:(UIImage *)image
+                                              isReshared:(BOOL)yesOrNo
+                                                groupIDs:(NSArray *)groupIDs
+                                               shareType:(NSInteger)shareType
                                                  handler:(MDAPINSStringHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-

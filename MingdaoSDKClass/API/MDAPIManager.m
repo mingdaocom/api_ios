@@ -264,7 +264,7 @@ static MDAPIManager *sharedManager = nil;
     NSString *boundary = @"-----------------MINGDAO-----------------";
     NSString *filename = @"photo.jpg";
     
-    NSString *urlstr = [NSString stringWithFormat:@"%@/passport/edit_avstar?u_key=%@"
+    NSString *urlstr = [NSString stringWithFormat:@"%@/passport/edit_avstar?u_key=%@&format=json"
                         , self.serverAddress
                         , self.accessToken];
     NSURL *url = [[NSURL alloc]initWithString:urlstr];
@@ -2821,6 +2821,9 @@ static MDAPIManager *sharedManager = nil;
                          replyToReplymentWithReplymentID:(NSString *)rID
                                                  message:(NSString *)msg
                                                    image:(UIImage *)image
+                                              isReshared:(BOOL)yesOrNo
+                                                groupIDs:(NSArray *)groupIDs
+                                               shareType:(NSInteger)shareType
                                                  handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -2832,6 +2835,12 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&r_id=%@", rID];
     if (image) {
         [urlString appendFormat:@"&f_type=%@", @"picture"];
+    }
+    if (yesOrNo) {
+        [urlString appendString:@"&isReshared=1"];
+        if (groupIDs && groupIDs.count > 0)
+            [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
+        [urlString appendFormat:@"&s_type=%d", shareType];
     }
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
