@@ -26,6 +26,15 @@
         self.department = [aDic objectForKey:@"department"];
         self.job = [aDic objectForKey:@"job"];
         self.mobilePhoneNumber = [aDic objectForKey:@"mobile_phone"];
+        NSRange range = [self.mobilePhoneNumber rangeOfString:@"*"];
+        if (((range.location + range.length )< self.mobilePhoneNumber.length)
+            && range.location > 0) {
+            self.isMobilePhoneNumberVisible = NO;
+        } else if (self.mobilePhoneNumber.length > 0) {
+            self.isMobilePhoneNumberVisible = YES;
+        } else {
+            self.isMobilePhoneNumberVisible = NO;
+        }
         self.workPhoneNumber = [aDic objectForKey:@"work_phone"];
         self.isFollowed = [[aDic objectForKey:@"followed_status"] boolValue];
         self.licence = [[aDic objectForKey:@"license"] integerValue];

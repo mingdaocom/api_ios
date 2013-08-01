@@ -75,6 +75,7 @@ typedef NSInteger MDUserGender;
 @property (strong, nonatomic) NSString *job;
 @property (strong, nonatomic) NSString *mobilePhoneNumber;
 @property (strong, nonatomic) NSString *workPhoneNumber;
+@property (assign, nonatomic) BOOL isMobilePhoneNumberVisible;
 @property (assign, nonatomic) BOOL isFollowed;
 @property (assign, nonatomic) MDUserLicence licence;
 @property (assign, nonatomic) NSInteger status;
