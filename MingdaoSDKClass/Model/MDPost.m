@@ -69,6 +69,10 @@
 @implementation MDPost
 - (MDPost *)initWithDictionary:(NSDictionary *)aDic
 {
+    if (aDic.allKeys.count == 0) {
+        return nil;
+    }
+    
     self = [super init];
     if (self) {
         self.objectID = [aDic objectForKey:@"guid"];

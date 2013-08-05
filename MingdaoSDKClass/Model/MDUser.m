@@ -17,6 +17,9 @@
         self.objectName = [aDic objectForKey:@"name"];
         self.avatar = [aDic objectForKey:@"avstar"];
         self.avatar100 = [aDic objectForKey:@"avstar100"];
+        if (!self.avatar100) {
+            self.avatar100 = self.avatar;
+        }
         self.email = [aDic objectForKey:@"email"];
         self.grade = [aDic objectForKey:@"grade"];
         self.mark = [aDic objectForKey:@"mark"];

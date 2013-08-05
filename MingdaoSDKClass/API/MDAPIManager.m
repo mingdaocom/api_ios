@@ -2184,15 +2184,15 @@ static MDAPIManager *sharedManager = nil;
             return;
         }
         
-        NSArray *postDics = [dic objectForKey:@"posts"];
-        NSMutableArray *posts = [NSMutableArray array];
-        for (NSDictionary *postDic in postDics) {
-            if (![postDic isKindOfClass:[NSDictionary class]])
+        NSArray *postRepliesDics = [dic objectForKey:@"replyments"];
+        NSMutableArray *postReplyments = [NSMutableArray array];
+        for (NSDictionary *postReplyDic in postRepliesDics) {
+            if (![postReplyDic isKindOfClass:[NSDictionary class]])
                 continue;
-            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
-            [posts addObject:post];
+            MDPostReplyment *postReplyment = [[MDPostReplyment alloc] initWithDictionary:postReplyDic];
+            [postReplyments addObject:postReplyment];
         }
-        handler(posts, error);
+        handler(postReplyments, error);
     }];
     return connection;
 }

@@ -26,6 +26,10 @@
 @implementation MDPostReplyment
 - (MDPostReplyment *)initWithDictionary:(NSDictionary *)aDic
 {
+    if (aDic.allKeys.count == 0) {
+        return nil;
+    }
+    
     self = [super init];
     if (self) {
         self.objectID = [aDic objectForKey:@"guid"];
@@ -34,7 +38,8 @@
         self.creator = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"user"]];
         NSDictionary *replyToDic = [aDic objectForKey:@"ref"];
         if (replyToDic && replyToDic.allKeys.count > 0) {
-            self.replyTo = [[MDPostReplyment alloc] initWithDictionary:[replyToDic objectForKey:@"replyment"]];
+            self.replymentToReplyment = [[MDPostReplyment alloc] initWithDictionary:[replyToDic objectForKey:@"replyment"]];
+            self.replymentToPost = [[MDPost alloc] initWithDictionary:[replyToDic objectForKey:@"post"]];
         }
 
         NSArray *detailDics = [aDic objectForKey:@"details"];
