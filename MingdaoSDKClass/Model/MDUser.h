@@ -79,6 +79,7 @@ typedef NSInteger MDUserGender;
 @property (assign, nonatomic) BOOL isFollowed;
 @property (assign, nonatomic) MDUserLicence licence;
 @property (assign, nonatomic) NSInteger status;
+@property (assign, nonatomic) NSInteger unreadMessageCount, messageCount;
 @property (strong, nonatomic) NSArray *jobs;
 @property (strong, nonatomic) NSArray *educations;
 

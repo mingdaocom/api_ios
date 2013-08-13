@@ -44,6 +44,8 @@
         self.status = [[aDic objectForKey:@"status"] integerValue];
         self.jobs = [aDic objectForKey:@"jobs"];
         self.educations = [aDic objectForKey:@"educations"];
+        self.unreadMessageCount = [[aDic objectForKey:@"unreadmessage_count"] integerValue];
+        self.messageCount = [[aDic objectForKey:@"message_count"] integerValue];
     }
     return self;
 }
