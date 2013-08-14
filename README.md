@@ -1,9 +1,10 @@
-api_ios
-=======
-Ã÷µÀObjective-C °æ±¾µÄSDK£¬°üº¬ÁËÈçºÎÓÃ»§¼øÈ¨ºÍ³£ÓÃµÄAPIµ÷ÓÃ
+###æ˜Žé“iOS ç‰ˆæœ¬çš„SDKï¼ŒåŒ…å«äº†ç”¨æˆ·é‰´æƒå’Œå‡ ä¸ªå¸¸ç”¨çš„APIè°ƒç”¨
 
-´Ë°æ±¾»ùÓÚObjective-C 2.0 ARC£¬¹¤³ÌÏîÄ¿ÇëÓÃXcode 4.6»òÕß¸ü¸ß°æ±¾´ò¿ª£¬¶ÔÓ¦iOS°æ±¾Îª5.0»ò¸ü¸ß
+æ­¤ç‰ˆæœ¬åŸºäºŽObjective-C 2.0 ARCï¼Œå·¥ç¨‹é¡¹ç›®è¯·ç”¨Xcode 4.6æˆ–è€…æ›´é«˜ç‰ˆæœ¬æ‰“å¼€ï¼Œå¯¹åº”iOSç‰ˆæœ¬ä¸º5.0æˆ–æ›´é«˜
+***
+è°ƒç”¨API æµ‹è¯•æµç¨‹è¯·ä¿®æ”¹é…ç½®æ–‡ä»¶çš„AppKeyå’ŒAppSecret
+***
+å…¬æœ‰äº‘è¯·åˆ°æ˜Žé“å¼€æ”¾å¹³å°åˆ›å»ºåº”ç”¨ <http://open.mingdao.com> ç§æœ‰éƒ¨ç½²è¯·è”ç³»ç®¡ç†å‘˜åˆ›å»ºåº”ç”¨å¹¶èŽ·å–ä»¤ç‰Œ
 
-µ÷ÓÃAPIÇëÐÞ¸ÄÅäÖÃÎÄ¼þµÄAppKeyºÍAppSecretÄÚÈÝ ¹«ÓÐÔÆÇëµ½Ã÷µÀ¿ª·ÅÆ½Ì¨´´½¨Ó¦ÓÃ http://open.mingdao.com Ë½ÓÐ²¿ÊðÇëÁªÏµ¹ÜÀíÔ±´´½¨Ó¦ÓÃ²¢»ñÈ¡ÁîÅÆ
 
-¾ßÌå¿ª·¢Ö¸ÄÏÇë¼û¡¶Ã÷µÀ¿ª·ÅÆ½Ì¨Ö¸ÄÏ¡·
+å…·ä½“å¼€å‘æŒ‡å—è¯·è§ã€Š[æ˜Žé“å¼€æ”¾å¹³å°æŒ‡å—](http://open.mingdao.com/md_develop_tread.html)ã€‹
