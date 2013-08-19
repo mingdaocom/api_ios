@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MDUser.h"
-
+@class MDPost;
 enum {
     MDPostReplymentTypeText = 0,
     MDPostReplymentTypeImage = 2,

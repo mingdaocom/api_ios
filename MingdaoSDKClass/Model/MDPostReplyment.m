@@ -7,6 +7,7 @@
 //
 
 #import "MDPostReplyment.h"
+#import "MDPost.h"
 
 @implementation MDPostReplymentDetail
 - (MDPostReplymentDetail *)initWithDictionary:(NSDictionary *)aDic
