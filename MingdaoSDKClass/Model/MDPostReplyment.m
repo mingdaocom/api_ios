@@ -62,6 +62,7 @@
                 self.type = MDPostReplymentTypeImage;
             }
         }
+        self.source = [aDic objectForKey:@"source"];
     }
     return self;
 }

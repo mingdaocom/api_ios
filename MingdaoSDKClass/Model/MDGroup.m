@@ -26,4 +26,16 @@
     }
     return self;
 }
+
+- (BOOL)isEqual:(id)object
+{
+    if ([object isKindOfClass:[self class]]) {
+        MDGroup *aGroup = (MDGroup *)object;
+        if ([self.objectID isEqualToString:aGroup.objectID]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
 @end

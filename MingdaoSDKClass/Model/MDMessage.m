@@ -15,8 +15,8 @@
     if (self) {
         self.objectID = [aDic objectForKey:@"id"];
         self.text = [aDic objectForKey:@"text"];
-        self.read = [[aDic objectForKey:@"status"] boolValue];
-        self.beenRead = [[aDic objectForKey:@"status2"] boolValue];
+        self.iHaveRead = [[aDic objectForKey:@"status"] boolValue];
+        self.heHasRead = [[aDic objectForKey:@"status2"] boolValue];
         self.createTime = [aDic objectForKey:@"create_time"];
         self.createUserID = [aDic objectForKey:@"create_user"];
     }

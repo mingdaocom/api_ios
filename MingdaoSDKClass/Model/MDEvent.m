@@ -59,6 +59,13 @@
             self.isPrivate = 0;
         }
         
+        self.isRecur = [[aDic objectForKey:@"is_recur"] boolValue];
+        self.frequency = [[aDic objectForKey:@"frequency"] integerValue];
+        self.interval = [[aDic objectForKey:@"interval"] integerValue];
+        self.weekDay = [[aDic objectForKey:@"week_day"] integerValue];
+        self.recurCount = [[aDic objectForKey:@"recur_count"] integerValue];
+        self.untilDate = [aDic objectForKey:@"until_date"];
+        
         NSMutableArray *memebers = [NSMutableArray array];
         NSDictionary *joinedDic = [aDic objectForKey:@"joined"];
         NSArray *users = [joinedDic objectForKey:@"users"];

@@ -13,7 +13,7 @@
 @property (strong, nonatomic) NSString *text;
 @property (strong, nonatomic) NSString *createTime;
 @property (strong, nonatomic) NSString *createUserID;
-@property (assign, nonatomic) BOOL read, beenRead;
+@property (assign, nonatomic) BOOL iHaveRead, heHasRead;
 
 - (MDMessage *)initWithDictionary:(NSDictionary *)aDic;
 @end

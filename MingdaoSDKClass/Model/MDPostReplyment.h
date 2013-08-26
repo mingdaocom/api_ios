@@ -24,7 +24,7 @@ typedef NSInteger MDPostReplymentType;
 @interface MDPostReplyment : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *text;
-@property (strong, nonatomic) NSString *createTime;
+@property (strong, nonatomic) NSString *createTime, *source;
 @property (strong, nonatomic) MDUser *creator;
 @property (strong, nonatomic) MDPostReplyment *replymentToReplyment;
 @property (strong, nonatomic) MDPost *replymentToPost;

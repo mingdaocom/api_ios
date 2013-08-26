@@ -23,6 +23,7 @@
             self.original_pic = [aDic objectForKey:@"original_pic"];
             self.thumbnail_pic = [aDic objectForKey:@"thumbnail_pic"];
         }
+        self.source = [aDic objectForKey:@"source"];
         self.creator = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"user"]];
         NSDictionary *replyToDic = [aDic objectForKey:@"ref"];
         if ([replyToDic isKindOfClass:[NSDictionary class]]) {
