@@ -40,8 +40,8 @@
 @property (readonly, nonatomic) NSArray *accetpedEmails, *rejectedEmails, *penddingEmails;
 
 @property (assign, nonatomic) BOOL isRecur;
-@property (assign, nonatomic) NSInteger frequency, interval, weekDay, recurCount;
-@property (strong, nonatomic) NSString *untilDate;
+@property (assign, nonatomic) NSInteger frequency, interval, recurCount;
+@property (strong, nonatomic) NSString *untilDate, *weekDay;
 
 - (MDEvent *)initWithDictionary:(NSDictionary *)aDic;
 - (NSString *)escapedDuration;

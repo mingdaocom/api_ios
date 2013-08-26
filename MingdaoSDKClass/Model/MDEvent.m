@@ -60,11 +60,16 @@
         }
         
         self.isRecur = [[aDic objectForKey:@"is_recur"] boolValue];
-        self.frequency = [[aDic objectForKey:@"frequency"] integerValue];
-        self.interval = [[aDic objectForKey:@"interval"] integerValue];
-        self.weekDay = [[aDic objectForKey:@"week_day"] integerValue];
-        self.recurCount = [[aDic objectForKey:@"recur_count"] integerValue];
-        self.untilDate = [aDic objectForKey:@"until_date"];
+        if (self.isRecur) {
+            NSDictionary *dic = [aDic objectForKey:@"recur"];
+            
+            self.frequency = [[dic objectForKey:@"frequency"] integerValue];
+            self.interval = [[dic objectForKey:@"interval"] integerValue];
+            self.weekDay = [dic objectForKey:@"week_day"];
+            self.recurCount = [[dic objectForKey:@"recur_count"] integerValue];
+            self.untilDate = [dic objectForKey:@"until_date"];
+        }
+
         
         NSMutableArray *memebers = [NSMutableArray array];
         NSDictionary *joinedDic = [aDic objectForKey:@"joined"];
