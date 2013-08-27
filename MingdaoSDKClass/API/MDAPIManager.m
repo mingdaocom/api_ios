@@ -988,15 +988,21 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)createEventWithEventName:(NSString *)name
-                 startDateString:(NSString *)sDateString
-                   endDateString:(NSString *)eDateString
-                        isAllDay:(BOOL)isAllday
-                         address:(NSString *)address
-                     description:(NSString *)des
-                       isPrivate:(BOOL)isPrivate
-                         userIDs:(NSArray *)uIDs
-                          emails:(NSArray *)emails
-                         handler:(MDAPINSStringHandler)handler
+                              startDateString:(NSString *)sDateString
+                                endDateString:(NSString *)eDateString
+                                     isAllDay:(BOOL)isAllday
+                                      address:(NSString *)address
+                                  description:(NSString *)des
+                                    isPrivate:(BOOL)isPrivate
+                                      userIDs:(NSArray *)uIDs
+                                       emails:(NSArray *)emails
+                                      isRecur:(BOOL)isRecur
+                                    frequency:(NSInteger)frequency
+                                     interval:(NSInteger)interval
+                                     weekDays:(NSString *)weekDays
+                                   recurCount:(NSInteger)recurCount
+                                    untilDate:(NSString *)untilDate
+                                      handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/calendar/create?format=json"];
@@ -1014,7 +1020,22 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&c_mids=%@", [uIDs componentsJoinedByString:@","]];
     if (emails && emails.count > 0)
         [urlString appendFormat:@"&c_memails=%@", [emails componentsJoinedByString:@","]];
-
+    if (isRecur) {
+        [urlString appendString:@"&is_recur=1"];
+        [urlString appendFormat:@"&frequency=%d", frequency];
+        [urlString appendFormat:@"&interval=%d", interval];
+        if (frequency == 2) {
+            weekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
+            [urlString appendFormat:@"&week_day=%@", weekDays];
+        }
+        if (recurCount > 0) {
+            [urlString appendFormat:@"&recur_count=%d", recurCount];
+        }
+        if (untilDate && untilDate.length > 0) {
+            [urlString appendFormat:@"&until_date=%@", untilDate];
+        }
+    }
+    
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -1037,14 +1058,20 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                        name:(NSString *)name
-             startDateString:(NSString *)sDateString
-               endDateString:(NSString *)eDateString
-                    isAllDay:(BOOL)isAllday
-                     address:(NSString *)address
-                 description:(NSString *)des
-                   isPrivate:(BOOL)isPrivate
-                     handler:(MDAPIBoolHandler)handler
+                                     name:(NSString *)name
+                          startDateString:(NSString *)sDateString
+                            endDateString:(NSString *)eDateString
+                                 isAllDay:(BOOL)isAllday
+                                  address:(NSString *)address
+                              description:(NSString *)des
+                                isPrivate:(BOOL)isPrivate
+                                  isRecur:(BOOL)isRecur
+                                frequency:(NSInteger)frequency
+                                 interval:(NSInteger)interval
+                                 weekDays:(NSString *)weekDays
+                               recurCount:(NSInteger)recurCount
+                                untilDate:(NSString *)untilDate
+                                  handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/calendar/edit?format=json"];
@@ -1059,7 +1086,21 @@ static MDAPIManager *sharedManager = nil;
     if (des && des.length > 0)
         [urlString appendFormat:@"&c_des=%@", des];
     [urlString appendFormat:@"&c_private=%@", isPrivate?@"0":@"1"];
-    
+    if (isRecur) {
+        [urlString appendString:@"&is_recur=1"];
+        [urlString appendFormat:@"&frequency=%d", frequency];
+        [urlString appendFormat:@"&interval=%d", interval];
+        if (frequency == 2) {
+            weekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
+            [urlString appendFormat:@"&week_day=%@", weekDays];
+        }
+        if (recurCount > 0) {
+            [urlString appendFormat:@"&recur_count=%d", recurCount];
+        }
+        if (untilDate && untilDate.length > 0) {
+            [urlString appendFormat:@"&until_date=%@", untilDate];
+        }
+    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){

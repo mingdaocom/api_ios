@@ -373,15 +373,21 @@
  handler - 创建成功返回日程编号
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)createEventWithEventName:(NSString *)name
-                 startDateString:(NSString *)sDateString
-                   endDateString:(NSString *)eDateString
-                        isAllDay:(BOOL)isAllday
-                         address:(NSString *)address
-                     description:(NSString *)des
-                       isPrivate:(BOOL)isPrivate
-                         userIDs:(NSArray *)uIDs
-                          emails:(NSArray *)emails
-                         handler:(MDAPINSStringHandler)handler;
+                              startDateString:(NSString *)sDateString
+                                endDateString:(NSString *)eDateString
+                                     isAllDay:(BOOL)isAllday
+                                      address:(NSString *)address
+                                  description:(NSString *)des
+                                    isPrivate:(BOOL)isPrivate
+                                      userIDs:(NSArray *)uIDs
+                                       emails:(NSArray *)emails
+                                      isRecur:(BOOL)isRecur
+                                    frequency:(NSInteger)frequency
+                                     interval:(NSInteger)interval
+                                     weekDays:(NSString *)weekDays
+                                   recurCount:(NSInteger)recurCount
+                                    untilDate:(NSString *)untilDate
+                                      handler:(MDAPINSStringHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -398,14 +404,20 @@
  handler - 处理编辑结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                        name:(NSString *)name
-             startDateString:(NSString *)sDateString
-               endDateString:(NSString *)eDateString
-                    isAllDay:(BOOL)isAllday
-                     address:(NSString *)address
-                 description:(NSString *)des
-                   isPrivate:(BOOL)isPrivate
-                     handler:(MDAPIBoolHandler)handler;
+                                     name:(NSString *)name
+                          startDateString:(NSString *)sDateString
+                            endDateString:(NSString *)eDateString
+                                 isAllDay:(BOOL)isAllday
+                                  address:(NSString *)address
+                              description:(NSString *)des
+                                isPrivate:(BOOL)isPrivate
+                                  isRecur:(BOOL)isRecur
+                                frequency:(NSInteger)frequency
+                                 interval:(NSInteger)interval
+                                 weekDays:(NSString *)weekDays
+                               recurCount:(NSInteger)recurCount
+                                untilDate:(NSString *)untilDate
+                                  handler:(MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:

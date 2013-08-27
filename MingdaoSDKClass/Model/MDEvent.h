@@ -38,10 +38,12 @@
 @property (readonly, nonatomic) NSDateComponents *startDateComponents, *endDateComponents;
 @property (readonly, nonatomic) NSArray *accetpedMembers, *rejectedMembers, *penddingMembers;
 @property (readonly, nonatomic) NSArray *accetpedEmails, *rejectedEmails, *penddingEmails;
+@property (readonly, nonatomic) NSString *repeatDetail;
+@property (readonly, nonatomic) NSArray *selectedWeekdays;
 
 @property (assign, nonatomic) BOOL isRecur;
 @property (assign, nonatomic) NSInteger frequency, interval, recurCount;
-@property (strong, nonatomic) NSString *untilDate, *weekDay;
+@property (strong, nonatomic) NSString *untilDateString, *weekDay;
 
 - (MDEvent *)initWithDictionary:(NSDictionary *)aDic;
 - (NSString *)escapedDuration;

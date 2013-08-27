@@ -65,9 +65,14 @@
             
             self.frequency = [[dic objectForKey:@"frequency"] integerValue];
             self.interval = [[dic objectForKey:@"interval"] integerValue];
-            self.weekDay = [dic objectForKey:@"week_day"];
+            
+//          NSArray *weekdayNames = [[[NSDateFormatter alloc] init] shortWeekdaySymbols];
+//          weekdayNames starts on Sunday witch from server goes with @"7"
+
+            self.weekDay = [[dic objectForKey:@"week_day"] stringByReplacingOccurrencesOfString:@"7" withString:@"0"];
+            
             self.recurCount = [[dic objectForKey:@"recur_count"] integerValue];
-            self.untilDate = [dic objectForKey:@"until_date"];
+            self.untilDateString = [dic objectForKey:@"until_date"];
         }
 
         
@@ -299,5 +304,93 @@
         [string appendString:@" 全天"];
     }
     return string;
+}
+
+- (NSString *)repeatDetail
+{
+    NSMutableString *string = [NSMutableString string];
+    
+    switch (self.frequency) {
+        case 1: {
+            // daily
+            if (self.interval == 1) {
+                [string appendString:@"每天"];
+            } else {
+                [string appendFormat:@"每%d天", self.interval];
+            }
+            if (self.untilDateString.length > 0) {
+                [string appendFormat:@" 截止到%@", self.untilDateString];
+            } else if (self.recurCount > 0) {
+                [string appendFormat:@" 共%d次", self.recurCount];
+            }
+            break;
+        }
+        case 2:{
+            // by week
+            NSArray *weekdayNames = [[[NSDateFormatter alloc] init] shortWeekdaySymbols];
+            
+            NSArray *days = [self.weekDay componentsSeparatedByString:@","];
+            
+            if (self.interval == 1) {
+                [string appendString:@"每周"];
+            } else {
+                [string appendFormat:@"每%d周", self.interval];
+            }
+            
+            for (int i = 0; i < days.count; i++) {
+                [string appendFormat:@" %@", weekdayNames[[days[i] integerValue]]];
+            }
+            
+            if (self.untilDateString.length > 0) {
+                [string appendFormat:@" 截止到 %@", self.untilDateString];
+            } else if (self.recurCount > 0) {
+                [string appendFormat:@" 共%d次", self.recurCount];
+            }
+            break;
+        }
+        case 3:{
+            // by month
+            if (self.interval == 1) {
+                [string appendString:@"每月"];
+            } else {
+                [string appendFormat:@"每%d个月", self.interval];
+            }
+            if (self.untilDateString.length > 0) {
+                [string appendFormat:@" 截止到%@", self.untilDateString];
+            } else if (self.recurCount > 0) {
+                [string appendFormat:@" 共%d次", self.recurCount];
+            }
+            break;
+        }
+        case 4:{
+            // by year
+            if (self.interval == 1) {
+                [string appendString:@"每年"];
+            } else {
+                [string appendFormat:@"每%d年", self.interval];
+            }
+            if (self.untilDateString.length > 0) {
+                [string appendFormat:@" 截止到%@", self.untilDateString];
+            } else if (self.recurCount > 0) {
+                [string appendFormat:@" 共%d次", self.recurCount];
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    
+    return string;
+}
+
+- (NSArray *)selectedWeekdays
+{
+    NSArray *weekdayNames = [[[NSDateFormatter alloc] init] shortWeekdaySymbols];
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *oArray = [self.weekDay componentsSeparatedByString:@","];
+    for (NSString *s in oArray) {
+        [array addObject:[weekdayNames objectAtIndex:[s integerValue]]];
+    }
+    return array;
 }
 @end
