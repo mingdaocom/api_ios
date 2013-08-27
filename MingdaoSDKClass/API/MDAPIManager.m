@@ -2549,6 +2549,38 @@ static MDAPIManager *sharedManager = nil;
     return connection;
 }
 
+- (MDURLConnection *)loadToppedPostsWithHandler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/post/list_toppost?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
 - (MDURLConnection *)loadPostWithPostID:(NSString *)pID handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];

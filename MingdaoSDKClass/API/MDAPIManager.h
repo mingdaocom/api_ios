@@ -640,19 +640,19 @@
                                             pagesize:(NSInteger)size
                                              handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadReplyMePostsWithKeywords:(NSString *)keywords
-                                               maxID:(NSString *)maxID
-                                            pagesize:(NSInteger)size
-                                             handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
-                                      postType:(MDPostType)type
                                             maxID:(NSString *)maxID
                                          pagesize:(NSInteger)size
                                           handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadMyPostsWithKeywords:(NSString *)keywords
-                                    postType:(MDPostType)type
+- (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
+                                      postType:(MDPostType)type
                                          maxID:(NSString *)maxID
                                       pagesize:(NSInteger)size
                                        handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadMyPostsWithKeywords:(NSString *)keywords
+                                    postType:(MDPostType)type
+                                       maxID:(NSString *)maxID
+                                    pagesize:(NSInteger)size
+                                     handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadUserPostsWithUserID:(NSString *)userID
                                        maxID:(NSString *)maxID
                                     pagesize:(NSInteger)size
@@ -669,15 +669,16 @@
                                          pagesize:(NSInteger)size
                                           handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadImagePostsWithGroupID:(NSString *)groupID
-                                          sinceID:(NSString *)sinceID
-                                            maxID:(NSString *)maxID
-                                         pagesize:(NSInteger)size
-                                          handler:(MDAPINSArrayHandler)handler;
+                                       sinceID:(NSString *)sinceID
+                                         maxID:(NSString *)maxID
+                                      pagesize:(NSInteger)size
+                                       handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadFAQPostsWithGroupID:(NSString *)groupID
                                      sinceID:(NSString *)sinceID
                                        maxID:(NSString *)maxID
                                     pagesize:(NSInteger)size
                                      handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadToppedPostsWithHandler:(MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
