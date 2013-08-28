@@ -664,16 +664,19 @@
                                        handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadDocumentPostsWithGroupID:(NSString *)groupID
                                          Keywords:(NSString *)keywords
+                                       filterType:(NSInteger)filterType
                                           sinceID:(NSString *)sinceID
                                             maxID:(NSString *)maxID
                                          pagesize:(NSInteger)size
                                           handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadImagePostsWithGroupID:(NSString *)groupID
+                                    filterType:(NSInteger)filterType
                                        sinceID:(NSString *)sinceID
                                          maxID:(NSString *)maxID
                                       pagesize:(NSInteger)size
                                        handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadFAQPostsWithGroupID:(NSString *)groupID
+                                  filterType:(NSInteger)filterType
                                      sinceID:(NSString *)sinceID
                                        maxID:(NSString *)maxID
                                     pagesize:(NSInteger)size
@@ -834,13 +837,13 @@
  size - int默认值20，最大值100	指定要返回的记录条数
  handler - 包含多个MDPost的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadCurrentUserJoinedVotessWithPageIndex:(NSInteger)page
+- (MDURLConnection *)loadCurrentUserJoinedVotesWithPageIndex:(NSInteger)page
                                                      pagesize:(NSInteger)size
                                                       handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadCurrentUserCreatedVotessWithPageIndex:(NSInteger)page
+- (MDURLConnection *)loadCurrentUserCreatedVotesWithPageIndex:(NSInteger)page
                                                       pagesize:(NSInteger)size
                                                        handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadAllVotessWithPageIndex:(NSInteger)page
+- (MDURLConnection *)loadAllVotesWithPageIndex:(NSInteger)page
                                        pagesize:(NSInteger)size
                                         handler:(MDAPINSArrayHandler)handler;
 

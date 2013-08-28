@@ -2416,6 +2416,7 @@ static MDAPIManager *sharedManager = nil;
 
 - (MDURLConnection *)loadDocumentPostsWithGroupID:(NSString *)groupID
                                          Keywords:(NSString *)keywords
+                                       filterType:(NSInteger)filterType
                                           sinceID:(NSString *)sinceID
                                             maxID:(NSString *)maxID
                                          pagesize:(NSInteger)size
@@ -2434,6 +2435,9 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];
+    if (filterType != 0) {
+        [urlString appendFormat:@"&filter_type=%d", filterType];
+    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -2462,6 +2466,7 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)loadImagePostsWithGroupID:(NSString *)groupID
+                                    filterType:(NSInteger)filterType
                                        sinceID:(NSString *)sinceID
                                          maxID:(NSString *)maxID
                                       pagesize:(NSInteger)size
@@ -2478,6 +2483,9 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];
+    if (filterType != 0) {
+        [urlString appendFormat:@"&filter_type=%d", filterType];
+    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -2506,6 +2514,7 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)loadFAQPostsWithGroupID:(NSString *)groupID
+                                  filterType:(NSInteger)filterType
                                      sinceID:(NSString *)sinceID
                                        maxID:(NSString *)maxID
                                     pagesize:(NSInteger)size
@@ -2522,6 +2531,9 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];
+    if (filterType != 0) {
+        [urlString appendFormat:@"&filter_type=%d", filterType];
+    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -3108,7 +3120,7 @@ static MDAPIManager *sharedManager = nil;
 }
 
 #pragma mark - 投票接口
-- (MDURLConnection *)loadCurrentUserJoinedVotessWithPageIndex:(NSInteger)page
+- (MDURLConnection *)loadCurrentUserJoinedVotesWithPageIndex:(NSInteger)page
                                                      pagesize:(NSInteger)size
                                                       handler:(MDAPINSArrayHandler)handler
 {
@@ -3147,7 +3159,7 @@ static MDAPIManager *sharedManager = nil;
 
 }
 
-- (MDURLConnection *)loadCurrentUserCreatedVotessWithPageIndex:(NSInteger)page
+- (MDURLConnection *)loadCurrentUserCreatedVotesWithPageIndex:(NSInteger)page
                                                       pagesize:(NSInteger)size
                                                        handler:(MDAPINSArrayHandler)handler
 {
@@ -3185,7 +3197,7 @@ static MDAPIManager *sharedManager = nil;
     return connection;
 }
 
-- (MDURLConnection *)loadAllVotessWithPageIndex:(NSInteger)page
+- (MDURLConnection *)loadAllVotesWithPageIndex:(NSInteger)page
                                        pagesize:(NSInteger)size
                                         handler:(MDAPINSArrayHandler)handler
 {
