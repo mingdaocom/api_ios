@@ -6,6 +6,7 @@
 //  Copyright (c) 2013年 WeeTomProduct. All rights reserved.
 //
 #import "MDURLConnection.h"
+#import "MDURLConnectionQueue.h"
 #import "MDCompany.h"
 #import "MDUser.h"
 #import "MDMessageAll.h"
@@ -23,3 +24,4 @@ typedef void (^MDAPIObjectHandler)(id object, NSError *error);
 typedef void (^MDAPINSDictionaryHandler)(NSDictionary *dictionary, NSError *error);
 typedef void (^MDAPINSArrayHandler)(NSArray *objects, NSError *error);
 typedef void (^MDAPINSStringHandler)(NSString *string, NSError *error);
+typedef void (^MDAPIQueueBoolHandler)(NSInteger lastFinishedIndex, CGFloat progress, BOOL succeed, NSError *error);

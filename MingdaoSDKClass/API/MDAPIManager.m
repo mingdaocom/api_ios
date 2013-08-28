@@ -165,6 +165,30 @@ static MDAPIManager *sharedManager = nil;
     return connection;
 }
 
+#pragma mark - 企业网络与管理员接口
+- (MDURLConnection *)loadCompanyDetailWithHandler:(MDAPINSDictionaryHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/company/detail?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
+            return;
+        }
+        
+        handler(dic, error);
+    }];
+    return connection;
+}
+
 #pragma mark - 账号接口
 
 - (MDURLConnection *)loadCurrentUserDetailWithHandler:(MDAPIObjectHandler)handler
@@ -878,26 +902,49 @@ static MDAPIManager *sharedManager = nil;
     return connection;
 }
 
-- (MDURLConnection *)inviteUserToCompanyWithEmail:(NSString *)email
-                            fullname:(NSString *)fullname
-                                 msg:(NSString *)msg
-                                type:(NSInteger)type
-                             handler:(MDAPIBoolHandler)handler
+- (MDURLConnectionQueue *)inviteUserToCompanyWithEmail:(NSString *)email
+                              baseAuthenticationDomain:(NSString *)baseAuthenticationDomain
+                                               handler:(MDAPIQueueBoolHandler)handler;
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/user/invite?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&email=%@", email];
-    [urlString appendFormat:@"&fullname=%@", [fullname stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    [urlString appendFormat:@"&msg=%@", [msg?msg:@"" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    if (type == 0 || type == 1)
+    NSArray *emails = [email componentsSeparatedByString:@","];
+    NSMutableArray *requests = [NSMutableArray array];
+    for (NSString *s in emails) {
+        NSString *anEmail = s;
+        NSMutableString *urlString = [self.serverAddress mutableCopy];
+        [urlString appendString:@"/user/invite?format=json"];
+        [urlString appendFormat:@"&access_token=%@", self.accessToken];
+        [urlString appendFormat:@"&email=%@", anEmail];
+        [urlString appendFormat:@"&fullname=%@", [anEmail substringToIndex:[anEmail rangeOfString:@"@"].location]];
+        [urlString appendFormat:@"&msg=%@", @"这是公司专属的企业和信息协作平台，使用明道网络和您的同事沟通协作，分享文档，问答，图片等，创建群组，并可使用不断增加的企业信息服务和应用程序。"];
+        NSInteger type = 1;
+        if ([anEmail hasSuffix:baseAuthenticationDomain]) {
+            type = 0;
+        }
         [urlString appendFormat:@"&type=%d", type];
+        NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+        [requests addObject:req];
+    }
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error handler:handler];
+    MDURLConnectionQueue *queue = [[MDURLConnectionQueue alloc] initWithRequest:requests handler:^(NSInteger lastFinishedIndex, CGFloat progress, NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(lastFinishedIndex, progress ,NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:nil], @"errorCode":@"1"}]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(lastFinishedIndex,progress ,NO, [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"error":[MDErrorParser errorStringWithErrorCode:errorCode],@"errorCode":errorCode}]);
+            return;
+        }
+        
+        if ([[dic objectForKey:@"count"] boolValue]) {
+            handler(lastFinishedIndex,progress, YES, error);
+        } else {
+            handler(lastFinishedIndex,progress ,NO, error);
+        }
     }];
-    return connection;
+    return queue;
 }
 
 - (MDURLConnection *)loadFavouritedUsersWithHandler:(MDAPIObjectHandler)handler

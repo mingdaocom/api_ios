@@ -9,7 +9,7 @@
 #import "MDURLConnection.h"
 
 @interface MDURLConnection () <NSURLConnectionDataDelegate>
-@property (strong, nonatomic) NSURLRequest *req;
+@property (strong, nonatomic) NSMutableURLRequest *req;
 @property (strong, nonatomic) NSURLConnection *connection;
 @property (strong, nonatomic) NSMutableData *appendingData;
 @property (copy,   nonatomic) MDAPINSDataHandler handler;
@@ -21,7 +21,8 @@
 {
     self = [super init];
     if (self) {
-        self.req = request;
+        self.req = [request mutableCopy];
+        self.req.timeoutInterval = 30;
         self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
         self.handler = handler;
     }

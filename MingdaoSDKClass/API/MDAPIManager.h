@@ -47,9 +47,12 @@
  handler   - 处理登录结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loginWithUsername:(NSString *)username
-                 password:(NSString *)password
-                projectID:(NSString *)projectID
-                  handler:(MDAPIBoolHandler)handler;
+                              password:(NSString *)password
+                             projectID:(NSString *)projectID
+                               handler:(MDAPIBoolHandler)handler;
+
+#pragma mark - 企业网络与管理员接口
+- (MDURLConnection *)loadCompanyDetailWithHandler:(MDAPINSDictionaryHandler)handler;
 
 #pragma mark - 账号接口
 
@@ -323,11 +326,9 @@
  msg - 邀请的消息 必须
  handler    - 处理邀请结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)inviteUserToCompanyWithEmail:(NSString *)email
-                            fullname:(NSString *)fullname
-                                 msg:(NSString *)msg
-                                type:(NSInteger)type
-                             handler:(MDAPIBoolHandler)handler;
+- (MDURLConnectionQueue *)inviteUserToCompanyWithEmail:(NSString *)email
+                              baseAuthenticationDomain:(NSString *)baseAuthenticationDomain
+                                               handler:(MDAPIQueueBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
