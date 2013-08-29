@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define MDAPIErrorDomain @"MDAPIErrorDomain"
+
 @interface MDErrorParser : NSObject
 + (NSString *)errorStringWithErrorCode:(NSString *)errorCode;
++ (NSError *)errorWithMDDic:(NSDictionary *)dic URLString:(NSString *)urlString;
 @end

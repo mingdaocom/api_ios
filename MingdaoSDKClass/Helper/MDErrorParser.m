@@ -65,4 +65,21 @@
             return @"未知错误";
     }
 }
+
++ (NSError *)errorWithMDDic:(NSDictionary *)dic URLString:(NSString *)urlString
+{
+    if (dic) {
+        NSInteger code = [[dic objectForKey:@"error_code"] integerValue];
+        NSString *localizedDescription = [self errorStringWithErrorCode:[dic objectForKey:@"error_code"]];
+        
+        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+        [userInfo setObject:localizedDescription forKey:@"NSLocalizedDescription"];
+        [userInfo setObject:urlString forKey:@"NSErrorFailingURLStringKey"];
+        
+        NSError *error = [NSError errorWithDomain:MDAPIErrorDomain code:code userInfo:userInfo];
+        return error;
+    }
+
+    return [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"NSLocalizedDescription":[MDErrorParser errorStringWithErrorCode:@"0"],@"NSErrorFailingURLStringKey":urlString}];
+}
 @end
