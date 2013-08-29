@@ -347,7 +347,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -387,7 +388,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -429,7 +431,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -487,7 +490,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -521,7 +525,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -555,7 +560,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -590,7 +596,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -618,7 +625,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -726,7 +734,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -771,7 +780,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -814,7 +824,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -849,7 +860,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -878,7 +890,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -912,7 +925,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1023,7 +1037,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1156,7 +1171,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1297,7 +1313,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
             return ;
@@ -1331,7 +1348,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1370,7 +1388,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1406,7 +1425,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1440,9 +1460,6 @@ static MDAPIManager *sharedManager = nil;
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         if (error) {
-            handler(nil, error);
-            return ;
-        }if (error) {
             handler(nil, error);
             return ;
         }
@@ -1539,9 +1556,6 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }if (error) {
-            handler(nil, error);
-            return ;
         }
         NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
@@ -1584,7 +1598,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1625,7 +1640,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1666,7 +1682,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1707,7 +1724,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1748,7 +1766,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1785,7 +1804,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1821,7 +1841,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1856,7 +1877,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1910,7 +1932,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -1942,7 +1965,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2002,7 +2026,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2213,7 +2238,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2259,7 +2285,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2310,7 +2337,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2361,7 +2389,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2405,7 +2434,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2454,7 +2484,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2503,7 +2534,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2547,7 +2579,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2593,7 +2626,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2647,7 +2681,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2698,7 +2733,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2749,7 +2785,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2784,7 +2821,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2820,7 +2858,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2850,7 +2889,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2895,7 +2935,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2937,7 +2978,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2975,7 +3017,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3038,7 +3081,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3107,7 +3151,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3192,7 +3237,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3303,7 +3349,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3379,7 +3426,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3421,7 +3469,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3462,7 +3511,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3499,7 +3549,8 @@ static MDAPIManager *sharedManager = nil;
         if (error) {
             handler(nil, error);
             return ;
-        }NSDictionary *dic = [data objectFromJSONData];
+        }
+        NSDictionary *dic = [data objectFromJSONData];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
