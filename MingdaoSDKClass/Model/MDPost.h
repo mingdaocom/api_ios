@@ -43,6 +43,7 @@ enum {
 typedef NSInteger MDPostShareType;
 
 enum {
+    MDPostTypeAll = -1,
     MDPostTypeText = 0,
     MDPostTypeLink = 1,
     MDPostTypeImage = 2,

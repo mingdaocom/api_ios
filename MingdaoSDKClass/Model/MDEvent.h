@@ -30,6 +30,10 @@
 @property (strong, nonatomic) NSArray *members;
 @property (strong, nonatomic) NSArray *eventMails;
 
+@property (assign, nonatomic) BOOL isRecur;
+@property (assign, nonatomic) NSInteger frequency, interval, recurCount;
+@property (strong, nonatomic) NSString *untilDateString, *weekDay;
+
 @property (readonly ,nonatomic) BOOL isInOneDay;
 @property (readonly, nonatomic) NSArray *memberIDs;
 @property (readonly, nonatomic) NSArray *memberEmails;
@@ -40,10 +44,6 @@
 @property (readonly, nonatomic) NSArray *accetpedEmails, *rejectedEmails, *penddingEmails;
 @property (readonly, nonatomic) NSString *repeatDetail;
 @property (readonly, nonatomic) NSArray *selectedWeekdays;
-
-@property (assign, nonatomic) BOOL isRecur;
-@property (assign, nonatomic) NSInteger frequency, interval, recurCount;
-@property (strong, nonatomic) NSString *untilDateString, *weekDay;
 
 - (MDEvent *)initWithDictionary:(NSDictionary *)aDic;
 - (NSString *)escapedDuration;

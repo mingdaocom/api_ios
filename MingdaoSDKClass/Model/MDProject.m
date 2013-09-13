@@ -18,4 +18,13 @@
     }
     return self;
 }
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDProject *copyObject = object;
+    copyObject.objectID = [self.objectID copy];
+    copyObject.objectName = [self.objectName copy];
+    return copyObject;
+}
 @end

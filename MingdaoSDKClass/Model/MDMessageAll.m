@@ -19,4 +19,14 @@
     }
     return self;
 }
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDMessageAll *copyObject = object;
+    copyObject.creator = [self.creator copy];
+    copyObject.text = [self.text copy];
+    copyObject.createTime = [self.createTime copy];
+    return copyObject;
+}
 @end

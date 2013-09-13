@@ -54,11 +54,41 @@
 {
     if ([object isKindOfClass:[self class]]) {
         MDUser *aUser = (MDUser *)object;
-        if ([self.objectID isEqualToString:aUser.objectID]) {
+        if ([[self.objectID lowercaseString] isEqualToString:[aUser.objectID lowercaseString]]) {
             return YES;
         }
     }
     
     return NO;
 }
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDUser *copyObject = object;
+    copyObject.objectID = [self.objectID copy];
+    copyObject.objectName = [self.objectName copy];
+    copyObject.avatar = [self.avatar copy];
+    copyObject.avatar100 = [self.avatar100 copy];
+    copyObject.email = [self.email copy];
+    copyObject.grade = [self.grade copy];
+    copyObject.mark = [self.mark copy];
+    copyObject.gender = self.gender;
+    copyObject.birth = [self.birth copy];
+    copyObject.company = [self.company copy];
+    copyObject.department = [self.department copy];
+    copyObject.job = [self.job copy];
+    copyObject.mobilePhoneNumber = [self.mobilePhoneNumber copy];
+    copyObject.workPhoneNumber = [self.workPhoneNumber copy];
+    copyObject.isMobilePhoneNumberVisible = self.isMobilePhoneNumberVisible;
+    copyObject.isFollowed = self.isFollowed;
+    copyObject.licence = self.licence;
+    copyObject.status = self.status;
+    copyObject.unreadMessageCount = self.unreadMessageCount;
+    copyObject.messageCount = self.messageCount;
+    copyObject.jobs = [self.jobs copy];
+    copyObject.educations = [self.educations copy];
+    return copyObject;
+}
+
 @end

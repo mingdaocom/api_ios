@@ -1821,7 +1821,7 @@ static MDAPIManager *sharedManager = nil;
         for (NSDictionary *projectDic in projectDics) {
             if (![projectDic isKindOfClass:[NSDictionary class]])
                 continue;
-            MDTask *task = [[MDTask alloc] initWithDictionary:projectDic];
+            MDProject *task = [[MDProject alloc] initWithDictionary:projectDic];
             [projects addObject:task];
         }
         handler(projects, error);
@@ -1908,13 +1908,16 @@ static MDAPIManager *sharedManager = nil;
                                   chargerID:(NSString *)chargerID
                                   memberIDs:(NSArray *)memberIDs
                                   projectID:(NSString *)projectID
+                                   parentID:(NSString *)parentID
                                     handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/create?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_title=%@", name];
-    [urlString appendFormat:@"&t_ed=%@", endDateString];
+    
+    if (endDateString && endDateString.length > 0)
+        [urlString appendFormat:@"&t_ed=%@", endDateString];
     if (des && des.length > 0)
         [urlString appendFormat:@"&t_des=%@", des];
     if (memberIDs && memberIDs.count > 0)
@@ -1923,6 +1926,9 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&u_id=%@", chargerID];
     if (projectID && projectID.length > 0)
         [urlString appendFormat:@"&t_pid=%@", projectID];
+    if (parentID && parentID.length > 0) {
+        [urlString appendFormat:@"&t_parentID=%@", parentID];
+    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
@@ -2060,6 +2066,22 @@ static MDAPIManager *sharedManager = nil;
     return connection;
 }
 
+- (MDURLConnection *)unfinishTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/unfinish?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
 - (MDURLConnection *)deleteTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -2180,6 +2202,25 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     [urlString appendFormat:@"&u_id=%@", memberID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)addObserverToTaskWithTaskID:(NSString *)tID
+                                       memberIDs:(NSArray *)memberIDs
+                                         handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/add_observer?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&u_ids=%@", [memberIDs componentsJoinedByString:@","]];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];

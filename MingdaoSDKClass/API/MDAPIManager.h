@@ -544,6 +544,7 @@
                                   chargerID:(NSString *)chargerID
                                   memberIDs:(NSArray *)memberIDs
                                   projectID:(NSString *)projectID
+                                   parentID:(NSString *)parentID
                                     handler:(MDAPINSStringHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -580,6 +581,7 @@
  handler - 创建成功返回回复编号
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)finishTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)unfinishTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)deleteTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
                                   title:(NSString *)title
@@ -599,6 +601,9 @@
 - (MDURLConnection *)addMemberToTaskWithTaskID:(NSString *)tID
                               memberID:(NSString *)memberID
                                handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)addObserverToTaskWithTaskID:(NSString *)tID
+                                       memberIDs:(NSArray *)memberIDs
+                                         handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)deleteMemberFromeTaskWithTaskID:(NSString *)tID
                               memberID:(NSString *)memberID
                                handler:(MDAPIBoolHandler)handler;

@@ -31,11 +31,28 @@
 {
     if ([object isKindOfClass:[self class]]) {
         MDGroup *aGroup = (MDGroup *)object;
-        if ([self.objectID isEqualToString:aGroup.objectID]) {
+        if ([[self.objectID lowercaseString] isEqualToString:[aGroup.objectID lowercaseString]]) {
             return YES;
         }
     }
     
     return NO;
+}
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDGroup *copyObject = object;
+    copyObject.objectID = [self.objectID copy];
+    copyObject.objectName = [self.objectName copy];
+    copyObject.avatar = [self.avatar copy];
+    copyObject.isPublic = self.isPublic;
+    copyObject.status = self.status;
+    copyObject.isJoined = self.isJoined;
+    copyObject.userCount = self.userCount;
+    copyObject.postCount = self.postCount;
+    copyObject.creator = [self.creator copy];
+    copyObject.admins = [self.admins copy];
+    return copyObject;
 }
 @end

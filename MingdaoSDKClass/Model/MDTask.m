@@ -19,10 +19,15 @@
         self.expiredDateString = [aDic objectForKey:@"expire_date"];
         self.finishedDateString = [aDic objectForKey:@"finished_date"];
         self.replyCount = [[aDic objectForKey:@"reply_count"] integerValue];
+        self.unreadCount = [[aDic objectForKey:@"unread_count"] integerValue];
         self.createdDateString = [aDic objectForKey:@"create_time"];
         self.creatorID = [aDic objectForKey:@"create_userid"];
         self.project = [[MDProject alloc] initWithDictionary:[aDic objectForKey:@"project"]];
+        if (!self.project.objectID) {
+            self.project = nil;
+        }
         self.charger = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"user"]];
+        self.subTaskCount = [[aDic objectForKey:@"sub_count"] integerValue];
         
         NSMutableArray *memebers = [NSMutableArray array];
         NSDictionary *userDics = [aDic objectForKey:@"joined"];
@@ -33,7 +38,90 @@
             }
         }
         self.members = memebers;
+
+        memebers = [NSMutableArray array];
+        userDics = [aDic objectForKey:@"observer"];
+        for (NSDictionary *userDic in userDics) {
+            if ([userDic isKindOfClass:[NSDictionary class]]) {
+                MDUser *aUser = [[MDUser alloc] initWithDictionary:userDic];
+                [memebers addObject:aUser];
+            }
+        }
+        self.observers = memebers;
+        
+        NSMutableArray *subTasks = [NSMutableArray array];
+        NSDictionary *taskDics = [aDic objectForKey:@"c_task"];
+        for (NSDictionary *taskDic in taskDics) {
+            if ([taskDic isKindOfClass:[NSDictionary class]]) {
+                MDTask *aTask = [[MDTask alloc] initWithDictionary:taskDic];
+                [subTasks addObject:aTask];
+            }
+        }
+        self.subTasks = subTasks;
     }
     return self;
+}
+
+- (BOOL)finished
+{
+    return (self.finishedDateString && self.finishedDateString.length > 0);
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if ([object isKindOfClass:[self class]]) {
+        MDTask *aUser = (MDTask *)object;
+        if ([[self.objectID lowercaseString] isEqualToString:[aUser.objectID lowercaseString]]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (MDUser *)creator
+{
+    if ([self.charger.objectID isEqualToString:self.creatorID]) {
+        return self.charger;
+    } else {
+        for (MDUser *u in self.observers) {
+            if ([u.objectID isEqualToString:self.creatorID]) {
+                return u;
+            }
+        }
+        for (MDUser *u in self.members) {
+            if ([u.objectID isEqualToString:self.creatorID]) {
+                return u;
+            }
+        }
+    }
+    MDUser *u = [[MDUser alloc] init];
+    u.objectID = self.creatorID;
+    u.objectName = @"创建者";
+    return u;
+}
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDTask *copyObject = object;
+    copyObject.objectID = [self.objectID copy];
+    copyObject.objectName = [self.objectName copy];
+    copyObject.des = [self.des copy];
+    copyObject.createdDateString = [self.createdDateString copy];
+    copyObject.expiredDateString = [self.expiredDateString copy];
+    copyObject.finishedDateString = [self.finishedDateString copy];
+    copyObject.creatorID = [self.creatorID copy];
+    copyObject.replyCount = self.replyCount;
+    copyObject.unreadCount = self.unreadCount;
+    copyObject.subTaskCount = self.subTaskCount;
+    copyObject.charger = [self.charger copy];
+    copyObject.project = [self.project copy];
+    copyObject.members = [self.members copy];
+    copyObject.observers = [self.observers copy];
+    if (self.subTasks.count > 0) {
+        copyObject.subTasks = [self.subTasks copy];
+    }
+    return copyObject;
 }
 @end

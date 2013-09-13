@@ -33,6 +33,15 @@
     }
     return NO;
 }
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDEventEmail *copyObject = object;
+    copyObject.memail = [self.memail copy];
+    copyObject.status = self.status;
+    return copyObject;
+}
 @end
 
 @interface MDEvent ()
@@ -392,5 +401,29 @@
         [array addObject:[weekdayNames objectAtIndex:[s integerValue]]];
     }
     return array;
+}
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDEvent *copyObject = object;
+    copyObject.objectID = [self.objectID copy];
+    copyObject.objectName = [self.objectName copy];
+    copyObject.creator = [self.creator copy];
+    copyObject.address = [self.address copy];
+    copyObject.startDateString = [self.startDateString copy];
+    copyObject.endDateString = [self.endDateString copy];
+    copyObject.des = [self.des copy];
+    copyObject.isAllday = self.isAllday;
+    copyObject.isPrivate = self.isPrivate;
+    copyObject.members = [self.members copy];
+    copyObject.eventMails = [self.eventMails copy];
+    copyObject.isRecur = self.isRecur;
+    copyObject.frequency = self.frequency;
+    copyObject.interval = self.interval;
+    copyObject.recurCount = self.recurCount;
+    copyObject.untilDateString = [self.untilDateString copy];
+    copyObject.weekDay = [self.weekDay copy];
+    return copyObject;
 }
 @end

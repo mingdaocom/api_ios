@@ -30,6 +30,19 @@
     }
     return self;
 }
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDVoteOption *copyObject = object;
+    copyObject.objectName = [self.objectName copy];
+    copyObject.voteCount = self.voteCount;
+    copyObject.selected = self.selected;
+    copyObject.originalPic = [self.originalPic copy];
+    copyObject.thumbnailPic = [self.thumbnailPic copy];
+    copyObject.members = [self.members copy];
+    return copyObject;
+}
 @end
 
 @implementation MDPostDetail
@@ -63,6 +76,26 @@
         }
     }
     return self;
+}
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDPostDetail *copyObject = object;
+    copyObject.isAnonymous = self.isAnonymous;
+    copyObject.maxChoiceCount = self.maxChoiceCount;
+    copyObject.deadLineString = [self.deadLineString copy];
+    copyObject.isInCenter = self.isInCenter;
+    copyObject.linkDes = [self.linkDes copy];
+    copyObject.linkTitle = [self.linkTitle copy];
+    copyObject.middlePic = [self.middlePic copy];
+    copyObject.originalPic = [self.originalPic copy];
+    copyObject.originalDoc = [self.originalDoc copy];
+    copyObject.thumbnailPic = [self.thumbnailPic copy];
+    copyObject.fileName = [self.fileName copy];
+    copyObject.isVisble = self.isVisble;
+    copyObject.voteOptions = [self.voteOptions copy];
+    return copyObject;
 }
 @end
 
@@ -139,4 +172,31 @@
     }
     return nil;
 }
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDPost *copyObject = object;
+    copyObject.objectID = [self.objectID copy];
+    copyObject.autoID = [self.autoID copy];
+    copyObject.text = [self.text copy];
+    copyObject.tags = [self.tags copy];
+    copyObject.createTime = [self.createTime copy];
+    copyObject.creator = [self.creator copy];
+    copyObject.source = [self.source copy];
+    copyObject.replyCount = self.replyCount;
+    copyObject.likeCount = self.likeCount;
+    copyObject.repostCount = self.repostCount;
+    copyObject.isFavourited = self.isFavourited;
+    copyObject.type = self.type;
+    copyObject.shareType = self.shareType;
+    copyObject.details = [self.details copy];
+    copyObject.textAttribute = [self.textAttribute copy];
+    copyObject.groups = [self.groups copy];
+    if (self.repost) {
+        copyObject.repost = [self.repost copy];
+    }
+    return copyObject;
+}
+
 @end

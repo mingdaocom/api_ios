@@ -22,6 +22,18 @@
     }
     return self;
 }
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDPostReplymentDetail *copyObject = object;
+    copyObject.middlePic = [self.middlePic copy];
+    copyObject.originalPic = [self.originalPic copy];
+    copyObject.originalDoc = [self.originalDoc copy];
+    copyObject.thumbnailPic = [self.thumbnailPic copy];
+    copyObject.fileName = [self.fileName copy];
+    return copyObject;
+}
 @end
 
 @implementation MDPostReplyment
@@ -65,5 +77,25 @@
         self.source = [aDic objectForKey:@"source"];
     }
     return self;
+}
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDPostReplyment*copyObject = object;
+    copyObject.objectID = [self.objectID copy];
+    copyObject.text = [self.text copy];
+    copyObject.createTime = [self.createTime copy];
+    copyObject.creator = [self.creator copy];
+    if (self.replymentToPost) {
+        copyObject.replymentToPost = [self.replymentToPost copy];
+    }
+    
+    if (self.replymentToReplyment) {
+        copyObject.replymentToReplyment = [self.replymentToReplyment copy];
+    }
+    copyObject.details = [self.details copy];
+    copyObject.source = [self.source copy];
+    return copyObject;
 }
 @end

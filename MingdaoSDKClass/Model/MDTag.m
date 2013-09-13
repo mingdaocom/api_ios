@@ -30,4 +30,19 @@
     }
     return self;
 }
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDTag *copyObject = object;
+    copyObject.objectID = [self.objectID copy];
+    copyObject.objectName = [self.objectName copy];
+    copyObject.postCount = self.postCount;
+    copyObject.imageCount = self.imageCount;
+    copyObject.documentCount = self.documentCount;
+    copyObject.faqCount = self.faqCount;
+    copyObject.voteCount = self.voteCount;
+    copyObject.totalPageSize = self.totalPageSize;
+    return copyObject;
+}
 @end
