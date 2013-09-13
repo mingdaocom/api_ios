@@ -495,6 +495,11 @@
                                                          page:(NSInteger)page
                                                       handler:(MDAPINSArrayHandler)handler;
 
+- (MDURLConnection *)loadCurrentUserObservedTasksWithKeywords:(NSString *)keywords allOrUnfinished:(BOOL)allOrUnFinished handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadCurrentUserObservedFinishedTasksWithPageSize:(NSInteger)size
+                                                                 page:(NSInteger)page
+                                                              handler:(MDAPINSArrayHandler)handler;
+
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  获取当前网络所有任务隶属的项目
