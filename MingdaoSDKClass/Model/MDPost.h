@@ -70,6 +70,8 @@ typedef NSInteger MDPostType;
 @property (strong, nonatomic) NSArray *groups;
 @property (strong, nonatomic) MDUser *creator;
 @property (strong, nonatomic) MDPost *repost;
+@property (assign, nonatomic) BOOL isAnswerred;
+@property (assign, nonatomic) NSInteger mark;
 
 @property (readonly, nonatomic) MDPostDetail *firstDetail;
 

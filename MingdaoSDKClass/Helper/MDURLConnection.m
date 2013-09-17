@@ -22,7 +22,7 @@
     self = [super init];
     if (self) {
         self.req = [request mutableCopy];
-        self.req.timeoutInterval = 30;
+        self.req.timeoutInterval = 120;
         self.connection = [[NSURLConnection alloc] initWithRequest:self.req delegate:self startImmediately:NO];
         self.handler = handler;
     }

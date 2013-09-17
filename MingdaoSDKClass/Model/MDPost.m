@@ -134,6 +134,8 @@
         self.shareType = [[aDic objectForKey:@"share_type"] integerValue];
         self.details = [aDic objectForKey:@"detail"];
         self.textAttribute = [aDic objectForKey:@"text_attribute"];
+        self.isAnswerred = [[aDic objectForKey:@"have_bestanswer"] boolValue];
+        self.mark = [[aDic objectForKey:@"mark"] integerValue];
         NSMutableArray *groups = [NSMutableArray array];
         NSArray *groupDics = [aDic objectForKey:@"groups"];
         for (NSDictionary *groupDic in groupDics) {
@@ -193,6 +195,8 @@
     copyObject.details = [self.details copy];
     copyObject.textAttribute = [self.textAttribute copy];
     copyObject.groups = [self.groups copy];
+    copyObject.isAnswerred = self.isAnswerred;
+    copyObject.mark = self.mark;
     if (self.repost) {
         copyObject.repost = [self.repost copy];
     }
