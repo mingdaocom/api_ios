@@ -14,7 +14,8 @@
 @property (strong, nonatomic) NSString *text;
 @property (strong, nonatomic) NSString *createDateString, *source;
 @property (assign, nonatomic) NSInteger type;
-@property (strong, nonatomic) NSString *original_file, *original_pic, *thumbnail_pic;
+@property (strong, nonatomic) NSString *original_file;
+@property (strong, nonatomic) NSArray *thumbnailPics, *originalPics;
 @property (strong, nonatomic) MDUser *creator;
 @property (strong, nonatomic) MDUser *replyTo;
 @property (readonly, nonatomic) NSString *fileName;

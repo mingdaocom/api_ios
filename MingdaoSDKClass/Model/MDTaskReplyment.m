@@ -21,8 +21,17 @@
         NSDictionary *detailDic = [aDic objectForKey:@"detail"];
         if ([detailDic isKindOfClass:[detailDic class]]) {
             self.original_file = [detailDic objectForKey:@"original_file"];
-            self.original_pic = [detailDic objectForKey:@"original_pic"];
-            self.thumbnail_pic = [detailDic objectForKey:@"thumbnail_pic"];
+            NSArray *picsDics = [detailDic objectForKey:@"pics"];
+            if (picsDics.count > 0) {
+                NSMutableArray *array1 = [NSMutableArray array];
+                NSMutableArray *array2 = [NSMutableArray array];
+                for (NSDictionary *picsDic in picsDics) {
+                    [array1 addObject:[picsDic objectForKey:@"thumbnail_pic"]];
+                    [array2 addObject:[picsDic objectForKey:@"original_pic"]];
+                }
+                self.thumbnailPics = array1;
+                self.originalPics = array2;
+            }
         }
         self.source = [aDic objectForKey:@"source"];
         self.creator = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"user"]];
@@ -50,8 +59,8 @@
     copyObject.createDateString = [self.createDateString copy];
     copyObject.type = self.type;
     copyObject.original_file = [self.original_file copy];
-    copyObject.original_pic = [self.original_pic copy];
-    copyObject.thumbnail_pic = [self.thumbnail_pic copy];
+    copyObject.originalPics = [self.originalPics copy];
+    copyObject.thumbnailPics = [self.thumbnailPics copy];
     copyObject.source = [self.source copy];
     copyObject.creator = [self.creator copy];
     if (self.replyTo) {
