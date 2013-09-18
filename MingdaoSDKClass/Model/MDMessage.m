@@ -19,6 +19,7 @@
         self.heHasRead = [[aDic objectForKey:@"status2"] boolValue];
         self.createTime = [aDic objectForKey:@"create_time"];
         self.createUserID = [aDic objectForKey:@"create_user"];
+        self.type = [[aDic objectForKey:@"message_type"] integerValue];
     }
     return self;
 }
@@ -33,6 +34,7 @@
     copyObject.heHasRead = self.heHasRead;
     copyObject.createTime = [self.createTime copy];
     copyObject.createUserID = [self.createUserID copy];
+    copyObject.type = self.type;
     return copyObject;
 }
 @end
