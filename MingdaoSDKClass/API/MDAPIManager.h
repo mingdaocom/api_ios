@@ -684,12 +684,14 @@
                                          pagesize:(NSInteger)size
                                           handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadImagePostsWithGroupID:(NSString *)groupID
+                                      Keywords:(NSString *)keywords
                                     filterType:(NSInteger)filterType
                                        sinceID:(NSString *)sinceID
                                          maxID:(NSString *)maxID
                                       pagesize:(NSInteger)size
                                        handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadFAQPostsWithGroupID:(NSString *)groupID
+                                    Keywords:(NSString *)keywords
                                   filterType:(NSInteger)filterType
                                      sinceID:(NSString *)sinceID
                                        maxID:(NSString *)maxID
@@ -860,6 +862,7 @@
                                                       pagesize:(NSInteger)size
                                                        handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadAllVotesWithPageIndex:(NSInteger)page
+                                      keywords:(NSString *)keywords
                                        pagesize:(NSInteger)size
                                         handler:(MDAPINSArrayHandler)handler;
 
