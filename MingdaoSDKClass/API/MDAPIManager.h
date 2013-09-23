@@ -251,8 +251,11 @@
  handler    - 处理邀请结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)inviteUserToGroupWithGroupID:(NSString *)gID
-                               email:(NSString *)email
-                             handler:(MDAPIBoolHandler)handler;
+                                            email:(NSString *)email
+                                          handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)deleteUserFromGroupID:(NSString *)gID
+                                    userID:(NSString *)userID
+                                   handler:(MDAPIBoolHandler)handler;
 
 #pragma mark - 用户接口
 
