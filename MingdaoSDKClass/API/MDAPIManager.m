@@ -2077,7 +2077,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)createTaskReplymentOnTaskWithTaskID:(NSString *)tID
                                                  message:(NSString *)message
                                  replyToReplymentWithRID:(NSString *)rID
-                                                   image:(UIImage *)image
+                                                  images:(NSArray *)images
                                                  handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -2092,24 +2092,36 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
     
-    if (image) {
-        NSString *boundary = @"-----------------MINGDAO-----------------";
-        NSString *filename = @"photo.jpg";
+    if (images.count > 0) {
+        NSString *boundary = @"----------MINGDAO";
+        NSString *boundaryPrefix = @"--";
+        
+        NSMutableData *postBody = [NSMutableData data];
+        for (int i = 0; i < images.count; i++) {
+            NSString *filename = [NSString stringWithFormat:@"photo%d.jpg", i];
+            NSMutableString *parameter = [NSMutableString string];
+            [parameter appendString:@"r_img"];
+            if (i > 0) {
+                [parameter appendFormat:@"%d", i];
+            }
+            
+            [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\";\r\n\r\n", parameter, filename] dataUsingEncoding:NSUTF8StringEncoding]];
+            NSData *imageData = UIImageJPEGRepresentation(images[i], 0.5);
+            [postBody appendData:imageData];
+            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+        
+        [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
+
         
         NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
         [req setValue:contentType forHTTPHeaderField:@"Content-type"];
         
-        //准备数据
-        NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-        
-        //adding the body:
-        NSMutableData *postBody = [NSMutableData data];
-        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"r_img\"; filename=\"%@\"\r\n", filename] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[@"Content-Type: application/octet-stream; charset=UTF-8\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[@"Content-Transfer-Encoding: binary\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:imageData];
-        [postBody appendData:[[NSString stringWithFormat:@"\r\n%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [req setHTTPBody:postBody];
     }
     
@@ -3194,7 +3206,7 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)createImagePostWithText:(NSString *)text
-                                       image:(UIImage *)image
+                                      images:(NSArray *)images
                                     groupIDs:(NSArray *)groupIDs
                                    shareType:(NSInteger)shareType
                                     toCenter:(BOOL)toCenter
@@ -3215,24 +3227,38 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
     
-    NSString *boundary = @"-----------------MINGDAO-----------------";
-    NSString *filename = @"photo.jpg";
-    
-    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
-    [req setValue:contentType forHTTPHeaderField:@"Content-type"];
-    
-    //准备数据
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-    
-    //adding the body:
-    NSMutableData *postBody = [NSMutableData data];
-    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"p_img\"; filename=\"%@\"\r\n", filename] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[@"Content-Type: application/octet-stream; charset=UTF-8\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[@"Content-Transfer-Encoding: binary\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:imageData];
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [req setHTTPBody:postBody];
+    if (images.count > 0) {
+        NSString *boundary = @"----------MINGDAO";
+        NSString *boundaryPrefix = @"--";
+        
+        NSMutableData *postBody = [NSMutableData data];
+        for (int i = 0; i < images.count; i++) {
+            NSString *filename = [NSString stringWithFormat:@"photo%d.jpg", i];
+            NSMutableString *parameter = [NSMutableString string];
+            [parameter appendString:@"p_img"];
+            if (i > 0) {
+                [parameter appendFormat:@"%d", i];
+            }
+            
+            [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\";\r\n\r\n", parameter, filename] dataUsingEncoding:NSUTF8StringEncoding]];
+            NSData *imageData = UIImageJPEGRepresentation(images[i], 0.5);
+            [postBody appendData:imageData];
+            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+        
+        [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        
+        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
+        [req setValue:contentType forHTTPHeaderField:@"Content-type"];
+        
+        [req setHTTPBody:postBody];
+    }
 
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
@@ -3258,7 +3284,7 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)createRepostWithText:(NSString *)text
-                                    image:(UIImage *)image
+                                   images:(NSArray *)images
                                    postID:(NSString *)postID
                                  groupIDs:(NSArray *)groupIDs
                                 shareType:(NSInteger)shareType
@@ -3273,7 +3299,7 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&p_msg=%@", text];
     [urlString appendFormat:@"&re_p_id=%@", postID];
     [urlString appendFormat:@"&s_type=%d", shareType];
-    if (image) {
+    if (images.count > 0) {
         [urlString appendFormat:@"&f_type=%@", @"picture"];
     }
     if (yesOrNo) {
@@ -3284,26 +3310,39 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
     
-    if (image) {
-        NSString *boundary = @"-----------------MINGDAO-----------------";
-        NSString *filename = @"photo.jpg";
+    if (images.count > 0) {
+        NSString *boundary = @"----------MINGDAO";
+        NSString *boundaryPrefix = @"--";
+        
+        NSMutableData *postBody = [NSMutableData data];
+        for (int i = 0; i < images.count; i++) {
+            NSString *filename = [NSString stringWithFormat:@"photo%d.jpg", i];
+            NSMutableString *parameter = [NSMutableString string];
+            [parameter appendString:@"p_img"];
+            if (i > 0) {
+                [parameter appendFormat:@"%d", i];
+            }
+            
+            [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\";\r\n\r\n", parameter, filename] dataUsingEncoding:NSUTF8StringEncoding]];
+            NSData *imageData = UIImageJPEGRepresentation(images[i], 0.5);
+            [postBody appendData:imageData];
+            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+        
+        [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
+        
         
         NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
         [req setValue:contentType forHTTPHeaderField:@"Content-type"];
         
-        //准备数据
-        NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-        
-        //adding the body:
-        NSMutableData *postBody = [NSMutableData data];
-        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"p_img\"; filename=\"%@\"\r\n", filename] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[@"Content-Type: application/octet-stream; charset=UTF-8\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[@"Content-Transfer-Encoding: binary\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:imageData];
-        [postBody appendData:[[NSString stringWithFormat:@"\r\n%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [req setHTTPBody:postBody];
     }
+
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         if (error) {
@@ -3344,7 +3383,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)createPostReplymentOnPostWithPostID:(NSString *)pID
                          replyToReplymentWithReplymentID:(NSString *)rID
                                                  message:(NSString *)msg
-                                                   image:(UIImage *)image
+                                                  images:(NSArray *)images
                                               isReshared:(BOOL)yesOrNo
                                                 groupIDs:(NSArray *)groupIDs
                                                shareType:(NSInteger)shareType
@@ -3357,7 +3396,7 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&r_msg=%@", msg];
     if (rID && rID.length > 0)
         [urlString appendFormat:@"&r_id=%@", rID];
-    if (image) {
+    if (images.count > 0) {
         [urlString appendFormat:@"&f_type=%@", @"picture"];
     }
     if (yesOrNo) {
@@ -3370,26 +3409,39 @@ static MDAPIManager *sharedManager = nil;
 
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
-    if (image) {
-        NSString *boundary = @"-----------------MINGDAO-----------------";
-        NSString *filename = @"photo.jpg";
+    if (images.count > 0) {
+        NSString *boundary = @"----------MINGDAO";
+        NSString *boundaryPrefix = @"--";
+        
+        NSMutableData *postBody = [NSMutableData data];
+        for (int i = 0; i < images.count; i++) {
+            NSString *filename = [NSString stringWithFormat:@"photo%d.jpg", i];
+            NSMutableString *parameter = [NSMutableString string];
+            [parameter appendString:@"p_img"];
+            if (i > 0) {
+                [parameter appendFormat:@"%d", i];
+            }
+            
+            [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\";\r\n\r\n", parameter, filename] dataUsingEncoding:NSUTF8StringEncoding]];
+            NSData *imageData = UIImageJPEGRepresentation(images[i], 0.5);
+            [postBody appendData:imageData];
+            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+        
+        [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
+        
         
         NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
         [req setValue:contentType forHTTPHeaderField:@"Content-type"];
         
-        //准备数据
-        NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-        
-        //adding the body:
-        NSMutableData *postBody = [NSMutableData data];
-        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"p_img\"; filename=\"%@\"\r\n", filename] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[@"Content-Type: application/octet-stream; charset=UTF-8\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[@"Content-Transfer-Encoding: binary\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:imageData];
-        [postBody appendData:[[NSString stringWithFormat:@"\r\n%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [req setHTTPBody:postBody];
     }
+
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         if (error) {

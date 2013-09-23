@@ -575,7 +575,7 @@
 - (MDURLConnection *)createTaskReplymentOnTaskWithTaskID:(NSString *)tID
                                                  message:(NSString *)message
                                  replyToReplymentWithRID:(NSString *)rID
-                                                   image:(UIImage *)image
+                                                  images:(NSArray *)images
                                                  handler:(MDAPINSStringHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -738,13 +738,13 @@
                                   shareType:(NSInteger)shareType
                                     handler:(MDAPINSStringHandler)handler;
 - (MDURLConnection *)createImagePostWithText:(NSString *)text
-                                       image:(UIImage *)image
+                                      images:(NSArray *)images
                                     groupIDs:(NSArray *)groupIDs
                                    shareType:(NSInteger)shareType
                                     toCenter:(BOOL)toCenter
                                    handler:(MDAPINSStringHandler)handler;
 - (MDURLConnection *)createRepostWithText:(NSString *)text
-                                    image:(UIImage *)image
+                                   images:(NSArray *)images
                                    postID:(NSString *)postID
                                  groupIDs:(NSArray *)groupIDs
                                 shareType:(NSInteger)shareType
@@ -773,7 +773,7 @@
 - (MDURLConnection *)createPostReplymentOnPostWithPostID:(NSString *)pID
                          replyToReplymentWithReplymentID:(NSString *)rID
                                                  message:(NSString *)msg
-                                                   image:(UIImage *)image
+                                                  images:(NSArray *)images
                                               isReshared:(BOOL)yesOrNo
                                                 groupIDs:(NSArray *)groupIDs
                                                shareType:(NSInteger)shareType
