@@ -856,9 +856,11 @@
  handler - 包含多个MDPost的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loadCurrentUserJoinedVotesWithPageIndex:(NSInteger)page
+                                                    keywords:(NSString *)keywords
                                                      pagesize:(NSInteger)size
                                                       handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadCurrentUserCreatedVotesWithPageIndex:(NSInteger)page
+                                                     keywords:(NSString *)keywords
                                                       pagesize:(NSInteger)size
                                                        handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadAllVotesWithPageIndex:(NSInteger)page

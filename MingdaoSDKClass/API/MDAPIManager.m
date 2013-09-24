@@ -3641,6 +3641,7 @@ static MDAPIManager *sharedManager = nil;
 
 #pragma mark - 投票接口
 - (MDURLConnection *)loadCurrentUserJoinedVotesWithPageIndex:(NSInteger)page
+                                                    keywords:(NSString *)keywords
                                                      pagesize:(NSInteger)size
                                                       handler:(MDAPINSArrayHandler)handler
 {
@@ -3651,6 +3652,8 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&pageindex=%d", page];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -3684,6 +3687,7 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)loadCurrentUserCreatedVotesWithPageIndex:(NSInteger)page
+                                                     keywords:(NSString *)keywords
                                                       pagesize:(NSInteger)size
                                                        handler:(MDAPINSArrayHandler)handler
 {
@@ -3694,6 +3698,8 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&pageindex=%d", page];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
