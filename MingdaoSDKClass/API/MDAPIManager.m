@@ -12,7 +12,6 @@
 #import "JSONKit.h"
 
 @interface MDAPIManager ()
-@property (strong, nonatomic) NSString *serverAddress;
 @property (strong, nonatomic) NSString *appKey, *appSecret;
 @end
 
