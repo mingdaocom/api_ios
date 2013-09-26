@@ -2160,6 +2160,7 @@ static MDAPIManager *sharedManager = nil;
         NSString *replementID = [dic objectForKey:@"replyment"];
         handler(replementID, nil);
     }];
+    connection.timeOut = 60 + 30*images.count;
     return connection;
 }
 
@@ -3300,6 +3301,8 @@ static MDAPIManager *sharedManager = nil;
         NSString *postID = [dic objectForKey:@"post"];
         handler(postID, error);
     }];
+    connection.timeOut = 60 + 30*images.count;
+
     return connection;
 }
 
@@ -3383,6 +3386,8 @@ static MDAPIManager *sharedManager = nil;
         NSString *postID = [dic objectForKey:@"post"];
         handler(postID, error);
     }];
+    connection.timeOut = 60 + 30*images.count;
+
     return connection;
 }
 
@@ -3482,6 +3487,8 @@ static MDAPIManager *sharedManager = nil;
         NSString *replymentID = [dic objectForKey:@"replyment"];
         handler(replymentID, nil);
     }];
+    connection.timeOut = 60 + 30*images.count;
+
     return connection;
 }
 

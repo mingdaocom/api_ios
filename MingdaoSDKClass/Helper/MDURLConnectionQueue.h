@@ -13,6 +13,7 @@ typedef void (^MDAPIConnectionQueueHandler)(NSInteger lastFinishedIndex, CGFloat
 @interface MDURLConnectionQueue : NSObject
 - (MDURLConnectionQueue *)initWithRequest:(NSArray *)requests handler:(MDAPIConnectionQueueHandler)handler;
 @property (assign, nonatomic) BOOL stopWhenError;
+@property (assign, nonatomic) NSTimeInterval timeOut;
 - (void)start;
 - (void)cancel;
 @end

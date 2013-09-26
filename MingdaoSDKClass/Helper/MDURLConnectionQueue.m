@@ -41,7 +41,10 @@
     }
     
     NSMutableURLRequest *req = (NSMutableURLRequest *)[self.requests[self.currentQueue] mutableCopy];
-    req.timeoutInterval = 30;
+    if (self.timeOut > 0) {
+        req.timeoutInterval = self.timeOut;
+    } else
+        req.timeoutInterval = 60;
     NSLog(@"%@", [req.URL absoluteString]);
     
     self.currentAppendingData = [NSMutableData data];
