@@ -8,6 +8,21 @@
 
 #import "MDMessage.h"
 
+@implementation MDMessageDetail
+- (MDMessageDetail *)initWithDictionary:(NSDictionary *)aDic
+{
+    self = [super init];
+    if (self) {
+        self.thumbnail_pic = [aDic objectForKey:@"thumbnail_pic"];
+        self.middle_pic = [aDic objectForKey:@"middle_pic"];
+        self.original_pic = [aDic objectForKey:@"original_pic"];
+        self.original_filename = [aDic objectForKey:@"original_filename"];
+        self.original_file = [aDic objectForKey:@"original_file"];
+    }
+    return self;
+}
+@end
+
 @implementation MDMessage
 - (MDMessage *)initWithDictionary:(NSDictionary *)aDic
 {
@@ -20,6 +35,13 @@
         self.createTime = [aDic objectForKey:@"create_time"];
         self.createUserID = [aDic objectForKey:@"create_user"];
         self.type = [[aDic objectForKey:@"message_type"] integerValue];
+        NSMutableArray *details = [NSMutableArray array];
+        NSArray *detailDics = [aDic objectForKey:@"detail"];
+        for (NSDictionary *detailDic in detailDics) {
+            MDMessageDetail *detail = [[MDMessageDetail alloc] initWithDictionary:detailDic];
+            [details addObject:detail];
+        }
+        self.details = details;
     }
     return self;
 }

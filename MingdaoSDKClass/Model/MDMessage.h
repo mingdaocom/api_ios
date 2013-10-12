@@ -17,6 +17,10 @@ typedef enum {
     MessageTypeSystem = 5
 } MessageType;
 
+@interface MDMessageDetail : NSObject
+@property (strong, nonatomic) NSString *thumbnail_pic, *middle_pic, *original_pic, *original_filename, *original_file;
+@end
+
 @interface MDMessage : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *text;
@@ -24,6 +28,7 @@ typedef enum {
 @property (strong, nonatomic) NSString *createUserID;
 @property (assign, nonatomic) BOOL iHaveRead, heHasRead;
 @property (assign, nonatomic) MessageType type;
+@property (strong, nonatomic) NSArray *details;
 
 - (MDMessage *)initWithDictionary:(NSDictionary *)aDic;
 @end
