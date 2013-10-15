@@ -334,6 +334,20 @@
                               baseAuthenticationDomain:(NSString *)baseAuthenticationDomain
                                                handler:(MDAPIQueueBoolHandler)handler;
 
+- (MDURLConnection *)reinviteUserWithEmails:(NSArray *)emails handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)cancelInviteToUserWithEmails:(NSArray *)emails tokens:(NSArray *)tokens handler:(MDAPIBoolHandler)handler;
+
+typedef enum
+{
+    MDInvitedUserTypeAllFailed = 0,
+    MDInvitedUserTypeTokenUnuserd = 1,
+    MDInvitedUserTypePendding = 2,
+    MDInvitedUserTypeRefused = 3,
+    MDInvitedUserTypeSucceed = 4
+} MDInvitedUserType;
+
+- (MDURLConnection *)loadInvitedUserListWithType:(MDInvitedUserType)type handler:(MDAPINSArrayHandler)handler;
+
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  获取当前登录用户常用联系人列表
@@ -614,8 +628,9 @@
                                        memberIDs:(NSArray *)memberIDs
                                          handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)deleteMemberFromeTaskWithTaskID:(NSString *)tID
-                              memberID:(NSString *)memberID
-                               handler:(MDAPIBoolHandler)handler;
+                                            memberID:(NSString *)memberID
+                                             handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)applyForObservationToTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler;
 
 #pragma mark - 动态接口
 

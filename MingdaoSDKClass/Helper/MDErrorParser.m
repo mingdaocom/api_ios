@@ -20,15 +20,15 @@
         case 10003:
             return @"非法操作";
         case 10004:
-            return @"请求未加入群组数据";
+            return @"您没有权限查看此群组";
         case 10005:
             return @"内部错误";
         case 10006:
-            return @"请求未加入任务数据";
+            return @"您没有权限查看此任务";
         case 10007:
             return @"请求数据不存在";
         case 10008:
-            return @"请求未加入日程数据";
+            return @"您没有权限查看此日程";
         case 10009:
             return @"无权对任务进行操作(权限仅给任务负责人或任务创建者)";
         case 10010:
