@@ -147,13 +147,12 @@
  @parmas:
  userID   - 私信来自这个userID的user
  text     - 私信内容
- type     - 默认为0；1表示接收消息者发送系统消息（仅限应用创建者）
  handler  - 处理发送成功后返回的私信ID
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)sendMessageToUserID:(NSString *)userID
-                    message:(NSString *)text
-                       type:(NSInteger)type
-                    handler:(MDAPINSStringHandler)handler;
+                                 message:(NSString *)text
+                                  images:(NSArray *)images
+                                 handler:(MDAPINSStringHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
