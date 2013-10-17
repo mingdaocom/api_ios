@@ -7,6 +7,7 @@
 //
 
 #import "MDURLConnection.h"
+#import "MDErrorParser.h"
 
 @interface MDURLConnection () <NSURLConnectionDataDelegate>
 @property (strong, nonatomic) NSMutableURLRequest *req;
@@ -14,6 +15,7 @@
 @property (strong, nonatomic) NSMutableData *appendingData;
 @property (copy,   nonatomic) MDAPINSDataHandler handler;
 @property (assign, nonatomic) long long totalLength, currentLength;
+@property (assign, nonatomic) int statusCode;
 @end
 
 @implementation MDURLConnection
@@ -35,6 +37,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    self.statusCode = [((NSHTTPURLResponse *)response) statusCode];
     self.totalLength = [response expectedContentLength];
     self.currentLength = 0;
 }
@@ -67,6 +70,13 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    if (self.statusCode != 200) {
+        NSError *error = [MDErrorParser errorWithHttpErrorCode:self.statusCode URLString:self.req.URL.absoluteString];
+        self.handler(nil, error);
+        self.handler = nil;
+        return;
+    }
+    
     self.handler(self.appendingData, nil);
     self.handler = nil;
 }

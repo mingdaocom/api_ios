@@ -13,4 +13,5 @@
 @interface MDErrorParser : NSObject
 + (NSString *)errorStringWithErrorCode:(NSString *)errorCode;
 + (NSError *)errorWithMDDic:(NSDictionary *)dic URLString:(NSString *)urlString;
++ (NSError *)errorWithHttpErrorCode:(int)statusCode URLString:(NSString *)urlString;
 @end

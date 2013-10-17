@@ -101,4 +101,25 @@
 
     return [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"NSLocalizedDescription":[MDErrorParser errorStringWithErrorCode:@"0"],@"NSErrorFailingURLStringKey":urlString}];
 }
+
++ (NSError *)errorWithHttpErrorCode:(int)statusCode URLString:(NSString *)urlString
+{
+    if (statusCode == 404) {
+        NSString *localizedDescription = nil;
+        if (NSMaxRange([urlString rangeOfString:@"api.mingdao.com"]) < urlString.length) {
+            localizedDescription = @"服务器错误";
+        } else {
+            localizedDescription = @"您使用的是私有部署的明道版本，此功能将在后续版本中提供";
+        }
+        
+        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+        [userInfo setObject:localizedDescription forKey:@"NSLocalizedDescription"];
+        [userInfo setObject:urlString forKey:@"NSErrorFailingURLStringKey"];
+        
+        NSError *error = [NSError errorWithDomain:MDAPIErrorDomain code:statusCode userInfo:userInfo];
+        return error;
+    }
+    
+    return [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{@"NSLocalizedDescription":[MDErrorParser errorStringWithErrorCode:@"0"],@"NSErrorFailingURLStringKey":urlString}];
+}
 @end
