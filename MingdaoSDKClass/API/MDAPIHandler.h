@@ -18,6 +18,7 @@
 #import "MDPost.h"
 #import "MDPostReplyment.h"
 #import "MDTag.h"
+#import "MDPostAt.h"
 
 typedef void (^MDAPIBoolHandler)(BOOL success, NSError *error);
 typedef void (^MDAPIObjectHandler)(id object, NSError *error);

@@ -674,7 +674,7 @@ typedef enum
                                           handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
                                       postType:(MDPostType)type
-                                         maxID:(NSString *)maxID
+                                     pageindex:(NSInteger)pageindex
                                       pagesize:(NSInteger)size
                                        handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadMyPostsWithKeywords:(NSString *)keywords

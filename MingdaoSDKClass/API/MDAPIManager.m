@@ -2735,18 +2735,19 @@ static MDAPIManager *sharedManager = nil;
 
 - (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
                                       postType:(MDPostType)type
-                                         maxID:(NSString *)maxID
+                                     pageindex:(NSInteger)pageindex
                                       pagesize:(NSInteger)size
                                        handler:(MDAPINSArrayHandler)handler
 {
     
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/atme?format=json"];
+    [urlString appendString:@"/post/atme_2?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
-    if (maxID && maxID.length > 0)
-        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (pageindex > 1) {
+        [urlString appendFormat:@"&pageindex=%d", pageindex];
+    }
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%d", size];
     if (type != -1) {
@@ -2775,7 +2776,7 @@ static MDAPIManager *sharedManager = nil;
         for (NSDictionary *postDic in postDics) {
             if (![postDic isKindOfClass:[NSDictionary class]])
                 continue;
-            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            MDPostAt *post = [[MDPostAt alloc] initWithDictionary:postDic];
             [posts addObject:post];
         }
         handler(posts, error);
