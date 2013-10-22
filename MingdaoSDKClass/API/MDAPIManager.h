@@ -239,8 +239,9 @@
  handler - 处理修改后的结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)createGroupWithGroupName:(NSString *)gName
-                        isPublic:(BOOL)isPub
-                         handler:(MDAPIObjectHandler)handler;
+                                       detail:(NSString *)detail
+                                     isPublic:(BOOL)isPub
+                                      handler:(MDAPIObjectHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:

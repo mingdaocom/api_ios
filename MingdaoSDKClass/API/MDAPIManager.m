@@ -767,13 +767,15 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)createGroupWithGroupName:(NSString *)gName
-                        isPublic:(BOOL)isPub
-                         handler:(MDAPIObjectHandler)handler
+                                       detail:(NSString *)detail
+                                     isPublic:(BOOL)isPub
+                                      handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/create?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_name=%@", gName];
+    [urlString appendFormat:@"&about=%@", detail];
     [urlString appendFormat:@"&is_public=%d", isPub?1:0];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
