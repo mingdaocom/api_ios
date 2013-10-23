@@ -46,6 +46,10 @@
         self.educations = [aDic objectForKey:@"educations"];
         self.unreadMessageCount = [[aDic objectForKey:@"unreadmessage_count"] integerValue];
         self.messageCount = [[aDic objectForKey:@"message_count"] integerValue];
+        
+        if ([aDic objectForKey:@"project"]) {
+            self.project = [[MDCompany alloc] initWithDictionary:[aDic objectForKey:@"project"]];
+        }
     }
     return self;
 }
@@ -88,6 +92,7 @@
     copyObject.messageCount = self.messageCount;
     copyObject.jobs = [self.jobs copy];
     copyObject.educations = [self.educations copy];
+    copyObject.project = [self.project copy];
     return copyObject;
 }
 

@@ -45,6 +45,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "MDCompany.h"
 
 enum {
     MDUserLicenceNomalUser = -1,
@@ -82,6 +83,7 @@ typedef NSInteger MDUserGender;
 @property (assign, nonatomic) NSInteger unreadMessageCount, messageCount;
 @property (strong, nonatomic) NSArray *jobs;
 @property (strong, nonatomic) NSArray *educations;
+@property (strong, nonatomic) MDCompany *project;
 
 - (MDUser *)initWithDictionary:(NSDictionary *)aDic;
 @end

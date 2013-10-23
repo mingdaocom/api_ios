@@ -15,6 +15,9 @@
     if (self) {
         self.objectID = [aDic objectForKey:@"id"];
         self.objectName = [aDic objectForKey:@"name"];
+        self.nameEn = [aDic objectForKey:@"nameEn"];
+        self.logo = [aDic objectForKey:@"logo"];
+        self.type = [[aDic objectForKey:@"license_type"] integerValue];
     }
     return self;
 }
@@ -25,6 +28,9 @@
     MDCompany *copyObject = object;
     copyObject.objectID = [self.objectID copy];
     copyObject.objectName = [self.objectName copy];
+    copyObject.nameEn = [self.nameEn copy];
+    copyObject.logo = [self.logo copy];
+    copyObject.type = self.type;
     return copyObject;
 }
 @end

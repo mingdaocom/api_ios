@@ -252,8 +252,18 @@
  handler    - 处理邀请结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)inviteUserToGroupWithGroupID:(NSString *)gID
-                                            email:(NSString *)email
+                                           emails:(NSArray *)emails
+                                       inviteType:(NSInteger)type
                                           handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)cancelInviteToUserToGroupWithTokens:(NSArray *)tokens
+                                                 handler:(MDAPIBoolHandler)handler;
+typedef enum {
+    MDGroupInviteTypeAll = 0,
+    MDGroupInviteTypeWithOtherCompanyUser = 1,
+    MDGroupInviteTypeWithColleagueOlny = 2
+} MDGroupInviteType;
+- (MDURLConnection *)loadInvitedUserToGroupListWithType:(MDGroupInviteType)type
+                                                handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)deleteUserFromGroupID:(NSString *)gID
                                     userID:(NSString *)userID
                                    handler:(MDAPIBoolHandler)handler;
