@@ -264,6 +264,7 @@ typedef enum {
     MDGroupInviteTypeWithColleagueOlny = 2
 } MDGroupInviteType;
 - (MDURLConnection *)loadInvitedUserToGroupListWithType:(MDGroupInviteType)type
+                                                groupID:(NSString *)groupID
                                                 handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)deleteUserFromGroupID:(NSString *)gID
                                     userID:(NSString *)userID

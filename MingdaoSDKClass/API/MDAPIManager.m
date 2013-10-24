@@ -839,11 +839,13 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)loadInvitedUserToGroupListWithType:(MDGroupInviteType)type
+                                                groupID:(NSString *)groupID
                                                 handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/groupinvite/invited_user?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&g_id=%@", groupID];
     [urlString appendFormat:@"&type=%d", type];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
