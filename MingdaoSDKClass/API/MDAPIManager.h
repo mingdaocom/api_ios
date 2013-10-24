@@ -241,6 +241,7 @@
 - (MDURLConnection *)createGroupWithGroupName:(NSString *)gName
                                        detail:(NSString *)detail
                                      isPublic:(BOOL)isPub
+                                     isHidden:(BOOL)isHidden
                                       handler:(MDAPIObjectHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-

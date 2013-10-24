@@ -769,6 +769,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)createGroupWithGroupName:(NSString *)gName
                                        detail:(NSString *)detail
                                      isPublic:(BOOL)isPub
+                                     isHidden:(BOOL)isHidden
                                       handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -777,6 +778,9 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&g_name=%@", gName];
     [urlString appendFormat:@"&about=%@", detail];
     [urlString appendFormat:@"&is_public=%d", isPub?1:0];
+    if (!isPub) {
+        [urlString appendFormat:@"&is_hidden=%d", isHidden?1:0];
+    }
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         if (error) {
