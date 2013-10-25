@@ -269,7 +269,12 @@ typedef enum {
 - (MDURLConnection *)deleteUserFromGroupID:(NSString *)gID
                                     userID:(NSString *)userID
                                    handler:(MDAPIBoolHandler)handler;
-
+- (MDURLConnection *)addGroupAdminWithGroupID:(NSString *)gID
+                                       userID:(NSString *)userID
+                                      handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)removeGroupAdminWithGroupID:(NSString *)gID
+                                          userID:(NSString *)userID
+                                         handler:(MDAPIBoolHandler)handler;
 #pragma mark - 用户接口
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-

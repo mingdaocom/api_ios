@@ -887,6 +887,41 @@ static MDAPIManager *sharedManager = nil;
     return connection;
 }
 
+- (MDURLConnection *)addGroupAdminWithGroupID:(NSString *)gID
+                                       userID:(NSString *)userID
+                                      handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/group/add_admin?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&g_id=%@", gID];
+    [urlString appendFormat:@"&u_id=%@", userID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)removeGroupAdminWithGroupID:(NSString *)gID
+                                          userID:(NSString *)userID
+                                         handler:(MDAPIBoolHandler)handler
+{
+#warning !!!
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/group/add_admin?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&g_id=%@", gID];
+    [urlString appendFormat:@"&u_id=%@", userID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
 #pragma mark - 用户接口
 - (MDURLConnection *)loadAllUsersWithHandler:(MDAPINSArrayHandler)handler
 {
