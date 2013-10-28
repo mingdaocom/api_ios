@@ -908,9 +908,8 @@ static MDAPIManager *sharedManager = nil;
                                           userID:(NSString *)userID
                                          handler:(MDAPIBoolHandler)handler
 {
-#warning !!!
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/group/add_admin?format=json"];
+    [urlString appendString:@"/group/remove_admin?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", gID];
     [urlString appendFormat:@"&u_id=%@", userID];
