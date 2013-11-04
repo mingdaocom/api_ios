@@ -2823,6 +2823,52 @@ static MDAPIManager *sharedManager = nil;
     return connection;
 }
 
+- (MDURLConnection *)loadMyReplyWithKeywords:(NSString *)keywords
+                                       maxID:(NSString *)maxID
+                                    pagesize:(NSInteger)size
+                                     handler:(MDAPINSArrayHandler)handler
+{
+    
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/post/replybyme?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%d", size];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSArray *postRepliesDics = [dic objectForKey:@"replyments"];
+        NSMutableArray *postReplyments = [NSMutableArray array];
+        for (NSDictionary *postReplyDic in postRepliesDics) {
+            if (![postReplyDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPostReplyment *postReplyment = [[MDPostReplyment alloc] initWithDictionary:postReplyDic];
+            [postReplyments addObject:postReplyment];
+        }
+        handler(postReplyments, error);
+    }];
+    return connection;
+}
+
 - (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
                                       postType:(MDPostType)type
                                      pageindex:(NSInteger)pageindex

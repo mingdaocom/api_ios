@@ -690,6 +690,10 @@ typedef enum
                                             maxID:(NSString *)maxID
                                          pagesize:(NSInteger)size
                                           handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadMyReplyWithKeywords:(NSString *)keywords
+                                       maxID:(NSString *)maxID
+                                    pagesize:(NSInteger)size
+                                     handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
                                       postType:(MDPostType)type
                                      pageindex:(NSInteger)pageindex
