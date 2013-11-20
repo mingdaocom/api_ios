@@ -110,7 +110,7 @@
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     [data setObject:msg forKey:@"msg"];
     [data setObject:userID forKey:@"touser"];
-    [data setObject:[NSString stringWithFormat:@"%d", type] forKey:@"type"];
+    [data setObject:[NSNumber numberWithInteger:type] forKey:@"type"];
     if (file) {
         [data setObject:file forKey:@"file"];
     }
@@ -122,7 +122,7 @@
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     [data setObject:msg forKey:@"msg"];
     [data setObject:groupID forKey:@"togroup"];
-    [data setObject:[NSString stringWithFormat:@"%d", type] forKey:@"type"];
+    [data setObject:[NSNumber numberWithInteger:type] forKey:@"type"];
     if (file) {
         [data setObject:file forKey:@"file"];
     }
@@ -173,7 +173,7 @@
 {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     [data setObject:userID forKey:@"userid"];
-    [data setObject:[NSString stringWithFormat:@"%d", count] forKey:@"num"];
+    [data setObject:[NSNumber numberWithInteger:count] forKey:@"num"];
     [self sendEvent:@"unread message list" withData:data andAcknowledge:handler];
 }
 
@@ -181,11 +181,11 @@
 {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     [data setObject:userID forKey:@"userid"];
-    [data setObject:[NSString stringWithFormat:@"%d", count] forKey:@"num"];
+    [data setObject:[NSNumber numberWithInteger:count] forKey:@"num"];
     if (timeString) {
         [data setObject:timeString forKey:@"sincetime"];
     }
-    [data setObject:[NSString stringWithFormat:@"%d", page] forKey:@"page"];
+    [data setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     [self sendEvent:@"message list" withData:data andAcknowledge:handler];
 }
 
@@ -193,7 +193,7 @@
 {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     [data setObject:groupID forKey:@"groupid"];
-    [data setObject:[NSString stringWithFormat:@"%d", count] forKey:@"num"];
+    [data setObject:[NSNumber numberWithInteger:count] forKey:@"num"];
     [self sendEvent:@"unread group message list" withData:data andAcknowledge:handler];
 }
 
@@ -201,17 +201,18 @@
 {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     [data setObject:groupID forKey:@"groupid"];
-    [data setObject:[NSString stringWithFormat:@"%d", count] forKey:@"num"];
+    [data setObject:[NSNumber numberWithInteger:count] forKey:@"num"];
     if (timeString) {
         [data setObject:timeString forKey:@"sincetime"];
     }
-    [data setObject:[NSString stringWithFormat:@"%d", page] forKey:@"page"];
+    [data setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     [self sendEvent:@"message list" withData:data andAcknowledge:handler];
 }
 
 #pragma mark - 数据处理
 - (void)socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
 {
+    NSLog(@"recieved Event: %@ <<<<", packet.name);
     if ([packet.name isEqualToString:@"user status"]) {
         if (self.statusDidChangeHandler) {
             self.statusDidChangeHandler(packet.dataAsJSON);
