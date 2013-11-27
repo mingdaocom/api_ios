@@ -108,7 +108,9 @@
 - (void)sendMessageToUserWithUserID:(NSString *)userID message:(NSString *)msg type:(NSInteger)type file:(id)file handler:(MDWebChatSocketCallBackHandler)handler
 {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
-    [data setObject:msg forKey:@"msg"];
+    if (msg) {
+        [data setObject:msg forKey:@"msg"];
+    }
     [data setObject:userID forKey:@"touser"];
     [data setObject:[NSNumber numberWithInteger:type] forKey:@"type"];
     if (file) {
@@ -120,7 +122,9 @@
 - (void)sendMessageToGroupWithGroupID:(NSString *)groupID message:(NSString *)msg type:(NSInteger)type file:(id)file handler:(MDWebChatSocketCallBackHandler)handler
 {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
-    [data setObject:msg forKey:@"msg"];
+    if (msg) {
+        [data setObject:msg forKey:@"msg"];
+    }
     [data setObject:groupID forKey:@"togroup"];
     [data setObject:[NSNumber numberWithInteger:type] forKey:@"type"];
     if (file) {
@@ -209,6 +213,12 @@
     [self sendEvent:@"message list" withData:data andAcknowledge:handler];
 }
 
+- (void)loadQiniuTokenAndKeyWithType:(NSInteger)type handler:(MDWebChatSocketCallBackHandler)handler
+{
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+    [data setObject:[NSNumber numberWithInteger:type] forKey:@"type"];
+    [self sendEvent:@"upload token" withData:data andAcknowledge:handler];
+}
 #pragma mark - 数据处理
 - (void)socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
 {

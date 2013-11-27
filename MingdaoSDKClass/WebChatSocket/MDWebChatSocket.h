@@ -37,6 +37,7 @@ typedef void(^MDWebChatSocketCallBackHandler)(id argsData);
 - (void)loadUserMessageListWithUserID:(NSString *)userID count:(NSInteger)count sinceTime:(NSString *)timeString page:(NSInteger)page handler:(MDWebChatSocketCallBackHandler)handler;
 - (void)loadUnreadGroupMessageListWithGroupID:(NSString *)groupID count:(NSInteger)count handler:(MDWebChatSocketCallBackHandler)handler;
 - (void)loadGroupMessageListWithGroupID:(NSString *)groupID count:(NSInteger)count sinceTime:(NSString *)timeString page:(NSInteger)page handler:(MDWebChatSocketCallBackHandler)handler;
+- (void)loadQiniuTokenAndKeyWithType:(NSInteger)type handler:(MDWebChatSocketCallBackHandler)handler;
 
 // 数据处理
 @property (copy, nonatomic) MDWebChatSocketCallBackHandler statusDidChangeHandler, groupJoinedHandler, groupRemovedHandler, newGroupMessageHandler, newUserMessageHandler;
