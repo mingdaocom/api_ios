@@ -431,11 +431,10 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/message/create?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&u_id=%@", userID];
-    [urlString appendFormat:@"&msg=%@", [text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (images.count > 0) {
         [urlString appendFormat:@"&f_type=%d", 0];
     }
-    
+
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [req setHTTPMethod:@"POST"];
     
@@ -445,6 +444,11 @@ static MDAPIManager *sharedManager = nil;
         NSString *boundaryPrefix = @"--";
         
         NSMutableData *postBody = [NSMutableData data];
+        
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"msg"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", text] dataUsingEncoding:NSUTF8StringEncoding]];
+
         for (int i = 0; i < images.count; i++) {
             NSString *filename = [NSString stringWithFormat:@"photo%d.jpg", i];
             NSMutableString *parameter = [NSMutableString string];
@@ -471,6 +475,11 @@ static MDAPIManager *sharedManager = nil;
         [req setValue:contentType forHTTPHeaderField:@"Content-type"];
         
         [req setHTTPBody:postBody];
+    }
+    else {
+        NSString *str = [NSString stringWithFormat:@"msg=%@", [[self class] localEncode:text]];
+        NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+        [req setHTTPBody:data];
     }
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
@@ -2212,8 +2221,6 @@ static MDAPIManager *sharedManager = nil;
     
     if (endDateString && endDateString.length > 0)
         [urlString appendFormat:@"&t_ed=%@", endDateString];
-    if (des && des.length > 0)
-        [urlString appendFormat:@"&t_des=%@", des];
     if (memberIDs && memberIDs.count > 0)
         [urlString appendFormat:@"&t_mids=%@", [memberIDs componentsJoinedByString:@","]];
     if (chargerID && chargerID.length > 0)
@@ -2227,6 +2234,12 @@ static MDAPIManager *sharedManager = nil;
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
+
+    if (des && des.length > 0) {
+        NSString *str = [NSString stringWithFormat:@"t_des=%@", des];
+        NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+        [req setHTTPBody:data];
+    }
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         if (error) {
@@ -2293,13 +2306,16 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/task/addreply?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
-    [urlString appendFormat:@"&r_msg=%@", message];
     if (rID && rID.length > 0)
         [urlString appendFormat:@"&r_id=%@", rID];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
+#warning SERVER ERROR
+    NSString *str = [NSString stringWithFormat:@"r_msg=%@", message];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [req setHTTPBody:data];
     
     if (images.count > 0) {
         NSString *boundary = @"----------MINGDAO";
@@ -2432,10 +2448,18 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/task/edit_des?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
-    [urlString appendFormat:@"&des=%@", des];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+#warning SERVER ERROR
+    if (des && des.length > 0) {
+        NSString *str = [NSString stringWithFormat:@"t_des=%@", des];
+        NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+        [req setHTTPBody:data];
+    }
+    
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         [self handleBoolData:data error:error URLString:urlString handler:handler];
@@ -3371,12 +3395,15 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&p_msg=%@", [[self class] localEncode:text]];
     [urlString appendFormat:@"&s_type=%d", shareType];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
+    
+    NSString *str = [NSString stringWithFormat:@"p_msg=%@", [[self class] localEncode:text]];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [req setHTTPBody:data];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         if (error) {
@@ -3453,12 +3480,14 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&access_token=%@&p_type=4", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&p_msg=%@", [[self class] localEncode:text]];
     [urlString appendFormat:@"&s_type=%d", shareType];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
+    NSString *str = [NSString stringWithFormat:@"p_msg=%@", [[self class] localEncode:text]];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [req setHTTPBody:data];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         if (error) {
@@ -3494,7 +3523,6 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&access_token=%@&f_type=picture", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&p_msg=%@", [[self class] localEncode:text]];
     [urlString appendFormat:@"&s_type=%d", shareType];
     if (toCenter) {
         [urlString appendFormat:@"&is_center=%d", 1];
@@ -3504,11 +3532,16 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
     
+    NSString *boundary = @"----------MINGDAO";
+    NSString *boundaryPrefix = @"--";
+    
+    NSMutableData *postBody = [NSMutableData data];
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"p_msg"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", [[self class] localEncode:text]] dataUsingEncoding:NSUTF8StringEncoding]];
+    
     if (images.count > 0) {
-        NSString *boundary = @"----------MINGDAO";
-        NSString *boundaryPrefix = @"--";
-        
-        NSMutableData *postBody = [NSMutableData data];
         for (int i = 0; i < images.count; i++) {
             NSString *filename = [NSString stringWithFormat:@"photo%d.jpg", i];
             NSMutableString *parameter = [NSMutableString string];
@@ -3533,10 +3566,13 @@ static MDAPIManager *sharedManager = nil;
         
         NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
         [req setValue:contentType forHTTPHeaderField:@"Content-type"];
-        
-        [req setHTTPBody:postBody];
     }
 
+//    NSString *str = [NSString stringWithFormat:@"p_msg=%@", [[self class] localEncode:text]];
+//    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+//    [postBody appendData:data];
+    
+    [req setHTTPBody:postBody];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         if (error) {
@@ -3575,7 +3611,6 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&p_msg=%@", [[self class] localEncode:text]];
     [urlString appendFormat:@"&re_p_id=%@", postID];
     [urlString appendFormat:@"&s_type=%d", shareType];
     if (images.count > 0) {
@@ -3594,6 +3629,10 @@ static MDAPIManager *sharedManager = nil;
         NSString *boundaryPrefix = @"--";
         
         NSMutableData *postBody = [NSMutableData data];
+        
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"p_msg"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", [[self class] localEncode:text]] dataUsingEncoding:NSUTF8StringEncoding]];
         for (int i = 0; i < images.count; i++) {
             NSString *filename = [NSString stringWithFormat:@"photo%d.jpg", i];
             NSMutableString *parameter = [NSMutableString string];
@@ -3618,11 +3657,15 @@ static MDAPIManager *sharedManager = nil;
         
         NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
         [req setValue:contentType forHTTPHeaderField:@"Content-type"];
-        
         [req setHTTPBody:postBody];
     }
+    else {
+        NSString *str = [NSString stringWithFormat:@"p_msg=%@", [[self class] localEncode:text]];
+        NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+        [req setHTTPBody:data];
+    }
 
-    
+
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         if (error) {
             handler(nil, error);
@@ -3674,7 +3717,6 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/post/add_reply?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
-    [urlString appendFormat:@"&r_msg=%@", [[self class] localEncode:msg]];
     if (rID && rID.length > 0)
         [urlString appendFormat:@"&r_id=%@", rID];
     if (images.count > 0) {
@@ -3690,11 +3732,17 @@ static MDAPIManager *sharedManager = nil;
 
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
+    
     if (images.count > 0) {
         NSString *boundary = @"----------MINGDAO";
         NSString *boundaryPrefix = @"--";
         
         NSMutableData *postBody = [NSMutableData data];
+        
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"r_msg"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", [[self class] localEncode:msg]] dataUsingEncoding:NSUTF8StringEncoding]];
+        
         for (int i = 0; i < images.count; i++) {
             NSString *filename = [NSString stringWithFormat:@"photo%d.jpg", i];
             NSMutableString *parameter = [NSMutableString string];
@@ -3719,9 +3767,14 @@ static MDAPIManager *sharedManager = nil;
         
         NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
         [req setValue:contentType forHTTPHeaderField:@"Content-type"];
-        
         [req setHTTPBody:postBody];
     }
+    else {
+        NSString *str = [NSString stringWithFormat:@"r_msg=%@", [[self class] localEncode:msg]];
+        NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+        [req setHTTPBody:data];
+    }
+
 
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
