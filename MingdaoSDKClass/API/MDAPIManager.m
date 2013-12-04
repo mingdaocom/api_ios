@@ -2312,16 +2312,17 @@ static MDAPIManager *sharedManager = nil;
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
-#warning SERVER ERROR
-    NSString *str = [NSString stringWithFormat:@"r_msg=%@", message];
-    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-    [req setHTTPBody:data];
     
     if (images.count > 0) {
         NSString *boundary = @"----------MINGDAO";
         NSString *boundaryPrefix = @"--";
         
         NSMutableData *postBody = [NSMutableData data];
+        
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"r_msg"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", message] dataUsingEncoding:NSUTF8StringEncoding]];
+        
         for (int i = 0; i < images.count; i++) {
             NSString *filename = [NSString stringWithFormat:@"photo%d.jpg", i];
             NSMutableString *parameter = [NSMutableString string];
@@ -2348,6 +2349,11 @@ static MDAPIManager *sharedManager = nil;
         [req setValue:contentType forHTTPHeaderField:@"Content-type"];
         
         [req setHTTPBody:postBody];
+    }
+    else {
+        NSString *str = [NSString stringWithFormat:@"r_msg=%@", message];
+        NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+        [req setHTTPBody:data];
     }
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
@@ -2453,9 +2459,8 @@ static MDAPIManager *sharedManager = nil;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
     
-#warning SERVER ERROR
     if (des && des.length > 0) {
-        NSString *str = [NSString stringWithFormat:@"t_des=%@", des];
+        NSString *str = [NSString stringWithFormat:@"des=%@", des];
         NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
         [req setHTTPBody:data];
     }
