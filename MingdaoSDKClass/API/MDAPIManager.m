@@ -7,9 +7,6 @@
 //
 
 #import "MDAPIManager.h"
-#import "UIDevice+IdentifierAddition.h"
-#import "MDErrorParser.h"
-#import "JSONKit.h"
 
 @interface MDAPIManager ()
 @property (strong, nonatomic) NSString *appKey, *appSecret;

@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "MDAPIHandler.h"
+#import "UIDevice+IdentifierAddition.h"
+#import "MDErrorParser.h"
+#import "JSONKit.h"
 
 @interface MDAPIManager : NSObject
 @property (strong, nonatomic) NSString *serverAddress;
