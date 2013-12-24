@@ -22,6 +22,7 @@
 
 typedef void (^MDAPIBoolHandler)(BOOL success, NSError *error);
 typedef void (^MDAPIObjectHandler)(id object, NSError *error);
+typedef void (^MDAPINSIntegerHandler)(NSInteger count, NSError *error);
 typedef void (^MDAPINSDictionaryHandler)(NSDictionary *dictionary, NSError *error);
 typedef void (^MDAPINSArrayHandler)(NSArray *objects, NSError *error);
 typedef void (^MDAPINSStringHandler)(NSString *string, NSError *error);
