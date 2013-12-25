@@ -339,6 +339,8 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         [self handleBoolData:data error:error URLString:urlstr handler:handler];
     }];
+    connection.timeOut = 30 + 30*1;
+    
     return connection;
 }
 
@@ -2372,7 +2374,7 @@ static MDAPIManager *sharedManager = nil;
         NSString *replementID = [dic objectForKey:@"replyment"];
         handler(replementID, nil);
     }];
-    connection.timeOut = 60 + 30*images.count;
+    connection.timeOut = 30 + 30*images.count;
     return connection;
 }
 
@@ -3570,10 +3572,6 @@ static MDAPIManager *sharedManager = nil;
         [req setValue:contentType forHTTPHeaderField:@"Content-type"];
     }
 
-//    NSString *str = [NSString stringWithFormat:@"p_msg=%@", [[self class] localEncode:text]];
-//    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-//    [postBody appendData:data];
-    
     [req setHTTPBody:postBody];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
@@ -3595,7 +3593,7 @@ static MDAPIManager *sharedManager = nil;
         NSString *postID = [dic objectForKey:@"post"];
         handler(postID, error);
     }];
-    connection.timeOut = 60 + 30*images.count;
+    connection.timeOut = 30 + 30*images.count;
 
     return connection;
 }
@@ -3687,7 +3685,7 @@ static MDAPIManager *sharedManager = nil;
         NSString *postID = [dic objectForKey:@"post"];
         handler(postID, error);
     }];
-    connection.timeOut = 60 + 30*images.count;
+    connection.timeOut = 30 + 30*images.count;
 
     return connection;
 }
@@ -3798,7 +3796,7 @@ static MDAPIManager *sharedManager = nil;
         NSString *replymentID = [dic objectForKey:@"replyment"];
         handler(replymentID, nil);
     }];
-    connection.timeOut = 60 + 30*images.count;
+    connection.timeOut = 30 + 30*images.count;
 
     return connection;
 }
