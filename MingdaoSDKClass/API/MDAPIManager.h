@@ -24,6 +24,7 @@
 + (void)setServerAddress:(NSString *)serverAddress;
 + (void)setAppKey:(NSString *)appKey;
 + (void)setAppSecret:(NSString *)appSecret;
+- (void)handleBoolData:(NSData *)data error:(NSError *)error URLString:(NSString *)urlString handler:(MDAPIBoolHandler)handler;
 
 #pragma mark - 登录/验证接口
 

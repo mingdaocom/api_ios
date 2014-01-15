@@ -265,7 +265,6 @@ static MDAPIManager *sharedManager = nil;
 
 - (MDURLConnection *)setCurrentUserSettingWithMentionMeOn:(NSNumber *)mentionOn replymeOn:(NSNumber *)replyOn sysOn:(NSNumber *)sysOn Handler:(MDAPIBoolHandler)handler
 {
-    //TODO: ...
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/passport/setuserpush?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
