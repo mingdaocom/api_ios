@@ -62,6 +62,7 @@
         self.originalDoc = [dic objectForKey:@"original_file"];
         self.thumbnailPic = [dic objectForKey:@"thumbnail_pic"];
         self.fileName = [dic objectForKey:@"original_filename"];
+        self.videoUrl = [dic objectForKey:@"video_url"];
         self.isVisble = [[dic objectForKey:@"Visble"] boolValue];
         NSArray *voteOptionDics = [dic objectForKey:@"options"];
         if (voteOptionDics && voteOptionDics.count > 0) {

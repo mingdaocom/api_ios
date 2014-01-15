@@ -37,9 +37,9 @@
  sHandler - 处理仅存在一个网络时登录结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loginWithUsername:(NSString *)username
-                 password:(NSString *)password
-           projectHandler:(MDAPINSArrayHandler)pHandler
-                  handler:(MDAPIBoolHandler)sHandler;
+                              password:(NSString *)password
+                        projectHandler:(MDAPINSArrayHandler)pHandler
+                               handler:(MDAPIBoolHandler)sHandler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -67,6 +67,9 @@
  handler - 处理MDUser结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loadCurrentUserDetailWithHandler:(MDAPIObjectHandler)handler;
+
+- (MDURLConnection *)loadCurrentUserSettingWithHandler:(MDAPIObjectHandler)handler;
+- (MDURLConnection *)setCurrentUserSettingWithMentionMeOn:(NSNumber *)mentionOn replymeOn:(NSNumber *)replyOn sysOn:(NSNumber *)sysOn Handler:(MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:

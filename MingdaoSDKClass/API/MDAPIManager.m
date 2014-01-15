@@ -136,9 +136,9 @@ static MDAPIManager *sharedManager = nil;
 }
 
 - (MDURLConnection *)loginWithUsername:(NSString *)username
-                 password:(NSString *)password
-                projectID:(NSString *)projectID
-                  handler:(MDAPIBoolHandler)handler
+                              password:(NSString *)password
+                             projectID:(NSString *)projectID
+                               handler:(MDAPIBoolHandler)handler
 {    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/oauth2/access_token?format=json"];
@@ -232,6 +232,54 @@ static MDAPIManager *sharedManager = nil;
         
         MDUser *aUser = [[MDUser alloc] initWithDictionary:[dic objectForKey:@"user"]];
         handler(aUser, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadCurrentUserSettingWithHandler:(MDAPIObjectHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/passport/get_setting?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        handler(dic, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)setCurrentUserSettingWithMentionMeOn:(NSNumber *)mentionOn replymeOn:(NSNumber *)replyOn sysOn:(NSNumber *)sysOn Handler:(MDAPIBoolHandler)handler
+{
+    //TODO: ...
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/passport/setuserpush?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (mentionOn) {
+        [urlString appendFormat:@"&push_mentioned=%d", [mentionOn integerValue]];
+    }
+    if (replyOn) {
+        [urlString appendFormat:@"&push_comment=%d", [replyOn integerValue]];
+    }
+    if (sysOn) {
+        [urlString appendFormat:@"&push_sysmessage=%d", [sysOn integerValue]];
+    }
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
     }];
     return connection;
 }

@@ -28,6 +28,7 @@
 @property (assign, nonatomic) BOOL isInCenter;
 @property (strong, nonatomic) NSString *linkDes, *linkTitle, *linkURL;
 @property (strong, nonatomic) NSString *middlePic, *originalPic, *fileName, *thumbnailPic, *originalDoc;
+@property (strong, nonatomic) NSString *videoUrl;
 @property (strong, nonatomic) NSArray *voteOptions;
 - (MDPostDetail *)initWithDictionary:(NSDictionary *)dic;
 @end
@@ -49,7 +50,8 @@ enum {
     MDPostTypeImage = 2,
     MDPostTypeDocument = 3,
     MDPostTypeFAQ = 4,
-    MDPostTypeVote = 7
+    MDPostTypeVote = 7,
+    MDPostTypeVideoAndAudio = 8
 };
 typedef NSInteger MDPostType;
 
