@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MingdaoAuthenticator.h"
+#import "MDAuthenticator.h"
 
 @class MDAuthView;
 

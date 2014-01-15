@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 Mingdao. All rights reserved.
 //
 
-#import "MingdaoAuthenticator.h"
+#import "MDAuthenticator.h"
 
-@implementation MingdaoAuthenticator
+@implementation MDAuthenticator
 + (BOOL)openMingdaoAppWithAppKey:(NSString *)appKey appSecret:(NSString *)appSecret rediretURL:(NSString *)urlString
 {
     NSMutableString *string = [NSMutableString stringWithString:@"mingdao://app.mingdao.com/authentication/?"];

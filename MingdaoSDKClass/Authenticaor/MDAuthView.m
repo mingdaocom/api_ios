@@ -72,7 +72,7 @@
 
 - (void)start
 {
-    [self.webView loadRequest:[MingdaoAuthenticator authorizeWithAppKey:self.appKey rediretURL:self.redirectURL state:self.state display:MDAuthorizeDisplayTypeMobile]];
+    [self.webView loadRequest:[MDAuthenticator authorizeWithAppKey:self.appKey rediretURL:self.redirectURL state:self.state display:MDAuthorizeDisplayTypeMobile]];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType

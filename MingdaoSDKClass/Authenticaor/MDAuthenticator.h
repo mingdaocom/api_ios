@@ -16,7 +16,7 @@ typedef enum {
     MDAuthorizeDisplayTypeApponmingdao //默认的站内应用授权页，授权后不返回access_token，只刷新站内应用父框架。
 } MDAuthorizeDisplayType;
 
-@interface MingdaoAuthenticator : NSObject
+@interface MDAuthenticator : NSObject
 + (BOOL)openMingdaoAppWithAppKey:(NSString *)appKey appSecret:(NSString *)appSecret rediretURL:(NSString *)urlString;
 + (NSString *)mingdaoAppDidFinishAuthenticationWithResutlt:(NSURL *)result;
 
