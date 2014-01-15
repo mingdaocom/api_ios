@@ -56,6 +56,12 @@
                              projectID:(NSString *)projectID
                                handler:(MDAPIBoolHandler)handler;
 
+- (MDURLConnection *)loginWithAppKey:(NSString *)appKey
+                           appSecret:(NSString *)appSecret
+                                code:(NSString *)code
+                         redirectURL:(NSString *)redirectURL
+                             handler:(MDAPIBoolHandler)handler;
+
 #pragma mark - 企业网络与管理员接口
 - (MDURLConnection *)loadCompanyDetailWithHandler:(MDAPINSDictionaryHandler)handler;
 

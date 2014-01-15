@@ -178,6 +178,41 @@ static MDAPIManager *sharedManager = nil;
     return connection;
 }
 
+- (MDURLConnection *)loginWithAppKey:(NSString *)appKey
+                           appSecret:(NSString *)appSecret
+                                code:(NSString *)code
+                         redirectURL:(NSString *)redirectURL
+                             handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/oauth2/access_token?format=json"];
+    [urlString appendFormat:@"&app_key=%@&app_secret=%@&redirect_uri=%@&code=%@", appKey, appSecret, redirectURL, code];
+    [urlString appendString:@"&grant_type=authorization_code"];
+    
+    NSString *urlStr = urlString;
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        NSDictionary *dic = [data objectFromJSONData];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSString *accessToken = [dic objectForKey:@"access_token"];
+        if (accessToken && accessToken.length > 0) {
+            self.accessToken = accessToken;
+            handler(YES, error);
+        } else {
+            handler(NO, error);
+        }
+    }];
+    return connection;
+}
+
 #pragma mark - 企业网络与管理员接口
 - (MDURLConnection *)loadCompanyDetailWithHandler:(MDAPINSDictionaryHandler)handler
 {

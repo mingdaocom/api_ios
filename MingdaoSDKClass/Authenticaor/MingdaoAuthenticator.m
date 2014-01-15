@@ -48,19 +48,20 @@
     if (type != 0) {
         switch (type) {
             case MDAuthorizeDisplayTypeDefault:
-                [string appendString:@"default"];
+                [string appendString:@"&display=default"];
                 break;
             case MDAuthorizeDisplayTypeMobile:
-                [string appendString:@"mobile"];
+                [string appendString:@"&display=mobile"];
                 break;
             case MDAuthorizeDisplayTypePopup:
-                [string appendString:@"popup"];
+                [string appendString:@"&display=popup"];
                 break;
             default:
-                [string appendString:@"apponmingdao"];
+                [string appendString:@"&display=apponmingdao"];
                 break;
         }
     }
+    
     return [NSURLRequest requestWithURL:[NSURL URLWithString:string]];
 }
 @end
