@@ -17,8 +17,11 @@ typedef enum {
 } MDAuthorizeDisplayType;
 
 @interface MDAuthenticator : NSObject
-+ (BOOL)openMingdaoAppWithAppKey:(NSString *)appKey appSecret:(NSString *)appSecret rediretURL:(NSString *)urlString;
-+ (NSString *)mingdaoAppDidFinishAuthenticationWithResutlt:(NSURL *)result;
++ (BOOL)authorizeByMingdaoAppWithAppKey:(NSString *)appKey
+                              appSecret:(NSString *)appSecret
+                             rediretURL:(NSString *)urlString;
+
++ (NSDictionary *)mingdaoAppDidFinishAuthenticationWithResutlt:(NSURL *)result;
 
 + (NSURLRequest *)authorizeWithAppKey:(NSString *)appKey
                            rediretURL:(NSString *)urlString

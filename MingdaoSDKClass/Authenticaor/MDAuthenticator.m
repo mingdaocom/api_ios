@@ -9,25 +9,29 @@
 #import "MDAuthenticator.h"
 
 @implementation MDAuthenticator
-+ (BOOL)openMingdaoAppWithAppKey:(NSString *)appKey appSecret:(NSString *)appSecret rediretURL:(NSString *)urlString
++ (BOOL)authorizeByMingdaoAppWithAppKey:(NSString *)appKey appSecret:(NSString *)appSecret rediretURL:(NSString *)urlString
 {
     NSMutableString *string = [NSMutableString stringWithString:@"mingdao://app.mingdao.com/authentication/?"];
-    [string appendFormat:@"appKey==%@&&appSecret==%@&&redirectURL==%@", appKey, appSecret, [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [string appendFormat:@"appKey==%@&&appSecret==%@", appKey, appSecret];
     return [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
 }
 
-+ (NSString *)mingdaoAppDidFinishAuthenticationWithResutlt:(NSURL *)url
++ (NSDictionary *)mingdaoAppDidFinishAuthenticationWithResutlt:(NSURL *)url
 {
     if ([url.scheme hasPrefix:@"mingdaoApp"]) {
         NSArray *queries = [url.query componentsSeparatedByString:@"&&"];
-        if (queries.count == 2) {
-            NSString *code = [queries[0] componentsSeparatedByString:@"=="][1];
-            NSString *redirectURL = [[queries[1] componentsSeparatedByString:@"=="][1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        if (queries.count > 0) {
+            NSString *result = nil;
+            for (NSString *p in queries) {
+                if ([p hasPrefix:@"result"]) {
+                    result = [p componentsSeparatedByString:@"=="][1];
+                }
+            }
 
-            NSLog(@"code = %@\nredirectURL = %@", code, redirectURL);
+            NSDictionary *dic = [[result stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] objectFromJSONString];
             
-            if (code) {
-                return code;
+            if (dic) {
+                return dic;
             }
         }
     }
