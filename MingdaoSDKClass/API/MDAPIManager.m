@@ -77,9 +77,9 @@ static MDAPIManager *sharedManager = nil;
 
 #pragma mark - 登录/验证接口
 - (MDURLConnection *)loginWithUsername:(NSString *)username
-                 password:(NSString *)password
-           projectHandler:(MDAPINSArrayHandler)pHandler
-                  handler:(MDAPIBoolHandler)sHandler
+                              password:(NSString *)password
+                        projectHandler:(MDAPINSArrayHandler)pHandler
+                               handler:(MDAPINSDictionaryHandler)sHandler
 {    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/oauth2/access_token?format=json"];
@@ -124,13 +124,7 @@ static MDAPIManager *sharedManager = nil;
             return;
         }
 
-        NSString *accessToken = [dic objectForKey:@"access_token"];
-        if (accessToken && accessToken.length > 0) {
-            self.accessToken = accessToken;
-            sHandler(YES, error);
-        } else {
-            sHandler(NO, error);
-        }
+        sHandler(dic, error);
     }];
     return connection;
 }
@@ -138,7 +132,7 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)loginWithUsername:(NSString *)username
                               password:(NSString *)password
                              projectID:(NSString *)projectID
-                               handler:(MDAPIBoolHandler)handler
+                               handler:(MDAPINSDictionaryHandler)handler
 {    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/oauth2/access_token?format=json"];
@@ -167,13 +161,7 @@ static MDAPIManager *sharedManager = nil;
             return;
         }
         
-        NSString *accessToken = [dic objectForKey:@"access_token"];
-        if (accessToken && accessToken.length > 0) {
-            self.accessToken = accessToken;
-            handler(YES, error);
-        } else {
-            handler(NO, error);
-        }
+        handler(dic, error);
     }];
     return connection;
 }
@@ -182,7 +170,7 @@ static MDAPIManager *sharedManager = nil;
                            appSecret:(NSString *)appSecret
                                 code:(NSString *)code
                          redirectURL:(NSString *)redirectURL
-                             handler:(MDAPIBoolHandler)handler
+                             handler:(MDAPINSDictionaryHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/oauth2/access_token?format=json"];
@@ -202,13 +190,7 @@ static MDAPIManager *sharedManager = nil;
             return;
         }
         
-        NSString *accessToken = [dic objectForKey:@"access_token"];
-        if (accessToken && accessToken.length > 0) {
-            self.accessToken = accessToken;
-            handler(YES, error);
-        } else {
-            handler(NO, error);
-        }
+        handler(dic, error);
     }];
     return connection;
 }

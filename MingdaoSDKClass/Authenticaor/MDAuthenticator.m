@@ -8,8 +8,13 @@
 
 #import "MDAuthenticator.h"
 
+NSString *const MDAuthErrorKey = @"error";
+NSString *const MDAuthAccessTokenKey = @"access_token";
+NSString *const MDAuthRefreshTokenKey = @"refresh_token";
+NSString *const MDAuthExpiresTimeKey = @"expires_in";
+
 @implementation MDAuthenticator
-+ (BOOL)authorizeByMingdaoAppWithAppKey:(NSString *)appKey appSecret:(NSString *)appSecret rediretURL:(NSString *)urlString
++ (BOOL)authorizeByMingdaoAppWithAppKey:(NSString *)appKey appSecret:(NSString *)appSecret
 {
     NSMutableString *string = [NSMutableString stringWithString:@"mingdao://app.mingdao.com/authentication/?"];
     [string appendFormat:@"appKey==%@&&appSecret==%@", appKey, appSecret];

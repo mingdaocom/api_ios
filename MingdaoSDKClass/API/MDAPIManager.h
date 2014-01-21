@@ -40,7 +40,7 @@
 - (MDURLConnection *)loginWithUsername:(NSString *)username
                               password:(NSString *)password
                         projectHandler:(MDAPINSArrayHandler)pHandler
-                               handler:(MDAPIBoolHandler)sHandler;
+                               handler:(MDAPINSDictionaryHandler)sHandler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -54,13 +54,13 @@
 - (MDURLConnection *)loginWithUsername:(NSString *)username
                               password:(NSString *)password
                              projectID:(NSString *)projectID
-                               handler:(MDAPIBoolHandler)handler;
+                               handler:(MDAPINSDictionaryHandler)handler;
 
 - (MDURLConnection *)loginWithAppKey:(NSString *)appKey
                            appSecret:(NSString *)appSecret
                                 code:(NSString *)code
                          redirectURL:(NSString *)redirectURL
-                             handler:(MDAPIBoolHandler)handler;
+                             handler:(MDAPINSDictionaryHandler)handler;
 
 #pragma mark - 企业网络与管理员接口
 - (MDURLConnection *)loadCompanyDetailWithHandler:(MDAPINSDictionaryHandler)handler;

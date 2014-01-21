@@ -42,7 +42,7 @@
         [self addSubview:actionBar];
             UIButton *cB = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 44)];
         [cB setTitle:@"退出" forState:UIControlStateNormal];
-        [cB addTarget:self action:@selector(hide) forControlEvents:UIControlEventTouchUpInside];
+        [cB addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
         [actionBar addSubview:cB];
     }
     return self;
@@ -50,8 +50,9 @@
 
 - (void)showInView:(UIView *)view
 {
+    [self.webView loadRequest:[MDAuthenticator authorizeWithAppKey:self.appKey rediretURL:self.redirectURL state:self.state display:MDAuthorizeDisplayTypeMobile]];
     self.alpha = 0;
-    [view addSubview:self];
+    [view.window addSubview:self];
     [UIView animateKeyframesWithDuration:0.3 delay:0 options:UIViewKeyframeAnimationOptionLayoutSubviews animations:^{
         self.alpha = 1;
     } completion:^(BOOL finished){
@@ -70,9 +71,22 @@
     }];
 }
 
-- (void)start
+- (void)cancel
 {
-    [self.webView loadRequest:[MDAuthenticator authorizeWithAppKey:self.appKey rediretURL:self.redirectURL state:self.state display:MDAuthorizeDisplayTypeMobile]];
+    [self hide];
+    [self.delegate mingdaoAuthView:self didFinishAuthorizeWithResult:nil];
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    self.indicatorBaseView.hidden = NO;
+    [self.indicatorView startAnimating];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    self.indicatorBaseView.hidden = YES;
+    [self.indicatorView stopAnimating];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -89,12 +103,17 @@
                     NSLog(@"code == %@", code);
                     self.indicatorBaseView.hidden = NO;
                     [self.indicatorView startAnimating];
-                    [[[MDAPIManager sharedManager] loginWithAppKey:self.appKey appSecret:self.appSecret code:code redirectURL:self.redirectURL handler:^(BOOL succeed, NSError *error){
+                    [[[MDAPIManager sharedManager] loginWithAppKey:self.appKey appSecret:self.appSecret code:code redirectURL:self.redirectURL handler:^(NSDictionary *dic, NSError *error){
                         self.indicatorBaseView.hidden = YES;
                         [self.indicatorView stopAnimating];
-                        if (error || !succeed) {
+                        if (error) {
                             return ;
                         }
+                        if (dic) {
+                            NSString *accessToken = [dic objectForKey:@"access_token"];
+                            [MDAPIManager sharedManager].accessToken = accessToken;
+                        }
+                        
                         NSLog(@"%@", [MDAPIManager sharedManager].accessToken);
                         [self.delegate mingdaoAuthView:self didFinishAuthorizeWithResult:[MDAPIManager sharedManager].accessToken];
                     }] start];

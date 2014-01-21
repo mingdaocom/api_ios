@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "MDAPIManager.h"
 
+extern NSString *const MDAuthErrorKey;
+extern NSString *const MDAuthAccessTokenKey;
+extern NSString *const MDAuthRefreshTokenKey;
+extern NSString *const MDAuthExpiresTimeKeyl;
+
 typedef enum {
     MDAuthorizeDisplayTypeDefault = 0,	//默认的授权页面，适用于web浏览器。
     MDAuthorizeDisplayTypeMobile,      //移动终端的授权页面，适用于支持html5的手机。
@@ -18,8 +23,7 @@ typedef enum {
 
 @interface MDAuthenticator : NSObject
 + (BOOL)authorizeByMingdaoAppWithAppKey:(NSString *)appKey
-                              appSecret:(NSString *)appSecret
-                             rediretURL:(NSString *)urlString;
+                              appSecret:(NSString *)appSecret;
 
 + (NSDictionary *)mingdaoAppDidFinishAuthenticationWithResutlt:(NSURL *)result;
 

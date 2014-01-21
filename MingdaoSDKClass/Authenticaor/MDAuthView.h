@@ -22,7 +22,6 @@
 @property (strong, nonatomic) NSString *redirectURL;
 @property (strong, nonatomic) NSString *state; // optional
 @property (weak, nonatomic) id<MDAuthViewDelegate> delegate;
-- (void)start;
 - (void)showInView:(UIView *)view;
 - (void)hide;
 @end
