@@ -325,12 +325,12 @@
             if (self.interval == 1) {
                 [string appendString:@"每天"];
             } else {
-                [string appendFormat:@"每%ld天", self.interval];
+                [string appendFormat:@"每%ld天", (long)self.interval];
             }
             if (self.untilDateString.length > 0) {
                 [string appendFormat:@" 截止到%@", self.untilDateString];
             } else if (self.recurCount > 0) {
-                [string appendFormat:@" 共%ld次", self.recurCount];
+                [string appendFormat:@" 共%ld次", (long)self.recurCount];
             }
             break;
         }
@@ -343,7 +343,7 @@
             if (self.interval == 1) {
                 [string appendString:@"每周"];
             } else {
-                [string appendFormat:@"每%ld周", self.interval];
+                [string appendFormat:@"每%ld周", (long)self.interval];
             }
             
             for (int i = 0; i < days.count; i++) {
@@ -353,7 +353,7 @@
             if (self.untilDateString.length > 0) {
                 [string appendFormat:@" 截止到 %@", self.untilDateString];
             } else if (self.recurCount > 0) {
-                [string appendFormat:@" 共%ld次", self.recurCount];
+                [string appendFormat:@" 共%ld次", (long)self.recurCount];
             }
             break;
         }
@@ -362,12 +362,12 @@
             if (self.interval == 1) {
                 [string appendString:@"每月"];
             } else {
-                [string appendFormat:@"每%ld个月", self.interval];
+                [string appendFormat:@"每%ld个月", (long)self.interval];
             }
             if (self.untilDateString.length > 0) {
                 [string appendFormat:@" 截止到%@", self.untilDateString];
             } else if (self.recurCount > 0) {
-                [string appendFormat:@" 共%ld次", self.recurCount];
+                [string appendFormat:@" 共%ld次", (long)self.recurCount];
             }
             break;
         }
@@ -376,12 +376,12 @@
             if (self.interval == 1) {
                 [string appendString:@"每年"];
             } else {
-                [string appendFormat:@"每%ld年", self.interval];
+                [string appendFormat:@"每%ld年", (long)self.interval];
             }
             if (self.untilDateString.length > 0) {
                 [string appendFormat:@" 截止到%@", self.untilDateString];
             } else if (self.recurCount > 0) {
-                [string appendFormat:@" 共%ld次", self.recurCount];
+                [string appendFormat:@" 共%ld次", (long)self.recurCount];
             }
             break;
         }

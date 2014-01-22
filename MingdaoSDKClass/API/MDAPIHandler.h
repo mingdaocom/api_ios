@@ -1,10 +1,11 @@
 //
-//  Header.h
-//  MingdaoSDK
+//  MDAPIHandler.h
+//  Mingdao
 //
 //  Created by Wee Tom on 13-6-3.
-//  Copyright (c) 2013年 WeeTomProduct. All rights reserved.
+//  
 //
+
 #import "MDURLConnection.h"
 #import "MDURLConnectionQueue.h"
 #import "MDCompany.h"
