@@ -10,6 +10,7 @@
 #import "MDAuthenticator.h"
 #import "MDAuthView.h"
 
+#warning keys
 #define AppKey @"A2714D1F5AD3D87F8D93DBC7FDA1098"
 #define AppSecret @"DF468BA6954E334BD7A9A6BD964A12C0"
 #define RedirectURL @"http://www.baidu.com"
