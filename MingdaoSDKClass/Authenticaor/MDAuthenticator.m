@@ -21,7 +21,7 @@ NSString *const MDAuthExpiresTimeKey = @"expires_in";
     return [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
 }
 
-+ (NSDictionary *)mingdaoAppDidFinishAuthenticationWithResutlt:(NSURL *)url
++ (NSDictionary *)mingdaoAppDidFinishAuthenticationWithURL:(NSURL *)url
 {
     if ([url.scheme hasPrefix:@"mingdaoApp"]) {
         NSArray *queries = [url.query componentsSeparatedByString:@"&&"];
@@ -29,14 +29,17 @@ NSString *const MDAuthExpiresTimeKey = @"expires_in";
             NSString *result = nil;
             for (NSString *p in queries) {
                 if ([p hasPrefix:@"result"]) {
-                    result = [p componentsSeparatedByString:@"=="][1];
+                    if ([[p componentsSeparatedByString:@"=="] count] > 2) {
+                        result = [p componentsSeparatedByString:@"=="][1];
+                    }
                 }
             }
 
-            NSDictionary *dic = [[result stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] objectFromJSONString];
-            
-            if (dic) {
-                return dic;
+            if (result) {
+                NSDictionary *dic = [[result stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] objectFromJSONString];   
+                if (dic) {
+                    return dic;
+                }
             }
         }
     }

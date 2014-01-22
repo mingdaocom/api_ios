@@ -25,7 +25,7 @@ typedef enum {
 + (BOOL)authorizeByMingdaoAppWithAppKey:(NSString *)appKey
                               appSecret:(NSString *)appSecret;
 
-+ (NSDictionary *)mingdaoAppDidFinishAuthenticationWithResutlt:(NSURL *)result;
++ (NSDictionary *)mingdaoAppDidFinishAuthenticationWithURL:(NSURL *)result;
 
 + (NSURLRequest *)authorizeWithAppKey:(NSString *)appKey
                            rediretURL:(NSString *)urlString
