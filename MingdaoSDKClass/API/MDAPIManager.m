@@ -286,13 +286,13 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/passport/setuserpush?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (mentionOn) {
-        [urlString appendFormat:@"&push_mentioned=%d", [mentionOn integerValue]];
+        [urlString appendFormat:@"&push_mentioned=%ld", [mentionOn integerValue]];
     }
     if (replyOn) {
-        [urlString appendFormat:@"&push_comment=%d", [replyOn integerValue]];
+        [urlString appendFormat:@"&push_comment=%ld", [replyOn integerValue]];
     }
     if (sysOn) {
-        [urlString appendFormat:@"&push_sysmessage=%d", [sysOn integerValue]];
+        [urlString appendFormat:@"&push_sysmessage=%ld", [sysOn integerValue]];
     }
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         [self handleBoolData:data error:error URLString:urlString handler:handler];
@@ -364,7 +364,7 @@ static MDAPIManager *sharedManager = nil;
     if (birthday && birthday.length > 0)
         [urlString appendFormat:@"&birth=%@", [birthday stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (gender != 0)
-        [urlString appendFormat:@"&gender=%d", gender];
+        [urlString appendFormat:@"&gender=%ld", gender];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         [self handleBoolData:data error:error URLString:urlString handler:handler];
@@ -453,8 +453,8 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/message/list?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&u_id=%@", userID];
-    [urlString appendFormat:@"&pageindex=%d", pages];
-    [urlString appendFormat:@"&pagesize=%d", size];
+    [urlString appendFormat:@"&pageindex=%ld", pages];
+    [urlString appendFormat:@"&pagesize=%ld", size];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         if (error) {
@@ -886,7 +886,7 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/groupinvite/again_inviteuser?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", gID];
-    [urlString appendFormat:@"&invite_type=%d", type];
+    [urlString appendFormat:@"&invite_type=%ld", type];
     [urlString appendFormat:@"&emails=%@", [emails componentsJoinedByString:@","]];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -1220,7 +1220,7 @@ static MDAPIManager *sharedManager = nil;
         if ([anEmail hasSuffix:baseAuthenticationDomain]) {
             type = 0;
         }
-        [urlString appendFormat:@"&type=%d", type];
+        [urlString appendFormat:@"&type=%ld", type];
         NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
         [requests addObject:req];
@@ -1432,14 +1432,14 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendFormat:@"&c_memails=%@", [emails componentsJoinedByString:@","]];
     if (isRecur) {
         [urlString appendString:@"&is_recur=1"];
-        [urlString appendFormat:@"&frequency=%d", frequency];
-        [urlString appendFormat:@"&interval=%d", interval];
+        [urlString appendFormat:@"&frequency=%ld", frequency];
+        [urlString appendFormat:@"&interval=%ld", interval];
         if (frequency == 2) {
             weekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
             [urlString appendFormat:@"&week_day=%@", weekDays];
         }
         if (recurCount > 0) {
-            [urlString appendFormat:@"&recur_count=%d", recurCount];
+            [urlString appendFormat:@"&recur_count=%ld", recurCount];
         }
         if (untilDate && untilDate.length > 0) {
             [urlString appendFormat:@"&until_date=%@", untilDate];
@@ -1502,14 +1502,14 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&c_private=%@", isPrivate?@"0":@"1"];
     if (isRecur) {
         [urlString appendString:@"&is_recur=1"];
-        [urlString appendFormat:@"&frequency=%d", frequency];
-        [urlString appendFormat:@"&interval=%d", interval];
+        [urlString appendFormat:@"&frequency=%ld", frequency];
+        [urlString appendFormat:@"&interval=%ld", interval];
         if (frequency == 2) {
             weekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
             [urlString appendFormat:@"&week_day=%@", weekDays];
         }
         if (recurCount > 0) {
-            [urlString appendFormat:@"&recur_count=%d", recurCount];
+            [urlString appendFormat:@"&recur_count=%ld", recurCount];
         }
         if (untilDate && untilDate.length > 0) {
             [urlString appendFormat:@"&until_date=%@", untilDate];
@@ -1661,8 +1661,8 @@ static MDAPIManager *sharedManager = nil;
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/calendar/week?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&year=%d", year];
-    [urlString appendFormat:@"&week=%d", week];    
+    [urlString appendFormat:@"&year=%ld", year];
+    [urlString appendFormat:@"&week=%ld", week];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -1870,9 +1870,9 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/task/my_joined_finished?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (page > 0)
-        [urlString appendFormat:@"&pageindex=%d", page];
+        [urlString appendFormat:@"&pageindex=%ld", page];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -1954,9 +1954,9 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/task/my_assign_finished?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (page > 0)
-        [urlString appendFormat:@"&pageindex=%d", page];
+        [urlString appendFormat:@"&pageindex=%ld", page];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -2038,9 +2038,9 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/task/my_charge_finished?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (page > 0)
-        [urlString appendFormat:@"&pageindex=%d", page];
+        [urlString appendFormat:@"&pageindex=%ld", page];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -2161,9 +2161,9 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/task/my_observer_finished?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (page > 0)
-        [urlString appendFormat:@"&pageindex=%d", page];
+        [urlString appendFormat:@"&pageindex=%ld", page];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -2235,7 +2235,7 @@ static MDAPIManager *sharedManager = nil;
     if (maxTID)
         [urlString appendFormat:@"&max_id=%@", maxTID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -2684,9 +2684,9 @@ static MDAPIManager *sharedManager = nil;
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (type != -1) {
-        [urlString appendFormat:@"&post_type=%d", type];
+        [urlString appendFormat:@"&post_type=%ld", type];
     }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -2734,7 +2734,7 @@ static MDAPIManager *sharedManager = nil;
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -2783,9 +2783,9 @@ static MDAPIManager *sharedManager = nil;
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (type != -1) {
-        [urlString appendFormat:@"&post_type=%d", type];
+        [urlString appendFormat:@"&post_type=%ld", type];
     }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -2835,9 +2835,9 @@ static MDAPIManager *sharedManager = nil;
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (type != -1) {
-        [urlString appendFormat:@"&post_type=%d", type];
+        [urlString appendFormat:@"&post_type=%ld", type];
     }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -2883,7 +2883,7 @@ static MDAPIManager *sharedManager = nil;
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -2929,7 +2929,7 @@ static MDAPIManager *sharedManager = nil;
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -2974,12 +2974,12 @@ static MDAPIManager *sharedManager = nil;
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
     if (pageindex > 1) {
-        [urlString appendFormat:@"&pageindex=%d", pageindex];
+        [urlString appendFormat:@"&pageindex=%ld", pageindex];
     }
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (type != -1) {
-        [urlString appendFormat:@"&post_type=%d", type];
+        [urlString appendFormat:@"&post_type=%ld", type];
     }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -3027,9 +3027,9 @@ static MDAPIManager *sharedManager = nil;
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0) 
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (type != -1) {
-        [urlString appendFormat:@"&post_type=%d", type];
+        [urlString appendFormat:@"&post_type=%ld", type];
     }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -3074,7 +3074,7 @@ static MDAPIManager *sharedManager = nil;
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
 
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -3122,7 +3122,7 @@ static MDAPIManager *sharedManager = nil;
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
 
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -3174,9 +3174,9 @@ static MDAPIManager *sharedManager = nil;
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (filterType != 0) {
-        [urlString appendFormat:@"&filter_type=%d", filterType];
+        [urlString appendFormat:@"&filter_type=%ld", filterType];
     }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -3227,9 +3227,9 @@ static MDAPIManager *sharedManager = nil;
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (filterType != 0)
-        [urlString appendFormat:@"&filter_type=%d", filterType];
+        [urlString appendFormat:@"&filter_type=%ld", filterType];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
     
@@ -3281,9 +3281,9 @@ static MDAPIManager *sharedManager = nil;
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", (long)size];
     if (filterType != 0)
-        [urlString appendFormat:@"&filter_type=%d", filterType];
+        [urlString appendFormat:@"&filter_type=%ld", filterType];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
     
@@ -3463,7 +3463,7 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&s_type=%d", shareType];
+    [urlString appendFormat:@"&s_type=%ld", shareType];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
@@ -3510,7 +3510,7 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&l_title=%@", [[self class] localEncode:link]];
     [urlString appendFormat:@"&l_uri=%@", link];
     [urlString appendFormat:@"&p_msg=%@", [[self class] localEncode:text]];
-    [urlString appendFormat:@"&s_type=%d", shareType];
+    [urlString appendFormat:@"&s_type=%ld", shareType];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
@@ -3548,7 +3548,7 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&access_token=%@&p_type=4", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&s_type=%d", shareType];
+    [urlString appendFormat:@"&s_type=%ld", shareType];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
@@ -3591,7 +3591,7 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&access_token=%@&f_type=picture", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&s_type=%d", shareType];
+    [urlString appendFormat:@"&s_type=%ld", shareType];
     if (toCenter) {
         [urlString appendFormat:@"&is_center=%d", 1];
     }
@@ -3676,7 +3676,7 @@ static MDAPIManager *sharedManager = nil;
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
     [urlString appendFormat:@"&re_p_id=%@", postID];
-    [urlString appendFormat:@"&s_type=%d", shareType];
+    [urlString appendFormat:@"&s_type=%ld", shareType];
     if (images.count > 0) {
         [urlString appendFormat:@"&f_type=%@", @"picture"];
     }
@@ -3790,7 +3790,7 @@ static MDAPIManager *sharedManager = nil;
         [urlString appendString:@"&isReshared=1"];
         if (groupIDs && groupIDs.count > 0)
             [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-        [urlString appendFormat:@"&s_type=%d", shareType];
+        [urlString appendFormat:@"&s_type=%ld", shareType];
     }
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
@@ -3950,9 +3950,9 @@ static MDAPIManager *sharedManager = nil;
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
     if (page > 0)
-        [urlString appendFormat:@"&pageindex=%d", page];
+        [urlString appendFormat:@"&pageindex=%ld", page];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -4028,9 +4028,9 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/vote/my_joined?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (page > 0)
-        [urlString appendFormat:@"&pageindex=%d", page];
+        [urlString appendFormat:@"&pageindex=%ld", page];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
     
@@ -4074,9 +4074,9 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/vote/my_create?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (page > 0)
-        [urlString appendFormat:@"&pageindex=%d", page];
+        [urlString appendFormat:@"&pageindex=%ld", page];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
     
@@ -4119,9 +4119,9 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendString:@"/vote/all?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (page > 1)
-        [urlString appendFormat:@"&pageindex=%d", page];
+        [urlString appendFormat:@"&pageindex=%ld", page];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", size];
+        [urlString appendFormat:@"&pagesize=%ld", size];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
     

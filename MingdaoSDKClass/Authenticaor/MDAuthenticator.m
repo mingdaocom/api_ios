@@ -1,6 +1,6 @@
 //
 //  MingdaoAuthenticator.m
-//  SDKDemo
+//  Mingdao
 //
 //  Created by Wee Tom on 14-1-15.
 //  Copyright (c) 2014年 Mingdao. All rights reserved.
@@ -29,7 +29,7 @@ NSString *const MDAuthExpiresTimeKey = @"expires_in";
             NSString *result = nil;
             for (NSString *p in queries) {
                 if ([p hasPrefix:@"result"]) {
-                    if ([[p componentsSeparatedByString:@"=="] count] > 2) {
+                    if ([[p componentsSeparatedByString:@"=="] count] >= 2) {
                         result = [p componentsSeparatedByString:@"=="][1];
                     }
                 }
