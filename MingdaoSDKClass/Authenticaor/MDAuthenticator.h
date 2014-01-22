@@ -22,11 +22,24 @@ typedef enum {
 } MDAuthorizeDisplayType;
 
 @interface MDAuthenticator : NSObject
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ 通过调用明道App来获取认证信息
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 + (BOOL)authorizeByMingdaoAppWithAppKey:(NSString *)appKey
                               appSecret:(NSString *)appSecret;
 
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ 通过解析明道App返回的URL来获取认证信息
+ 包括:
+ access_token
+ expire_in
+ refresh_token
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 + (NSDictionary *)mingdaoAppDidFinishAuthenticationWithURL:(NSURL *)result;
 
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ 生成通过Mobile来认证的链接,使用方法参考 @MDAuthView
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 + (NSURLRequest *)authorizeWithAppKey:(NSString *)appKey
                            rediretURL:(NSString *)urlString
                                 state:(NSString *)state

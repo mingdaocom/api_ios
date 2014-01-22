@@ -37,15 +37,15 @@
     [self authorizeByMingdaoMobilePage];
 }
 
-- (void)mingdaoAuthView:(MDAuthView *)view didFinishAuthorizeWithResult:(NSString *)token
+- (IBAction)buttonPressed:(UIButton *)sender {
+    // 尝试使用明道App认证
+    [self authorizeByMingdaoApp];
+}
+
+- (void)authorizeByMingdaoApp
 {
-    [view removeFromSuperview];
-    if (token) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Succeed!" message:[NSString stringWithFormat:@"token = %@", token] delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
-        [alertView show];
-    } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Failed!" message:@"" delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
-        [alertView show];
+    if (![MDAuthenticator authorizeByMingdaoAppWithAppKey:AppKey appSecret:AppSecret]) {
+        [self authorizeByMingdaoMobilePage];
     }
 }
 
@@ -59,11 +59,15 @@
     [view showInView:self.view];
 }
 
-- (IBAction)buttonPressed:(UIButton *)sender {
-    // 尝试使用明道App认证
-    if (![MDAuthenticator authorizeByMingdaoAppWithAppKey:AppKey appSecret:AppSecret]) {
-        // 未安装明道app，通过网页认证
-        [self authorizeByMingdaoMobilePage];
+- (void)mingdaoAuthView:(MDAuthView *)view didFinishAuthorizeWithResult:(NSString *)token
+{
+    [view removeFromSuperview];
+    if (token) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Succeed!" message:[NSString stringWithFormat:@"token = %@", token] delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
+        [alertView show];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Failed!" message:@"" delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
+        [alertView show];
     }
 }
 @end
