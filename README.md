@@ -22,7 +22,7 @@ iOS平台：https://github.com/meihua-info/api_ios
 
 2、参照SDK中所提供的Sample，仔细阅读SDK说明文档。
 
-3、参照说明文档，修改应用信息（包括Appkey、App Secret、Redirect Url），并完成第三方应用中的一些开发工作。
+3、参照说明文档，修改应用信息（包括AppKey、App Secret、Redirect Url），并完成第三方应用中的一些开发工作。
 
 注明：第三方也可根据自身需要，对SDK进行二次开发。
 
@@ -43,7 +43,7 @@ iOS平台：https://github.com/meihua-info/api_ios
 
 ![image](https://raw2.github.com/meihua-info/api_ios/master/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/1.jpeg)
 
-（2）添加URLScheme
+（2）添加URLScheme (URLScheme为mingdaoApp'AppKey', 引号内内容创建应用时获取的AppKey, 不好扩引号)
 
 ![image](https://raw2.github.com/meihua-info/api_ios/master/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/3.jpeg)
 
@@ -55,11 +55,8 @@ iOS平台：https://github.com/meihua-info/api_ios
 
 ![image](https://raw2.github.com/meihua-info/api_ios/master/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/4.jpeg)
 
-（5）示例：使用WebView授权
+（5）示例
 
-![image](https://github.com/meihua-info/api_android/raw/master/doc/6.png)
+![image](https://raw2.github.com/meihua-info/api_ios/master/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/5.png)
 
-（6）示例：使用明道客户端授权
-
-![image](https://github.com/meihua-info/api_android/raw/master/doc/7.png)
 ***
