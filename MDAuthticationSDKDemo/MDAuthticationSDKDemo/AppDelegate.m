@@ -23,12 +23,18 @@
     NSLog(@"%@", result);
     NSString *errorStirng= result[MDAuthErrorKey];
     if (errorStirng) {
-        //TODO:..
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Failed!" message:errorStirng delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
+        [alertView show];
+        return YES;
     }
 
-    //    NSString *accessToken = result[MDAuthAccessTokenKey];
+    NSString *accessToken = result[MDAuthAccessTokenKey];
     //    NSString *refeshToken = result[MDAuthRefreshTokenKey];
     //    NSString *expireTime = result[MDAuthExpiresTimeKeyl];
+    [MDAPIManager sharedManager].accessToken = accessToken;
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Succeed!" message:[NSString stringWithFormat:@"token = %@", accessToken] delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
+    [alertView show];
     
     return YES;
 }

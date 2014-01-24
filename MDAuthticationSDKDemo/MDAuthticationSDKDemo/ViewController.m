@@ -16,15 +16,24 @@
 #define RedirectURL @"http://www.baidu.com"
 
 @interface ViewController () <MDAuthViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *tokenLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *birthLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
 
 @end
 
 @implementation ViewController
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MDAPIManagerNewTokenSetNotification object:nil];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newTokenSet:) name:MDAPIManagerNewTokenSetNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,9 +74,29 @@
     if (token) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Succeed!" message:[NSString stringWithFormat:@"token = %@", token] delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
         [alertView show];
+        [MDAPIManager sharedManager].accessToken = token;
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Failed!" message:@"" delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
         [alertView show];
     }
+}
+
+- (void)newTokenSet:(NSNotification *)notification
+{
+    self.tokenLabel.text = notification.object;
+    
+    [self.indicator startAnimating];
+    __weak __block typeof(self) weakSelf = self;
+    
+    [[[MDAPIManager sharedManager] loadCurrentUserDetailWithHandler:^(MDUser *user, NSError *error){
+        [weakSelf.indicator stopAnimating];
+        if (error) {
+            weakSelf.nameLabel.text = error.userInfo[NSLocalizedDescriptionKey];
+            return ;
+        }
+        weakSelf.nameLabel.text = user.objectName;
+        weakSelf.titleLabel.text = user.job;
+        weakSelf.birthLabel.text = user.birth;
+    }] start];
 }
 @end

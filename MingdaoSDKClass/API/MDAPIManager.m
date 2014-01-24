@@ -8,6 +8,8 @@
 
 #import "MDAPIManager.h"
 
+extern NSString const *MDAPIManagerNewTokenSetNotification = @"MDAPIManagerNewTokenSetNotification";
+
 @interface MDAPIManager ()
 @property (strong, nonatomic) NSString *appKey, *appSecret;
 @end
@@ -47,6 +49,14 @@ static MDAPIManager *sharedManager = nil;
         return @"https://api.mingdao.com";
     }
     return _serverAddress;
+}
+
+- (void)setAccessToken:(NSString *)accessToken
+{
+    if (![_accessToken isEqualToString:accessToken] && accessToken) {
+        _accessToken = accessToken;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MDAPIManagerNewTokenSetNotification" object:accessToken userInfo:nil];
+    }
 }
 
 - (void)handleBoolData:(NSData *)data error:(NSError *)error URLString:(NSString *)urlString handler:(MDAPIBoolHandler)handler

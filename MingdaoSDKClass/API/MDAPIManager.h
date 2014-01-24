@@ -12,6 +12,8 @@
 #import "MDErrorParser.h"
 #import "JSONKit.h"
 
+extern NSString *MDAPIManagerNewTokenSetNotification;
+
 @interface MDAPIManager : NSObject
 @property (strong, nonatomic) NSString *serverAddress;
 @property (strong, nonatomic) NSString *accessToken;
