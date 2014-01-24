@@ -41,19 +41,19 @@ iOS平台：https://github.com/meihua-info/api_ios
 
 （1）添加MingdaoSDK资源文件
 
-![image](https://github.com/meihua-info/api_android/raw/master/doc/1.png)
+![image](https://raw2.github.com/meihua-info/api_ios/master/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/1.jpeg)
 
 （2）添加URLScheme
 
-![image](https://github.com/meihua-info/api_android/raw/master/doc/2.png)
+![image](https://raw2.github.com/meihua-info/api_ios/master/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/3.jpeg)
 
 （3）添加调用代码
 
-![image](https://github.com/meihua-info/api_android/raw/master/doc/4.png)
+![image](https://raw2.github.com/meihua-info/api_ios/master/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/2.jpeg)
 
 （4）接收返回的accesstoken结果
 
-![image](https://github.com/meihua-info/api_android/raw/master/doc/5.png)
+![image](https://raw2.github.com/meihua-info/api_ios/master/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/4.jpeg)
 
 （5）示例：使用WebView授权
 
