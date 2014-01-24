@@ -26,10 +26,20 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>MDAuthtication</string>
+			<string>MDAuthForiPhone</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>mingdaoAppA2714D1F5AD3D87F8D93DBC7FDA1098</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>MDAuthForiPad</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>mingdaoAppHDA2714D1F5AD3D87F8D93DBC7FDA1098</string>
 			</array>
 		</dict>
 	</array>

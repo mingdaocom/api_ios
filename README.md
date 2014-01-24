@@ -12,7 +12,8 @@
 
 目前支持SSO的客户端版本（SDK会进行版本识别并以WebView方式向下兼容）
 
-1、iOS版明道客户端3.0及以上
+1、iPhone版明道客户端3.0及以上
+2、iPad版明道客户端暂不支持
 ##3、接入流程
 1、下载并导入明道官方SDK。
 
@@ -43,7 +44,11 @@ iOS平台：https://github.com/meihua-info/api_ios
 
 ![image](https://raw2.github.com/meihua-info/api_ios/master/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/1.jpeg)
 
-（2）添加URLScheme (URLScheme为mingdaoApp'AppKey', 引号内内容创建应用时获取的AppKey, 不好扩引号)
+（2）添加URLScheme 
+    注: iPhone/iPod URLScheme为mingdaoApp'AppKey', 
+        iPad URLScheme为mingdaoAppHD'AppKey',
+        明道会优先将回调信息回传到iPad版应用,
+        引号内内容创建应用时获取的AppKey, 不包括引号
 
 ![image](https://raw2.github.com/meihua-info/api_ios/master/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/3.jpeg)
 
