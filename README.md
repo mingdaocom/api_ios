@@ -31,7 +31,7 @@ iOS平台：https://github.com/meihua-info/api_ios
 公有云请到明道开放平台创建应用 <http://open.mingdao.com> 私有部署请联系管理员创建应用并获取令牌
 
 具体开发指南请见《[明道开放平台指南](http://open.mingdao.com/md_develop_tread.html)》
-##5、Android平台接入说明文档
+##5、iOS平台接入说明文档
 
 1、此源码是已经嵌入了iOS的Demo，开发者可以根据此Demo将SDK嵌入到自己的项目中。
 
