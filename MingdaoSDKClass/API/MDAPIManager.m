@@ -53,7 +53,7 @@ static MDAPIManager *sharedManager = nil;
 
 - (void)setAccessToken:(NSString *)accessToken
 {
-    if (![_accessToken isEqualToString:accessToken] && accessToken) {
+    if (![_accessToken isEqualToString:accessToken]) {
         _accessToken = accessToken;
         [[NSNotificationCenter defaultCenter] postNotificationName:MDAPIManagerNewTokenSetNotification object:accessToken userInfo:nil];
     }

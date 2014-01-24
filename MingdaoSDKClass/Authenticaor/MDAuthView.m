@@ -74,7 +74,7 @@
 - (void)cancel
 {
     [self hide];
-    [self.delegate mingdaoAuthView:self didFinishAuthorizeWithResult:nil];
+    [self.delegate mingdaoAuthView:self didFinishAuthorizeWithResult:@{MDAuthErrorKey:@"MDAuthErrorUserCancelled"}];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
@@ -91,7 +91,6 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSLog(@"%@", request);
     if ([request.URL.absoluteString hasPrefix:self.redirectURL]) {
         NSString *code = nil;
         NSArray *quries = [request.URL.query componentsSeparatedByString:@"&"];
@@ -100,22 +99,19 @@
                 NSArray *parameterAndResult = [q componentsSeparatedByString:@"="];
                 if (parameterAndResult.count == 2 && [parameterAndResult[0] isEqualToString:@"code"]) {
                     code = parameterAndResult[1];
-                    NSLog(@"code == %@", code);
                     self.indicatorBaseView.hidden = NO;
                     [self.indicatorView startAnimating];
+                    
+                    __weak __block typeof(self) weakSelf = self;
                     [[[MDAPIManager sharedManager] loginWithAppKey:self.appKey appSecret:self.appSecret code:code redirectURL:self.redirectURL handler:^(NSDictionary *dic, NSError *error){
-                        self.indicatorBaseView.hidden = YES;
-                        [self.indicatorView stopAnimating];
+                        weakSelf.indicatorBaseView.hidden = YES;
+                        [weakSelf.indicatorView stopAnimating];
                         if (error) {
+                            [weakSelf.delegate mingdaoAuthView:self didFinishAuthorizeWithResult:@{MDAuthErrorKey:@"MDAuthErrorAPIError"}];
                             return ;
                         }
-                        if (dic) {
-                            NSString *accessToken = [dic objectForKey:@"access_token"];
-                            [MDAPIManager sharedManager].accessToken = accessToken;
-                        }
                         
-                        NSLog(@"%@", [MDAPIManager sharedManager].accessToken);
-                        [self.delegate mingdaoAuthView:self didFinishAuthorizeWithResult:[MDAPIManager sharedManager].accessToken];
+                        [weakSelf.delegate mingdaoAuthView:self didFinishAuthorizeWithResult:dic];
                     }] start];
                     return NO;
                 }

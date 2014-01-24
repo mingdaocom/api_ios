@@ -12,7 +12,7 @@
 @class MDAuthView;
 
 @protocol MDAuthViewDelegate <NSObject>
-- (void)mingdaoAuthView:(MDAuthView *)view didFinishAuthorizeWithResult:(NSString *)token;
+- (void)mingdaoAuthView:(MDAuthView *)view didFinishAuthorizeWithResult:(NSDictionary *)result;
 @end
 
 @interface MDAuthView : UIView <UIWebViewDelegate>

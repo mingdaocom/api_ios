@@ -25,6 +25,8 @@
 @end
 
 @implementation ViewController
+#pragma mark -
+#pragma mark - ViewLifeCycle
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MDAPIManagerNewTokenSetNotification object:nil];
@@ -47,19 +49,23 @@
 }
 
 - (IBAction)buttonPressed:(UIButton *)sender {
-    // 尝试使用明道App认证
+    // 尝试使用明道App获取认证信息
     [self authorizeByMingdaoApp];
 }
 
+#pragma mark -
+#pragma mark - AuthMethod
 - (void)authorizeByMingdaoApp
 {
     if (![MDAuthenticator authorizeByMingdaoAppWithAppKey:AppKey appSecret:AppSecret]) {
+        // 未安装明道App
         [self authorizeByMingdaoMobilePage];
     }
 }
 
 - (void)authorizeByMingdaoMobilePage
 {
+    // 使用 @MDAuthView 来获取认证信息
     MDAuthView *view = [[MDAuthView alloc] initWithFrame:self.view.bounds];
     view.appKey = AppKey;
     view.appSecret = AppSecret;
@@ -68,23 +74,34 @@
     [view showInView:self.view];
 }
 
-- (void)mingdaoAuthView:(MDAuthView *)view didFinishAuthorizeWithResult:(NSString *)token
+#pragma mark -
+#pragma mark - MDAuthViewDelegate
+- (void)mingdaoAuthView:(MDAuthView *)view didFinishAuthorizeWithResult:(NSDictionary *)result
 {
-    [view removeFromSuperview];
-    if (token) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Succeed!" message:[NSString stringWithFormat:@"token = %@", token] delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
+    // @MDAuthView 的回调方法
+    
+    [view hide];
+    NSString *errorStirng= result[MDAuthErrorKey];
+    if (errorStirng) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Failed!" message:errorStirng delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
         [alertView show];
-        [MDAPIManager sharedManager].accessToken = token;
     } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Failed!" message:@"" delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
+        NSString *accessToken = result[MDAuthAccessTokenKey];
+        //    NSString *refeshToken = result[MDAuthRefreshTokenKey];
+        //    NSString *expireTime = result[MDAuthExpiresTimeKeyl];
+        [MDAPIManager sharedManager].accessToken = accessToken;
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Succeed!" message:[NSString stringWithFormat:@"token = %@", accessToken] delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
         [alertView show];
     }
 }
 
+#pragma mark -
+#pragma mark - Notification
 - (void)newTokenSet:(NSNotification *)notification
 {
     self.tokenLabel.text = notification.object;
     
+    // 开始获取用户信息并展示
     [self.indicator startAnimating];
     __weak __block typeof(self) weakSelf = self;
     
