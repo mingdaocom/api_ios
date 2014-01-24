@@ -12,7 +12,7 @@
 #import "MDErrorParser.h"
 #import "JSONKit.h"
 
-extern NSString *MDAPIManagerNewTokenSetNotification;
+extern NSString * const MDAPIManagerNewTokenSetNotification;
 
 @interface MDAPIManager : NSObject
 @property (strong, nonatomic) NSString *serverAddress;
@@ -21,11 +21,13 @@ extern NSString *MDAPIManagerNewTokenSetNotification;
 + (MDAPIManager *)sharedManager;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @optional
  设置私有部署API地址，默认为:https://api.mingdao.com/
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 + (void)setServerAddress:(NSString *)serverAddress;
 + (void)setAppKey:(NSString *)appKey;
 + (void)setAppSecret:(NSString *)appSecret;
+
 - (void)handleBoolData:(NSData *)data error:(NSError *)error URLString:(NSString *)urlString handler:(MDAPIBoolHandler)handler;
 
 #pragma mark - 登录/验证接口

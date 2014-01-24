@@ -8,7 +8,7 @@
 
 #import "MDAPIManager.h"
 
-extern NSString const *MDAPIManagerNewTokenSetNotification = @"MDAPIManagerNewTokenSetNotification";
+NSString * const MDAPIManagerNewTokenSetNotification = @"MDAPIManagerNewTokenSetNotification";
 
 @interface MDAPIManager ()
 @property (strong, nonatomic) NSString *appKey, *appSecret;
@@ -55,7 +55,7 @@ static MDAPIManager *sharedManager = nil;
 {
     if (![_accessToken isEqualToString:accessToken] && accessToken) {
         _accessToken = accessToken;
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"MDAPIManagerNewTokenSetNotification" object:accessToken userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MDAPIManagerNewTokenSetNotification object:accessToken userInfo:nil];
     }
 }
 
