@@ -53,7 +53,7 @@
     [self.webView loadRequest:[MDAuthenticator authorizeWithAppKey:self.appKey rediretURL:self.redirectURL state:self.state display:MDAuthorizeDisplayTypeMobile]];
     self.alpha = 0;
     [view.window addSubview:self];
-    [UIView animateKeyframesWithDuration:0.3 delay:0 options:UIViewKeyframeAnimationOptionLayoutSubviews animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         self.alpha = 1;
     } completion:^(BOOL finished){
         
@@ -62,7 +62,7 @@
 
 - (void)hide
 {
-    [UIView animateKeyframesWithDuration:0.3 delay:0 options:UIViewKeyframeAnimationOptionLayoutSubviews animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         self.alpha = 0;
     } completion:^(BOOL finished){
         if (finished) {
