@@ -35,15 +35,18 @@ typedef enum {
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  通过解析明道App返回的URL来获取认证信息
- 包括:
- access_token
- expire_in
- refresh_token
+ 格式:
+ @{
+    @"access_token":@"A",
+    @"expire_in":@"B",
+    @"refresh_token":@"C"
+ }
+ 如果url并非明道验证返回链接则返回nil
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 + (NSDictionary *)mingdaoAppDidFinishAuthenticationWithURL:(NSURL *)result;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
- 生成通过Mobile来认证的链接,使用方法参考 @MDAuthView
+ 通过Mobile来认证的链接,使用方法参考 @MDAuthView
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 + (NSURLRequest *)authorizeWithAppKey:(NSString *)appKey
                            rediretURL:(NSString *)urlString
