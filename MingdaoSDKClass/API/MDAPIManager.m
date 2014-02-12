@@ -90,8 +90,18 @@ static MDAPIManager *sharedManager = nil;
                               password:(NSString *)password
                         projectHandler:(MDAPINSArrayHandler)pHandler
                                handler:(MDAPINSDictionaryHandler)sHandler
-{    
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
+{
+    return [self loginWithServer:[MDAPIManager sharedManager].serverAddress username:username password:password projectHandler:pHandler handler:sHandler];
+}
+
+- (MDURLConnection *)loginWithServer:(NSString *)serverAddress
+                            username:(NSString *)username
+                            password:(NSString *)password
+                      projectHandler:(MDAPINSArrayHandler)pHandler
+                             handler:(MDAPINSDictionaryHandler)sHandler
+{
+    
+    NSMutableString *urlString = [serverAddress mutableCopy];
     [urlString appendString:@"/oauth2/access_token?format=json"];
     [urlString appendFormat:@"&app_key=%@&app_secret=%@",  self.appKey, self.appSecret];
     
@@ -101,7 +111,7 @@ static MDAPIManager *sharedManager = nil;
     
     
     [urlString appendFormat:@"&grant_type=password&username=%@&password=%@", userNameTmp, passwordTmp];
-
+    
     
     NSString *urlStr = urlString;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -133,18 +143,25 @@ static MDAPIManager *sharedManager = nil;
             pHandler(projects, error);
             return;
         }
-
+        
         sHandler(dic, error);
     }];
     return connection;
+
 }
 
 - (MDURLConnection *)loginWithUsername:(NSString *)username
                               password:(NSString *)password
                              projectID:(NSString *)projectID
                                handler:(MDAPINSDictionaryHandler)handler
-{    
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
+{
+    return [self loginWithServer:[MDAPIManager sharedManager].serverAddress username:username password:password projectID:projectID handler:handler];
+}
+
+- (MDURLConnection *)loginWithServer:(NSString *)serverAddress username:(NSString *)username password:(NSString *)password projectID:(NSString *)projectID handler:(MDAPINSDictionaryHandler)handler
+{
+    
+    NSMutableString *urlString = [serverAddress mutableCopy];
     [urlString appendString:@"/oauth2/access_token?format=json"];
     [urlString appendFormat:@"&app_key=%@&app_secret=%@", self.appKey, self.appSecret];
     //生成UserName令牌签名,首先处理用户名和密码中的特殊字符
@@ -174,6 +191,7 @@ static MDAPIManager *sharedManager = nil;
         handler(dic, error);
     }];
     return connection;
+
 }
 
 - (MDURLConnection *)loginWithAppKey:(NSString *)appKey

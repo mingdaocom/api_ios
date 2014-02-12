@@ -582,7 +582,7 @@
 				GCC_PREFIX_HEADER = "MDAuthticationSDKDemo/MDAuthticationSDKDemo-Prefix.pch";
 				INFOPLIST_FILE = "MDAuthticationSDKDemo/MDAuthticationSDKDemo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "99C7212E-D458-4CA6-A2ED-E1A3EA367542";
+				PROVISIONING_PROFILE = "64BAC956-0001-4B79-8D3A-E840445B8B13";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -598,7 +598,7 @@
 				GCC_PREFIX_HEADER = "MDAuthticationSDKDemo/MDAuthticationSDKDemo-Prefix.pch";
 				INFOPLIST_FILE = "MDAuthticationSDKDemo/MDAuthticationSDKDemo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "99C7212E-D458-4CA6-A2ED-E1A3EA367542";
+				PROVISIONING_PROFILE = "64BAC956-0001-4B79-8D3A-E840445B8B13";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

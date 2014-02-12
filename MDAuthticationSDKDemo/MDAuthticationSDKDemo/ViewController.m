@@ -11,9 +11,9 @@
 #import "MDAuthView.h"
 
 #warning keys
-#define AppKey @"E122D74997594DF274C41722732D25C"
-#define AppSecret @"C879A5862377DAF66F7FABFBB69D84CE"
-#define RedirectURL @"http://www.mingdao.com"
+#define AppKey @"1365A728E314EAD3FAC96967ADBA40"
+#define AppSecret @"2C6F216EDA81733767F8F6C68568A66"
+#define RedirectURL @"http://www.baidu.com/"
 
 @interface ViewController () <MDAuthViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *tokenLabel;

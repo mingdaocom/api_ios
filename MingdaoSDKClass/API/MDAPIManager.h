@@ -46,6 +46,12 @@ extern NSString * const MDAPIManagerNewTokenSetNotification;
                         projectHandler:(MDAPINSArrayHandler)pHandler
                                handler:(MDAPINSDictionaryHandler)sHandler;
 
+- (MDURLConnection *)loginWithServer:(NSString *)serverAddress
+                            username:(NSString *)username
+                            password:(NSString *)password
+                      projectHandler:(MDAPINSArrayHandler)pHandler
+                            handler:(MDAPINSDictionaryHandler)sHandler;
+
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  通过用户名密码以及选定的MDProject.objectID来登录，projectID为必填
@@ -55,6 +61,12 @@ extern NSString * const MDAPIManagerNewTokenSetNotification;
  projectID - 登录的网络ID，ID(MDProject.objectID)可从上方的方法获取
  handler   - 处理登录结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)loginWithServer:(NSString *)serverAddress
+                            username:(NSString *)username
+                            password:(NSString *)password
+                            projectID:(NSString *)projectID
+                            handler:(MDAPINSDictionaryHandler)handler;
+
 - (MDURLConnection *)loginWithUsername:(NSString *)username
                               password:(NSString *)password
                              projectID:(NSString *)projectID
