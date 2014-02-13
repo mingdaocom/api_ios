@@ -38,7 +38,8 @@
  "endDate": "结束年月",
  "name": "学校名称",
  "startDate": "开始年月",
- "title": "学位或学历"
+ "title": "学位或学历",
+ "egroup":"是否外部用户0 为否 1为是"
  }]
  }
  }
@@ -78,6 +79,7 @@ typedef NSInteger MDUserGender;
 @property (strong, nonatomic) NSString *workPhoneNumber;
 @property (assign, nonatomic) BOOL isMobilePhoneNumberVisible;
 @property (assign, nonatomic) BOOL isFollowed;
+@property (assign, nonatomic) BOOL egroup;
 @property (assign, nonatomic) MDUserLicence licence;
 @property (assign, nonatomic) NSInteger status;
 @property (assign, nonatomic) NSInteger unreadMessageCount, messageCount;

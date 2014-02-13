@@ -40,6 +40,7 @@
         }
         self.workPhoneNumber = [aDic objectForKey:@"work_phone"];
         self.isFollowed = [[aDic objectForKey:@"followed_status"] boolValue];
+        self.egroup = [[aDic objectForKey:@"egroup"] boolValue];
         self.licence = [[aDic objectForKey:@"license"] integerValue];
         self.status = [[aDic objectForKey:@"status"] integerValue];
         self.jobs = [aDic objectForKey:@"jobs"];
