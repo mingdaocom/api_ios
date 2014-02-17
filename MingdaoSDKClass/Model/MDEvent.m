@@ -292,22 +292,22 @@
     NSMutableString *string = [NSMutableString string];
     NSDateFormatter *fm = [[NSDateFormatter alloc] init];
     if (!self.isAllday) {
-        [fm setDateFormat:@"yyyy-MM-dd HH:mm"];
+        [fm setDateFormat:@"yyyy-MM-dd EEEE HH:mm"];
         [string appendString:[fm stringFromDate:startDate]];
         if ((sComp.year != eComp.year) || (sComp.day != eComp.day)) {
         } else if (sComp.month != eComp.month) {
-            [fm setDateFormat:@"MM-dd HH:mm"];
+            [fm setDateFormat:@"MM-dd EEEE HH:mm"];
         } else {
             [fm setDateFormat:@"HH:mm"];
         }
         [string appendFormat:@" - %@", [fm stringFromDate:endDate]];
     } else {
-        [fm setDateFormat:@"yyyy-MM-dd"];
+        [fm setDateFormat:@"yyyy-MM-dd EEEE"];
         [string appendString:[fm stringFromDate:startDate]];
         if (sComp.year != eComp.year) {
             [string appendFormat:@" - %@", [fm stringFromDate:endDate]];
         } else if ((sComp.year != eComp.year) || (sComp.day != eComp.day)) {
-            [fm setDateFormat:@"MM-dd"];
+            [fm setDateFormat:@"MM-dd EEEE"];
             [string appendFormat:@" - %@", [fm stringFromDate:endDate]];
         }
         [string appendString:@" 全天"];
