@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F7677E5E18B44BFD00C58FED /* UIView+JMNoise.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E4A18B44BFD00C58FED /* UIView+JMNoise.m */; };
+		F7677E5F18B44BFD00C58FED /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = F7677E4C18B44BFD00C58FED /* close.png */; };
+		F7677E6018B44BFD00C58FED /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7677E4D18B44BFD00C58FED /* close@2x.png */; };
+		F7677E6118B44BFD00C58FED /* modalButton-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = F7677E4E18B44BFD00C58FED /* modalButton-selected.png */; };
+		F7677E6218B44BFD00C58FED /* modalButton-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7677E4F18B44BFD00C58FED /* modalButton-selected@2x.png */; };
+		F7677E6318B44BFD00C58FED /* modalButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7677E5018B44BFD00C58FED /* modalButton.png */; };
+		F7677E6418B44BFD00C58FED /* modalButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7677E5118B44BFD00C58FED /* modalButton@2x.png */; };
+		F7677E6518B44BFD00C58FED /* UAModalPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E5418B44BFD00C58FED /* UAModalPanel.m */; };
+		F7677E6618B44BFD00C58FED /* UATitledModalPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E5618B44BFD00C58FED /* UATitledModalPanel.m */; };
+		F7677E6718B44BFD00C58FED /* UAGradientBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E5918B44BFD00C58FED /* UAGradientBackground.m */; };
+		F7677E6818B44BFD00C58FED /* UANoisyGradientBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E5B18B44BFD00C58FED /* UANoisyGradientBackground.m */; };
+		F7677E6918B44BFD00C58FED /* UARoundedRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E5D18B44BFD00C58FED /* UARoundedRectView.m */; };
+		F7677E6C18B44CD100C58FED /* MDAuthPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E6B18B44CD100C58FED /* MDAuthPanel.m */; };
 		F7B3F4F11886204800F186DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B3F4F01886204800F186DB /* Foundation.framework */; };
 		F7B3F4F31886204800F186DB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B3F4F21886204800F186DB /* CoreGraphics.framework */; };
 		F7B3F4F51886204800F186DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B3F4F41886204800F186DB /* UIKit.framework */; };
@@ -42,7 +55,6 @@
 		F7B3F59818862D3E00F186DB /* MDTask.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F57018862D3E00F186DB /* MDTask.m */; };
 		F7B3F59918862D3E00F186DB /* MDTaskReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F57218862D3E00F186DB /* MDTaskReplyment.m */; };
 		F7B3F59A18862D3E00F186DB /* MDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F57418862D3E00F186DB /* MDUser.m */; };
-		F7B3F5A318867AB300F186DB /* MDAuthView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F5A218867AB300F186DB /* MDAuthView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +68,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F7677E4918B44BFD00C58FED /* UIView+JMNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JMNoise.h"; sourceTree = "<group>"; };
+		F7677E4A18B44BFD00C58FED /* UIView+JMNoise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JMNoise.m"; sourceTree = "<group>"; };
+		F7677E4C18B44BFD00C58FED /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		F7677E4D18B44BFD00C58FED /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
+		F7677E4E18B44BFD00C58FED /* modalButton-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modalButton-selected.png"; sourceTree = "<group>"; };
+		F7677E4F18B44BFD00C58FED /* modalButton-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modalButton-selected@2x.png"; sourceTree = "<group>"; };
+		F7677E5018B44BFD00C58FED /* modalButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = modalButton.png; sourceTree = "<group>"; };
+		F7677E5118B44BFD00C58FED /* modalButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modalButton@2x.png"; sourceTree = "<group>"; };
+		F7677E5318B44BFD00C58FED /* UAModalPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAModalPanel.h; sourceTree = "<group>"; };
+		F7677E5418B44BFD00C58FED /* UAModalPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAModalPanel.m; sourceTree = "<group>"; };
+		F7677E5518B44BFD00C58FED /* UATitledModalPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATitledModalPanel.h; sourceTree = "<group>"; };
+		F7677E5618B44BFD00C58FED /* UATitledModalPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATitledModalPanel.m; sourceTree = "<group>"; };
+		F7677E5818B44BFD00C58FED /* UAGradientBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAGradientBackground.h; sourceTree = "<group>"; };
+		F7677E5918B44BFD00C58FED /* UAGradientBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAGradientBackground.m; sourceTree = "<group>"; };
+		F7677E5A18B44BFD00C58FED /* UANoisyGradientBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANoisyGradientBackground.h; sourceTree = "<group>"; };
+		F7677E5B18B44BFD00C58FED /* UANoisyGradientBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANoisyGradientBackground.m; sourceTree = "<group>"; };
+		F7677E5C18B44BFD00C58FED /* UARoundedRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARoundedRectView.h; sourceTree = "<group>"; };
+		F7677E5D18B44BFD00C58FED /* UARoundedRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UARoundedRectView.m; sourceTree = "<group>"; };
+		F7677E6A18B44CD100C58FED /* MDAuthPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAuthPanel.h; sourceTree = "<group>"; };
+		F7677E6B18B44CD100C58FED /* MDAuthPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAuthPanel.m; sourceTree = "<group>"; };
 		F7B3F4ED1886204800F186DB /* MDAuthticationSDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDAuthticationSDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7B3F4F01886204800F186DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F7B3F4F21886204800F186DB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -118,8 +150,6 @@
 		F7B3F57218862D3E00F186DB /* MDTaskReplyment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskReplyment.m; sourceTree = "<group>"; };
 		F7B3F57318862D3E00F186DB /* MDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDUser.h; sourceTree = "<group>"; };
 		F7B3F57418862D3E00F186DB /* MDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDUser.m; sourceTree = "<group>"; };
-		F7B3F5A118867AB300F186DB /* MDAuthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAuthView.h; sourceTree = "<group>"; };
-		F7B3F5A218867AB300F186DB /* MDAuthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAuthView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +176,71 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F7677E4618B44BFD00C58FED /* UAModalPanel */ = {
+			isa = PBXGroup;
+			children = (
+				F7677E4718B44BFD00C58FED /* Panel */,
+			);
+			path = UAModalPanel;
+			sourceTree = "<group>";
+		};
+		F7677E4718B44BFD00C58FED /* Panel */ = {
+			isa = PBXGroup;
+			children = (
+				F7677E4818B44BFD00C58FED /* Categories */,
+				F7677E4B18B44BFD00C58FED /* Images */,
+				F7677E5218B44BFD00C58FED /* Panels */,
+				F7677E5718B44BFD00C58FED /* Views */,
+			);
+			path = Panel;
+			sourceTree = "<group>";
+		};
+		F7677E4818B44BFD00C58FED /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F7677E4918B44BFD00C58FED /* UIView+JMNoise.h */,
+				F7677E4A18B44BFD00C58FED /* UIView+JMNoise.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		F7677E4B18B44BFD00C58FED /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F7677E4C18B44BFD00C58FED /* close.png */,
+				F7677E4D18B44BFD00C58FED /* close@2x.png */,
+				F7677E4E18B44BFD00C58FED /* modalButton-selected.png */,
+				F7677E4F18B44BFD00C58FED /* modalButton-selected@2x.png */,
+				F7677E5018B44BFD00C58FED /* modalButton.png */,
+				F7677E5118B44BFD00C58FED /* modalButton@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		F7677E5218B44BFD00C58FED /* Panels */ = {
+			isa = PBXGroup;
+			children = (
+				F7677E5318B44BFD00C58FED /* UAModalPanel.h */,
+				F7677E5418B44BFD00C58FED /* UAModalPanel.m */,
+				F7677E5518B44BFD00C58FED /* UATitledModalPanel.h */,
+				F7677E5618B44BFD00C58FED /* UATitledModalPanel.m */,
+			);
+			path = Panels;
+			sourceTree = "<group>";
+		};
+		F7677E5718B44BFD00C58FED /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F7677E5818B44BFD00C58FED /* UAGradientBackground.h */,
+				F7677E5918B44BFD00C58FED /* UAGradientBackground.m */,
+				F7677E5A18B44BFD00C58FED /* UANoisyGradientBackground.h */,
+				F7677E5B18B44BFD00C58FED /* UANoisyGradientBackground.m */,
+				F7677E5C18B44BFD00C58FED /* UARoundedRectView.h */,
+				F7677E5D18B44BFD00C58FED /* UARoundedRectView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		F7B3F4E41886204800F186DB = {
 			isa = PBXGroup;
 			children = (
@@ -253,10 +348,11 @@
 		F7B3F54618862D3E00F186DB /* Authenticaor */ = {
 			isa = PBXGroup;
 			children = (
+				F7677E4618B44BFD00C58FED /* UAModalPanel */,
 				F7B3F54718862D3E00F186DB /* MDAuthenticator.h */,
 				F7B3F54818862D3E00F186DB /* MDAuthenticator.m */,
-				F7B3F5A118867AB300F186DB /* MDAuthView.h */,
-				F7B3F5A218867AB300F186DB /* MDAuthView.m */,
+				F7677E6A18B44CD100C58FED /* MDAuthPanel.h */,
+				F7677E6B18B44CD100C58FED /* MDAuthPanel.m */,
 			);
 			path = Authenticaor;
 			sourceTree = "<group>";
@@ -405,8 +501,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7677E6118B44BFD00C58FED /* modalButton-selected.png in Resources */,
+				F7677E6018B44BFD00C58FED /* close@2x.png in Resources */,
 				F7B3F5091886204800F186DB /* Images.xcassets in Resources */,
+				F7677E6318B44BFD00C58FED /* modalButton.png in Resources */,
 				F7B3F4FB1886204800F186DB /* InfoPlist.strings in Resources */,
+				F7677E6418B44BFD00C58FED /* modalButton@2x.png in Resources */,
+				F7677E6218B44BFD00C58FED /* modalButton-selected@2x.png in Resources */,
+				F7677E5F18B44BFD00C58FED /* close.png in Resources */,
 				F7B3F5041886204800F186DB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,16 +530,21 @@
 			files = (
 				F7B3F59418862D3E00F186DB /* MDPostAt.m in Sources */,
 				F7B3F5071886204800F186DB /* ViewController.m in Sources */,
+				F7677E5E18B44BFD00C58FED /* UIView+JMNoise.m in Sources */,
 				F7B3F58C18862D3E00F186DB /* MDURLConnection.m in Sources */,
+				F7677E6618B44BFD00C58FED /* UATitledModalPanel.m in Sources */,
 				F7B3F58918862D3E00F186DB /* JSONKit.m in Sources */,
 				F7B3F5011886204800F186DB /* AppDelegate.m in Sources */,
 				F7B3F58518862D3E00F186DB /* MDAuthenticator.m in Sources */,
+				F7677E6818B44BFD00C58FED /* UANoisyGradientBackground.m in Sources */,
+				F7677E6518B44BFD00C58FED /* UAModalPanel.m in Sources */,
+				F7677E6718B44BFD00C58FED /* UAGradientBackground.m in Sources */,
 				F7B3F58D18862D3E00F186DB /* MDURLConnectionQueue.m in Sources */,
 				F7B3F4FD1886204800F186DB /* main.m in Sources */,
+				F7677E6918B44BFD00C58FED /* UARoundedRectView.m in Sources */,
 				F7B3F58718862D3E00F186DB /* UIDevice+IdentifierAddition.m in Sources */,
 				F7B3F59918862D3E00F186DB /* MDTaskReplyment.m in Sources */,
 				F7B3F59318862D3E00F186DB /* MDPost.m in Sources */,
-				F7B3F5A318867AB300F186DB /* MDAuthView.m in Sources */,
 				F7B3F58F18862D3E00F186DB /* MDEvent.m in Sources */,
 				F7B3F58618862D3E00F186DB /* NSString+MD5Addition.m in Sources */,
 				F7B3F59618862D3E00F186DB /* MDProject.m in Sources */,
@@ -447,6 +554,7 @@
 				F7B3F59818862D3E00F186DB /* MDTask.m in Sources */,
 				F7B3F59018862D3E00F186DB /* MDGroup.m in Sources */,
 				F7B3F59218862D3E00F186DB /* MDMessageAll.m in Sources */,
+				F7677E6C18B44CD100C58FED /* MDAuthPanel.m in Sources */,
 				F7B3F59A18862D3E00F186DB /* MDUser.m in Sources */,
 				F7B3F58E18862D3E00F186DB /* MDCompany.m in Sources */,
 				F7B3F59718862D3E00F186DB /* MDTag.m in Sources */,

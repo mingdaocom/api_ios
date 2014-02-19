@@ -1,28 +1,36 @@
 //
-//  MDAuthView.m
-//  Mingdao
+//  MDAuthPanel.m
+//  MDAuthticationSDKDemo
 //
-//  Created by Wee Tom on 14-1-15.
+//  Created by Wee Tom on 14-2-19.
 //  Copyright (c) 2014年 Mingdao. All rights reserved.
 //
 
-#import "MDAuthView.h"
-#import <QuartzCore/QuartzCore.h>
+#import "MDAuthPanel.h"
 
-@interface MDAuthView ()
+@interface MDAuthPanel () <UIWebViewDelegate, UAModalPanelDelegate>
 @property (strong, nonatomic) UIView *indicatorBaseView;
 @property (strong, nonatomic) UIActivityIndicatorView *indicatorView;
 @end
 
-@implementation MDAuthView
-
-- (id)initWithFrame:(CGRect)frame
+@implementation MDAuthPanel
+- (MDAuthPanel *)initWithFrame:(CGRect)frame appKey:(NSString *)appKey appSecret:(NSString *)appSecret redirectURL:(NSString *)redirectURL state:(NSString *)state;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height - 44)];
+        self.appKey = appKey;
+        self.appSecret = appSecret;
+        self.redirectURL = redirectURL;
+        self.state = state;
+        
+        self.delegate = self;
+        
+        self.margin = UIEdgeInsetsMake(28, 12, 10, 12);
+        self.padding = UIEdgeInsetsMake(1, 1, 1, 1);
+        self.webView = [[UIWebView alloc] initWithFrame:self.contentView.bounds];
         self.webView.delegate = self;
-        [self addSubview:self.webView];
+        self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self.contentView addSubview:self.webView];
         
         self.indicatorBaseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
         self.indicatorBaseView.center = self.webView.center;
@@ -30,51 +38,22 @@
         self.indicatorBaseView.backgroundColor = [UIColor lightGrayColor];
         self.indicatorBaseView.layer.cornerRadius = 5;
         self.indicatorBaseView.alpha = 0.5;
+        self.indicatorBaseView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
         [self.webView addSubview:self.indicatorBaseView];
         
         self.indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         self.indicatorView.center = self.webView.center;
         self.indicatorView.hidesWhenStopped = YES;
+        self.indicatorView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
         [self.webView addSubview:self.indicatorView];
-        
-        UIView *actionBar = [[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height - 44, frame.size.width, 44)];
-        actionBar.backgroundColor = [UIColor lightGrayColor];
-        [self addSubview:actionBar];
-            UIButton *cB = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 44)];
-        [cB setTitle:@"退出" forState:UIControlStateNormal];
-        [cB addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
-        [actionBar addSubview:cB];
     }
     return self;
 }
 
-- (void)showInView:(UIView *)view
+- (void)show
 {
+    [super show];
     [self.webView loadRequest:[MDAuthenticator authorizeWithAppKey:self.appKey rediretURL:self.redirectURL state:self.state display:MDAuthorizeDisplayTypeMobile]];
-    self.alpha = 0;
-    [view.window addSubview:self];
-    [UIView animateWithDuration:0.3 animations:^{
-        self.alpha = 1;
-    } completion:^(BOOL finished){
-        
-    }];
-}
-
-- (void)hide
-{
-    [UIView animateWithDuration:0.3 animations:^{
-        self.alpha = 0;
-    } completion:^(BOOL finished){
-        if (finished) {
-            [self removeFromSuperview];
-        }
-    }];
-}
-
-- (void)cancel
-{
-    [self hide];
-    [self.delegate mingdaoAuthView:self didFinishAuthorizeWithResult:@{MDAuthErrorKey:@"MDAuthErrorUserCancelled"}];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
@@ -107,11 +86,13 @@
                         weakSelf.indicatorBaseView.hidden = YES;
                         [weakSelf.indicatorView stopAnimating];
                         if (error) {
-                            [weakSelf.delegate mingdaoAuthView:self didFinishAuthorizeWithResult:@{MDAuthErrorKey:@"MDAuthErrorAPIError"}];
+                            [weakSelf.authDelegate mingdaoAuthPanel:self
+                                       didFinishAuthorizeWithResult:@{MDAuthErrorKey:@"MDAuthErrorAPIError"}];
                             return ;
                         }
                         
-                        [weakSelf.delegate mingdaoAuthView:self didFinishAuthorizeWithResult:dic];
+                        [weakSelf.authDelegate mingdaoAuthPanel:self
+                                   didFinishAuthorizeWithResult:dic];
                     }] start];
                     return NO;
                 }
@@ -121,4 +102,15 @@
     return YES;
 }
 
+#pragma mark - UAModalDisplayPanelViewDelegate
+// Optional: This is called when the close button is pressed
+//   You can use it to perform validations
+//   Return YES to close the panel, otherwise NO
+//   Only used if delegate is set.
+- (BOOL)shouldCloseModalPanel:(UAModalPanel *)modalPanel {
+	UADebugLog(@"shouldCloseModalPanel called with modalPanel: %@", modalPanel);
+    [self.authDelegate mingdaoAuthPanel:self
+           didFinishAuthorizeWithResult:@{MDAuthErrorKey:@"MDAuthErrorUserCancelled"}];
+	return YES;
+}
 @end

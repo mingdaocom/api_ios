@@ -8,14 +8,14 @@
 
 #import "ViewController.h"
 #import "MDAuthenticator.h"
-#import "MDAuthView.h"
+#import "MDAuthPanel.h"
 
 #warning keys
-#define AppKey @"1365A728E314EAD3FAC96967ADBA40"
-#define AppSecret @"2C6F216EDA81733767F8F6C68568A66"
-#define RedirectURL @"http://www.baidu.com/"
+#define AppKey @"E122D74997594DF274C41722732D25C"
+#define AppSecret @"C879A5862377DAF66F7FABFBB69D84CE"
+#define RedirectURL @"http://www.mingdao.com"
 
-@interface ViewController () <MDAuthViewDelegate>
+@interface ViewController () <MDAuthPanelDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *tokenLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *birthLabel;
@@ -65,22 +65,17 @@
 
 - (void)authorizeByMingdaoMobilePage
 {
-    // 使用 @MDAuthView 来获取认证信息
-    MDAuthView *view = [[MDAuthView alloc] initWithFrame:self.view.bounds];
-    view.appKey = AppKey;
-    view.appSecret = AppSecret;
-    view.redirectURL = RedirectURL;
-    view.delegate = self;
-    [view showInView:self.view];
+    MDAuthPanel *panel = [[MDAuthPanel alloc] initWithFrame:self.view.bounds appKey:AppKey appSecret:AppSecret redirectURL:RedirectURL state:nil];
+    panel.authDelegate = self;
+    [self.view.window addSubview:panel];
+    [panel show];
 }
 
 #pragma mark -
-#pragma mark - MDAuthViewDelegate
-- (void)mingdaoAuthView:(MDAuthView *)view didFinishAuthorizeWithResult:(NSDictionary *)result
+#pragma mark - MDAuthPanelAuthDelegate
+- (void)mingdaoAuthPanel:(MDAuthPanel *)panel didFinishAuthorizeWithResult:(NSDictionary *)result
 {
-    // @MDAuthView 的回调方法
-    
-    [view hide];
+    [panel hide];
     NSString *errorStirng= result[MDAuthErrorKey];
     if (errorStirng) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Failed!" message:errorStirng delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
