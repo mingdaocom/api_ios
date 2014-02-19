@@ -65,6 +65,7 @@
 
 - (void)authorizeByMingdaoMobilePage
 {
+    // 通过 @MDAuthPanel 进行web验证
     MDAuthPanel *panel = [[MDAuthPanel alloc] initWithFrame:self.view.bounds appKey:AppKey appSecret:AppSecret redirectURL:RedirectURL state:nil];
     panel.authDelegate = self;
     [self.view.window addSubview:panel];
@@ -75,6 +76,7 @@
 #pragma mark - MDAuthPanelAuthDelegate
 - (void)mingdaoAuthPanel:(MDAuthPanel *)panel didFinishAuthorizeWithResult:(NSDictionary *)result
 {
+    // @MDAuthPanel 验证结束 返回结果
     [panel hide];
     NSString *errorStirng= result[MDAuthErrorKey];
     if (errorStirng) {
