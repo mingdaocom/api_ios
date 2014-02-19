@@ -90,7 +90,11 @@
 + (NSError *)errorWithMDDic:(NSDictionary *)dic URLString:(NSString *)urlString
 {
     if (dic) {
-        NSInteger code = [[dic objectForKey:@"error_code"] integerValue];
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (!errorCode) {
+            return nil;
+        }
+        NSInteger code = [errorCode integerValue];
         NSString *localizedDescription = [self errorStringWithErrorCode:[dic objectForKey:@"error_code"]];
         
         NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
