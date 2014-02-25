@@ -83,7 +83,7 @@
             return @"扩展应用未安装";
             
         default:
-            return @"未知错误";
+            return @"操作失败";
     }
 }
 
