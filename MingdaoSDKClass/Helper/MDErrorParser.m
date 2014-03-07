@@ -64,7 +64,6 @@
         case 10204:
             return NSLocalizedString(@"非法邀请", @"非法邀请");
         case 10205:
-            //TODO: TRANSLATE
             return NSLocalizedString(@"有效域名邮箱，不能通过来宾邀请加入", @"有效域名邮箱，不能通过来宾邀请加入");
         case 10206:
             return NSLocalizedString(@"无权限邀请来宾", @"无权限邀请来宾");
@@ -72,16 +71,12 @@
         case 10301:
             return NSLocalizedString(@"暂无应用的最新版本", @"暂无应用的最新版本");
         case 10302:
-            //TODO: TRANSLATE
             return NSLocalizedString(@"仅限高级模式的管理员，针对企业应用", @"仅限高级模式的管理员，针对企业应用");
         case 10303:
-            //TODO: TRANSLATE
             return NSLocalizedString(@"仅限高级模式的管理员调用", @"仅限高级模式的管理员调用");
         case 10304:
-            //TODO: TRANSLATE
             return NSLocalizedString(@"仅限高级模式可调用", @"仅限高级模式可调用");
         case 10305:
-            //TODO: TRANSLATE
             return NSLocalizedString(@"仅限应用创建者可调用", @"仅限应用创建者可调用");
 
         case 10401:
