@@ -17,7 +17,7 @@
         self.objectName = [aDic objectForKey:@"name"];
         self.nameEn = [aDic objectForKey:@"nameEn"];
         self.logo = [aDic objectForKey:@"logo"];
-        self.type = [[aDic objectForKey:@"license_type"] integerValue];
+        self.type = [[aDic objectForKey:@"license_type"] intValue];
     }
     return self;
 }

@@ -37,7 +37,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    self.statusCode = [((NSHTTPURLResponse *)response) statusCode];
+    self.statusCode = (int)[((NSHTTPURLResponse *)response) statusCode];
     self.totalLength = [response expectedContentLength];
     self.currentLength = 0;
 }
