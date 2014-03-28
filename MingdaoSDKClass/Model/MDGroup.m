@@ -16,12 +16,14 @@
         self.objectID = [aDic objectForKey:@"id"];
         self.objectName = [aDic objectForKey:@"name"];
         self.avatar = [aDic objectForKey:@"avstar"];
+        self.about = [aDic objectForKey:@"about"];
         self.isPublic = [[aDic objectForKey:@"is_public"] boolValue];
         self.status = [[aDic objectForKey:@"status"] integerValue];
         self.isJoined = [[aDic objectForKey:@"followed_status"] boolValue];
         self.userCount = [[aDic objectForKey:@"user_count"] integerValue];
         self.postCount = [[aDic objectForKey:@"post_count"] integerValue];
         self.creator = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"user"]];
+        self.isHidden = [[aDic objectForKey:@"is_hidden"] boolValue];
         self.admins = [aDic objectForKey:@"admins"];
     }
     return self;
@@ -46,9 +48,11 @@
     copyObject.objectID = [self.objectID copy];
     copyObject.objectName = [self.objectName copy];
     copyObject.avatar = [self.avatar copy];
+    copyObject.about = [self.about copy];
     copyObject.isPublic = self.isPublic;
     copyObject.status = self.status;
     copyObject.isJoined = self.isJoined;
+    copyObject.isHidden = self.isHidden;
     copyObject.userCount = self.userCount;
     copyObject.postCount = self.postCount;
     copyObject.creator = [self.creator copy];

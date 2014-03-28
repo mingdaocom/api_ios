@@ -54,6 +54,8 @@
             return NSLocalizedString(@"用户访问令牌失效", @"用户访问令牌失效");
         case 10107:
             return NSLocalizedString(@"由于多次尝试失败,账号已被锁定,20分钟后解锁", @"由于多次尝试失败,账号已被锁定,20分钟后解锁");
+        case 10108:
+            return NSLocalizedString(@"登录状态已过期,请重新登录", @"登录状态已过期,请重新登录");
             
         case 10201:
             return NSLocalizedString(@"Email不合法", @"Email不合法");

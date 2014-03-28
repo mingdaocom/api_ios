@@ -46,6 +46,7 @@ static MDAPIManager *sharedManager = nil;
 - (NSString *)serverAddress
 {
     if (!_serverAddress) {
+        //return @"http://172.16.22.159/MD.api.Web";
         return @"https://api.mingdao.com";
     }
     return _serverAddress;
@@ -901,6 +902,32 @@ static MDAPIManager *sharedManager = nil;
         
         MDGroup *group = [[MDGroup alloc] initWithDictionary:[dic objectForKey:@"group"]];
         handler(group, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)editGroupWithGroupID:(NSString *)groupID
+                                     name:(NSString *)gName
+                                   detail:(NSString *)detail
+                                 isPublic:(BOOL)isPub
+                                 isHidden:(BOOL)isHidden
+                                  handler:(MDAPIBoolHandler)handler
+{
+    
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/group/setting?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&g_id=%@", groupID];
+    [urlString appendFormat:@"&g_name=%@", [[self class] localEncode:gName]];
+    [urlString appendFormat:@"&about=%@", [[self class] localEncode:detail]];
+    [urlString appendFormat:@"&is_public=%d", isPub?1:0];
+    if (!isPub) {
+        [urlString appendFormat:@"&is_hidden=%d", isHidden?1:0];
+    }
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
     }];
     return connection;
 }

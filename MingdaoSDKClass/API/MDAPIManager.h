@@ -275,6 +275,21 @@ extern NSString * const MDAPIManagerNewTokenSetNotification;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
+ 编辑群组
+ @parmas:
+ gName - 群组名称，必须
+ isPub - 是否开放，可选
+ handler - 处理修改后的结果
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)editGroupWithGroupID:(NSString *)groupID
+                                     name:(NSString *)gName
+                                   detail:(NSString *)detail
+                                 isPublic:(BOOL)isPub
+                                 isHidden:(BOOL)isHidden
+                                  handler:(MDAPIBoolHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
  邀请用户（同事邮箱）加入群组
  @parmas:
  gID        - 群组ID，必须

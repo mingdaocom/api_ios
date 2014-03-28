@@ -34,10 +34,10 @@
 @interface MDGroup : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
+@property (strong, nonatomic) NSString *about;
 @property (strong, nonatomic) NSString *avatar;
-@property (assign, nonatomic) BOOL isPublic;
+@property (assign, nonatomic) BOOL isPublic, isJoined, isHidden;
 @property (assign, nonatomic) NSInteger status;
-@property (assign, nonatomic) BOOL isJoined;
 @property (assign, nonatomic) NSInteger userCount;
 @property (assign, nonatomic) NSInteger postCount;
 @property (strong, nonatomic) MDUser *creator;
