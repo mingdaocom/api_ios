@@ -10,7 +10,6 @@
 #import "MDAPIHandler.h"
 #import "UIDevice+IdentifierAddition.h"
 #import "MDErrorParser.h"
-#import "JSONKit.h"
 
 extern NSString * const MDAPIManagerNewTokenSetNotification;
 
