@@ -17,7 +17,7 @@
         self.objectID = [aDic objectForKey:@"guid"];
         self.text = [aDic objectForKey:@"text"];
         self.createDateString = [aDic objectForKey:@"create_time"];
-        self.type = [[aDic objectForKey:@"type"] integerValue];
+        self.type = [[aDic objectForKey:@"type"] intValue];
         NSDictionary *detailDic = [aDic objectForKey:@"detail"];
         if ([detailDic isKindOfClass:[detailDic class]]) {
             self.original_file = [detailDic objectForKey:@"original_file"];

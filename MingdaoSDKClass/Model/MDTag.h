@@ -11,7 +11,7 @@
 @interface MDTag : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
-@property (assign, nonatomic) NSInteger postCount, imageCount, documentCount, faqCount, voteCount;
-@property (assign, nonatomic) NSInteger totalPageSize;
+@property (assign, nonatomic) int postCount, imageCount, documentCount, faqCount, voteCount;
+@property (assign, nonatomic) int totalPageSize;
 - (MDTag *)initWithDictionary:(NSDictionary *)dic;
 @end

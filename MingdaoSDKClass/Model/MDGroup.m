@@ -18,10 +18,10 @@
         self.avatar = [aDic objectForKey:@"avstar"];
         self.about = [aDic objectForKey:@"about"];
         self.isPublic = [[aDic objectForKey:@"is_public"] boolValue];
-        self.status = [[aDic objectForKey:@"status"] integerValue];
+        self.status = [[aDic objectForKey:@"status"] intValue];
         self.isJoined = [[aDic objectForKey:@"followed_status"] boolValue];
-        self.userCount = [[aDic objectForKey:@"user_count"] integerValue];
-        self.postCount = [[aDic objectForKey:@"post_count"] integerValue];
+        self.userCount = [[aDic objectForKey:@"user_count"] intValue];
+        self.postCount = [[aDic objectForKey:@"post_count"] intValue];
         self.creator = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"user"]];
         self.isHidden = [[aDic objectForKey:@"is_hidden"] boolValue];
         self.admins = [aDic objectForKey:@"admins"];

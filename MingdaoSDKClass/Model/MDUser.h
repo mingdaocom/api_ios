@@ -54,14 +54,14 @@ enum {
     MDUserLicenceAdmin = 1,
     MDUserLicenceAnnouncer = 2
 };
-typedef NSInteger MDUserLicence;
+typedef int MDUserLicence;
 
 enum {
     MDUserGenderUnknown = 0,
     MDUserGenderMale = 1,
     MDUserGenderFemale = 2
 };
-typedef NSInteger MDUserGender;
+typedef int MDUserGender;
 
 @interface MDUser : NSObject
 @property (strong, nonatomic) NSString *objectID;
@@ -81,8 +81,8 @@ typedef NSInteger MDUserGender;
 @property (assign, nonatomic) BOOL isFollowed;
 @property (assign, nonatomic) BOOL egroup;
 @property (assign, nonatomic) MDUserLicence licence;
-@property (assign, nonatomic) NSInteger status;
-@property (assign, nonatomic) NSInteger unreadMessageCount, messageCount;
+@property (assign, nonatomic) int status;
+@property (assign, nonatomic) int unreadMessageCount, messageCount;
 @property (strong, nonatomic) NSArray *jobs;
 @property (strong, nonatomic) NSArray *educations;
 @property (strong, nonatomic) MDCompany *project;

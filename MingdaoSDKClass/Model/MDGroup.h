@@ -37,9 +37,9 @@
 @property (strong, nonatomic) NSString *about;
 @property (strong, nonatomic) NSString *avatar;
 @property (assign, nonatomic) BOOL isPublic, isJoined, isHidden;
-@property (assign, nonatomic) NSInteger status;
-@property (assign, nonatomic) NSInteger userCount;
-@property (assign, nonatomic) NSInteger postCount;
+@property (assign, nonatomic) int status;
+@property (assign, nonatomic) int userCount;
+@property (assign, nonatomic) int postCount;
 @property (strong, nonatomic) MDUser *creator;
 @property (strong, nonatomic) NSArray *admins;
 

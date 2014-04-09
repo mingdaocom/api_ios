@@ -20,13 +20,13 @@
         self.objectName = [dic objectForKey:@"name"];
         NSDictionary *countDic = [dic objectForKey:@"count"];
         if ([countDic isKindOfClass:[NSDictionary class]]) {
-            self.postCount = [[countDic objectForKey:@"post"] integerValue];
-            self.imageCount = [[countDic objectForKey:@"img"] integerValue];
-            self.documentCount = [[countDic objectForKey:@"doc"] integerValue];
-            self.faqCount = [[countDic objectForKey:@"faq"] integerValue];
-            self.voteCount = [[countDic objectForKey:@"vote"] integerValue];
+            self.postCount = [[countDic objectForKey:@"post"] intValue];
+            self.imageCount = [[countDic objectForKey:@"img"] intValue];
+            self.documentCount = [[countDic objectForKey:@"doc"] intValue];
+            self.faqCount = [[countDic objectForKey:@"faq"] intValue];
+            self.voteCount = [[countDic objectForKey:@"vote"] intValue];
         }
-        self.totalPageSize = [[dic objectForKey:@"totalPageSize"] integerValue];
+        self.totalPageSize = [[dic objectForKey:@"totalPageSize"] intValue];
     }
     return self;
 }

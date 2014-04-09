@@ -11,7 +11,7 @@
 
 @interface MDEventEmail : NSObject
 @property (strong, nonatomic) NSString *memail;
-@property (assign, nonatomic) NSInteger status;
+@property (assign, nonatomic) int status;
 - (MDEventEmail *)initWithDictionary:(NSDictionary *)aDic;
 @end
 
@@ -31,7 +31,7 @@
 @property (strong, nonatomic) NSArray *eventMails;
 
 @property (assign, nonatomic) BOOL isRecur;
-@property (assign, nonatomic) NSInteger frequency, interval, recurCount;
+@property (assign, nonatomic) int frequency, interval, recurCount;
 @property (strong, nonatomic) NSString *untilDateString, *weekDay;
 
 @property (readonly ,nonatomic) BOOL isInOneDay;

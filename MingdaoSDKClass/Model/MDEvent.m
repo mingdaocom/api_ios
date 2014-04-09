@@ -18,7 +18,7 @@
     self = [super init];
     if (self) {
         self.memail = [aDic objectForKey:@"memail"];
-        self.status = [[aDic objectForKey:@"status"] integerValue];
+        self.status = [[aDic objectForKey:@"status"] intValue];
     }
     return self;
 }
@@ -72,15 +72,15 @@
         if (self.isRecur) {
             NSDictionary *dic = [aDic objectForKey:@"recur"];
             
-            self.frequency = [[dic objectForKey:@"frequency"] integerValue];
-            self.interval = [[dic objectForKey:@"interval"] integerValue];
+            self.frequency = [[dic objectForKey:@"frequency"] intValue];
+            self.interval = [[dic objectForKey:@"interval"] intValue];
             
 //          NSArray *weekdayNames = [[[NSDateFormatter alloc] init] shortWeekdaySymbols];
 //          weekdayNames starts on Sunday witch from server goes with @"7"
 
             self.weekDay = [[dic objectForKey:@"week_day"] stringByReplacingOccurrencesOfString:@"7" withString:@"0"];
             
-            self.recurCount = [[dic objectForKey:@"recur_count"] integerValue];
+            self.recurCount = [[dic objectForKey:@"recur_count"] intValue];
             self.untilDateString = [dic objectForKey:@"until_date"];
         }
 
@@ -240,7 +240,7 @@
     return [self sortUserWithStatus:0];
 }
 
-- (NSArray *)sortUserWithStatus:(NSInteger)status
+- (NSArray *)sortUserWithStatus:(int)status
 {
     NSMutableArray *array = [NSMutableArray array];
     for (MDUser *aUser in self.members) {
@@ -266,7 +266,7 @@
     return [self sortEmailWithStatus:0];
 }
 
-- (NSArray *)sortEmailWithStatus:(NSInteger)status
+- (NSArray *)sortEmailWithStatus:(int)status
 {
     NSMutableArray *array = [NSMutableArray array];
     for (MDEventEmail *aUser in self.eventMails) {
@@ -347,7 +347,7 @@
             }
             
             for (int i = 0; i < days.count; i++) {
-                [string appendFormat:@" %@", weekdayNames[[days[i] integerValue]]];
+                [string appendFormat:@" %@", weekdayNames[[days[i] intValue]]];
             }
             
             if (self.untilDateString.length > 0) {
@@ -398,7 +398,7 @@
     NSMutableArray *array = [NSMutableArray array];
     NSArray *oArray = [self.weekDay componentsSeparatedByString:@","];
     for (NSString *s in oArray) {
-        [array addObject:[weekdayNames objectAtIndex:[s integerValue]]];
+        [array addObject:[weekdayNames objectAtIndex:[s intValue]]];
     }
     return array;
 }

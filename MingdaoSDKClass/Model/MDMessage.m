@@ -34,7 +34,7 @@
         self.heHasRead = [[aDic objectForKey:@"status2"] boolValue];
         self.createTime = [aDic objectForKey:@"create_time"];
         self.createUserID = [aDic objectForKey:@"create_user"];
-        self.type = [[aDic objectForKey:@"message_type"] integerValue];
+        self.type = [[aDic objectForKey:@"message_type"] intValue];
         NSMutableArray *details = [NSMutableArray array];
         NSArray *detailDics = [aDic objectForKey:@"detail"];
         for (NSDictionary *detailDic in detailDics) {

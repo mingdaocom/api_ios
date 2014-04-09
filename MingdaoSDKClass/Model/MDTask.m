@@ -18,8 +18,8 @@
         self.des = [aDic objectForKey:@"des"];
         self.expiredDateString = [aDic objectForKey:@"expire_date"];
         self.finishedDateString = [aDic objectForKey:@"finished_date"];
-        self.replyCount = [[aDic objectForKey:@"reply_count"] integerValue];
-        self.unreadCount = [[aDic objectForKey:@"unread_count"] integerValue];
+        self.replyCount = [[aDic objectForKey:@"reply_count"] intValue];
+        self.unreadCount = [[aDic objectForKey:@"unread_count"] intValue];
         self.createdDateString = [aDic objectForKey:@"create_time"];
         self.creatorID = [aDic objectForKey:@"create_userid"];
         self.project = [[MDProject alloc] initWithDictionary:[aDic objectForKey:@"project"]];
@@ -27,7 +27,7 @@
             self.project = nil;
         }
         self.charger = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"user"]];
-        self.subTaskCount = [[aDic objectForKey:@"sub_count"] integerValue];
+        self.subTaskCount = [[aDic objectForKey:@"sub_count"] intValue];
         
         NSMutableArray *memebers = [NSMutableArray array];
         NSDictionary *userDics = [aDic objectForKey:@"joined"];

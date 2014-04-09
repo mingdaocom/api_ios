@@ -13,7 +13,7 @@
 @property (strong, nonatomic) NSString *objectID, *autoID;
 @property (strong, nonatomic) NSString *text;
 @property (strong, nonatomic) NSString *createDateString, *source;
-@property (assign, nonatomic) NSInteger type;
+@property (assign, nonatomic) int type;
 @property (strong, nonatomic) NSString *original_file;
 @property (strong, nonatomic) NSArray *thumbnailPics, *originalPics;
 @property (strong, nonatomic) MDUser *creator;

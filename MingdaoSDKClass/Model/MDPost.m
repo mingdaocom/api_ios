@@ -14,7 +14,7 @@
     self = [super init];
     if (self) {
         self.objectName = [dic objectForKey:@"name"];
-        self.voteCount = [[dic objectForKey:@"value"] integerValue];
+        self.voteCount = [[dic objectForKey:@"value"] intValue];
         self.selected = [[dic objectForKey:@"selected"] boolValue];
         self.originalPic = [dic objectForKey:@"original_pic"];
         self.thumbnailPic = [dic objectForKey:@"thumbnail_pic"];
@@ -51,7 +51,7 @@
     self = [super init];
     if (self) {
         self.isAnonymous = ![[dic objectForKey:@"Anonymous"] boolValue];
-        self.maxChoiceCount = [[dic objectForKey:@"AvailableNumber"] integerValue];
+        self.maxChoiceCount = [[dic objectForKey:@"AvailableNumber"] intValue];
         self.deadLineString = [dic objectForKey:@"Deadline"];
         self.isInCenter = [[dic objectForKey:@"is_center"] boolValue];
         self.linkDes = [dic objectForKey:@"link_des"];
@@ -126,17 +126,17 @@
         self.tags = tags;
         self.createTime = [aDic objectForKey:@"create_time"];
         self.source = [aDic objectForKey:@"source"];
-        self.replyCount = [[aDic objectForKey:@"reply_count"] integerValue];
-        self.likeCount = [[aDic objectForKey:@"like_count"] integerValue];
-        self.repostCount = [[aDic objectForKey:@"reshared_count"] integerValue];
+        self.replyCount = [[aDic objectForKey:@"reply_count"] intValue];
+        self.likeCount = [[aDic objectForKey:@"like_count"] intValue];
+        self.repostCount = [[aDic objectForKey:@"reshared_count"] intValue];
         self.isFavourited = [[aDic objectForKey:@"favorite"] boolValue];
         self.isLiked = [[aDic objectForKey:@"like"] boolValue];
-        self.type = [[aDic objectForKey:@"type"] integerValue];
-        self.shareType = [[aDic objectForKey:@"share_type"] integerValue];
+        self.type = [[aDic objectForKey:@"type"] intValue];
+        self.shareType = [[aDic objectForKey:@"share_type"] intValue];
         self.details = [aDic objectForKey:@"detail"];
         self.textAttribute = [aDic objectForKey:@"text_attribute"];
         self.isAnswerred = [[aDic objectForKey:@"have_bestanswer"] boolValue];
-        self.mark = [[aDic objectForKey:@"mark"] integerValue];
+        self.mark = [[aDic objectForKey:@"mark"] intValue];
         NSMutableArray *groups = [NSMutableArray array];
         NSArray *groupDics = [aDic objectForKey:@"groups"];
         for (NSDictionary *groupDic in groupDics) {

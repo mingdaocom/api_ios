@@ -14,7 +14,7 @@ enum {
     MDPostReplymentTypeImage = 2,
     MDPostReplymentTypeDocument = 3
 };
-typedef NSInteger MDPostReplymentType;
+typedef int MDPostReplymentType;
 
 @interface MDPostReplymentDetail : NSObject
 @property (strong, nonatomic) NSString *middlePic, *originalPic, *fileName, *thumbnailPic, *originalDoc;

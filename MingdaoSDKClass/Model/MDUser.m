@@ -21,7 +21,7 @@
         self.grade = [aDic objectForKey:@"grade"];
         self.mark = [aDic objectForKey:@"mark"];
         self.birth = [aDic objectForKey:@"birth"];
-        self.gender = [[aDic objectForKey:@"gender"] integerValue];
+        self.gender = [[aDic objectForKey:@"gender"] intValue];
         self.company = [aDic objectForKey:@"company"];
         self.department = [aDic objectForKey:@"department"];
         self.job = [aDic objectForKey:@"job"];
@@ -38,12 +38,12 @@
         self.workPhoneNumber = [aDic objectForKey:@"work_phone"];
         self.isFollowed = [[aDic objectForKey:@"followed_status"] boolValue];
         self.egroup = [[aDic objectForKey:@"egroup"] boolValue];
-        self.licence = [[aDic objectForKey:@"license"] integerValue];
-        self.status = [[aDic objectForKey:@"status"] integerValue];
+        self.licence = [[aDic objectForKey:@"license"] intValue];
+        self.status = [[aDic objectForKey:@"status"] intValue];
         self.jobs = [aDic objectForKey:@"jobs"];
         self.educations = [aDic objectForKey:@"educations"];
-        self.unreadMessageCount = [[aDic objectForKey:@"unreadmessage_count"] integerValue];
-        self.messageCount = [[aDic objectForKey:@"message_count"] integerValue];
+        self.unreadMessageCount = [[aDic objectForKey:@"unreadmessage_count"] intValue];
+        self.messageCount = [[aDic objectForKey:@"message_count"] intValue];
         
         if ([aDic objectForKey:@"project"]) {
             self.project = [[MDCompany alloc] initWithDictionary:[aDic objectForKey:@"project"]];

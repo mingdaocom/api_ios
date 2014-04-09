@@ -51,7 +51,7 @@
 @property (strong, nonatomic) NSString *expiredDateString;
 @property (strong, nonatomic) NSString *finishedDateString;
 @property (strong, nonatomic) NSString *creatorID;
-@property (assign, nonatomic) NSInteger replyCount, unreadCount, subTaskCount;
+@property (assign, nonatomic) int replyCount, unreadCount, subTaskCount;
 @property (strong, nonatomic) MDUser *charger;
 @property (strong, nonatomic) MDProject *project;
 @property (strong, nonatomic) NSArray *members, *observers;
