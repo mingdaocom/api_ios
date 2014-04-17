@@ -50,7 +50,7 @@
 {
     self = [super init];
     if (self) {
-        self.isAnonymous = ![[dic objectForKey:@"Anonymous"] boolValue];
+        self.isAnonymous = [[dic objectForKey:@"Anonymous"] boolValue];
         self.maxChoiceCount = [[dic objectForKey:@"AvailableNumber"] intValue];
         self.deadLineString = [dic objectForKey:@"Deadline"];
         self.isInCenter = [[dic objectForKey:@"is_center"] boolValue];
@@ -77,6 +77,16 @@
         }
     }
     return self;
+}
+
+- (BOOL)voted
+{
+    for (MDVoteOption *o in self.voteOptions) {
+        if (o.selected) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (id)copy
