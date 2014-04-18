@@ -89,6 +89,15 @@
     return NO;
 }
 
+- (int)totalVoteCount
+{
+    int totalVoteCount = 0;
+    for (MDVoteOption *o in self.voteOptions) {
+        totalVoteCount += o.voteCount;
+    }
+    return totalVoteCount;
+}
+
 - (id)copy
 {
     id object = [[[self class] alloc] init];
@@ -105,7 +114,12 @@
     copyObject.thumbnailPic = [self.thumbnailPic copy];
     copyObject.fileName = [self.fileName copy];
     copyObject.isVisble = self.isVisble;
-    copyObject.voteOptions = [self.voteOptions copy];
+    NSMutableArray *voteOptions = [NSMutableArray array];
+    for (MDVoteOption *d in self.voteOptions) {
+        MDVoteOption *dd = [d copy];
+        [voteOptions addObject:dd];
+    }
+    copyObject.voteOptions = voteOptions;
     return copyObject;
 }
 @end
@@ -203,7 +217,12 @@
     copyObject.isFavourited = self.isFavourited;
     copyObject.type = self.type;
     copyObject.shareType = self.shareType;
-    copyObject.details = [self.details copy];
+    NSMutableArray *details = [NSMutableArray array];
+    for (MDPostDetail *d in self.details) {
+        MDPostDetail *dd = [d copy];
+        [details addObject:dd];
+    }
+    copyObject.details = details;
     copyObject.textAttribute = [self.textAttribute copy];
     copyObject.groups = [self.groups copy];
     copyObject.isAnswerred = self.isAnswerred;
