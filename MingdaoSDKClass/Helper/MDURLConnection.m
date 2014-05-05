@@ -72,7 +72,7 @@
 {
     if (self.statusCode != 200) {
         NSError *error = [MDErrorParser errorWithHttpErrorCode:self.statusCode URLString:self.req.URL.absoluteString];
-        self.handler(nil, error);
+        self.handler(self.appendingData, error);
         self.handler = nil;
         return;
     }
