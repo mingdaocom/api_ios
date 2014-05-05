@@ -45,4 +45,13 @@
     copyObject.totalPageSize = self.totalPageSize;
     return copyObject;
 }
+
+- (BOOL)isEqual:(id)object
+{
+    if ([object isKindOfClass:[MDTag class]]) {
+        MDTag *aTag = object;
+        return [aTag.objectName isEqualToString:self.objectName];
+    }
+    return NO;
+}
 @end
