@@ -684,14 +684,9 @@ typedef enum
 - (MDURLConnection *)addMemberToTaskWithTaskID:(NSString *)tID
                               memberID:(NSString *)memberID
                                handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)addObserverToTaskWithTaskID:(NSString *)tID
-                                       memberIDs:(NSArray *)memberIDs
-                                         handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)deleteMemberFromeTaskWithTaskID:(NSString *)tID
                                             memberID:(NSString *)memberID
                                              handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)applyForObservationToTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler;
-
 #pragma mark - 动态接口
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-

@@ -2666,25 +2666,6 @@ static MDAPIManager *sharedManager = nil;
     return connection;
 }
 
-- (MDURLConnection *)addObserverToTaskWithTaskID:(NSString *)tID
-                                       memberIDs:(NSArray *)memberIDs
-                                         handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/add_observer?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&t_id=%@", tID];
-    [urlString appendFormat:@"&u_ids=%@", [memberIDs componentsJoinedByString:@","]];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
 - (MDURLConnection *)deleteMemberFromeTaskWithTaskID:(NSString *)tID
                                             memberID:(NSString *)memberID
                                              handler:(MDAPIBoolHandler)handler
@@ -2694,22 +2675,6 @@ static MDAPIManager *sharedManager = nil;
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     [urlString appendFormat:@"&u_id=%@", memberID];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)applyForObservationToTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/apply_observer?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&t_id=%@", tID];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];

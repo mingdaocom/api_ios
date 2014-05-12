@@ -54,7 +54,7 @@
 @property (assign, nonatomic) int replyCount, unreadCount, subTaskCount;
 @property (strong, nonatomic) MDUser *charger;
 @property (strong, nonatomic) MDProject *project;
-@property (strong, nonatomic) NSArray *members, *observers;
+@property (strong, nonatomic) NSArray *members;
 @property (strong, nonatomic) NSArray *subTasks;
 
 @property (readonly, nonatomic) MDUser *creator;

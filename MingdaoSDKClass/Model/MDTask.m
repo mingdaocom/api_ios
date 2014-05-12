@@ -38,16 +38,6 @@
             }
         }
         self.members = memebers;
-
-        memebers = [NSMutableArray array];
-        userDics = [aDic objectForKey:@"observer"];
-        for (NSDictionary *userDic in userDics) {
-            if ([userDic isKindOfClass:[NSDictionary class]]) {
-                MDUser *aUser = [[MDUser alloc] initWithDictionary:userDic];
-                [memebers addObject:aUser];
-            }
-        }
-        self.observers = memebers;
         
         NSMutableArray *subTasks = [NSMutableArray array];
         NSDictionary *taskDics = [aDic objectForKey:@"c_task"];
@@ -84,11 +74,6 @@
     if ([self.charger.objectID isEqualToString:self.creatorID]) {
         return self.charger;
     } else {
-        for (MDUser *u in self.observers) {
-            if ([u.objectID isEqualToString:self.creatorID]) {
-                return u;
-            }
-        }
         for (MDUser *u in self.members) {
             if ([u.objectID isEqualToString:self.creatorID]) {
                 return u;
@@ -118,7 +103,6 @@
     copyObject.charger = [self.charger copy];
     copyObject.project = [self.project copy];
     copyObject.members = [self.members copy];
-    copyObject.observers = [self.observers copy];
     if (self.subTasks.count > 0) {
         copyObject.subTasks = [self.subTasks copy];
     }
