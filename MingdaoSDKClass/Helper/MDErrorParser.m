@@ -86,8 +86,13 @@
         case 10401:
             return NSLocalizedString(@"扩展应用未安装", @"扩展应用未安装");
             
-        default:
-            return NSLocalizedString(@"操作失败", @"操作失败");
+        default: {
+            NSMutableString *string = [NSLocalizedString(@"操作失败", @"操作失败") mutableCopy];
+            [string appendString:@", "];
+            [string appendString:NSLocalizedString(@"错误代码", @"错误代码")];
+            [string appendFormat:@":%d", errorCodeInt];
+            return string;
+        }
     }
 }
 
