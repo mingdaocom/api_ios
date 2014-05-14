@@ -1049,6 +1049,78 @@ static MDAPIManager *sharedManager = nil;
     return connection;
 }
 
+- (MDURLConnection *)loadUnauditedUsersOfGroupID:(NSString *)groupID
+                                         handler:(MDAPINSArrayHandler)handler
+{
+    
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/group/get_unauditedUsers?format=json"];
+    [urlString appendFormat:@"&g_id=%@", groupID];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSArray *userDics = [dic objectForKey:@"users"];
+        NSMutableArray *users = [NSMutableArray array];
+        for (NSDictionary *userDic in userDics) {
+            if (![userDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDUser *user = [[MDUser alloc] initWithDictionary:userDic];
+            [users addObject:user];
+        }
+        handler(users, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)passUserID:(NSString *)userID
+                      toGroupID:(NSString *)groupID
+                        handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/group/pass_unauditedUser?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&g_id=%@", groupID];
+    [urlString appendFormat:@"&u_ids=%@", userID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)refuseUserID:(NSString *)userID
+                      fromGroupID:(NSString *)groupID
+                          handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/group/refuse_unauditedUser?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&g_id=%@", groupID];
+    [urlString appendFormat:@"&u_id=%@", userID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
 #pragma mark - 用户接口
 - (MDURLConnection *)loadAllUsersWithHandler:(MDAPINSArrayHandler)handler
 {
