@@ -46,7 +46,7 @@ static MDAPIManager *sharedManager = nil;
 - (NSString *)serverAddress
 {
     if (!_serverAddress) {
-        //return @"http://172.16.22.159/MD.api.Web";
+        return @"http://172.16.23.247/MD.api.Web";
         return @"https://api.mingdao.com";
     }
     return _serverAddress;
@@ -1054,6 +1054,42 @@ static MDAPIManager *sharedManager = nil;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/user/all?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSArray *userDics = [dic objectForKey:@"users"];
+        NSMutableArray *users = [NSMutableArray array];
+        for (NSDictionary *userDic in userDics) {
+            if (![userDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDUser *user = [[MDUser alloc] initWithDictionary:userDic];
+            [users addObject:user];
+        }
+        handler(users, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadTopMentionedUsersWihtHandler:(MDAPINSArrayHandler)handler
+{
+    
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/user/get_userMetioned?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
