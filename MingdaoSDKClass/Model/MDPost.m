@@ -200,6 +200,20 @@
     return nil;
 }
 
+- (BOOL)isEqual:(id)object
+{
+    MDPost *aPost = object;
+    if ([aPost isKindOfClass:[MDPost class]]) {
+        if (self.autoID.length != 0 && aPost.autoID.length != 0 && [aPost.autoID isEqualToString:self.autoID]) {
+            return YES;
+        }
+        if (self.objectID.length != 0 && aPost.objectID.length != 0 && [aPost.objectID isEqualToString:self.objectID]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (id)copy
 {
     id object = [[[self class] alloc] init];
