@@ -34,7 +34,7 @@ NSString *const MDAuthExpiresTimeKey = @"expires_in";
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:ipadString]]) {
         return [[UIApplication sharedApplication] openURL:[NSURL URLWithString:ipadString]];
     } else {
-        NSMutableString *string = [NSMutableString stringWithString:@"mingdao://app.mingdao.com/authentication/?"];
+        NSMutableString *string = [NSMutableString stringWithString:@"mingdaoT://app.mingdao.com/authentication/?"];
         [string appendFormat:@"appKey==%@&&appSecret==%@", appKey, appSecret];
         
         return [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
@@ -56,7 +56,8 @@ NSString *const MDAuthExpiresTimeKey = @"expires_in";
             }
 
             if (result) {
-                NSDictionary *dic = [[result stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] objectFromJSONString];   
+                NSString *resultString = [result stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[resultString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
                 if (dic) {
                     return dic;
                 }

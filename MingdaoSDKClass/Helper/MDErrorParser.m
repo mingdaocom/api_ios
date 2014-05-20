@@ -90,7 +90,7 @@
             NSMutableString *string = [NSLocalizedString(@"操作失败", @"操作失败") mutableCopy];
             [string appendString:@", "];
             [string appendString:NSLocalizedString(@"错误代码", @"错误代码")];
-            [string appendFormat:@":%d", errorCodeInt];
+            [string appendFormat:@":%ld", (long)errorCodeInt];
             return string;
         }
     }
