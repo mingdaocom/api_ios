@@ -30,6 +30,7 @@
 @property (strong, nonatomic) NSString *middlePic, *originalPic, *fileName, *thumbnailPic, *originalDoc;
 @property (strong, nonatomic) NSString *videoUrl;
 @property (strong, nonatomic) NSArray *voteOptions;
+@property (assign, nonatomic) BOOL isAllowDown;
 
 @property (readonly, nonatomic) BOOL voted;
 @property (readonly, nonatomic) int totalVoteCount;
