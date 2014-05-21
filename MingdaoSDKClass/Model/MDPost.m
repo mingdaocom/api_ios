@@ -64,7 +64,7 @@
         self.fileName = [dic objectForKey:@"original_filename"];
         self.videoUrl = [dic objectForKey:@"video_url"];
         self.isVisble = [[dic objectForKey:@"Visble"] boolValue];
-        self.isAllowDown = [[dic objectForKey:@"allow_down"] boolValue];
+        self.isDownloadable = [[dic objectForKey:@"allow_down"] boolValue];
         NSArray *voteOptionDics = [dic objectForKey:@"options"];
         if (voteOptionDics && voteOptionDics.count > 0) {
             NSMutableArray *options = [NSMutableArray array];
@@ -115,7 +115,7 @@
     copyObject.thumbnailPic = [self.thumbnailPic copy];
     copyObject.fileName = [self.fileName copy];
     copyObject.isVisble = self.isVisble;
-    copyObject.isAllowDown = self.isAllowDown;
+    copyObject.isDownloadable = self.isDownloadable;
     NSMutableArray *voteOptions = [NSMutableArray array];
     for (MDVoteOption *d in self.voteOptions) {
         MDVoteOption *dd = [d copy];
