@@ -437,20 +437,11 @@ static MDAPIManager *sharedManager = nil;
     return connection;
 }
 
-- (MDURLConnection *)loadUserCommonTagsWithKeywords:(NSString *)keywords
-                                           pagesize:(NSInteger)size
-                                               page:(NSInteger)page
-                                            handler:(MDAPINSArrayHandler)handler
+- (MDURLConnection *)loadCurrentUserCommonTagsWithHandler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/passport/get_commonCategory?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
-    if (page > 0)
-        [urlString appendFormat:@"&pageindex=%ld", (long)page];
-    if (size > 0)
-        [urlString appendFormat:@"&pagesize=%ld", (long)size];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
