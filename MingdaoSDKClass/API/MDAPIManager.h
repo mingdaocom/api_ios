@@ -145,6 +145,20 @@ extern NSString * const MDAPIManagerNewTokenSetNotification;
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)saveUserWithAvatar:(UIImage *)avatarImg handler:(MDAPIBoolHandler)handler;
 
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 获取当前个人常用动态标签信息
+ @parmas:
+ keywords - 关键词模糊搜索
+ pageindex - 指定当前的页码
+ pagesize - 默认值20，最大值100 指定要返回的记录条数
+ handler - 处理包含多个MDTag的NSArray
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)loadUserCommonTagsWithKeywords:(NSString *)keywords
+                                       pagesize:(NSInteger)size
+                                           page:(NSInteger)page
+                                        handler:(MDAPINSArrayHandler)handler;
+
 #pragma mark - 私信接口
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
