@@ -178,6 +178,10 @@ static MDAPIManager *sharedManager = nil;
     
     NSString *urlStr = urlString;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(NO, error);
+            return ;
+        }
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
@@ -208,6 +212,10 @@ static MDAPIManager *sharedManager = nil;
     
     NSString *urlStr = urlString;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(NO, error);
+            return ;
+        }
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
@@ -1428,7 +1436,10 @@ static MDAPIManager *sharedManager = nil;
     MDURLConnectionQueue *queue = [[MDURLConnectionQueue alloc] initWithRequest:requests handler:^(NSInteger lastFinishedIndex, CGFloat progress, NSData *data, NSError *error){
         
         NSURLRequest *req = requests[lastFinishedIndex];
-
+        if (error) {
+            handler(lastFinishedIndex, progress ,NO, error);
+            return ;
+        }
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(lastFinishedIndex, progress ,NO, [MDErrorParser errorWithMDDic:dic URLString:req.URL.absoluteString]);
@@ -1578,7 +1589,11 @@ static MDAPIManager *sharedManager = nil;
                         , self.accessToken];
     
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){        
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
@@ -2370,7 +2385,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -2906,7 +2921,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3010,7 +3025,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3101,7 +3116,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3202,7 +3217,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3294,7 +3309,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3403,7 +3418,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3457,7 +3472,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3493,7 +3508,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3530,7 +3545,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3561,7 +3576,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3598,7 +3613,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3642,7 +3657,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3685,7 +3700,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3726,7 +3741,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3807,7 +3822,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -3899,7 +3914,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -4010,7 +4025,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -4124,7 +4139,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
@@ -4204,7 +4219,7 @@ static MDAPIManager *sharedManager = nil;
             handler(nil, error);
             return ;
         }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
             handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
