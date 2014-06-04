@@ -225,14 +225,17 @@
     return connection;
 }
 
-- (MDURLConnection *)loadEvents:(MDAPINSArrayHandler)handler
+- (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
+                                   handler:(MDAPINSArrayHandler)handler
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/todo?u_key=%@&format=json"
-                        , self.serverAddress
-                        , self.accessToken
-                        ];
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/calendar/todo?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (userIDs) {
+        [urlString appendFormat:@"&u_ids=%@", [userIDs componentsJoinedByString:@","]];
+    }
     
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         if (error) {
             handler(nil, error);
@@ -260,12 +263,17 @@
     return connection;
 }
 
-- (MDURLConnection *)loadEventsForDay:(NSString *)yearMonthAndDay handler:(MDAPINSArrayHandler)handler
+- (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
+                                    forDay:(NSString *)yearMonthAndDay
+                                   handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/calendar/day?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&date=%@", yearMonthAndDay];
+    if (userIDs) {
+        [urlString appendFormat:@"&u_ids=%@", [userIDs componentsJoinedByString:@","]];
+    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -297,15 +305,19 @@
     return connection;
 }
 
-- (MDURLConnection *)loadEventsForWeek:(NSInteger)week
-                                  year:(NSInteger)year
-                               handler:(MDAPINSArrayHandler)handler
+- (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
+                                   forWeek:(NSInteger)week
+                                      year:(NSInteger)year
+                                   handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/calendar/week?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&year=%ld", (long)year];
     [urlString appendFormat:@"&week=%ld", (long)week];
+    if (userIDs) {
+        [urlString appendFormat:@"&u_ids=%@", [userIDs componentsJoinedByString:@","]];
+    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -337,12 +349,57 @@
     return connection;
 }
 
-- (MDURLConnection *)loadEventsForMonth:(NSString *)yearAndMonth handler:(MDAPINSArrayHandler)handler
+- (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
+                                  forMonth:(NSString *)yearAndMonth
+                                   handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/calendar/month?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&date=%@", yearAndMonth];
+    if (userIDs) {
+        [urlString appendFormat:@"&u_ids=%@", [userIDs componentsJoinedByString:@","]];
+    }
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSMutableArray *returnEvents = [NSMutableArray array];
+        for (NSDictionary *aDic in [dic objectForKey:@"calendars"]) {
+            if (![aDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDEvent *aEvent = [[MDEvent alloc] initWithDictionary:aDic];
+            [returnEvents addObject:aEvent];
+        }
+        
+        handler(returnEvents, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadUnconfirmedEventsWithPageSize:(int)pageSize
+                                                  page:(int)page
+                                               handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/calendar/invitedCalendars?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&pageindex=%d", page];
+    [urlString appendFormat:@"&pagesize=%d", pageSize];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){

@@ -103,10 +103,21 @@
  yearMonthAndDay - date	false	string	日期字符串。默认值为今天。如：2013-05-05。
  handler - 处理包含多个MDEvent的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadEvents:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadEventsForDay:(NSString *)yearMonthAndDay handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadEventsForWeek:(NSInteger)week year:(NSInteger)year handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadEventsForMonth:(NSString *)yearAndMonth handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
+                                   handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
+                                    forDay:(NSString *)yearMonthAndDay
+                                   handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
+                                   forWeek:(NSInteger)week
+                                      year:(NSInteger)year
+                                   handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
+                                  forMonth:(NSString *)yearAndMonth
+                                   handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadUnconfirmedEventsWithPageSize:(int)pageSize
+                                                  page:(int)page
+                                               handler:(MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
