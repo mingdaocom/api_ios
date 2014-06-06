@@ -37,5 +37,40 @@
     return connection;
 }
 
+- (MDURLConnection *)loadCompanyCommonTagsWithHandler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/company/get_commonCategory?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSArray *tagDics = [dic objectForKey:@"tags"];
+        NSMutableArray *tags = [NSMutableArray array];
+        for (NSDictionary *tagDic in tagDics) {
+            if (![tagDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDTag *tag = [[MDTag alloc] initWithDictionary:tagDic];
+            [tags addObject:tag];
+        }
+        handler(tags, error);
+    }];
+    return connection;
+}
 
 @end
