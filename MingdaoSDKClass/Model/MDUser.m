@@ -26,6 +26,9 @@
         self.department = [aDic objectForKey:@"department"];
         self.job = [aDic objectForKey:@"job"];
         self.mobilePhoneNumber = [aDic objectForKey:@"mobilephone"];
+        if (!self.mobilePhoneNumber) {
+            self.mobilePhoneNumber = [aDic objectForKey:@"mobile_phone"];
+        }
         NSRange range = [self.mobilePhoneNumber rangeOfString:@"*"];
         if (((range.location + range.length )< self.mobilePhoneNumber.length)
             && range.location > 0) {
