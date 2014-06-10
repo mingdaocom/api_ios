@@ -11,5 +11,7 @@
 @interface MDAPIManager (Company)
 #pragma mark - 企业网络与管理员接口
 - (MDURLConnection *)loadCompanyDetailWithHandler:(MDAPINSDictionaryHandler)handler;
-- (MDURLConnection *)loadCompanyCommonTagsWithHandler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadCompanyCommonTagsWithPageSize:(int)pageSize
+                                             pageIndex:(int)pageIndex
+                                               handler:(MDAPINSArrayHandler)handler;
 @end

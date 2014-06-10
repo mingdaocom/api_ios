@@ -37,11 +37,16 @@
     return connection;
 }
 
-- (MDURLConnection *)loadCompanyCommonTagsWithHandler:(MDAPINSArrayHandler)handler
+- (MDURLConnection *)loadCompanyCommonTagsWithPageSize:(int)pageSize
+                                             pageIndex:(int)pageIndex
+                                               handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/company/get_commonCategory?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&pageindex=%d", pageIndex];
+    [urlString appendFormat:@"&pagesize=%d", pageSize];
+
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
