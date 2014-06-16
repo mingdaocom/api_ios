@@ -53,5 +53,31 @@
                                    optionString:(NSString *)optionString
                                         handler:(MDAPIBoolHandler)handler;
 
-
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+@usage:
+ 创建投票动态
+ @param
+ text          动态内容
+ options       投票选项内容以[option]标示符分开
+ images        投票发布时的图片信息
+ imageOptions  发布的图片信息对应的选项
+ endDateString 投票结束时间
+ maxChoice     投票最大可选项
+ isAnonymous   是否为匿名投票
+ isVisible     是否可以查看投票结果
+ groupIDs      投票动态分享的群组
+ shareType     分享范围
+ handler       处理动态发布是否成功的信息
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)createPollPostWithText:(NSString *)text
+                                    options:(NSString *)options
+                                     images:(NSArray *)images
+                               imageOptions:(NSString *)imageOptions
+                              endDateString:(NSString *)endDateString
+                                  maxChoice:(NSInteger *)maxChoice
+                                isAnonymous:(BOOL)isAnonymous
+                                  isVisible:(BOOL)isVisible
+                                   groupIDs:(NSArray *)groupIDs
+                                  shareType:(NSInteger)shareType
+                                    handler:(MDAPINSStringHandler)handler;
 @end
