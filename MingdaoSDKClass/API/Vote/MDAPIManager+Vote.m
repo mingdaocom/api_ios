@@ -200,7 +200,7 @@
                                      images:(NSArray *)images
                                imageOptions:(NSString *)imageOptions
                               endDateString:(NSString *)endDateString
-                                  maxChoice:(NSInteger *)maxChoice
+                                  maxChoice:(NSInteger)maxChoice
                                 isAnonymous:(BOOL)isAnonymous
                                   isVisible:(BOOL)isVisible
                                    groupIDs:(NSArray *)groupIDs
@@ -209,41 +209,65 @@
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/vote/create?format=json"];
-    [urlString appendFormat:@"access_token=%@",self.accessToken];
+    [urlString appendFormat:@"&access_token=%@",self.accessToken];
     
-    [urlString appendFormat:@"p_msg=%@",text];
-    [urlString appendFormat:@"vote_options=%@",options];
-    [urlString appendFormat:@"v_img_options=%@",imageOptions];
-    [urlString appendFormat:@"vote_lasttime=%@",endDateString];
-    [urlString appendFormat:@"available_number=%ld",(long)maxChoice];
-    if (isAnonymous) {
-        [urlString appendFormat:@"vote_anonymous=%d",1];
-    }
-    if (isVisible) {
-        [urlString appendFormat:@"vote_visble=%d",1];
-    }
-    if (groupIDs &&groupIDs.count>0) {
-        [urlString appendFormat:@"g_id=%@",[groupIDs componentsJoinedByString:@","]];
-    }
-    [urlString appendFormat:@"s_type=%ld",(long)shareType];
+    NSMutableData *postBody = [NSMutableData data];
+
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
     
-    if (images.count > 0) {
-        NSString *boundary = @"----------MINGDAO";
-        NSString *boundaryPrefix = @"--";
-        
-        NSMutableData *postBody = [NSMutableData data];
+    NSString *boundary = @"----------MINGDAO";
+    NSString *boundaryPrefix = @"--";
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"p_msg"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", [self localEncode:text]] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"vote_options"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", options] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"vote_lasttime"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", endDateString] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"available_number"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", (long)maxChoice] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    if (imageOptions) {
         
         [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"p_msg"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", [self localEncode:text]] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"v_img_options"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", imageOptions] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    if (isAnonymous) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"vote_anonymous"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%d\r\n", 1] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    if (isVisible) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"vote_visble"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%d\r\n", 1] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    if (groupIDs &&groupIDs.count>0) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"g_id"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", [groupIDs componentsJoinedByString:@","]] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"s_type"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", (long)shareType] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    if (images.count > 0) {
         for (int i = 0; i < images.count; i++) {
             NSString *filename = [NSString stringWithFormat:@"photo%d.jpg", i];
             NSMutableString *parameter = [NSMutableString string];
-            [parameter appendString:@"p_img"];
+            [parameter appendString:@"v_img"];
             if (i > 0) {
                 [parameter appendFormat:@"%d", i];
             }
@@ -256,16 +280,16 @@
             [postBody appendData:imageData];
             [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
         }
-        
-        [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        
-        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
-        [req setValue:contentType forHTTPHeaderField:@"Content-type"];
-        [req setHTTPBody:postBody];
     }
+    
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
+    [req setValue:contentType forHTTPHeaderField:@"Content-type"];
+    [req setHTTPBody:postBody];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error) {
         if (error) {

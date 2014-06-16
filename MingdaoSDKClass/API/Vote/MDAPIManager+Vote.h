@@ -74,7 +74,7 @@
                                      images:(NSArray *)images
                                imageOptions:(NSString *)imageOptions
                               endDateString:(NSString *)endDateString
-                                  maxChoice:(NSInteger *)maxChoice
+                                  maxChoice:(NSInteger)maxChoice
                                 isAnonymous:(BOOL)isAnonymous
                                   isVisible:(BOOL)isVisible
                                    groupIDs:(NSArray *)groupIDs
