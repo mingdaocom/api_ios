@@ -100,6 +100,11 @@
     }
 }
 
+- (NSURLRequest *)request
+{
+    return self.req;
+}
+
 - (void)dealloc
 {
     self.req = nil;

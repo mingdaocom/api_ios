@@ -78,4 +78,45 @@
     return connection;
 }
 
+- (MDURLConnection *)loadCompanyIsDeploymentSetInfo:(MDAPIBoolHandler)handler
+{
+    NSString *urlStr = [NSString stringWithFormat:@"%@/company/isSetDeployment?access_token=%@&format=json"
+                        , self.serverAddress
+                        , self.accessToken];
+    
+    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlStr handler:handler];
+    }];
+    return connection;
+
+}
+
+- (MDURLConnection *)setCompanyName:(NSString *)name handler:(MDAPIBoolHandler)handler
+{
+    NSString *urlStr = [NSString stringWithFormat:@"%@/company/setCompanyName?access_token=%@&format=json&pName=%@"
+                        , self.serverAddress
+                        , self.accessToken
+                        , name];
+    
+    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlStr handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)addDeparments:(NSArray *)names handler:(MDAPIBoolHandler)handler
+{
+    NSString *urlStr = [NSString stringWithFormat:@"%@/company/addProjectDepartment?access_token=%@&format=json&departs=%@"
+                        , self.serverAddress
+                        , self.accessToken
+                        , [names componentsJoinedByString:@","]];
+    
+    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlStr handler:handler];
+    }];
+    return connection;
+}
 @end

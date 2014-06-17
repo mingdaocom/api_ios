@@ -478,7 +478,6 @@
 
 - (MDURLConnection *)exitEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler
 {
-    
     NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/exit?u_key=%@&c_id=%@&format=json"
                         , self.serverAddress
                         , self.accessToken
