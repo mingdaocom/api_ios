@@ -11,6 +11,8 @@
 #import "UIDevice+IdentifierAddition.h"
 #import "MDErrorParser.h"
 
+#define MDAPIDefaultServerAddress @"https://api.mingdao.com"
+
 extern NSString * const MDAPIManagerNewTokenSetNotification;
 
 @interface MDAPIManager : NSObject
@@ -19,10 +21,6 @@ extern NSString * const MDAPIManagerNewTokenSetNotification;
 
 + (MDAPIManager *)sharedManager;
 
-/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
- @optional
- 设置私有部署API地址，默认为:https://api.mingdao.com/
- -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 + (void)setServerAddress:(NSString *)serverAddress;
 + (void)setAppKey:(NSString *)appKey;
 + (void)setAppSecret:(NSString *)appSecret;
