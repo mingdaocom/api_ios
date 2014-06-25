@@ -57,6 +57,8 @@
 @property (strong, nonatomic) NSArray *members;
 @property (strong, nonatomic) NSArray *subTasks;
 
+@property (assign, nonatomic) int colorType;
+
 @property (readonly, nonatomic) MDUser *creator;
 @property (readonly, nonatomic) BOOL finished, expired;
 

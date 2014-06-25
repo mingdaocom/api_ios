@@ -103,6 +103,7 @@
     copyObject.charger = [self.charger copy];
     copyObject.project = [self.project copy];
     copyObject.members = [self.members copy];
+    copyObject.colorType = self.colorType;
     if (self.subTasks.count > 0) {
         copyObject.subTasks = [self.subTasks copy];
     }
