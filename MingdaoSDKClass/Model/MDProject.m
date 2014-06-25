@@ -22,7 +22,7 @@
         self.taskInProgressCount = [[aDic objectForKey:@"inprogressCount"] intValue];
         self.taskCompletedCount = [[aDic objectForKey:@"completedCount"] intValue];
         
-        self.projectColor = [[aDic objectForKey:@"projectColor"] intValue];
+        self.colorType = [[aDic objectForKey:@"projectColor"] intValue];
     }
     return self;
 }
@@ -44,7 +44,7 @@
     copyObject.taskCompletedCount = self.taskCompletedCount;
     copyObject.taskInProgressCount = self.taskInProgressCount;
     
-    copyObject.projectColor = self.projectColor;
+    copyObject.colorType = self.colorType;
     
     return copyObject;
 }
