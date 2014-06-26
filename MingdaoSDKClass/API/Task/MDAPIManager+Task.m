@@ -836,9 +836,10 @@
     [urlString appendString:@"/task/v2/getFolders?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     BOOL hasNoFolderTaskInfo = YES;
-    if (keywords && keywords.length > 0)
+    if (keywords && keywords.length > 0){
         hasNoFolderTaskInfo = NO;
         [urlString appendFormat:@"&keywords=%@", keywords];
+    }
     if (type == 2 || type == 3) {
         hasNoFolderTaskInfo = NO;
         [urlString appendFormat:@"&filterType=%d", type];
@@ -895,7 +896,7 @@
             MDTaskFolder *noFolderTaskInfo = [[MDTaskFolder alloc] init];
             noFolderTaskInfo.unreadDiscussCount = [[dic objectForKey:@"nullFolder_notificationCount"] intValue];
             noFolderTaskInfo.taskInProgressCount = [[dic objectForKey:@"nullFolder_unCompleteCount"] intValue];
-            noFolderTaskInfo.taskInProgressCount = [[dic objectForKey:@"nullFolder_completedCount"] intValue];
+            noFolderTaskInfo.taskCompletedCount = [[dic objectForKey:@"nullFolder_completedCount"] intValue];
             handler(projects, noFolderTaskInfo, error);
         } else {
             handler(projects, nil, error);
