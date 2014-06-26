@@ -821,4 +821,86 @@
     return connection;
 }
 
+- (MDURLConnection *)loadFoldersWithKeywords:(NSString *)keywords
+                                  filterType:(int)type
+                                   colorType:(int)colorType
+                                   orderType:(int)orderType
+                           isShowEmptyFolder:(BOOL)isShowEmptyFolder
+                       isShowCompletedFolder:(BOOL)isShowCompletedFolder
+                                    pageSize:(int)pageSize
+                                   pageIndex:(int)pageIndex
+                                     handler:(void(^)(NSArray *folders, MDTaskFolder *noFolderTaskInfo, NSError *error))handler
+{
+    
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/getFolders?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    BOOL hasNoFolderTaskInfo = YES;
+    if (keywords && keywords.length > 0)
+        hasNoFolderTaskInfo = NO;
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    if (type == 2 || type == 3) {
+        hasNoFolderTaskInfo = NO;
+        [urlString appendFormat:@"&filterType=%d", type];
+    }
+    if (colorType >= 0 && colorType <= 5) {
+        hasNoFolderTaskInfo = NO;
+        [urlString appendFormat:@"&color=%d", colorType];
+    }
+    if (orderType >= 1 && orderType <= 2) {
+        hasNoFolderTaskInfo = NO;
+        [urlString appendFormat:@"&orderType=%d", orderType];
+    }
+    if (isShowEmptyFolder || isShowCompletedFolder) {
+        hasNoFolderTaskInfo = NO;
+    }
+    if (pageSize > 0) {
+        [urlString appendFormat:@"&pagesize=%d", pageSize];
+    }
+    if (pageIndex > 0) {
+        if (pageIndex != 1) {
+            hasNoFolderTaskInfo = NO;
+        }
+        [urlString appendFormat:@"&pageindex=%d", pageIndex];
+    }
+    [urlString appendFormat:@"&isShowEmptyFolder=%d", isShowEmptyFolder?1:0];
+    [urlString appendFormat:@"&isShowCompletedFolder=%d", isShowCompletedFolder?1:0];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSArray *projectDics = [dic objectForKey:@"folders"];
+        NSMutableArray *projects = [NSMutableArray array];
+        for (NSDictionary *projectDic in projectDics) {
+            if (![projectDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDTaskFolder *task = [[MDTaskFolder alloc] initWithDictionary:projectDic];
+            [projects addObject:task];
+        }
+        if (hasNoFolderTaskInfo) {
+            MDTaskFolder *noFolderTaskInfo = [[MDTaskFolder alloc] init];
+            noFolderTaskInfo.unreadDiscussCount = [[dic objectForKey:@"nullFolder_notificationCount"] intValue];
+            noFolderTaskInfo.taskInProgressCount = [[dic objectForKey:@"nullFolder_unCompleteCount"] intValue];
+            noFolderTaskInfo.taskInProgressCount = [[dic objectForKey:@"nullFolder_completedCount"] intValue];
+            handler(projects, noFolderTaskInfo, error);
+        } else {
+            handler(projects, nil, error);
+        }
+    }];
+    return connection;
+}
 @end

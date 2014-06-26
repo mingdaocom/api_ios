@@ -16,7 +16,7 @@
 - (MDProject *)initWithDictionary:(NSDictionary *)aDic;
 @end
 
-@interface MDV2Project : NSObject
+@interface MDTaskFolder : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
 
@@ -33,5 +33,5 @@
 @property (strong, nonatomic) MDUser *charger;
 
 @property (readonly, nonatomic) BOOL isCompleted;
-- (MDV2Project *)initWithDictionary:(NSDictionary *)aDic;
+- (MDTaskFolder *)initWithDictionary:(NSDictionary *)aDic;
 @end

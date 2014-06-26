@@ -30,8 +30,8 @@
 }
 @end
 
-@implementation MDV2Project
-- (MDV2Project *)initWithDictionary:(NSDictionary *)aDic
+@implementation MDTaskFolder
+- (MDTaskFolder *)initWithDictionary:(NSDictionary *)aDic
 {
     self = [super init];
     if (self) {
@@ -64,7 +64,7 @@
 - (id)copy
 {
     id object = [[[self class] alloc] init];
-    MDV2Project *copyObject = object;
+    MDTaskFolder *copyObject = object;
     copyObject.objectID = [self.objectID copy];
     copyObject.objectName = [self.objectName copy];
     

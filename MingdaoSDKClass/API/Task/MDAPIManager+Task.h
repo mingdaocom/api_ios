@@ -150,4 +150,14 @@
 - (MDURLConnection *)deleteMemberFromeTaskWithTaskID:(NSString *)tID
                                             memberID:(NSString *)memberID
                                              handler:(MDAPIBoolHandler)handler;
+
+- (MDURLConnection *)loadFoldersWithKeywords:(NSString *)keywords
+                                  filterType:(int)type
+                                   colorType:(int)colorType
+                                   orderType:(int)orderType
+                           isShowEmptyFolder:(BOOL)isShowEmptyFolder
+                       isShowCompletedFolder:(BOOL)isShowCompletedFolder
+                                    pageSize:(int)pageSize
+                                   pageIndex:(int)pageIndex
+                                     handler:(void(^)(NSArray *folders, MDTaskFolder *noFolderTaskInfo, NSError *error))handler;
 @end
