@@ -28,6 +28,15 @@
     
     return copyObject;
 }
+
+- (BOOL)isEqual:(id)object
+{
+    if ([object isKindOfClass:[MDProject class]]) {
+        MDProject *project = (MDProject *)object;
+        return [self.objectID isEqualToString:project.objectID];
+    }
+    return NO;
+}
 @end
 
 @implementation MDTaskFolder
@@ -75,5 +84,14 @@
     copyObject.colorType = self.colorType;
     
     return copyObject;
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if ([object isKindOfClass:[MDTaskFolder class]]) {
+        MDTaskFolder *folder = (MDTaskFolder *)object;
+        return [self.objectID isEqualToString:folder.objectID];
+    }
+    return NO;
 }
 @end
