@@ -7,17 +7,31 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MDUser.h"
+
 @interface MDProject : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
 
+- (MDProject *)initWithDictionary:(NSDictionary *)aDic;
+@end
+
+@interface MDV2Project : NSObject
+@property (strong, nonatomic) NSString *objectID;
+@property (strong, nonatomic) NSString *objectName;
+
+@property (strong, nonatomic) NSString *createDateString;
 @property (strong, nonatomic) NSString *deadLine;
-@property (strong, nonatomic) NSString *completedDate;
+
+@property (assign, nonatomic) int unreadDiscussCount;
 @property (assign, nonatomic) int taskInProgressCount;
 @property (assign, nonatomic) int taskCompletedCount;
 
 @property (assign, nonatomic) int colorType;
 
-@property (assign, nonatomic) BOOL isCompleted;
-- (MDProject *)initWithDictionary:(NSDictionary *)aDic;
+@property (strong, nonatomic) NSString *creatorID;
+@property (strong, nonatomic) MDUser *charger;
+
+@property (readonly, nonatomic) BOOL isCompleted;
+- (MDV2Project *)initWithDictionary:(NSDictionary *)aDic;
 @end

@@ -15,14 +15,43 @@
     if (self) {
         self.objectID = [aDic objectForKey:@"guid"];
         self.objectName = [aDic objectForKey:@"title"];
+    }
+    return self;
+}
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDProject *copyObject = object;
+    copyObject.objectID = [self.objectID copy];
+    copyObject.objectName = [self.objectName copy];
+    
+    return copyObject;
+}
+@end
+
+@implementation MDV2Project
+- (MDV2Project *)initWithDictionary:(NSDictionary *)aDic
+{
+    self = [super init];
+    if (self) {
+        self.objectID = [aDic objectForKey:@"id"];
+        self.objectName = [aDic objectForKey:@"name"];
         
+        self.createDateString = [aDic objectForKey:@"create_time"];
         self.deadLine = [aDic objectForKey:@"deadline"];
-        self.completedDate = [aDic objectForKey:@"completeDate"];
         
-        self.taskInProgressCount = [[aDic objectForKey:@"inprogressCount"] intValue];
-        self.taskCompletedCount = [[aDic objectForKey:@"completedCount"] intValue];
+        self.unreadDiscussCount = [[aDic objectForKey:@"not_count"] intValue];
+        self.taskInProgressCount = [[aDic objectForKey:@"un_completedCount"] intValue];
+        self.taskCompletedCount = [[aDic objectForKey:@"completed_count"] intValue];
         
-        self.colorType = [[aDic objectForKey:@"projectColor"] intValue];
+        self.colorType = [[aDic objectForKey:@"color"] intValue];
+        
+        self.creatorID = [aDic objectForKey:@"create_user"];
+        MDUser *user = [[MDUser alloc] init];
+        user.objectID = [aDic objectForKey:@"charge_user"];
+        user.avatar = [aDic objectForKey:@"charge_avatar"];
+        self.charger = user;
     }
     return self;
 }
@@ -35,12 +64,11 @@
 - (id)copy
 {
     id object = [[[self class] alloc] init];
-    MDProject *copyObject = object;
+    MDV2Project *copyObject = object;
     copyObject.objectID = [self.objectID copy];
     copyObject.objectName = [self.objectName copy];
     
     copyObject.deadLine = [self.deadLine copy];
-    copyObject.completedDate = [self.completedDate copy];
     copyObject.taskCompletedCount = self.taskCompletedCount;
     copyObject.taskInProgressCount = self.taskInProgressCount;
     
