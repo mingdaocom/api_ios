@@ -33,6 +33,9 @@
         
         self.isLocked = [[aDic objectForKey:@"is_lock"] boolValue];
         self.isNoticed = [[aDic objectForKey:@"is_notice"] boolValue];
+        self.isContainMe = [[aDic objectForKey:@"isContainMe"] boolValue];
+        
+        self.currentUserType = [[aDic objectForKey:@"currentUserType"] intValue];
         
         self.folder = [[MDTaskFolder alloc] initWithDictionary:[aDic objectForKey:@"folder"]];
         
