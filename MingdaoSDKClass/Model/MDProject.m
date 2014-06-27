@@ -80,11 +80,17 @@
     copyObject.objectID = [self.objectID copy];
     copyObject.objectName = [self.objectName copy];
     
+    copyObject.createDateString = [self.createDateString copy];
     copyObject.deadLine = [self.deadLine copy];
+    
+    copyObject.unreadDiscussCount = self.unreadDiscussCount;
     copyObject.taskCompletedCount = self.taskCompletedCount;
     copyObject.taskInProgressCount = self.taskInProgressCount;
     
     copyObject.colorType = self.colorType;
+    
+    copyObject.creatorID = [self.creatorID copy];
+    copyObject.charger = [self.charger copy];
     
     return copyObject;
 }
