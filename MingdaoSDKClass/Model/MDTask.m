@@ -69,23 +69,6 @@
     return NO;
 }
 
-- (MDUser *)creator
-{
-    if ([self.charger.objectID isEqualToString:self.creatorID]) {
-        return self.charger;
-    } else {
-        for (MDUser *u in self.members) {
-            if ([u.objectID isEqualToString:self.creatorID]) {
-                return u;
-            }
-        }
-    }
-    MDUser *u = [[MDUser alloc] init];
-    u.objectID = self.creatorID;
-    u.objectName = @"创建者";
-    return u;
-}
-
 - (id)copy
 {
     id object = [[[self class] alloc] init];

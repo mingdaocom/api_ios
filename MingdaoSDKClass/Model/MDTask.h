@@ -53,13 +53,13 @@
 @property (strong, nonatomic) NSString *creatorID;
 @property (assign, nonatomic) int replyCount, unreadCount, subTaskCount;
 @property (strong, nonatomic) MDUser *charger;
+@property (strong, nonatomic) MDUser *creator;
 @property (strong, nonatomic) MDProject *project;
 @property (strong, nonatomic) NSArray *members;
 @property (strong, nonatomic) NSArray *subTasks;
 
 @property (assign, nonatomic) int colorType;
 
-@property (readonly, nonatomic) MDUser *creator;
 @property (readonly, nonatomic) BOOL finished, expired;
 
 - (MDTask *)initWithDictionary:(NSDictionary *)aDic;
