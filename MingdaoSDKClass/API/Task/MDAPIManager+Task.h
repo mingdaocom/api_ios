@@ -160,4 +160,15 @@
                                     pageSize:(int)pageSize
                                    pageIndex:(int)pageIndex
                                      handler:(void(^)(NSArray *folders, MDTaskFolder *noFolderTaskInfo, NSError *error))handler;
+
+- (MDURLConnection *)loadTasksWithKeywords:(NSString *)keywords
+                                  folderID:(NSString *)folderID
+                                filterType:(int)filterType
+                                 colorType:(int)colorType
+                                  finished:(BOOL)finished
+                               categortIDs:(NSString *)categortIDs
+                                    userID:(NSString *)userID
+                                 pageIndex:(int)pageIndex
+                                  pageSize:(int)pageSize
+                                   handler:(MDAPINSArrayHandler)handler;
 @end
