@@ -67,7 +67,10 @@
 
 - (BOOL)isCompleted
 {
-    return self.taskInProgressCount == self.taskCompletedCount;
+    if ((self.taskInProgressCount == 0) && (self.taskCompletedCount > 0)) {
+        return YES;
+    }
+    return NO;
 }
 
 - (id)copy
