@@ -13,21 +13,28 @@
 {
     self = [super init];
     if (self) {
-        self.objectID = [aDic objectForKey:@"guid"];
+        self.objectID = [aDic objectForKey:@"id"];
         self.objectName = [aDic objectForKey:@"title"];
         self.des = [aDic objectForKey:@"des"];
+        
+        self.createdDateString = [aDic objectForKey:@"create_time"];
         self.expiredDateString = [aDic objectForKey:@"expire_date"];
         self.finishedDateString = [aDic objectForKey:@"finished_date"];
-        self.replyCount = [[aDic objectForKey:@"reply_count"] intValue];
-        self.unreadCount = [[aDic objectForKey:@"unread_count"] intValue];
-        self.createdDateString = [aDic objectForKey:@"create_time"];
-        self.creatorID = [aDic objectForKey:@"create_userid"];
-        self.project = [[MDProject alloc] initWithDictionary:[aDic objectForKey:@"project"]];
-        if (!self.project.objectID) {
-            self.project = nil;
-        }
-        self.charger = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"user"]];
+        
+        self.charger = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"charge_user"]];
+        self.creator = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"create_user"]];
+        
         self.subTaskCount = [[aDic objectForKey:@"sub_count"] intValue];
+        
+        self.replyCount = [[aDic objectForKey:@"reply_count"] intValue];
+        self.unreadDiscussCount = [[aDic objectForKey:@"unread_count"] intValue];
+        
+        self.colorType = [[aDic objectForKey:@"color"] intValue];
+        
+        self.isLocked = [[aDic objectForKey:@"is_lock"] boolValue];
+        self.isNoticed = [[aDic objectForKey:@"is_notice"] boolValue];
+        
+        self.folder = [[MDTaskFolder alloc] initWithDictionary:[aDic objectForKey:@"folder"]];
         
         NSMutableArray *memebers = [NSMutableArray array];
         NSDictionary *userDics = [aDic objectForKey:@"joined"];
@@ -76,17 +83,24 @@
     copyObject.objectID = [self.objectID copy];
     copyObject.objectName = [self.objectName copy];
     copyObject.des = [self.des copy];
+    
     copyObject.createdDateString = [self.createdDateString copy];
     copyObject.expiredDateString = [self.expiredDateString copy];
     copyObject.finishedDateString = [self.finishedDateString copy];
-    copyObject.creatorID = [self.creatorID copy];
+    
     copyObject.replyCount = self.replyCount;
-    copyObject.unreadCount = self.unreadCount;
+    copyObject.unreadDiscussCount = self.unreadDiscussCount;
     copyObject.subTaskCount = self.subTaskCount;
+
+    copyObject.creator = [self.creator copy];
     copyObject.charger = [self.charger copy];
-    copyObject.project = [self.project copy];
+
+    copyObject.folder = [self.folder copy];
+    
     copyObject.members = [self.members copy];
+    
     copyObject.colorType = self.colorType;
+    
     if (self.subTasks.count > 0) {
         copyObject.subTasks = [self.subTasks copy];
     }

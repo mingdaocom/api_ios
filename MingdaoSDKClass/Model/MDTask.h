@@ -47,18 +47,23 @@
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
 @property (strong, nonatomic) NSString *des;
+
 @property (strong, nonatomic) NSString *createdDateString;
 @property (strong, nonatomic) NSString *expiredDateString;
 @property (strong, nonatomic) NSString *finishedDateString;
-@property (strong, nonatomic) NSString *creatorID;
-@property (assign, nonatomic) int replyCount, unreadCount, subTaskCount;
+
 @property (strong, nonatomic) MDUser *charger;
 @property (strong, nonatomic) MDUser *creator;
-@property (strong, nonatomic) MDProject *project;
+
 @property (strong, nonatomic) NSArray *members;
 @property (strong, nonatomic) NSArray *subTasks;
 
+@property (assign, nonatomic) BOOL isLocked, isNoticed;
+
+@property (assign, nonatomic) int replyCount, unreadDiscussCount, subTaskCount;
 @property (assign, nonatomic) int colorType;
+
+@property (strong, nonatomic) MDTaskFolder *folder;
 
 @property (readonly, nonatomic) BOOL finished, expired;
 

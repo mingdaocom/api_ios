@@ -831,7 +831,6 @@
                                    pageIndex:(int)pageIndex
                                      handler:(void(^)(NSArray *folders, MDTaskFolder *noFolderTaskInfo, NSError *error))handler
 {
-    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/v2/getFolders?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
@@ -901,6 +900,74 @@
         } else {
             handler(projects, nil, error);
         }
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadTasksWithKeywords:(NSString *)keywords
+                                  folderID:(NSString *)folderID
+                                filterType:(int)filterType
+                                 colorType:(int)colorType
+                                  finished:(BOOL)finished
+                               categortIDs:(NSString *)categortIDs
+                                    userID:(NSString *)userID
+                                 pageIndex:(int)pageIndex
+                                  pageSize:(int)pageSize
+                                   handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/getTaskList?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords && keywords.length > 0){
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    }
+    if (folderID) {
+        [urlString appendFormat:@"&folderID=%@", folderID];
+    }
+    if (filterType == 2 || filterType == 3) {
+        [urlString appendFormat:@"&filterType=%d", filterType];
+    }
+    if (colorType >= 0 && colorType <= 5) {
+        [urlString appendFormat:@"&color=%d", colorType];
+    }
+    [urlString appendFormat:@"&status=%d", finished?1:0];
+    if (categortIDs) {
+        [urlString appendFormat:@"&categoryIDs=%@", categortIDs];
+    }
+    if (userID) {
+        [urlString appendFormat:@"&u_id=%@", userID];
+    }
+    if (pageSize > 0)
+        [urlString appendFormat:@"&pagesize=%d", pageSize];
+    if (pageIndex > 0)
+        [urlString appendFormat:@"&pageindex=%d", pageIndex];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSArray *taskDics = [dic objectForKey:@"tasks"];
+        NSMutableArray *tasks = [NSMutableArray array];
+        for (NSDictionary *taskDic in taskDics) {
+            if (![taskDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
+            [tasks addObject:task];
+        }
+        handler(tasks, error);
     }];
     return connection;
 }
