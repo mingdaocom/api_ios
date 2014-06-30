@@ -834,33 +834,22 @@
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/v2/getFolders?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    BOOL hasNoFolderTaskInfo = YES;
     if (keywords && keywords.length > 0){
-        hasNoFolderTaskInfo = NO;
         [urlString appendFormat:@"&keywords=%@", keywords];
     }
     if (type == 2 || type == 3) {
-        hasNoFolderTaskInfo = NO;
         [urlString appendFormat:@"&filterType=%d", type];
     }
     if (colorType >= 0 && colorType <= 5) {
-        hasNoFolderTaskInfo = NO;
         [urlString appendFormat:@"&color=%d", colorType];
     }
     if (orderType >= 1 && orderType <= 2) {
-        hasNoFolderTaskInfo = NO;
         [urlString appendFormat:@"&orderType=%d", orderType];
-    }
-    if (isShowEmptyFolder || isShowCompletedFolder) {
-        hasNoFolderTaskInfo = NO;
     }
     if (pageSize > 0) {
         [urlString appendFormat:@"&pagesize=%d", pageSize];
     }
     if (pageIndex > 0) {
-        if (pageIndex != 1) {
-            hasNoFolderTaskInfo = NO;
-        }
         [urlString appendFormat:@"&pageindex=%d", pageIndex];
     }
     [urlString appendFormat:@"&isShowEmptyFolder=%d", isShowEmptyFolder?1:0];
@@ -891,14 +880,15 @@
             MDTaskFolder *task = [[MDTaskFolder alloc] initWithDictionary:projectDic];
             [projects addObject:task];
         }
-        if (hasNoFolderTaskInfo) {
+        
+        if ([[dic objectForKey:@"nullFolder_notificationCount"] intValue] == -1 || [[dic objectForKey:@"nullFolder_unCompleteCount"] intValue] == -1 || [[dic objectForKey:@"nullFolder_completedCount"] intValue] == -1) {
+            handler(projects, nil, error);
+        } else {
             MDTaskFolder *noFolderTaskInfo = [[MDTaskFolder alloc] init];
             noFolderTaskInfo.unreadDiscussCount = [[dic objectForKey:@"nullFolder_notificationCount"] intValue];
             noFolderTaskInfo.taskInProgressCount = [[dic objectForKey:@"nullFolder_unCompleteCount"] intValue];
             noFolderTaskInfo.taskCompletedCount = [[dic objectForKey:@"nullFolder_completedCount"] intValue];
             handler(projects, noFolderTaskInfo, error);
-        } else {
-            handler(projects, nil, error);
         }
     }];
     return connection;
@@ -971,4 +961,105 @@
     }];
     return connection;
 }
+
+- (MDURLConnection *)validateFolderWithName:(NSString *)folderName
+                                    handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/validateFolder?format=json"];
+    [urlString appendFormat:@"&access_token=%@",self.accessToken];
+    
+    NSMutableData *postBody = [NSMutableData data];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    NSString *boundary = @"--------MINGDAO";
+    NSString *boundaryPrefix = @"--";
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name= \"%@\"\r\n\r\n",@"name"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", folderName] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
+    [req setValue:contentType forHTTPHeaderField:@"Content-type"];
+    [req setHTTPBody:postBody];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error) {
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    
+    return connection;
+}
+
+- (MDURLConnection *)createFolderWithName:(NSString *)folderName
+                             chargeUserID:(NSString *)userID
+                                colorType:(int)colorType
+                                 deadLine:(NSString *)deadLine
+                                  handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/validateFolder?format=json"];
+    [urlString appendFormat:@"&access_token=%@",self.accessToken];
+    
+    NSMutableData *postBody = [NSMutableData data];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    NSString *boundary = @"--------MINGDAO";
+    NSString *boundaryPrefix = @"--";
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name= \"%@\"\r\n\r\n",@"name"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", folderName] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name= \"%@\"\r\n\r\n",@"chargeUserID"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", userID] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name= \"%@\"\r\n\r\n",@"color"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%d\r\n", colorType] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name= \"%@\"\r\n\r\n",@"dateLine"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", deadLine] dataUsingEncoding:NSUTF8StringEncoding]];
+
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
+    [req setValue:contentType forHTTPHeaderField:@"Content-type"];
+    [req setHTTPBody:postBody];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSString *postID = [dic objectForKey:@"folderId"];
+        handler(postID, error);
+    }];
+    return connection;
+}
+
 @end

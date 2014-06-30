@@ -171,4 +171,21 @@
                                  pageIndex:(int)pageIndex
                                   pageSize:(int)pageSize
                                    handler:(MDAPINSArrayHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 完成/删除/编辑项目
+ @parmas:
+ tID    -  回复的任务ID 必须
+ handler - 创建成功返回状态
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)validateFolderWithName:(NSString *)folderName
+                                                handler:(MDAPIBoolHandler)handler;
+
+- (MDURLConnection *)createFolderWithName:(NSString *)folderName
+                             chargeUserID:(NSString *)userID
+                                colorType:(int)colorType
+                                 deadLine:(NSString *)deadLine
+                                  handler:(MDAPINSStringHandler)handler;
+
 @end
