@@ -69,6 +69,7 @@
  handler - 处理MDTask
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loadTaskReplymentsWithTaskID:(NSString *)tID
+                                         onlyFile:(BOOL)onlyFile
                                             maxID:(NSString *)maxTID
                                          pageSize:(NSInteger)size
                                           handler:(MDAPINSArrayHandler)handler;

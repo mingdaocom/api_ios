@@ -417,7 +417,11 @@
     return connection;
 }
 
-- (MDURLConnection *)loadTaskReplymentsWithTaskID:(NSString *)tID maxID:(NSString *)maxTID pageSize:(NSInteger)size handler:(MDAPINSArrayHandler)handler
+- (MDURLConnection *)loadTaskReplymentsWithTaskID:(NSString *)tID
+                                         onlyFile:(BOOL)onlyFile
+                                            maxID:(NSString *)maxTID
+                                         pageSize:(NSInteger)size
+                                          handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/v2/getTopicListByTaskID?format=json"];
@@ -427,6 +431,9 @@
         [urlString appendFormat:@"&max_id=%@", maxTID];
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%ld", (long)size];
+    if (onlyFile) {
+        [urlString appendFormat:@"&onlyFile=%d", 1];
+    }
     
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
