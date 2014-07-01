@@ -172,6 +172,11 @@
                                   pageSize:(int)pageSize
                                    handler:(MDAPINSArrayHandler)handler;
 
+- (MDURLConnection *)loadSubTasksWithParentID:(NSString *)parentID
+                                    pageIndex:(int)pageIndex
+                                     pageSize:(int)pageSize
+                                      handler:(MDAPINSArrayHandler)handler;
+
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  完成/删除/编辑项目
