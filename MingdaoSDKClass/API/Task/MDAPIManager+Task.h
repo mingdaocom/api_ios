@@ -151,6 +151,12 @@
 - (MDURLConnection *)deleteMemberFromeTaskWithTaskID:(NSString *)tID
                                             memberID:(NSString *)memberID
                                              handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveTaskWitTaskID:(NSString *)tID
+                             colorType:(int)colorType
+                               handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                              lockState:(BOOL)lockedOrNot
+                                handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)loadFoldersWithKeywords:(NSString *)keywords
                                   filterType:(int)type
