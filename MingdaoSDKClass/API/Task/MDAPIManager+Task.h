@@ -218,5 +218,4 @@
                                 colorType:(int)colorType
                                  deadLine:(NSString *)deadLine
                                   handler:(MDAPINSStringHandler)handler;
-
 @end
