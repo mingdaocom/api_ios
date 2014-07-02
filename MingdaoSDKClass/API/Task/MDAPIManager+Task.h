@@ -158,6 +158,12 @@
                               lockState:(BOOL)lockedOrNot
                                 handler:(MDAPIBoolHandler)handler;
 
+- (MDURLConnection *)copyTaskWithTaskID:(NSString *)tID
+                              chargerID:(NSString *)chargerID
+                                  title:(NSString *)title
+                                options:(NSArray *)options
+                                handler:(MDAPIBoolHandler)handler;
+
 - (MDURLConnection *)createTaskV2WithTaskName:(NSString *)title
                                  description:(NSString *)description
                                endDateString:(NSString *)endDateString
