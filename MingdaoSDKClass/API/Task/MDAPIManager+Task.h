@@ -219,4 +219,15 @@
                                  deadLine:(NSString *)deadLine
                                   handler:(MDAPINSStringHandler)handler;
 
+- (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
+                                 folderName:(NSString *)folderName
+                                 chargeUser:(NSString *)chargeUser
+                                  colorType:(int)colorType
+                                   deadLine:(NSString *)deadLine
+                                    handler:(MDAPIBoolHandler)handler;
+
+- (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
+                                  colorType:(int)colorType
+                                    handler:(MDAPIBoolHandler)handler;
+
 @end
