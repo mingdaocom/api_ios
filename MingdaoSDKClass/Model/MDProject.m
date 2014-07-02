@@ -57,10 +57,10 @@
         self.colorType = [[aDic objectForKey:@"color"] intValue];
         
         self.creatorID = [aDic objectForKey:@"create_user"];
-        MDUser *user = [[MDUser alloc] init];
-        user.objectID = [aDic objectForKey:@"charge_user"];
-        user.avatar = [aDic objectForKey:@"charge_avatar"];
-        self.charger = user;
+        
+        if ([[aDic objectForKey:@"charge_user"] isKindOfClass:[NSDictionary class]]) {
+            self.charger = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"charge_user"]];
+        }
     }
     return self;
 }

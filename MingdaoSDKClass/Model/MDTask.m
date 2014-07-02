@@ -37,7 +37,9 @@
         
         self.currentUserType = [[aDic objectForKey:@"currentUserType"] intValue];
         
-        self.folder = [[MDTaskFolder alloc] initWithDictionary:[aDic objectForKey:@"folder"]];
+        if ([[aDic objectForKey:@"folder"] isKindOfClass:[NSDictionary class]]) {
+            self.folder = [[MDTaskFolder alloc] initWithDictionary:[aDic objectForKey:@"folder"]];
+        }
         
         NSMutableArray *memebers = [NSMutableArray array];
         NSDictionary *userDics = [aDic objectForKey:@"members"];

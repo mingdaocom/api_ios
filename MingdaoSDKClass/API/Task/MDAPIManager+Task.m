@@ -1315,4 +1315,83 @@
     return connection;
 }
 
+- (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
+                                 folderName:(NSString *)folderName
+                                 chargeUser:(NSString *)chargeUser
+                                  colorType:(int)colorType
+                                   deadLine:(NSString *)deadLine
+                                    handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/editFolderInfo?format=json"];
+    [urlString appendFormat:@"&access_token=%@",self.accessToken];
+    
+    NSMutableData *postBody = [NSMutableData data];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    NSString *boundary = @"--------MINGDAO";
+    NSString *boundaryPrefix = @"--";
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"folderID"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", folderID] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    if (folderName.length > 0) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"name"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", folderName] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    if (chargeUser.length > 0) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"chargeUser"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", chargeUser] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    if (colorType >= 0) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"color"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%d\r\n", colorType] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    if (deadLine && deadLine.length > 0) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"deadline"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", deadLine] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
+    [req setValue:contentType forHTTPHeaderField:@"Content-type"];
+    [req setHTTPBody:postBody];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error) {
+        [self handleBoolData:data error:error URLString:urlStr handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
+                                  colorType:(int)colorType
+                                    handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/editFolderColor?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&folderID=%@", folderID];
+    [urlString appendFormat:@"&color=%d", colorType];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
 @end
