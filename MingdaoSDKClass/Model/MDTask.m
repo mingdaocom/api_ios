@@ -40,7 +40,7 @@
         self.folder = [[MDTaskFolder alloc] initWithDictionary:[aDic objectForKey:@"folder"]];
         
         NSMutableArray *memebers = [NSMutableArray array];
-        NSDictionary *userDics = [aDic objectForKey:@"joined"];
+        NSDictionary *userDics = [aDic objectForKey:@"members"];
         for (NSDictionary *userDic in userDics) {
             if ([userDic isKindOfClass:[NSDictionary class]]) {
                 MDUser *aUser = [[MDUser alloc] initWithDictionary:userDic];

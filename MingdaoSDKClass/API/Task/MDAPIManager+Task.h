@@ -189,6 +189,9 @@
                                   pageSize:(int)pageSize
                                    handler:(MDAPINSArrayHandler)handler;
 
+- (MDURLConnection *)loadTaskDetailWithTaskID:(NSString *)taskID
+                                       handler:(MDAPIObjectHandler)handler;
+
 - (MDURLConnection *)loadSubTasksWithParentID:(NSString *)parentID
                                     pageIndex:(int)pageIndex
                                      pageSize:(int)pageSize
