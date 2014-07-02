@@ -41,6 +41,8 @@
             return NSLocalizedString(@"无权查看动态相关内容", @"无权查看动态相关内容");
         case 10014:
             return NSLocalizedString(@"无权查看群组相关内容", @"无权查看群组相关内容");
+        case 10017:
+            return NSLocalizedString(@"项目名称已经存在", @"项目名称已经存在");
         case 10021:
             return NSLocalizedString(@"群组名称已存在", @"群组名称已存在");
             

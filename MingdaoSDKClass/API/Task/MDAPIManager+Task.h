@@ -158,6 +158,16 @@
                               lockState:(BOOL)lockedOrNot
                                 handler:(MDAPIBoolHandler)handler;
 
+- (MDURLConnection *)createTaskV2WithTaskName:(NSString *)title
+                                 description:(NSString *)description
+                               endDateString:(NSString *)endDateString
+                                   chargerID:(NSString *)chargerID
+                                   memberIDs:(NSArray *)memberIDs
+                                   projectID:(NSString *)projectID
+                                    parentID:(NSString *)parentID
+                                   colorType:(int)colorType
+                                     handler:(MDAPINSStringHandler)handler;
+
 - (MDURLConnection *)loadFoldersWithKeywords:(NSString *)keywords
                                   filterType:(int)type
                                    colorType:(int)colorType
