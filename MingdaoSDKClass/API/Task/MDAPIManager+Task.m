@@ -432,7 +432,7 @@
     if (size > 0)
         [urlString appendFormat:@"&pagesize=%ld", (long)size];
     if (onlyFile) {
-        [urlString appendFormat:@"&onlyFile=%d", 1];
+        [urlString appendFormat:@"&is_onlyFile=%d", 1];
     }
     
     
@@ -912,13 +912,13 @@
         [urlString appendFormat:@"&keywords=%@", keywords];
     }
     if (type == 2 || type == 3) {
-        [urlString appendFormat:@"&filterType=%d", type];
+        [urlString appendFormat:@"&filter_type=%d", type];
     }
     if (colorType >= 0 && colorType <= 5) {
         [urlString appendFormat:@"&color=%d", colorType];
     }
     if (orderType >= 1 && orderType <= 2) {
-        [urlString appendFormat:@"&orderType=%d", orderType];
+        [urlString appendFormat:@"&order_type=%d", orderType];
     }
     if (pageSize > 0) {
         [urlString appendFormat:@"&pagesize=%d", pageSize];
@@ -926,8 +926,8 @@
     if (pageIndex > 0) {
         [urlString appendFormat:@"&pageindex=%d", pageIndex];
     }
-    [urlString appendFormat:@"&isShowEmptyFolder=%d", isShowEmptyFolder?1:0];
-    [urlString appendFormat:@"&isShowCompletedFolder=%d", isShowCompletedFolder?1:0];
+    [urlString appendFormat:@"&is_showEmptyFolder=%d", isShowEmptyFolder?1:0];
+    [urlString appendFormat:@"&is_showCompletedFolder=%d", isShowCompletedFolder?1:0];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -986,10 +986,10 @@
         [urlString appendFormat:@"&keywords=%@", keywords];
     }
     if (folderID) {
-        [urlString appendFormat:@"&folderID=%@", folderID];
+        [urlString appendFormat:@"&t_folderID=%@", folderID];
     }
     if (filterType == 2 || filterType == 3) {
-        [urlString appendFormat:@"&filterType=%d", filterType];
+        [urlString appendFormat:@"&filter_type=%d", filterType];
     }
     if (colorType >= 0 && colorType <= 5) {
         [urlString appendFormat:@"&color=%d", colorType];
@@ -1078,7 +1078,7 @@
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/v2/getSubTasks?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&parentID=%@", parentID];
+    [urlString appendFormat:@"&t_parentID=%@", parentID];
     if (pageSize > 0)
         [urlString appendFormat:@"&pagesize=%d", pageSize];
     if (pageIndex > 0)
@@ -1268,7 +1268,7 @@
     
     if (projectID && projectID.length > 0) {
         [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"folderID"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"t_folderID"]dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", projectID] dataUsingEncoding:NSUTF8StringEncoding]];
     }
     
@@ -1335,7 +1335,7 @@
     NSString *boundaryPrefix = @"--";
     
     [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"folderID"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"t_folderID"]dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", folderID] dataUsingEncoding:NSUTF8StringEncoding]];
     
     if (folderName.length > 0) {
@@ -1345,7 +1345,7 @@
     }
     if (chargeUser.length > 0) {
         [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"chargeUser"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"chargeUserID"]dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", chargeUser] dataUsingEncoding:NSUTF8StringEncoding]];
     }
     
@@ -1383,7 +1383,7 @@
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/v2/editFolderColor?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&folderID=%@", folderID];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
     [urlString appendFormat:@"&color=%d", colorType];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

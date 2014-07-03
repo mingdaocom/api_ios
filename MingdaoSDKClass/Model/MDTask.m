@@ -37,6 +37,10 @@
         
         self.currentUserType = [[aDic objectForKey:@"currentUserType"] intValue];
         
+        if ([[aDic objectForKey:@"parent_task"] isKindOfClass:[NSDictionary class]]) {
+            self.parentTask = [[MDTask alloc] initWithDictionary:[aDic objectForKey:@"parent_task"]];
+        }
+        
         if ([[aDic objectForKey:@"folder"] isKindOfClass:[NSDictionary class]]) {
             self.folder = [[MDTaskFolder alloc] initWithDictionary:[aDic objectForKey:@"folder"]];
         }

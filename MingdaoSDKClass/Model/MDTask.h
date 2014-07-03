@@ -64,6 +64,7 @@ typedef int MDTaskCurrentUserType;
 
 @property (strong, nonatomic) NSArray *members;
 @property (strong, nonatomic) NSArray *subTasks;
+@property (strong, nonatomic) MDTask *parentTask;
 
 @property (assign, nonatomic) BOOL isLocked, isNoticed;
 @property (assign, nonatomic) BOOL isContainMe;
