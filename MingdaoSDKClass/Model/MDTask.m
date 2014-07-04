@@ -50,6 +50,9 @@
         for (NSDictionary *userDic in userDics) {
             if ([userDic isKindOfClass:[NSDictionary class]]) {
                 MDUser *aUser = [[MDUser alloc] initWithDictionary:userDic];
+                if ([aUser isEqual:self.charger]) {
+                    continue;
+                }
                 [memebers addObject:aUser];
             }
         }
