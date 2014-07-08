@@ -158,6 +158,10 @@
                               lockState:(BOOL)lockedOrNot
                                 handler:(MDAPIBoolHandler)handler;
 
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                               parentID:(NSString *)parentID
+                                handler:(MDAPIBoolHandler)handler;
+
 - (MDURLConnection *)copyTaskWithTaskID:(NSString *)tID
                               chargerID:(NSString *)chargerID
                                   title:(NSString *)title
@@ -234,4 +238,7 @@
                                   colorType:(int)colorType
                                     handler:(MDAPIBoolHandler)handler;
 
+- (MDURLConnection *)deleteFolderWithFolderID:(NSString *)folderID
+                                isDeleteTasks:(BOOL)isDeleteTasks
+                                      handler:(MDAPIBoolHandler)handler;
 @end
