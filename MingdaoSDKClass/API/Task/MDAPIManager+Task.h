@@ -203,6 +203,10 @@
                                      pageSize:(int)pageSize
                                       handler:(MDAPINSArrayHandler)handler;
 
+- (MDURLConnection *)loadCanBeRelatedTasksWithTaskID:(NSString *)taskID
+                                              keywords:(NSString *)keywords
+                                               handler:(MDAPINSArrayHandler)handler;
+
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  完成/删除/编辑项目
