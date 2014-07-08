@@ -57,12 +57,19 @@
         self.linkDes = [dic objectForKey:@"link_des"];
         self.linkTitle = [dic objectForKey:@"link_title"];
         self.linkURL = [dic objectForKey:@"link_url"];
+        
+        self.thumbnailPic = [dic objectForKey:@"thumbnail_pic"];
         self.middlePic = [dic objectForKey:@"middle_pic"];
         self.originalPic = [dic objectForKey:@"original_pic"];
+        if (self.middlePic && [self.middlePic hasSuffix:@"gif"]) {
+            self.middlePic = self.thumbnailPic;
+        }
+        
         self.originalDoc = [dic objectForKey:@"original_file"];
-        self.thumbnailPic = [dic objectForKey:@"thumbnail_pic"];
         self.fileName = [dic objectForKey:@"original_filename"];
+        
         self.videoUrl = [dic objectForKey:@"video_url"];
+        
         self.isVisble = [[dic objectForKey:@"Visble"] boolValue];
         self.isDownloadable = [[dic objectForKey:@"allow_down"] boolValue];
         NSArray *voteOptionDics = [dic objectForKey:@"options"];
