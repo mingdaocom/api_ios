@@ -211,6 +211,13 @@
                                               keywords:(NSString *)keywords
                                                handler:(MDAPINSArrayHandler)handler;
 
+- (MDURLConnection *)loadAllTaskMessagesWithKeyWords:(NSString *)keywords
+                                         messageType:(int)messageType
+                                          isFavorite:(BOOL)isFavorite
+                                            isUnread:(BOOL)isUnread
+                                           pageIndex:(int)pageIndex
+                                            pageSize:(int)pageSize
+                                             handler:(MDAPINSArrayHandler)handler;
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  完成/删除/编辑项目

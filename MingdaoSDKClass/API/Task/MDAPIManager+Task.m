@@ -1179,6 +1179,55 @@
     return connection;
 }
 
+- (MDURLConnection *)loadAllTaskMessagesWithKeyWords:(NSString *)keywords
+                                         messageType:(int)messageType
+                                          isFavorite:(BOOL)isFavorite
+                                            isUnread:(BOOL)isUnread
+                                           pageIndex:(int)pageIndex
+                                            pageSize:(int)pageSize
+                                             handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/getAllTaskMessage?format=json"];
+    [urlString appendFormat:@"&access_token=%@",self.accessToken];
+    if (keywords && keywords.length > 0) {
+        [urlString appendFormat:@"&keywords=%@",keywords];
+    }
+    if (messageType > 0) {
+        [urlString appendFormat:@"&msg_type=%d",messageType];
+    }
+    [urlString appendFormat:@"&is_favorite=%d",isFavorite?1:0];
+    [urlString appendFormat:@"&is_unread=%d",isUnread?1:0];
+    if (pageIndex > 0) {
+        [urlString appendFormat:@"&pageindex=%d",pageIndex];
+    }
+    if (pageSize > 0) {
+        [urlString appendFormat:@"&pageSize=%d",pageSize];
+    }
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSArray *taskDics = [dic objectForKey:@"taskMessages"];
+        handler(taskDics, error);
+    }];
+    
+    return connection;
+}
+
 - (MDURLConnection *)validateFolderWithName:(NSString *)folderName
                                     handler:(MDAPIBoolHandler)handler
 {
