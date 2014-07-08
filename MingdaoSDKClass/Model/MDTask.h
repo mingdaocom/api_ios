@@ -44,9 +44,9 @@
 #import "MDProject.h"
 
 enum {
-    MDTaskCurrentUserTypeNone = -1,
-    MDTaskCurrentUserTypeMember = 0,
-    MDTaskCurrentUserTypeDelgater =1
+    MDTaskCurrentUserTypeNone = 0,
+    MDTaskCurrentUserTypeMember = 1,
+    MDTaskCurrentUserTypeDelgater = 2
 };
 typedef int MDTaskCurrentUserType;
 
