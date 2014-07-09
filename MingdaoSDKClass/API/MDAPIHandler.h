@@ -16,6 +16,8 @@
 #import "MDEvent.h"
 #import "MDTask.h"
 #import "MDTaskReplyment.h"
+#import "MDTaskMessage.h"
+#import "MDTaskMessageSystem.h"
 #import "MDPost.h"
 #import "MDPostReplyment.h"
 #import "MDTag.h"

@@ -1221,8 +1221,25 @@
             return;
         }
         
-        NSArray *taskDics = [dic objectForKey:@"taskMessages"];
-        handler(taskDics, error);
+        NSArray *msgDics = [dic objectForKey:@"taskMessages"];
+        NSMutableArray *messages = [NSMutableArray array];
+        if (messageType == 1) {
+            for (NSDictionary *msgDic in msgDics) {
+                if (![msgDic isKindOfClass:[NSDictionary class]])
+                    continue;
+                MDTaskMessageSystem *sysMessage = [[MDTaskMessageSystem alloc] initWithDictionary:msgDic];
+                [messages addObject:sysMessage];
+            }
+            
+        } else {
+            for (NSDictionary *msgDic in msgDics) {
+                if (![msgDic isKindOfClass:[NSDictionary class]])
+                    continue;
+                MDTaskMessage *message = [[MDTaskMessage alloc] initWithDictionary:msgDic];
+                [messages addObject:message];
+            }
+        }
+        handler(messages, error);
     }];
     
     return connection;
