@@ -168,6 +168,10 @@
                                 options:(NSArray *)options
                                 handler:(MDAPIBoolHandler)handler;
 
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                            noticeState:(BOOL)noticeState
+                                handler:(MDAPIBoolHandler)handler;
+
 - (MDURLConnection *)createTaskV2WithTaskName:(NSString *)title
                                  description:(NSString *)description
                                endDateString:(NSString *)endDateString
