@@ -893,7 +893,6 @@
                                 options:(NSArray *)options
                                 handler:(MDAPIBoolHandler)handler
 {
-    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/duplicate_task?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
@@ -908,6 +907,25 @@
         [urlString appendFormat:@"&is_deadline=%d", [options[4] boolValue]?1:0];
         [urlString appendFormat:@"&is_subtask=%d", [options[5] boolValue]?1:0];
     }
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                            noticeState:(BOOL)noticeState
+                                handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/editUserNotice?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&notice=%d", noticeState?1:0];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
