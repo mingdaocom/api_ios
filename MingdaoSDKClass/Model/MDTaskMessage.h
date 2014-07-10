@@ -8,31 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MDTaskMentionedMessage.h"
+#import "MDTaskReplyMessage.h"
+#import "MDTaskSystemMessage.h"
+
 typedef enum {
-    MDTaskMessageTypeSystem = 0,
-    MDTaskMessageTypeReplayMe = 1,
-    MDTaskMessageTypeAtMe = 2
+    MDTaskMessageTypeSystem = 1,
+    MDTaskMessageTypeReplayMe = 2,
+    MDTaskMessageTypeAtMe = 3
 }MDTaskMessageType;
 
-typedef enum {
-    MDTaskMessageFileTypeText = 0,
-    MDTaskMessageFileTypeImage = 1,
-    MDTaskMessageFileTypeDoc = 2,
-    MDTaskMessageFileTypeRar = 3
-}MDTaskMessageFileType;
-
 @interface MDTaskMessage : NSObject
-@property (strong, nonatomic) NSString *objectID;
-@property (strong, nonatomic) NSString *text;
-@property (strong, nonatomic) NSString *createTime;
-@property (strong, nonatomic) NSString *replyID;
-@property (assign, nonatomic) int isFavourite;
-@property (strong, nonatomic) MDUser *createUser;
-@property (strong, nonatomic) MDUser *replyUser;
-@property (strong, nonatomic) MDTask *task;
-@property (assign, nonatomic) MDTaskMessageType type;
-@property (assign, nonatomic) MDTaskMessageFileType fileType;
-@property (strong, nonatomic) MDTaskMessage *replymentToReplyment;
+@property (strong, nonatomic) NSString *inboxID;
+@property (assign, nonatomic) int messageType;
+@property (strong, nonatomic) MDTaskMentionedMessage *mentionedMessage;
+@property (strong, nonatomic) MDTaskReplyMessage *replayMessage;
+@property (strong, nonatomic) MDTaskSystemMessage *systemMessage;
 
 - (MDTaskMessage *)initWithDictionary:(NSDictionary *)aDic;
 @end

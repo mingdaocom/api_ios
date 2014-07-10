@@ -1193,9 +1193,8 @@
     if (keywords && keywords.length > 0) {
         [urlString appendFormat:@"&keywords=%@",keywords];
     }
-    if (messageType > 0) {
-        [urlString appendFormat:@"&msg_type=%d",messageType];
-    }
+    [urlString appendFormat:@"&msg_type=%d",messageType];
+    
     [urlString appendFormat:@"&is_favorite=%d",isFavorite?1:0];
     [urlString appendFormat:@"&is_unread=%d",isUnread?1:0];
     if (pageIndex > 0) {
@@ -1223,21 +1222,11 @@
         
         NSArray *msgDics = [dic objectForKey:@"taskMessages"];
         NSMutableArray *messages = [NSMutableArray array];
-        if (messageType == 1) {
-            for (NSDictionary *msgDic in msgDics) {
-                if (![msgDic isKindOfClass:[NSDictionary class]])
-                    continue;
-                MDTaskMessageSystem *sysMessage = [[MDTaskMessageSystem alloc] initWithDictionary:msgDic];
-                [messages addObject:sysMessage];
-            }
-            
-        } else {
-            for (NSDictionary *msgDic in msgDics) {
-                if (![msgDic isKindOfClass:[NSDictionary class]])
-                    continue;
-                MDTaskMessage *message = [[MDTaskMessage alloc] initWithDictionary:msgDic];
-                [messages addObject:message];
-            }
+        for (NSDictionary *msgDic in msgDics) {
+            if (![msgDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDTaskMessage *message = [[MDTaskMessage alloc] initWithDictionary:msgDic];
+            [messages addObject:message];
         }
         handler(messages, error);
     }];

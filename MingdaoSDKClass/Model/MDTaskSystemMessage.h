@@ -10,10 +10,11 @@
 
 typedef enum {
     MDTaskEventTypePrivate = 0,
-    MDTaskEventTypeApply = 1
+    MDTaskEventTypeEventApply = 1,
+    MDTaskEventTypeTaskApply = 2
 }MDTaskEventType;
 
-@interface MDTaskMessageSystem : NSObject
+@interface MDTaskSystemMessage : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *text;
 @property (strong, nonatomic) NSString *createTime;
@@ -23,5 +24,9 @@ typedef enum {
 @property (assign, nonatomic) MDTaskEventType eventType;
 @property (strong, nonatomic) NSString *eventContent;
 
-- (MDTaskMessageSystem *)initWithDictionary:(NSDictionary *)aDic;
+@property (strong, nonatomic) NSString *taskID;
+@property (strong, nonatomic) NSString *applyUserID;
+@property (strong, nonatomic) NSString *applyText;
+
+- (MDTaskSystemMessage *)initWithDictionary:(NSDictionary *)aDic;
 @end
