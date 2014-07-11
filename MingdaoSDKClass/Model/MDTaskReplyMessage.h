@@ -9,5 +9,5 @@
 #import "MDTaskMentionedMessage.h"
 
 @interface MDTaskReplyMessage : MDTaskMentionedMessage
-@property (strong, nonatomic) MDTaskMentionedMessage *originTopic;
+@property (strong, nonatomic) MDTaskReplyMessage *originTopic;
 @end

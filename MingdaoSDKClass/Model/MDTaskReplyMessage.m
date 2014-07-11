@@ -15,7 +15,7 @@
     if (self) {
         NSDictionary *originTopic = [aDic objectForKey:@"origin_topic"];
         if ([originTopic isKindOfClass:[NSDictionary class]]) {
-            self.originTopic = [[MDTaskMentionedMessage alloc] initWithDictionary:originTopic];
+            self.originTopic = [[MDTaskReplyMessage alloc] initWithDictionary:originTopic];
         }
     }
     return self;
