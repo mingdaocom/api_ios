@@ -63,6 +63,20 @@ enum {
 };
 typedef int MDUserGender;
 
+enum {
+    MDUserTaskMemberTypeNone = -1,
+    MDUserTaskMemberTypeMember = 0,
+    MDUserTaskMemberTypeDelegater = 1
+};
+typedef int MDUserTaskMemberType;
+
+enum {
+    MDUserTaskApplyStatusNone = 0,
+    MDUserTaskApplyStatusPending = 1,
+    MDUserTaskApplyStatusRejected = 2
+};
+typedef int MDUserTaskApplyStatus;
+
 @interface MDUser : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
@@ -86,6 +100,9 @@ typedef int MDUserGender;
 @property (strong, nonatomic) NSArray *jobs;
 @property (strong, nonatomic) NSArray *educations;
 @property (strong, nonatomic) MDCompany *project;
+
+@property (assign, nonatomic) MDUserTaskMemberType taskMemberType;
+@property (assign, nonatomic) MDUserTaskApplyStatus taskApplyStatus;
 
 - (MDUser *)initWithDictionary:(NSDictionary *)aDic;
 @end

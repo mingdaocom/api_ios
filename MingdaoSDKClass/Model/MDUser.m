@@ -51,6 +51,9 @@
         if ([aDic objectForKey:@"project"]) {
             self.project = [[MDCompany alloc] initWithDictionary:[aDic objectForKey:@"project"]];
         }
+        
+        self.taskMemberType = [[aDic objectForKey:@"member_type"] intValue];
+        self.taskApplyStatus = [[aDic objectForKey:@"apply_status"] intValue];
     }
     return self;
 }
@@ -102,6 +105,9 @@
     copyObject.jobs = [self.jobs copy];
     copyObject.educations = [self.educations copy];
     copyObject.project = [self.project copy];
+    
+    copyObject.taskMemberType = self.taskMemberType;
+    copyObject.taskApplyStatus = self.taskApplyStatus;
     return copyObject;
 }
 
