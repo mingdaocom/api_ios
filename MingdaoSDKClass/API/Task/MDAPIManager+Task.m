@@ -830,6 +830,27 @@
     return connection;
 }
 
+- (MDURLConnection *)applyJoinInTaskWithTaskID:(NSString *)tID
+                                        memberID:(NSString *)memberID
+                                         isAgree:(BOOL)agreeOrNot
+                                         handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/isAgreeMember?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&u_id=%@", memberID];
+    [urlString appendFormat:@"&is_agree=%d",agreeOrNot?1:0];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
 - (MDURLConnection *)saveTaskWitTaskID:(NSString *)tID colorType:(int)colorType handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -1219,7 +1240,7 @@
         [urlString appendFormat:@"&pageindex=%d",pageIndex];
     }
     if (pageSize > 0) {
-        [urlString appendFormat:@"&pageSize=%d",pageSize];
+        [urlString appendFormat:@"&pagesize=%d",pageSize];
     }
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error) {
