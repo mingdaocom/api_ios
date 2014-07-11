@@ -832,15 +832,45 @@
 
 - (MDURLConnection *)applyJoinInTaskWithTaskID:(NSString *)tID
                                         memberID:(NSString *)memberID
-                                         isAgree:(BOOL)agreeOrNot
+                                         isAgree:(BOOL)agree
                                          handler:(MDAPIBoolHandler)handler
+{
+    if (agree) {
+        return [self agreeToTaskWithTaskID:tID memberID:memberID handler:handler];
+    } else {
+        return [self refuseToTaskWithTaskID:tID memberID:memberID handler:handler];
+    }
+}
+
+- (MDURLConnection *)agreeToTaskWithTaskID:(NSString *)tID
+                                  memberID:(NSString *)memberID
+                                   handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/v2/isAgreeMember?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     [urlString appendFormat:@"&u_id=%@", memberID];
-    [urlString appendFormat:@"&is_agree=%d",agreeOrNot?1:0];
+    [urlString appendFormat:@"&is_agree=%d",1];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+- (MDURLConnection *)refuseToTaskWithTaskID:(NSString *)tID
+                                   memberID:(NSString *)memberID
+                                    handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/isAgreeMember?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&u_id=%@", memberID];
+    [urlString appendFormat:@"&is_agree=%d",0];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];

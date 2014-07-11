@@ -153,8 +153,14 @@
                                              handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)applyJoinInTaskWithTaskID:(NSString *)tID
                                         memberID:(NSString *)memberID
-                                         isAgree:(BOOL)agreeOrNot
+                                         isAgree:(BOOL)agree
                                          handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)agreeToTaskWithTaskID:(NSString *)tID
+                                  memberID:(NSString *)memberID
+                                   handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)refuseToTaskWithTaskID:(NSString *)tID
+                                  memberID:(NSString *)memberID
+                                   handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)saveTaskWitTaskID:(NSString *)tID
                              colorType:(int)colorType
                                handler:(MDAPIBoolHandler)handler;
