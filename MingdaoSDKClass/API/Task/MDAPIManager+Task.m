@@ -830,6 +830,25 @@
     return connection;
 }
 
+- (MDURLConnection *)applyTaskMemberWithTaskID:(NSString *)tID
+                                       handler:(MDAPIBoolHandler)handler
+{
+    
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/applyTaskMember?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+   
+}
+
 - (MDURLConnection *)applyJoinInTaskWithTaskID:(NSString *)tID
                                         memberID:(NSString *)memberID
                                          isAgree:(BOOL)agree

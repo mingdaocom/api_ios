@@ -151,6 +151,8 @@
 - (MDURLConnection *)deleteMemberFromeTaskWithTaskID:(NSString *)tID
                                             memberID:(NSString *)memberID
                                              handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)applyTaskMemberWithTaskID:(NSString *)tID
+                                       handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)applyJoinInTaskWithTaskID:(NSString *)tID
                                         memberID:(NSString *)memberID
                                          isAgree:(BOOL)agree
