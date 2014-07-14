@@ -854,50 +854,33 @@
                                          isAgree:(BOOL)agree
                                          handler:(MDAPIBoolHandler)handler
 {
-    if (agree) {
-        return [self agreeToTaskWithTaskID:tID memberID:memberID handler:handler];
-    } else {
-        return [self refuseToTaskWithTaskID:tID memberID:memberID handler:handler];
-    }
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/isAgreeMember?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&u_id=%@", memberID];
+    [urlString appendFormat:@"&is_agree=%d",agree?1:0];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
 }
 
 - (MDURLConnection *)agreeToTaskWithTaskID:(NSString *)tID
                                   memberID:(NSString *)memberID
                                    handler:(MDAPIBoolHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/isAgreeMember?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&t_id=%@", tID];
-    [urlString appendFormat:@"&u_id=%@", memberID];
-    [urlString appendFormat:@"&is_agree=%d",1];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
-    }];
-    return connection;
+    return [self applyJoinInTaskWithTaskID:tID memberID:memberID isAgree:YES handler:handler];
 }
 - (MDURLConnection *)refuseToTaskWithTaskID:(NSString *)tID
                                    memberID:(NSString *)memberID
                                     handler:(MDAPIBoolHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/isAgreeMember?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&t_id=%@", tID];
-    [urlString appendFormat:@"&u_id=%@", memberID];
-    [urlString appendFormat:@"&is_agree=%d",0];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
-    }];
-    return connection;
+    return [self applyJoinInTaskWithTaskID:tID memberID:memberID isAgree:NO handler:handler];
 }
 
 - (MDURLConnection *)saveTaskWitTaskID:(NSString *)tID colorType:(int)colorType handler:(MDAPIBoolHandler)handler
