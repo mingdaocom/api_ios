@@ -64,9 +64,9 @@ enum {
 typedef int MDUserGender;
 
 enum {
-    MDUserTaskMemberTypeNone = -1,
-    MDUserTaskMemberTypeMember = 0,
-    MDUserTaskMemberTypeDelegater = 1
+    MDUserTaskMemberTypeNone = 0,
+    MDUserTaskMemberTypeMember = 1,
+    MDUserTaskMemberTypeDelegater = 2
 };
 typedef int MDUserTaskMemberType;
 

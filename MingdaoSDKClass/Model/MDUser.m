@@ -52,7 +52,7 @@
             self.project = [[MDCompany alloc] initWithDictionary:[aDic objectForKey:@"project"]];
         }
         
-        self.taskMemberType = [[aDic objectForKey:@"member_type"] intValue];
+        self.taskMemberType = [[aDic objectForKey:@"member_type"] intValue] + 1;
         self.taskApplyStatus = [[aDic objectForKey:@"apply_status"] intValue];
     }
     return self;

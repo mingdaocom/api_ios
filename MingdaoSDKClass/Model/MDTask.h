@@ -43,13 +43,6 @@
 #import "MDUser.h"
 #import "MDProject.h"
 
-enum {
-    MDTaskCurrentUserTypeNone = 0,
-    MDTaskCurrentUserTypeMember = 1,
-    MDTaskCurrentUserTypeDelgater = 2
-};
-typedef int MDTaskCurrentUserType;
-
 @interface MDTask : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
@@ -69,7 +62,7 @@ typedef int MDTaskCurrentUserType;
 @property (assign, nonatomic) BOOL isLocked, isNoticed;
 @property (assign, nonatomic) BOOL isContainMe;
 
-@property (assign, nonatomic) MDTaskCurrentUserType currentUserType;
+@property (assign, nonatomic) MDUserTaskMemberType currentUserType;
 
 @property (assign, nonatomic) int replyCount, unreadDiscussCount, subTaskCount;
 @property (assign, nonatomic) int colorType;
