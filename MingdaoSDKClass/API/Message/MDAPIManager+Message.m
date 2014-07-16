@@ -51,7 +51,7 @@
                                     handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/message/list?format=json"];
+    [urlString appendString:@"/message/v2/msg_list?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&u_id=%@", userID];
     [urlString appendFormat:@"&pageindex=%ld", (long)pages];
