@@ -15,8 +15,12 @@
     if (self) {
         self.objectID = [aDic objectForKey:@"id"];
         self.objectName = [aDic objectForKey:@"name"];
-        self.avatar = [aDic objectForKey:@"avstar"];
-        self.avatar100 = [aDic objectForKey:@"avstar100"];
+        self.avatar = [aDic objectForKey:@"avatar"];
+        self.avatar100 = [aDic objectForKey:@"avatar100"];
+        if (!self.avatar && !self.avatar100) {
+            self.avatar = [aDic objectForKey:@"avstar"];
+            self.avatar100 = [aDic objectForKey:@"avstar100"];
+        }
         self.email = [aDic objectForKey:@"email"];
         self.grade = [aDic objectForKey:@"grade"];
         self.mark = [aDic objectForKey:@"mark"];
