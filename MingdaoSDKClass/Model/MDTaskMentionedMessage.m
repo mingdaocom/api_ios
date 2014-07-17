@@ -76,7 +76,7 @@
                         
                         self.originalDoc = file;
                         self.filename = [fileDic objectForKey:@"original_filename"];
-                        self.isDownloadAble = [[aDic objectForKey:@"allow_down"] boolValue];
+                        self.isDownloadAble = [[fileDic objectForKey:@"allow_down"] boolValue];
                     }
                         break;
                     default:
