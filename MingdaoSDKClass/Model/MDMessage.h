@@ -19,7 +19,7 @@ typedef enum {
 
 typedef enum {
     EventTypePrivate = 0,
-    EventTypeCalendarApply = 1,
+    EventTypeCalendarConfirm = 1,
     EventTypeTaskApply = 2
 } EventType;
 
