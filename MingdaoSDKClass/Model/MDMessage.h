@@ -9,19 +9,19 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    MessageTypePrivate = 0,
-    MessageTypeTask = 1,
-    MessageTypeDoc = 2,
-    MessageTypeCategory = 3,
-    MessageTypeCalendar = 4,
-    MessageTypeSystem = 5
-} MessageType;
+    MDMessageTypePrivate = 0,
+    MDMessageTypeTask = 1,
+    MDMessageTypeDoc = 2,
+    MDMessageTypeCategory = 3,
+    MDMessageTypeCalendar = 4,
+    MDMessageTypeSystem = 5
+} MDMessageType;
 
 typedef enum {
-    EventTypePrivate = 0,
-    EventTypeCalendarConfirm = 1,
-    EventTypeTaskApply = 2
-} EventType;
+    MDMessageEventTypePrivate = 0,
+    MDMessageEventTypeCalendarConfirm = 1,
+    MDMessageEventTypeTaskApply = 2
+} MDMessageEventType;
 
 @interface MDMessageDetail : NSObject
 @property (strong, nonatomic) NSString *thumbnail_pic, *middle_pic, *original_pic, *original_filename, *original_file;
@@ -33,8 +33,8 @@ typedef enum {
 @property (strong, nonatomic) NSString *createTime;
 @property (strong, nonatomic) NSString *createUserID;
 @property (assign, nonatomic) BOOL iHaveRead, heHasRead;
-@property (assign, nonatomic) MessageType type;
-@property (assign, nonatomic) EventType eventType;
+@property (assign, nonatomic) MDMessageType type;
+@property (assign, nonatomic) MDMessageEventType eventType;
 @property (strong, nonatomic) NSString *calendarID;
 @property (strong, nonatomic) NSString *calendarName;
 @property (strong, nonatomic) NSArray *details;

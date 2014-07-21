@@ -37,7 +37,7 @@
         self.type = [[aDic objectForKey:@"message_type"] intValue];
         self.eventType = [[aDic objectForKey:@"event_type"] intValue];
         
-        if (self.eventType == EventTypeCalendarConfirm) {
+        if (self.eventType == MDMessageEventTypeCalendarConfirm) {
             NSString *eventContent = [aDic objectForKey:@"event_content"];
             NSArray *arr = [NSArray arrayWithArray:[eventContent componentsSeparatedByString:@"|"]];
             self.calendarID = arr[0];
