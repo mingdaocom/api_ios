@@ -35,6 +35,15 @@
         self.createTime = [aDic objectForKey:@"create_time"];
         self.createUserID = [aDic objectForKey:@"create_user"];
         self.type = [[aDic objectForKey:@"message_type"] intValue];
+        self.eventType = [[aDic objectForKey:@"event_type"] intValue];
+        
+        if (self.eventType == EventTypeCalendarApply) {
+            NSString *eventContent = [aDic objectForKey:@"event_content"];
+            NSArray *arr = [NSArray arrayWithArray:[eventContent componentsSeparatedByString:@"|"]];
+            self.calendarID = arr[0];
+            self.calendarName = arr[1];
+        }
+        
         NSMutableArray *details = [NSMutableArray array];
         NSArray *detailDics = [aDic objectForKey:@"detail"];
         for (NSDictionary *detailDic in detailDics) {
@@ -57,6 +66,9 @@
     copyObject.createTime = [self.createTime copy];
     copyObject.createUserID = [self.createUserID copy];
     copyObject.type = self.type;
+    copyObject.eventType = self.eventType;
+    copyObject.calendarID = [self.calendarID copy];
+    copyObject.calendarName = [self.calendarName copy];
     return copyObject;
 }
 @end

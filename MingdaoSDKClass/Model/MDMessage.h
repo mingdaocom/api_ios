@@ -17,6 +17,12 @@ typedef enum {
     MessageTypeSystem = 5
 } MessageType;
 
+typedef enum {
+    EventTypePrivate = 0,
+    EventTypeCalendarApply = 1,
+    EventTypeTaskApply = 2
+} EventType;
+
 @interface MDMessageDetail : NSObject
 @property (strong, nonatomic) NSString *thumbnail_pic, *middle_pic, *original_pic, *original_filename, *original_file;
 @end
@@ -28,6 +34,9 @@ typedef enum {
 @property (strong, nonatomic) NSString *createUserID;
 @property (assign, nonatomic) BOOL iHaveRead, heHasRead;
 @property (assign, nonatomic) MessageType type;
+@property (assign, nonatomic) EventType eventType;
+@property (strong, nonatomic) NSString *calendarID;
+@property (strong, nonatomic) NSString *calendarName;
 @property (strong, nonatomic) NSArray *details;
 
 - (MDMessage *)initWithDictionary:(NSDictionary *)aDic;
