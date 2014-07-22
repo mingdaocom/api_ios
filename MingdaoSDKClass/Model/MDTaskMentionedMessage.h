@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class MDUser, MDTask;
+
 typedef enum {
     MDTaskMessageFileTypeText = 0,
     MDTaskMessageFileTypeImage = 1,
