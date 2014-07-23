@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class MDUser, MDTask;
+#import "MDUser.h"
+#import "MDTask.h"
 
 typedef enum {
     MDTaskMessageFileTypeText = 0,
