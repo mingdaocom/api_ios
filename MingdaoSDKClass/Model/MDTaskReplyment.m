@@ -21,6 +21,7 @@
         NSDictionary *detailDic = [aDic objectForKey:@"detail"];
         if ([detailDic isKindOfClass:[detailDic class]]) {
             self.original_file = [detailDic objectForKey:@"original_file"];
+            self.isDownloadAble = [[detailDic objectForKey:@"allow_down"] boolValue];
             NSArray *picsDics = [detailDic objectForKey:@"pics"];
             if (picsDics.count > 0) {
                 NSMutableArray *array1 = [NSMutableArray array];
@@ -59,6 +60,7 @@
     copyObject.createDateString = [self.createDateString copy];
     copyObject.type = self.type;
     copyObject.original_file = [self.original_file copy];
+    copyObject.isDownloadAble = self.isDownloadAble;
     copyObject.originalPics = [self.originalPics copy];
     copyObject.thumbnailPics = [self.thumbnailPics copy];
     copyObject.source = [self.source copy];

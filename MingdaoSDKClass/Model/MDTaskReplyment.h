@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSString *createDateString, *source;
 @property (assign, nonatomic) int type;
 @property (strong, nonatomic) NSString *original_file;
+@property (assign, nonatomic) BOOL isDownloadAble;
 @property (strong, nonatomic) NSArray *thumbnailPics, *originalPics;
 @property (strong, nonatomic) MDUser *creator;
 @property (strong, nonatomic) MDUser *replyTo;
