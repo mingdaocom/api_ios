@@ -18,6 +18,7 @@ typedef int MDPostReplymentType;
 
 @interface MDPostReplymentDetail : NSObject
 @property (strong, nonatomic) NSString *middlePic, *originalPic, *fileName, *thumbnailPic, *originalDoc;
+@property (assign, nonatomic) BOOL isDownloadAble;
 - (MDPostReplymentDetail *)initWithDictionary:(NSDictionary *)aDic;
 @end
 

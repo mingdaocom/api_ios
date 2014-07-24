@@ -19,6 +19,7 @@
         self.originalDoc = [aDic objectForKey:@"original_file"];
         self.thumbnailPic = [aDic objectForKey:@"thumbnail_pic"];
         self.fileName = [aDic objectForKey:@"original_filename"];
+        self.isDownloadAble = [[aDic objectForKey:@"allow_down"] boolValue];
     }
     return self;
 }
@@ -32,6 +33,7 @@
     copyObject.originalDoc = [self.originalDoc copy];
     copyObject.thumbnailPic = [self.thumbnailPic copy];
     copyObject.fileName = [self.fileName copy];
+    copyObject.isDownloadAble = self.isDownloadAble;
     return copyObject;
 }
 @end
