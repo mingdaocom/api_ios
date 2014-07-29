@@ -19,8 +19,9 @@
         self.createDateString = [aDic objectForKey:@"create_time"];
         self.type = [[aDic objectForKey:@"type"] intValue];
         NSDictionary *detailDic = [aDic objectForKey:@"detail"];
-        if ([detailDic isKindOfClass:[detailDic class]]) {
+        if ([detailDic isKindOfClass:[NSDictionary class]]) {
             self.original_file = [detailDic objectForKey:@"original_file"];
+            self.fileName = [detailDic objectForKey:@"original_filename"];
             self.isDownloadAble = [[detailDic objectForKey:@"allow_down"] boolValue];
             NSArray *picsDics = [detailDic objectForKey:@"pics"];
             if (picsDics.count > 0) {
@@ -44,12 +45,6 @@
     return self;
 }
 
-- (NSString *)fileName
-{
-    NSArray *array = [self.original_file componentsSeparatedByString:@"/"];
-    return [array lastObject];
-}
-
 - (id)copy
 {
     id object = [[[self class] alloc] init];
@@ -60,6 +55,7 @@
     copyObject.createDateString = [self.createDateString copy];
     copyObject.type = self.type;
     copyObject.original_file = [self.original_file copy];
+    copyObject.fileName = [self.fileName copy];
     copyObject.isDownloadAble = self.isDownloadAble;
     copyObject.originalPics = [self.originalPics copy];
     copyObject.thumbnailPics = [self.thumbnailPics copy];

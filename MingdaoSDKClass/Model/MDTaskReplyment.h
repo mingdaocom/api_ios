@@ -19,7 +19,7 @@
 @property (strong, nonatomic) NSArray *thumbnailPics, *originalPics;
 @property (strong, nonatomic) MDUser *creator;
 @property (strong, nonatomic) MDUser *replyTo;
-@property (readonly, nonatomic) NSString *fileName;
+@property (strong, nonatomic) NSString *fileName;
 
 - (MDTaskReplyment *)initWithDictionary:(NSDictionary *)aDic;
 @end
