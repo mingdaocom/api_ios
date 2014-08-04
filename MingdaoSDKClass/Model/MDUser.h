@@ -89,6 +89,8 @@ typedef int MDUserTaskApplyStatus;
 @property (strong, nonatomic) NSString *company;
 @property (strong, nonatomic) NSString *department;
 @property (strong, nonatomic) NSString *job;
+@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) NSString *workSite;
 @property (strong, nonatomic) NSString *mobilePhoneNumber;
 @property (strong, nonatomic) NSString *workPhoneNumber;
 @property (assign, nonatomic) BOOL isMobilePhoneNumberVisible;
