@@ -8,18 +8,29 @@
 
 #import <Foundation/Foundation.h>
 #import "MDUser.h"
+#import "MDPost.h"
+
+@interface MDTaskReplymentDetail : NSObject
+@property (strong, nonatomic) NSString *thumbnail_pic, *original_pic, *original_filename;
+@property (strong, nonatomic) NSString *original_file;
+@property (assign, nonatomic) BOOL allow_down;
+@property (assign, nonatomic) MDAttachmentFileType file_type;
+
+@property (strong, nonatomic) NSString *replyID;
+- (MDTaskReplymentDetail *)initWithDictionary:(NSDictionary *)aDic;
+@end
 
 @interface MDTaskReplyment : NSObject
 @property (strong, nonatomic) NSString *objectID, *autoID;
 @property (strong, nonatomic) NSString *text;
 @property (strong, nonatomic) NSString *createDateString, *source;
 @property (assign, nonatomic) int type;
-@property (strong, nonatomic) NSString *original_file;
-@property (assign, nonatomic) BOOL isDownloadAble;
-@property (strong, nonatomic) NSArray *thumbnailPics, *originalPics;
+
+@property (strong, nonatomic) NSArray *images, *files;
+
 @property (strong, nonatomic) MDUser *creator;
 @property (strong, nonatomic) MDUser *replyTo;
-@property (strong, nonatomic) NSString *fileName;
+@property (assign, nonatomic) MDAttachmentFileType fileType;
 
 - (MDTaskReplyment *)initWithDictionary:(NSDictionary *)aDic;
 @end

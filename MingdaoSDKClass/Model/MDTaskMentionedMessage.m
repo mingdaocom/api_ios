@@ -32,58 +32,30 @@
         MDTask *task = [[MDTask alloc] init];
         task.objectID = [aDic objectForKey:@"taskID"];
         task.objectName = [aDic objectForKey:@"taskName"];
-        self.task = [task copy];
+        self.task = task;
         
-        self.fileType = [[aDic objectForKey:@"file_type"] intValue];
-        self.picNames = [NSMutableArray array];
-        NSDictionary *fileDic = [aDic objectForKey:@"file"];
-        if ([fileDic isKindOfClass:[NSDictionary class]]) {
-            if ([fileDic allKeys].count > 0) {
-                self.fileServer = [fileDic objectForKey:@"server"];
-                self.fileStatus = [[fileDic objectForKey:@"status"] intValue];
-                switch (self.fileType) {
-                    case MDTaskMessageFileTypeText:
-                        break;
-                    case MDTaskMessageFileTypeImage:{
-                        self.thumbnailPics = [NSMutableArray array];
-                        self.originalPics = [NSMutableArray array];
-                        NSString *thumbnailFileName = [fileDic objectForKey:@"thumbnail_name"];
-                        NSString *thumbnailFilePath = [fileDic objectForKey:@"thumbnail_path"];
-                        NSArray *thumbnailFiles = [thumbnailFileName componentsSeparatedByString:@"|"];
-                        for (NSString *thumbnailFile in thumbnailFiles) {
-                            NSString *file = [NSString stringWithFormat:@"%@%@%@",self.fileServer,thumbnailFilePath,thumbnailFile];
-                            [self.thumbnailPics addObject:file];
-                        }
-                        
-                        NSString *originalFileName = [fileDic objectForKey:@"filename_original"];
-                        NSString *originalFilePath = [fileDic objectForKey:@"filepath_original"];
-                        NSArray *originalFiles = [originalFileName componentsSeparatedByString:@"|"];
-                        for (NSString *originalFile in originalFiles) {
-                            NSString *file = [NSString stringWithFormat:@"%@%@%@",self.fileServer,originalFilePath,originalFile];
-                            [self.originalPics addObject:file];
-                        }
-                        
-                        NSArray *originalFileNames = [[fileDic objectForKey:@"original_filename"] componentsSeparatedByString:@"|"];
-                        [self.picNames addObjectsFromArray:originalFileNames];
-                    }
-                        break;
-                    case MDTaskMessageFileTypeDoc:
-                    case MDTaskMessageFileTypeRar:{
-                        NSString *originalFileName = [fileDic objectForKey:@"filename_original"];
-                        NSString *originalFilePath = [fileDic objectForKey:@"filepath_original"];
-                        
-                        NSString *file = [NSString stringWithFormat:@"%@%@%@",self.fileServer,originalFilePath,originalFileName];
-                        
-                        self.originalDoc = file;
-                        self.filename = [fileDic objectForKey:@"original_filename"];
-                        self.isDownloadAble = [[fileDic objectForKey:@"allow_down"] boolValue];
-                    }
-                        break;
-                    default:
-                        break;
+        NSArray *detailDics = aDic[@"details"];
+        NSMutableArray *images = nil;
+        NSMutableArray *files = nil;
+        for (NSDictionary *dd in detailDics) {
+            MDTaskReplymentDetail *detail = [[MDTaskReplymentDetail alloc] initWithDictionary:dd];
+            detail.replyID = self.objectID;
+            if (detail.file_type == MDAttachmentFileTypeImage) {
+                if (!images) {
+                    images = [NSMutableArray array];
                 }
+                [images addObject:detail];
+            }
+            if (detail.file_type == MDAttachmentFileTypeZip ||
+                detail.file_type == MDAttachmentFileTypeFile) {
+                if (!files) {
+                    files = [NSMutableArray array];
+                }
+                [files addObject:detail];
             }
         }
+        self.images = images;
+        self.files = files;
     }
     return self;
 }
@@ -100,15 +72,8 @@
     copyObject.createUser = [self.createUser copy];
     copyObject.replyUser = [self.replyUser copy];
     copyObject.task = [self.task copy];
-    copyObject.thumbnailPics = [self.thumbnailPics copy];
-    copyObject.originalPics = [self.originalPics copy];
-    copyObject.picNames = [self.picNames copy];
-    copyObject.filename = [self.filename copy];
-    copyObject.originalDoc = [self.originalDoc copy];
-    copyObject.fileStatus = self.fileStatus;
-    copyObject.fileServer = [self.fileServer copy];
-    copyObject.isDownloadAble = self.isDownloadAble;
-    copyObject.fileType = self.fileType;
+    copyObject.files = [self.files copy];
+    copyObject.images = [self.images copy];
     return copyObject;
 }
 @end

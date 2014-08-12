@@ -8,6 +8,37 @@
 
 #import "MDTaskReplyment.h"
 
+@implementation MDTaskReplymentDetail
+- (MDTaskReplymentDetail *)initWithDictionary:(NSDictionary *)aDic
+{
+    self = [super init];
+    if (self) {
+        self.file_type = [aDic[@"file_type"] intValue];
+        self.thumbnail_pic = aDic[@"thumbnail_pic"];
+        self.original_pic = aDic[@"original_pic"];
+        self.original_filename = aDic[@"original_filename"];
+        
+        self.original_file = aDic[@"original_file"];
+        self.allow_down = [aDic[@"allow_down"] boolValue];
+    }
+    return self;
+}
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDTaskReplymentDetail *copyObject = object;
+    copyObject.file_type = self.file_type;
+    copyObject.thumbnail_pic = [self.thumbnail_pic copy];
+    copyObject.original_pic = [self.original_pic copy];
+    copyObject.original_file = [self.original_file copy];
+    copyObject.original_filename = [self.original_filename copy];
+    copyObject.allow_down = self.allow_down;
+    copyObject.replyID = [self.replyID copy];
+    return copyObject;
+}
+@end
+
 @implementation MDTaskReplyment
 - (MDTaskReplyment *)initWithDictionary:(NSDictionary *)aDic
 {
@@ -18,29 +49,36 @@
         self.text = [aDic objectForKey:@"text"];
         self.createDateString = [aDic objectForKey:@"create_time"];
         self.type = [[aDic objectForKey:@"type"] intValue];
-        NSDictionary *detailDic = [aDic objectForKey:@"detail"];
-        if ([detailDic isKindOfClass:[NSDictionary class]]) {
-            self.original_file = [detailDic objectForKey:@"original_file"];
-            self.fileName = [detailDic objectForKey:@"original_filename"];
-            self.isDownloadAble = [[detailDic objectForKey:@"allow_down"] boolValue];
-            NSArray *picsDics = [detailDic objectForKey:@"pics"];
-            if (picsDics.count > 0) {
-                NSMutableArray *array1 = [NSMutableArray array];
-                NSMutableArray *array2 = [NSMutableArray array];
-                for (NSDictionary *picsDic in picsDics) {
-                    [array1 addObject:[picsDic objectForKey:@"thumbnail_pic"]];
-                    [array2 addObject:[picsDic objectForKey:@"original_pic"]];
-                }
-                self.thumbnailPics = array1;
-                self.originalPics = array2;
-            }
-        }
+        self.fileType = [[aDic objectForKey:@"file_type"] intValue];
         self.source = [aDic objectForKey:@"source"];
         self.creator = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"user"]];
         NSDictionary *replyToDic = [aDic objectForKey:@"ref"];
         if ([replyToDic isKindOfClass:[NSDictionary class]] && replyToDic.allKeys.count > 0) {
             self.replyTo = [[MDUser alloc] initWithDictionary:[replyToDic objectForKey:@"user"]];
         }
+        
+        NSArray *detailDics = aDic[@"details"];
+        NSMutableArray *images = nil;
+        NSMutableArray *files = nil;
+        for (NSDictionary *dd in detailDics) {
+            MDTaskReplymentDetail *detail = [[MDTaskReplymentDetail alloc] initWithDictionary:dd];
+            detail.replyID = self.objectID;
+            if (detail.file_type == MDAttachmentFileTypeImage) {
+                if (!images) {
+                    images = [NSMutableArray array];
+                }
+                [images addObject:detail];
+            }
+            if (detail.file_type == MDAttachmentFileTypeZip ||
+                detail.file_type == MDAttachmentFileTypeFile) {
+                if (!files) {
+                    files = [NSMutableArray array];
+                }
+                [files addObject:detail];
+            }
+        }
+        self.images = images;
+        self.files = files;
     }
     return self;
 }
@@ -54,13 +92,11 @@
     copyObject.text = [self.text copy];
     copyObject.createDateString = [self.createDateString copy];
     copyObject.type = self.type;
-    copyObject.original_file = [self.original_file copy];
-    copyObject.fileName = [self.fileName copy];
-    copyObject.isDownloadAble = self.isDownloadAble;
-    copyObject.originalPics = [self.originalPics copy];
-    copyObject.thumbnailPics = [self.thumbnailPics copy];
+    copyObject.images = self.images;
+    copyObject.files = self.files;
     copyObject.source = [self.source copy];
     copyObject.creator = [self.creator copy];
+    copyObject.fileType = self.fileType;
     if (self.replyTo) {
         copyObject.replyTo = [self.replyTo copy];
     }

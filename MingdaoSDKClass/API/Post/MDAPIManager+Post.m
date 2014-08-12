@@ -70,7 +70,7 @@
                                  handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/tag?format=json"];
+    [urlString appendString:@"/post/v2/tag?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&tag=%@", tagName];
     if (keywords && keywords.length > 0)
@@ -118,7 +118,7 @@
                                       handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/all?format=json"];
+    [urlString appendString:@"/post/v2/all?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -170,7 +170,7 @@
                                              handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/favorite?format=json"];
+    [urlString appendString:@"/post/v2/favorite?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -220,7 +220,7 @@
                                           handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/replyme?format=json"];
+    [urlString appendString:@"/post/v2/replyme?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -313,7 +313,7 @@
 {
     
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/atme_2?format=json"];
+    [urlString appendString:@"/post/v2/atme_2?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -507,7 +507,7 @@
                                           handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/doc?format=json"];
+    [urlString appendString:@"/post/v2/doc?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (groupID && groupID.length > 0)
         [urlString appendFormat:@"&g_id=%@", groupID];
@@ -562,7 +562,7 @@
                                        handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/img?format=json"];
+    [urlString appendString:@"/post/v2/img?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (groupID && groupID.length > 0)
         [urlString appendFormat:@"&g_id=%@", groupID];
@@ -616,7 +616,7 @@
                                      handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/faq?format=json"];
+    [urlString appendString:@"/post/v2/faq?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (groupID && groupID.length > 0)
         [urlString appendFormat:@"&g_id=%@", groupID];
@@ -664,7 +664,7 @@
 - (MDURLConnection *)loadToppedPostsWithHandler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/list_toppost?format=json"];
+    [urlString appendString:@"/post/v2/list_toppost?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -700,7 +700,7 @@
 - (MDURLConnection *)loadPostWithPostID:(NSString *)pID handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/detail?format=json"];
+    [urlString appendString:@"/post/v2/detail?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     
@@ -731,7 +731,7 @@
 - (MDURLConnection *)loadPostReplymentsWithPostID:(NSString *)pID handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/reply?format=json"];
+    [urlString appendString:@"/post/v2/reply?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     
@@ -768,7 +768,7 @@
 - (MDURLConnection *)loadFAQPostBestAnsewerCommentWithPostID:(NSString *)pID handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/qa_thebestcomment?format=json"];
+    [urlString appendString:@"/post/v2/qa_thebestcomment?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     

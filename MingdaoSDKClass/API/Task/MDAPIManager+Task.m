@@ -424,7 +424,7 @@
                                           handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/getTopicListByTaskID?format=json"];
+    [urlString appendString:@"/task/v3/getTopicListByTaskID?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     if (maxTID)
@@ -1259,7 +1259,7 @@
                                              handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/getAllTaskMessage?format=json"];
+    [urlString appendString:@"/task/v3/getAllTaskMessage?format=json"];
     [urlString appendFormat:@"&access_token=%@",self.accessToken];
     if (keywords && keywords.length > 0) {
         [urlString appendFormat:@"&keywords=%@",keywords];

@@ -14,12 +14,13 @@
 {
     self = [super init];
     if (self) {
-        self.middlePic = [aDic objectForKey:@"middle_pic"];
-        self.originalPic = [aDic objectForKey:@"original_pic"];
-        self.originalDoc = [aDic objectForKey:@"original_file"];
-        self.thumbnailPic = [aDic objectForKey:@"thumbnail_pic"];
-        self.fileName = [aDic objectForKey:@"original_filename"];
-        self.isDownloadAble = [[aDic objectForKey:@"allow_down"] boolValue];
+        self.middlePic = aDic[@"middle_pic"];
+        self.originalPic = aDic[@"original_pic"];
+        self.originalDoc = aDic[@"original_file"];
+        self.thumbnailPic = aDic[@"thumbnail_pic"];
+        self.fileName = aDic[@"original_filename"];
+        self.isDownloadAble = [aDic[@"allow_down"] boolValue];
+        self.fileType = [aDic[@"file_type"] intValue];
     }
     return self;
 }
@@ -34,6 +35,8 @@
     copyObject.thumbnailPic = [self.thumbnailPic copy];
     copyObject.fileName = [self.fileName copy];
     copyObject.isDownloadAble = self.isDownloadAble;
+    copyObject.fileType = self.fileType;
+    copyObject.replyID = [self.replyID copy];
     return copyObject;
 }
 @end
@@ -59,22 +62,36 @@
 
         NSArray *detailDics = [aDic objectForKey:@"details"];
         NSMutableArray *details = [NSMutableArray arrayWithCapacity:detailDics.count];
+        NSMutableArray *images = nil;
+        NSMutableArray *files = nil;
         for (NSDictionary *detailDic in detailDics) {
             MDPostReplymentDetail *detail = [[MDPostReplymentDetail alloc] initWithDictionary:detailDic];
+            detail.replyID = self.objectID;
+            if (detail.fileType == MDAttachmentFileTypeImage) {
+                if (!images) {
+                    images = [NSMutableArray array];
+                }
+                [images addObject:detail];
+            }
+            if (detail.fileType == MDAttachmentFileTypeFile ||
+                detail.fileType == MDAttachmentFileTypeZip) {
+                if (!files) {
+                    files = [NSMutableArray array];
+                }
+                [files addObject:detail];
+            }
             [details addObject:detail];
         }
         self.details = details;
-        if (self.details.count == 0) {
-            self.type = MDPostReplymentTypeText;
-        } else if (self.details.count > 1) {
+        self.images = images;
+        self.files = files;
+        
+        if (self.images.count > 0) {
             self.type = MDPostReplymentTypeImage;
+        } else if (self.files.count > 0) {
+            self.type = MDPostReplymentTypeDocument;
         } else {
-            MDPostReplymentDetail *detail = [self.details objectAtIndex:0];
-            if (detail.originalDoc) {
-                self.type = MDPostReplymentTypeDocument;
-            } else {
-                self.type = MDPostReplymentTypeImage;
-            }
+            self.type = MDPostReplymentTypeText;
         }
         self.source = [aDic objectForKey:@"source"];
     }

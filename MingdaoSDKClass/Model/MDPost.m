@@ -57,6 +57,8 @@
         self.linkDes = [dic objectForKey:@"link_des"];
         self.linkTitle = [dic objectForKey:@"link_title"];
         self.linkURL = [dic objectForKey:@"link_url"];
+        self.fileType = [[dic objectForKey:@"file_type"] intValue];
+        self.fileSize = [[dic objectForKey:@"filesize"] longLongValue];
         
         self.thumbnailPic = [dic objectForKey:@"thumbnail_pic"];
         self.middlePic = [dic objectForKey:@"middle_pic"];
@@ -123,6 +125,9 @@
     copyObject.fileName = [self.fileName copy];
     copyObject.isVisble = self.isVisble;
     copyObject.isDownloadable = self.isDownloadable;
+    copyObject.fileType = self.fileType;
+    copyObject.fileSize = self.fileSize;
+    copyObject.postID = [self.postID copy];
     NSMutableArray *voteOptions = [NSMutableArray array];
     for (MDVoteOption *d in self.voteOptions) {
         MDVoteOption *dd = [d copy];
@@ -188,14 +193,41 @@
         
         NSArray *detailDics = [aDic objectForKey:@"details"];
         if (detailDics && detailDics.count > 0) {
-            NSMutableArray *details = [NSMutableArray array];
+            NSMutableArray *details = [NSMutableArray array]; // to be removed
+            NSMutableArray *images = nil;
+            NSMutableArray *files = nil;
             for (NSDictionary *detailDic in detailDics) {
                 if ([detailDic isKindOfClass:[NSDictionary class]]) {
                     MDPostDetail *detail = [[MDPostDetail alloc] initWithDictionary:detailDic];
+                    detail.postID = self.objectID;
+                    if (detail.fileType == MDAttachmentFileTypeImage) {
+                        if (!images) {
+                            images = [NSMutableArray array];
+                        }
+                        [images addObject:detail];
+                    }
+                    if (detail.fileType == MDAttachmentFileTypeFile ||
+                        detail.fileType == MDAttachmentFileTypeZip) {
+                        if (!files) {
+                            files = [NSMutableArray array];
+                        }
+                        [files addObject:detail];
+                    }
+                    if (detail.linkURL) {
+                        self.link = detail;
+                    }
+                    if (detail.videoUrl) {
+                        self.video = detail;
+                    }
+                    if (detail.voteOptions) {
+                        self.vote = detail;
+                    }
                     [details addObject:detail];
                 }
             }
             self.details = details;
+            self.images = images;
+            self.files = files;
         }
     }
     return self;

@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MDUser.h"
-@class MDPost;
+#import "MDPost.h"
+
 enum {
     MDPostReplymentTypeText = 0,
     MDPostReplymentTypeImage = 2,
@@ -18,7 +18,10 @@ typedef int MDPostReplymentType;
 
 @interface MDPostReplymentDetail : NSObject
 @property (strong, nonatomic) NSString *middlePic, *originalPic, *fileName, *thumbnailPic, *originalDoc;
+@property (assign, nonatomic) MDAttachmentFileType fileType;
 @property (assign, nonatomic) BOOL isDownloadAble;
+
+@property (strong, nonatomic) NSString *replyID;
 - (MDPostReplymentDetail *)initWithDictionary:(NSDictionary *)aDic;
 @end
 
@@ -30,7 +33,11 @@ typedef int MDPostReplymentType;
 @property (strong, nonatomic) MDPostReplyment *replymentToReplyment;
 @property (strong, nonatomic) MDPost *replymentToPost;
 @property (assign, nonatomic) MDPostReplymentType type;
-@property (strong, nonatomic) NSArray *details;
+
+@property (strong, nonatomic) NSArray *details; // to be removed, replaced by below
+
+@property (strong, nonatomic) NSArray *images, *files;
+
 
 - (MDPostReplyment *)initWithDictionary:(NSDictionary *)aDic;
 @end
