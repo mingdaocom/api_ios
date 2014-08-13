@@ -266,7 +266,7 @@
 {
     
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/replybyme?format=json"];
+    [urlString appendString:@"/post/v2/replybyme?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
