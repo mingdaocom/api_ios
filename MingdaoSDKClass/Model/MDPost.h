@@ -84,9 +84,6 @@ typedef int MDPostType;
 @property (assign, nonatomic) MDPostType type;
 @property (assign, nonatomic) MDPostShareType shareType;
 
-@property (strong, nonatomic) NSArray *details; // to be removed, replaced by below
-@property (readonly, nonatomic) MDPostDetail *firstDetail; // to be removed
-
 @property (strong, nonatomic) NSArray *images, *files;
 @property (strong, nonatomic) MDPostDetail *link, *video, *vote;
 

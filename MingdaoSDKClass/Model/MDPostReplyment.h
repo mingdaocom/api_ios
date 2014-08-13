@@ -34,8 +34,6 @@ typedef int MDPostReplymentType;
 @property (strong, nonatomic) MDPost *replymentToPost;
 @property (assign, nonatomic) MDPostReplymentType type;
 
-@property (strong, nonatomic) NSArray *details; // to be removed, replaced by below
-
 @property (strong, nonatomic) NSArray *images, *files;
 
 
