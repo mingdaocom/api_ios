@@ -9,260 +9,7 @@
 #import "MDAPIManager+Task.h"
 
 @implementation MDAPIManager (Task)
-
-#pragma mark - 任务接口
-- (MDURLConnection *)loadCurrentUserJoinedTasksWithKeywords:(NSString *)keywords
-                                            allOrUnfinished:(BOOL)allOrUnFinished
-                                                    handler:(MDAPINSArrayHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/my_joined?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
-    if (allOrUnFinished)
-        [urlString appendString:@"&f_type=0"];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
-        
-        NSArray *taskDics = [dic objectForKey:@"tasks"];
-        NSMutableArray *tasks = [NSMutableArray array];
-        for (NSDictionary *taskDic in taskDics) {
-            if (![taskDic isKindOfClass:[NSDictionary class]])
-                continue;
-            MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
-            [tasks addObject:task];
-        }
-        handler(tasks, error);
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)loadCurrentUserJoinedFinishedTasksWithPageSize:(NSInteger)size
-                                                               page:(NSInteger)page
-                                                            handler:(MDAPINSArrayHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/my_joined_finished?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (size > 0)
-        [urlString appendFormat:@"&pagesize=%ld", (long)size];
-    if (page > 0)
-        [urlString appendFormat:@"&pageindex=%ld", (long)page];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
-        
-        NSArray *taskDics = [dic objectForKey:@"tasks"];
-        NSMutableArray *tasks = [NSMutableArray array];
-        for (NSDictionary *taskDic in taskDics) {
-            if (![taskDic isKindOfClass:[NSDictionary class]])
-                continue;
-            MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
-            [tasks addObject:task];
-        }
-        handler(tasks, error);
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)loadCurrentUserAssignedTasksWithKeywords:(NSString *)keywords
-                                              allOrUnfinished:(BOOL)allOrUnFinished
-                                                      handler:(MDAPINSArrayHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/my_assign?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
-    if (allOrUnFinished)
-        [urlString appendString:@"&f_type=0"];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
-        
-        NSArray *taskDics = [dic objectForKey:@"tasks"];
-        NSMutableArray *tasks = [NSMutableArray array];
-        for (NSDictionary *taskDic in taskDics) {
-            if (![taskDic isKindOfClass:[NSDictionary class]])
-                continue;
-            MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
-            [tasks addObject:task];
-        }
-        handler(tasks, error);
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)loadCurrentUserAssignedFinishedTasksWithPageSize:(NSInteger)size
-                                                                 page:(NSInteger)page
-                                                              handler:(MDAPINSArrayHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/my_assign_finished?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (size > 0)
-        [urlString appendFormat:@"&pagesize=%ld", (long)size];
-    if (page > 0)
-        [urlString appendFormat:@"&pageindex=%ld", (long)page];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
-        
-        NSArray *taskDics = [dic objectForKey:@"tasks"];
-        NSMutableArray *tasks = [NSMutableArray array];
-        for (NSDictionary *taskDic in taskDics) {
-            if (![taskDic isKindOfClass:[NSDictionary class]])
-                continue;
-            MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
-            [tasks addObject:task];
-        }
-        handler(tasks, error);
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)loadCurrentUserChargedTasksWithKeywords:(NSString *)keywords
-                                             allOrUnfinished:(BOOL)allOrUnFinished
-                                                     handler:(MDAPINSArrayHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/my_charge?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
-    if (allOrUnFinished)
-        [urlString appendString:@"&f_type=0"];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
-        
-        NSArray *taskDics = [dic objectForKey:@"tasks"];
-        NSMutableArray *tasks = [NSMutableArray array];
-        for (NSDictionary *taskDic in taskDics) {
-            if (![taskDic isKindOfClass:[NSDictionary class]])
-                continue;
-            MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
-            [tasks addObject:task];
-        }
-        handler(tasks, error);
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)loadCurrentUserChargedFinishedTasksWithPageSize:(NSInteger)size
-                                                                page:(NSInteger)page
-                                                             handler:(MDAPINSArrayHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/my_charge_finished?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (size > 0)
-        [urlString appendFormat:@"&pagesize=%ld", (long)size];
-    if (page > 0)
-        [urlString appendFormat:@"&pageindex=%ld", (long)page];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
-        
-        NSArray *taskDics = [dic objectForKey:@"tasks"];
-        NSMutableArray *tasks = [NSMutableArray array];
-        for (NSDictionary *taskDic in taskDics) {
-            if (![taskDic isKindOfClass:[NSDictionary class]])
-                continue;
-            MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
-            [tasks addObject:task];
-        }
-        handler(tasks, error);
-    }];
-    return connection;
-}
-
+#pragma mark -
 - (MDURLConnection *)loadProjectsWithKeywords:(NSString *)keywords handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -301,122 +48,7 @@
     return connection;
 }
 
-- (MDURLConnection *)loadCurrentUserObservedTasksWithKeywords:(NSString *)keywords allOrUnfinished:(BOOL)allOrUnFinished handler:(MDAPINSArrayHandler)handler
-{
-    
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/my_observer?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
-    if (allOrUnFinished)
-        [urlString appendString:@"&f_type=0"];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
-        
-        NSArray *taskDics = [dic objectForKey:@"tasks"];
-        NSMutableArray *tasks = [NSMutableArray array];
-        for (NSDictionary *taskDic in taskDics) {
-            if (![taskDic isKindOfClass:[NSDictionary class]])
-                continue;
-            MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
-            [tasks addObject:task];
-        }
-        handler(tasks, error);
-    }];
-    return connection;
-    
-}
-
-- (MDURLConnection *)loadCurrentUserObservedFinishedTasksWithPageSize:(NSInteger)size
-                                                                 page:(NSInteger)page
-                                                              handler:(MDAPINSArrayHandler)handler
-{
-    
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/my_observer_finished?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (size > 0)
-        [urlString appendFormat:@"&pagesize=%ld", (long)size];
-    if (page > 0)
-        [urlString appendFormat:@"&pageindex=%ld", (long)page];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
-        
-        NSArray *taskDics = [dic objectForKey:@"tasks"];
-        NSMutableArray *tasks = [NSMutableArray array];
-        for (NSDictionary *taskDic in taskDics) {
-            if (![taskDic isKindOfClass:[NSDictionary class]])
-                continue;
-            MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
-            [tasks addObject:task];
-        }
-        handler(tasks, error);
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)loadTaskWithTaskID:(NSString *)tID handler:(MDAPIObjectHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/detail?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&t_id=%@", tID];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
-        
-        NSDictionary *projectDic = [dic objectForKey:@"task"];
-        MDTask *task = [[MDTask alloc] initWithDictionary:projectDic];
-        handler(task, error);
-    }];
-    return connection;
-}
-
+#pragma mark -
 - (MDURLConnection *)loadTaskReplymentsWithTaskID:(NSString *)tID
                                          onlyFile:(BOOL)onlyFile
                                             maxID:(NSString *)maxTID
@@ -466,6 +98,7 @@
     return connection;
 }
 
+#pragma mark -
 - (MDURLConnection *)createTaskWithTaskName:(NSString *)name
                                 description:(NSString *)des
                               endDateString:(NSString *)endDateString
@@ -524,6 +157,7 @@
     return connection;
 }
 
+#pragma mark -
 - (MDURLConnection *)createProjectWithName:(NSString *)name handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -557,6 +191,7 @@
     return connection;
 }
 
+#pragma mark -
 - (MDURLConnection *)createTaskReplymentOnTaskWithTaskID:(NSString *)tID
                                                  message:(NSString *)message
                                  replyToReplymentWithRID:(NSString *)rID
@@ -640,6 +275,7 @@
     return connection;
 }
 
+#pragma mark -
 - (MDURLConnection *)finishTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -876,6 +512,7 @@
 {
     return [self applyJoinInTaskWithTaskID:tID memberID:memberID isAgree:YES handler:handler];
 }
+
 - (MDURLConnection *)refuseToTaskWithTaskID:(NSString *)tID
                                    memberID:(NSString *)memberID
                                     handler:(MDAPIBoolHandler)handler
@@ -940,6 +577,25 @@
     return connection;
 }
 
+- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
+                            noticeState:(BOOL)noticeState
+                                handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/editUserNotice?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&notice=%d", noticeState?1:0];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
 - (MDURLConnection *)copyTaskWithTaskID:(NSString *)tID
                               chargerID:(NSString *)chargerID
                                   title:(NSString *)title
@@ -970,25 +626,7 @@
     return connection;
 }
 
-- (MDURLConnection *)saveTaskWithTaskID:(NSString *)tID
-                            noticeState:(BOOL)noticeState
-                                handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/editUserNotice?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&t_id=%@", tID];
-    [urlString appendFormat:@"&notice=%d", noticeState?1:0];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
+#pragma mark -
 - (MDURLConnection *)loadFoldersWithKeywords:(NSString *)keywords
                                   filterType:(int)type
                                    colorType:(int)colorType
@@ -1062,6 +700,7 @@
     return connection;
 }
 
+#pragma mark -
 - (MDURLConnection *)loadTasksWithKeywords:(NSString *)keywords
                                   folderID:(NSString *)folderID
                                 filterType:(int)filterType
@@ -1130,39 +769,6 @@
     return connection;
 }
 
-- (MDURLConnection *)loadTaskDetailWithTaskID:(NSString *)taskID
-                                       handler:(MDAPIObjectHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/getTaskDetail?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&t_id=%@",taskID];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
-        
-        NSDictionary *taskDics = [dic objectForKey:@"task"];
-        
-        MDTask *task = [[MDTask alloc] initWithDictionary:taskDics];
-        handler(task, error);
-    }];
-    return connection;
-}
-
 - (MDURLConnection *)loadSubTasksWithParentID:(NSString *)parentID
                                     pageIndex:(int)pageIndex
                                      pageSize:(int)pageSize
@@ -1209,8 +815,8 @@
 }
 
 - (MDURLConnection *)loadCanBeRelatedTasksWithTaskID:(NSString *)taskID
-                                              keywords:(NSString *)keywords
-                                               handler:(MDAPINSArrayHandler)handler
+                                            keywords:(NSString *)keywords
+                                             handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/v2/getTasksByKeywordsAndID?format=json"];
@@ -1250,6 +856,41 @@
     return connection;
 }
 
+#pragma mark -
+- (MDURLConnection *)loadTaskDetailWithTaskID:(NSString *)taskID
+                                       handler:(MDAPIObjectHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/getTaskDetail?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@",taskID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSDictionary *taskDics = [dic objectForKey:@"task"];
+        
+        MDTask *task = [[MDTask alloc] initWithDictionary:taskDics];
+        handler(task, error);
+    }];
+    return connection;
+}
+
+#pragma mark -
 - (MDURLConnection *)loadAllTaskMessagesWithKeyWords:(NSString *)keywords
                                          messageType:(int)messageType
                                           isFavorite:(BOOL)isFavorite
@@ -1305,6 +946,7 @@
     return connection;
 }
 
+#pragma mark -
 - (MDURLConnection *)validateFolderWithName:(NSString *)folderName
                                     handler:(MDAPIBoolHandler)handler
 {
@@ -1409,6 +1051,7 @@
     return connection;
 }
 
+#pragma mark -
 - (MDURLConnection *)createTaskV2WithTaskName:(NSString *)title
                                  description:(NSString *)description
                                endDateString:(NSString *)endDateString

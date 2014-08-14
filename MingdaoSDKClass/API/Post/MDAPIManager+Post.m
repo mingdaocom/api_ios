@@ -9,60 +9,7 @@
 #import "MDAPIManager+Post.h"
 
 @implementation MDAPIManager (Post)
-#pragma mark - 动态接口
-
-- (MDURLConnection *)loadFollowedPostsWithKeywords:(NSString *)keywords
-                                          postType:(MDPostType)type
-                                           sinceID:(NSString *)sinceID
-                                             maxID:(NSString *)maxID
-                                          pagesize:(NSInteger)size
-                                           handler:(MDAPINSArrayHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/followed?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
-    if (sinceID && sinceID.length > 0)
-        [urlString appendFormat:@"&since_id=%@", sinceID];
-    if (maxID && maxID.length > 0)
-        [urlString appendFormat:@"&max_id=%@", maxID];
-    if (size > 0)
-        [urlString appendFormat:@"&pagesize=%ld", (long)size];
-    if (type != -1) {
-        [urlString appendFormat:@"&post_type=%ld", (long)type];
-    }
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
-        
-        NSArray *postDics = [dic objectForKey:@"posts"];
-        NSMutableArray *posts = [NSMutableArray array];
-        for (NSDictionary *postDic in postDics) {
-            if (![postDic isKindOfClass:[NSDictionary class]])
-                continue;
-            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
-            [posts addObject:post];
-        }
-        handler(posts, error);
-    }];
-    return connection;
-}
-
+#pragma mark -
 - (MDURLConnection *)loadPostWithTagName:(NSString *)tagName
                                 keywords:(NSString *)keywords
                                    maxID:(NSString *)maxID
@@ -364,7 +311,7 @@
                                      handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/my?format=json"];
+    [urlString appendString:@"/post/v2/my?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -412,7 +359,7 @@
                                      handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/user?format=json"];
+    [urlString appendString:@"/post/v2/user?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&u_id=%@", userID];
     if (maxID && maxID.length > 0)
@@ -458,7 +405,7 @@
                                        handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/group?format=json"];
+    [urlString appendString:@"/post/v2/group?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", groupID];
     if (keywords && keywords.length > 0)
@@ -797,6 +744,7 @@
     return connection;
 }
 
+#pragma mark -
 - (MDURLConnection *)createTextPostWithText:(NSString *)text
                                    groupIDs:(NSArray *)groupIDs
                                   shareType:(NSInteger)shareType
@@ -1112,6 +1060,63 @@
     return connection;
 }
 
+- (MDURLConnection *)favouritePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/post/add_favorite?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)unFavouritePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/post/delete_favorite?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)likePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/post/add_like?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)unLikePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/post/delete_like?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&p_id=%@", pID];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+#pragma mark -
 - (MDURLConnection *)createPostReplymentOnPostWithPostID:(NSString *)pID
                          replyToReplymentWithReplymentID:(NSString *)rID
                                                  message:(NSString *)msg
@@ -1226,63 +1231,7 @@
     return connection;
 }
 
-
-- (MDURLConnection *)favouritePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/add_favorite?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&p_id=%@", pID];
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)unFavouritePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/delete_favorite?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&p_id=%@", pID];
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)likePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/add_like?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&p_id=%@", pID];
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)unLikePostWithPostID:(NSString *)pID handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/delete_like?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&p_id=%@", pID];
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
+#pragma mark -
 - (MDURLConnection *)loadAllTagsWithKeywords:(NSString *)keywords
                                     pagesize:(NSInteger)size
                                         page:(NSInteger)page

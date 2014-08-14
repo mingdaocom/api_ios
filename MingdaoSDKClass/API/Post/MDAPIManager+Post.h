@@ -23,12 +23,6 @@
  size - 指定要返回的记录条数
  handler - 包含多个MDPost的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadFollowedPostsWithKeywords:(NSString *)keywords
-                                          postType:(MDPostType)type
-                                           sinceID:(NSString *)sinceID
-                                             maxID:(NSString *)maxID
-                                          pagesize:(NSInteger)size
-                                           handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadPostWithTagName:(NSString *)tagName
                                 keywords:(NSString *)keywords
                                    maxID:(NSString *)maxID

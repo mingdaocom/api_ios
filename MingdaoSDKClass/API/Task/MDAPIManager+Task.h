@@ -10,37 +10,6 @@
 
 @interface MDAPIManager (Task)
 #pragma mark - 任务接口
-
-/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
- @usage:
- 获取当前登录用户参与/参与且已完成/托付/托付且已完成/负责/负责且已完成的任务列表
- @parmas:
- keywords - 任务中包含的关键词
- allOrUnfinished  - YES加载全部任务 NO加载未完成的任务
- size - 没次加载获取的任务书
- page - 任务所在页数
- handler - 包含多个MDTask的NSArray
- -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadCurrentUserJoinedTasksWithKeywords:(NSString *)keywords allOrUnfinished:(BOOL)allOrUnFinished handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadCurrentUserJoinedFinishedTasksWithPageSize:(NSInteger)size
-                                                               page:(NSInteger)page
-                                                            handler:(MDAPINSArrayHandler)handler;
-
-- (MDURLConnection *)loadCurrentUserAssignedTasksWithKeywords:(NSString *)keywords allOrUnfinished:(BOOL)allOrUnFinished handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadCurrentUserAssignedFinishedTasksWithPageSize:(NSInteger)size
-                                                                 page:(NSInteger)page
-                                                              handler:(MDAPINSArrayHandler)handler;
-
-- (MDURLConnection *)loadCurrentUserChargedTasksWithKeywords:(NSString *)keywords allOrUnfinished:(BOOL)allOrUnFinished handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadCurrentUserChargedFinishedTasksWithPageSize:(NSInteger)size
-                                                                page:(NSInteger)page
-                                                             handler:(MDAPINSArrayHandler)handler;
-
-- (MDURLConnection *)loadCurrentUserObservedTasksWithKeywords:(NSString *)keywords allOrUnfinished:(BOOL)allOrUnFinished handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadCurrentUserObservedFinishedTasksWithPageSize:(NSInteger)size
-                                                                 page:(NSInteger)page
-                                                              handler:(MDAPINSArrayHandler)handler;
-
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  获取当前网络所有任务隶属的项目
@@ -49,15 +18,6 @@
  handler - 包含多个MDProject的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loadProjectsWithKeywords:(NSString *)keywords handler:(MDAPINSArrayHandler)handler;
-
-/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
- @usage:
- 根据任务编号获取单条任务内容
- @parmas:
- tID - 任务编号
- handler - 处理MDTask
- -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadTaskWithTaskID:(NSString *)tID handler:(MDAPIObjectHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
