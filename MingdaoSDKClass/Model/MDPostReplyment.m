@@ -61,7 +61,6 @@
         }
 
         NSArray *detailDics = [aDic objectForKey:@"details"];
-        NSMutableArray *details = [NSMutableArray arrayWithCapacity:detailDics.count];
         NSMutableArray *images = nil;
         NSMutableArray *files = nil;
         for (NSDictionary *detailDic in detailDics) {
@@ -80,9 +79,7 @@
                 }
                 [files addObject:detail];
             }
-            [details addObject:detail];
         }
-        self.details = details;
         self.images = images;
         self.files = files;
         
@@ -113,8 +110,9 @@
     if (self.replymentToReplyment) {
         copyObject.replymentToReplyment = [self.replymentToReplyment copy];
     }
-    copyObject.details = [self.details copy];
     copyObject.source = [self.source copy];
+    copyObject.images = [self.images copy];
+    copyObject.files = [self.files copy];
     return copyObject;
 }
 @end

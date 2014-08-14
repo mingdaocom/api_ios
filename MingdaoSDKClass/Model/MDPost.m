@@ -171,7 +171,6 @@
         self.isLiked = [[aDic objectForKey:@"like"] boolValue];
         self.type = [[aDic objectForKey:@"type"] intValue];
         self.shareType = [[aDic objectForKey:@"share_type"] intValue];
-        self.details = [aDic objectForKey:@"detail"];
         self.textAttribute = [aDic objectForKey:@"text_attribute"];
         self.isAnswerred = [[aDic objectForKey:@"have_bestanswer"] boolValue];
         self.mark = [[aDic objectForKey:@"mark"] intValue];
@@ -193,7 +192,6 @@
         
         NSArray *detailDics = [aDic objectForKey:@"details"];
         if (detailDics && detailDics.count > 0) {
-            NSMutableArray *details = [NSMutableArray array]; // to be removed
             NSMutableArray *images = nil;
             NSMutableArray *files = nil;
             for (NSDictionary *detailDic in detailDics) {
@@ -222,23 +220,13 @@
                     if (detail.voteOptions) {
                         self.vote = detail;
                     }
-                    [details addObject:detail];
                 }
             }
-            self.details = details;
             self.images = images;
             self.files = files;
         }
     }
     return self;
-}
-
-- (MDPostDetail *)firstDetail
-{
-    if (self.details.count > 0) {
-        return [self.details objectAtIndex:0];
-    }
-    return nil;
 }
 
 - (BOOL)isEqual:(id)object
@@ -272,16 +260,15 @@
     copyObject.isFavourited = self.isFavourited;
     copyObject.type = self.type;
     copyObject.shareType = self.shareType;
-    NSMutableArray *details = [NSMutableArray array];
-    for (MDPostDetail *d in self.details) {
-        MDPostDetail *dd = [d copy];
-        [details addObject:dd];
-    }
-    copyObject.details = details;
     copyObject.textAttribute = [self.textAttribute copy];
     copyObject.groups = [self.groups copy];
     copyObject.isAnswerred = self.isAnswerred;
     copyObject.mark = self.mark;
+    copyObject.images = [self.images copy];
+    copyObject.files = [self.files copy];
+    copyObject.link = [self.link copy];
+    copyObject.video = [self.video copy];
+    copyObject.vote = [self.vote copy];
     if (self.repost) {
         copyObject.repost = [self.repost copy];
     }
