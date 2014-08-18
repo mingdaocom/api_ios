@@ -28,6 +28,7 @@
         self.gender = [[aDic objectForKey:@"gender"] intValue];
         self.company = [aDic objectForKey:@"company"];
         self.department = [aDic objectForKey:@"department"];
+        self.job = [aDic objectForKey:@"job"];
         self.mobilePhoneNumber = [aDic objectForKey:@"mobilephone"];
         if (!self.mobilePhoneNumber) {
             self.mobilePhoneNumber = [aDic objectForKey:@"mobile_phone"];
