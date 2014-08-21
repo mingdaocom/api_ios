@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MDUser.h"
 #import "MDTask.h"
+#import "MDTaskReplyment.h"
 
 @interface MDTaskMentionedMessage : NSObject
 @property (strong, nonatomic) NSString *objectID;

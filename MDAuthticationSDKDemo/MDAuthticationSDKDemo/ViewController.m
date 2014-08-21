@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "MDAuthenticator.h"
 #import "MDAuthPanel.h"
+#import "MDAPICategory.h"
 
 #warning keys
 #define AppKey @"E122D74997594DF274C41722732D25C"

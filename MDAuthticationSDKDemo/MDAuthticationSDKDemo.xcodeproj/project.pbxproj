@@ -20,6 +20,21 @@
 		F7677E6818B44BFD00C58FED /* UANoisyGradientBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E5B18B44BFD00C58FED /* UANoisyGradientBackground.m */; };
 		F7677E6918B44BFD00C58FED /* UARoundedRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E5D18B44BFD00C58FED /* UARoundedRectView.m */; };
 		F7677E6C18B44CD100C58FED /* MDAuthPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E6B18B44CD100C58FED /* MDAuthPanel.m */; };
+		F76B83A819A5E11700247FE8 /* MDTaskMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83A119A5E11700247FE8 /* MDTaskMessage.m */; };
+		F76B83A919A5E11700247FE8 /* MDTaskReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83A319A5E11700247FE8 /* MDTaskReplyment.m */; };
+		F76B83AA19A5E11700247FE8 /* MDTaskReplyMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83A519A5E11700247FE8 /* MDTaskReplyMessage.m */; };
+		F76B83AB19A5E11700247FE8 /* MDTaskSystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83A719A5E11700247FE8 /* MDTaskSystemMessage.m */; };
+		F76B83AE19A5E12200247FE8 /* MDTaskMentionedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83AD19A5E12200247FE8 /* MDTaskMentionedMessage.m */; };
+		F76B83CD19A5E13800247FE8 /* MDAPIManager+Calendar.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83B119A5E13800247FE8 /* MDAPIManager+Calendar.m */; };
+		F76B83CE19A5E13800247FE8 /* MDAPIManager+Company.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83B419A5E13800247FE8 /* MDAPIManager+Company.m */; };
+		F76B83CF19A5E13800247FE8 /* MDAPIManager+FullSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83B719A5E13800247FE8 /* MDAPIManager+FullSearch.m */; };
+		F76B83D019A5E13800247FE8 /* MDAPIManager+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83BA19A5E13800247FE8 /* MDAPIManager+Group.m */; };
+		F76B83D119A5E13800247FE8 /* MDAPIManager+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83BD19A5E13800247FE8 /* MDAPIManager+Message.m */; };
+		F76B83D219A5E13800247FE8 /* MDAPIManager+Passport.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83C019A5E13800247FE8 /* MDAPIManager+Passport.m */; };
+		F76B83D319A5E13800247FE8 /* MDAPIManager+Post.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83C319A5E13800247FE8 /* MDAPIManager+Post.m */; };
+		F76B83D419A5E13800247FE8 /* MDAPIManager+Task.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83C619A5E13800247FE8 /* MDAPIManager+Task.m */; };
+		F76B83D519A5E13800247FE8 /* MDAPIManager+User.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83C919A5E13800247FE8 /* MDAPIManager+User.m */; };
+		F76B83D619A5E13800247FE8 /* MDAPIManager+Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83CC19A5E13800247FE8 /* MDAPIManager+Vote.m */; };
 		F7B3F4F11886204800F186DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B3F4F01886204800F186DB /* Foundation.framework */; };
 		F7B3F4F31886204800F186DB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B3F4F21886204800F186DB /* CoreGraphics.framework */; };
 		F7B3F4F51886204800F186DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B3F4F41886204800F186DB /* UIKit.framework */; };
@@ -52,7 +67,6 @@
 		F7B3F59618862D3E00F186DB /* MDProject.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F56C18862D3E00F186DB /* MDProject.m */; };
 		F7B3F59718862D3E00F186DB /* MDTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F56E18862D3E00F186DB /* MDTag.m */; };
 		F7B3F59818862D3E00F186DB /* MDTask.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F57018862D3E00F186DB /* MDTask.m */; };
-		F7B3F59918862D3E00F186DB /* MDTaskReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F57218862D3E00F186DB /* MDTaskReplyment.m */; };
 		F7B3F59A18862D3E00F186DB /* MDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F57418862D3E00F186DB /* MDUser.m */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +101,37 @@
 		F7677E5D18B44BFD00C58FED /* UARoundedRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UARoundedRectView.m; sourceTree = "<group>"; };
 		F7677E6A18B44CD100C58FED /* MDAuthPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAuthPanel.h; sourceTree = "<group>"; };
 		F7677E6B18B44CD100C58FED /* MDAuthPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAuthPanel.m; sourceTree = "<group>"; };
+		F76B83A019A5E11700247FE8 /* MDTaskMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskMessage.h; sourceTree = "<group>"; };
+		F76B83A119A5E11700247FE8 /* MDTaskMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskMessage.m; sourceTree = "<group>"; };
+		F76B83A219A5E11700247FE8 /* MDTaskReplyment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskReplyment.h; sourceTree = "<group>"; };
+		F76B83A319A5E11700247FE8 /* MDTaskReplyment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskReplyment.m; sourceTree = "<group>"; };
+		F76B83A419A5E11700247FE8 /* MDTaskReplyMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskReplyMessage.h; sourceTree = "<group>"; };
+		F76B83A519A5E11700247FE8 /* MDTaskReplyMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskReplyMessage.m; sourceTree = "<group>"; };
+		F76B83A619A5E11700247FE8 /* MDTaskSystemMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskSystemMessage.h; sourceTree = "<group>"; };
+		F76B83A719A5E11700247FE8 /* MDTaskSystemMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskSystemMessage.m; sourceTree = "<group>"; };
+		F76B83AC19A5E12200247FE8 /* MDTaskMentionedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskMentionedMessage.h; sourceTree = "<group>"; };
+		F76B83AD19A5E12200247FE8 /* MDTaskMentionedMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskMentionedMessage.m; sourceTree = "<group>"; };
+		F76B83B019A5E13800247FE8 /* MDAPIManager+Calendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Calendar.h"; sourceTree = "<group>"; };
+		F76B83B119A5E13800247FE8 /* MDAPIManager+Calendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Calendar.m"; sourceTree = "<group>"; };
+		F76B83B319A5E13800247FE8 /* MDAPIManager+Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Company.h"; sourceTree = "<group>"; };
+		F76B83B419A5E13800247FE8 /* MDAPIManager+Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Company.m"; sourceTree = "<group>"; };
+		F76B83B619A5E13800247FE8 /* MDAPIManager+FullSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+FullSearch.h"; sourceTree = "<group>"; };
+		F76B83B719A5E13800247FE8 /* MDAPIManager+FullSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+FullSearch.m"; sourceTree = "<group>"; };
+		F76B83B919A5E13800247FE8 /* MDAPIManager+Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Group.h"; sourceTree = "<group>"; };
+		F76B83BA19A5E13800247FE8 /* MDAPIManager+Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Group.m"; sourceTree = "<group>"; };
+		F76B83BC19A5E13800247FE8 /* MDAPIManager+Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Message.h"; sourceTree = "<group>"; };
+		F76B83BD19A5E13800247FE8 /* MDAPIManager+Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Message.m"; sourceTree = "<group>"; };
+		F76B83BF19A5E13800247FE8 /* MDAPIManager+Passport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Passport.h"; sourceTree = "<group>"; };
+		F76B83C019A5E13800247FE8 /* MDAPIManager+Passport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Passport.m"; sourceTree = "<group>"; };
+		F76B83C219A5E13800247FE8 /* MDAPIManager+Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Post.h"; sourceTree = "<group>"; };
+		F76B83C319A5E13800247FE8 /* MDAPIManager+Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Post.m"; sourceTree = "<group>"; };
+		F76B83C519A5E13800247FE8 /* MDAPIManager+Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Task.h"; sourceTree = "<group>"; };
+		F76B83C619A5E13800247FE8 /* MDAPIManager+Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Task.m"; sourceTree = "<group>"; };
+		F76B83C819A5E13800247FE8 /* MDAPIManager+User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+User.h"; sourceTree = "<group>"; };
+		F76B83C919A5E13800247FE8 /* MDAPIManager+User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+User.m"; sourceTree = "<group>"; };
+		F76B83CB19A5E13800247FE8 /* MDAPIManager+Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Vote.h"; sourceTree = "<group>"; };
+		F76B83CC19A5E13800247FE8 /* MDAPIManager+Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Vote.m"; sourceTree = "<group>"; };
+		F76B83D719A5E2DB00247FE8 /* MDAPICategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAPICategory.h; sourceTree = "<group>"; };
 		F7B3F4ED1886204800F186DB /* MDAuthticationSDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDAuthticationSDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7B3F4F01886204800F186DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F7B3F4F21886204800F186DB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -143,8 +188,6 @@
 		F7B3F56E18862D3E00F186DB /* MDTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTag.m; sourceTree = "<group>"; };
 		F7B3F56F18862D3E00F186DB /* MDTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTask.h; sourceTree = "<group>"; };
 		F7B3F57018862D3E00F186DB /* MDTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTask.m; sourceTree = "<group>"; };
-		F7B3F57118862D3E00F186DB /* MDTaskReplyment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskReplyment.h; sourceTree = "<group>"; };
-		F7B3F57218862D3E00F186DB /* MDTaskReplyment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskReplyment.m; sourceTree = "<group>"; };
 		F7B3F57318862D3E00F186DB /* MDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDUser.h; sourceTree = "<group>"; };
 		F7B3F57418862D3E00F186DB /* MDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDUser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -238,6 +281,96 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		F76B83AF19A5E13800247FE8 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				F76B83B019A5E13800247FE8 /* MDAPIManager+Calendar.h */,
+				F76B83B119A5E13800247FE8 /* MDAPIManager+Calendar.m */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		F76B83B219A5E13800247FE8 /* Company */ = {
+			isa = PBXGroup;
+			children = (
+				F76B83B319A5E13800247FE8 /* MDAPIManager+Company.h */,
+				F76B83B419A5E13800247FE8 /* MDAPIManager+Company.m */,
+			);
+			path = Company;
+			sourceTree = "<group>";
+		};
+		F76B83B519A5E13800247FE8 /* FullSearch */ = {
+			isa = PBXGroup;
+			children = (
+				F76B83B619A5E13800247FE8 /* MDAPIManager+FullSearch.h */,
+				F76B83B719A5E13800247FE8 /* MDAPIManager+FullSearch.m */,
+			);
+			path = FullSearch;
+			sourceTree = "<group>";
+		};
+		F76B83B819A5E13800247FE8 /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				F76B83B919A5E13800247FE8 /* MDAPIManager+Group.h */,
+				F76B83BA19A5E13800247FE8 /* MDAPIManager+Group.m */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
+		F76B83BB19A5E13800247FE8 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				F76B83BC19A5E13800247FE8 /* MDAPIManager+Message.h */,
+				F76B83BD19A5E13800247FE8 /* MDAPIManager+Message.m */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		F76B83BE19A5E13800247FE8 /* Passport */ = {
+			isa = PBXGroup;
+			children = (
+				F76B83BF19A5E13800247FE8 /* MDAPIManager+Passport.h */,
+				F76B83C019A5E13800247FE8 /* MDAPIManager+Passport.m */,
+			);
+			path = Passport;
+			sourceTree = "<group>";
+		};
+		F76B83C119A5E13800247FE8 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				F76B83C219A5E13800247FE8 /* MDAPIManager+Post.h */,
+				F76B83C319A5E13800247FE8 /* MDAPIManager+Post.m */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		F76B83C419A5E13800247FE8 /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				F76B83C519A5E13800247FE8 /* MDAPIManager+Task.h */,
+				F76B83C619A5E13800247FE8 /* MDAPIManager+Task.m */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		F76B83C719A5E13800247FE8 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				F76B83C819A5E13800247FE8 /* MDAPIManager+User.h */,
+				F76B83C919A5E13800247FE8 /* MDAPIManager+User.m */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		F76B83CA19A5E13800247FE8 /* Vote */ = {
+			isa = PBXGroup;
+			children = (
+				F76B83CB19A5E13800247FE8 /* MDAPIManager+Vote.h */,
+				F76B83CC19A5E13800247FE8 /* MDAPIManager+Vote.m */,
+			);
+			path = Vote;
+			sourceTree = "<group>";
+		};
 		F7B3F4E41886204800F186DB = {
 			isa = PBXGroup;
 			children = (
@@ -324,6 +457,7 @@
 		F7B3F54118862D3E00F186DB /* MingdaoSDKClass */ = {
 			isa = PBXGroup;
 			children = (
+				F76B83D719A5E2DB00247FE8 /* MDAPICategory.h */,
 				F7B3F54218862D3E00F186DB /* API */,
 				F7B3F54618862D3E00F186DB /* Authenticaor */,
 				F7B3F54918862D3E00F186DB /* Helper */,
@@ -338,6 +472,16 @@
 				F7B3F54318862D3E00F186DB /* MDAPIHandler.h */,
 				F7B3F54418862D3E00F186DB /* MDAPIManager.h */,
 				F7B3F54518862D3E00F186DB /* MDAPIManager.m */,
+				F76B83AF19A5E13800247FE8 /* Calendar */,
+				F76B83B219A5E13800247FE8 /* Company */,
+				F76B83B519A5E13800247FE8 /* FullSearch */,
+				F76B83B819A5E13800247FE8 /* Group */,
+				F76B83BB19A5E13800247FE8 /* Message */,
+				F76B83BE19A5E13800247FE8 /* Passport */,
+				F76B83C119A5E13800247FE8 /* Post */,
+				F76B83C419A5E13800247FE8 /* Task */,
+				F76B83C719A5E13800247FE8 /* User */,
+				F76B83CA19A5E13800247FE8 /* Vote */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -404,8 +548,16 @@
 				F7B3F56E18862D3E00F186DB /* MDTag.m */,
 				F7B3F56F18862D3E00F186DB /* MDTask.h */,
 				F7B3F57018862D3E00F186DB /* MDTask.m */,
-				F7B3F57118862D3E00F186DB /* MDTaskReplyment.h */,
-				F7B3F57218862D3E00F186DB /* MDTaskReplyment.m */,
+				F76B83A019A5E11700247FE8 /* MDTaskMessage.h */,
+				F76B83A119A5E11700247FE8 /* MDTaskMessage.m */,
+				F76B83A219A5E11700247FE8 /* MDTaskReplyment.h */,
+				F76B83A319A5E11700247FE8 /* MDTaskReplyment.m */,
+				F76B83A419A5E11700247FE8 /* MDTaskReplyMessage.h */,
+				F76B83A519A5E11700247FE8 /* MDTaskReplyMessage.m */,
+				F76B83A619A5E11700247FE8 /* MDTaskSystemMessage.h */,
+				F76B83A719A5E11700247FE8 /* MDTaskSystemMessage.m */,
+				F76B83AC19A5E12200247FE8 /* MDTaskMentionedMessage.h */,
+				F76B83AD19A5E12200247FE8 /* MDTaskMentionedMessage.m */,
 				F7B3F57318862D3E00F186DB /* MDUser.h */,
 				F7B3F57418862D3E00F186DB /* MDUser.m */,
 			);
@@ -516,31 +668,45 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7B3F59418862D3E00F186DB /* MDPostAt.m in Sources */,
+				F76B83D019A5E13800247FE8 /* MDAPIManager+Group.m in Sources */,
+				F76B83D619A5E13800247FE8 /* MDAPIManager+Vote.m in Sources */,
+				F76B83AE19A5E12200247FE8 /* MDTaskMentionedMessage.m in Sources */,
+				F76B83CF19A5E13800247FE8 /* MDAPIManager+FullSearch.m in Sources */,
 				F7B3F5071886204800F186DB /* ViewController.m in Sources */,
+				F76B83D319A5E13800247FE8 /* MDAPIManager+Post.m in Sources */,
 				F7677E5E18B44BFD00C58FED /* UIView+JMNoise.m in Sources */,
 				F7B3F58C18862D3E00F186DB /* MDURLConnection.m in Sources */,
 				F7677E6618B44BFD00C58FED /* UATitledModalPanel.m in Sources */,
 				F7B3F5011886204800F186DB /* AppDelegate.m in Sources */,
 				F7B3F58518862D3E00F186DB /* MDAuthenticator.m in Sources */,
 				F7677E6818B44BFD00C58FED /* UANoisyGradientBackground.m in Sources */,
+				F76B83CD19A5E13800247FE8 /* MDAPIManager+Calendar.m in Sources */,
 				F7677E6518B44BFD00C58FED /* UAModalPanel.m in Sources */,
 				F7677E6718B44BFD00C58FED /* UAGradientBackground.m in Sources */,
 				F7B3F58D18862D3E00F186DB /* MDURLConnectionQueue.m in Sources */,
 				F7B3F4FD1886204800F186DB /* main.m in Sources */,
 				F7677E6918B44BFD00C58FED /* UARoundedRectView.m in Sources */,
+				F76B83CE19A5E13800247FE8 /* MDAPIManager+Company.m in Sources */,
 				F7B3F58718862D3E00F186DB /* UIDevice+IdentifierAddition.m in Sources */,
-				F7B3F59918862D3E00F186DB /* MDTaskReplyment.m in Sources */,
+				F76B83AB19A5E11700247FE8 /* MDTaskSystemMessage.m in Sources */,
 				F7B3F59318862D3E00F186DB /* MDPost.m in Sources */,
+				F76B83A919A5E11700247FE8 /* MDTaskReplyment.m in Sources */,
+				F76B83D119A5E13800247FE8 /* MDAPIManager+Message.m in Sources */,
 				F7B3F58F18862D3E00F186DB /* MDEvent.m in Sources */,
 				F7B3F58618862D3E00F186DB /* NSString+MD5Addition.m in Sources */,
 				F7B3F59618862D3E00F186DB /* MDProject.m in Sources */,
 				F7B3F59518862D3E00F186DB /* MDPostReplyment.m in Sources */,
+				F76B83D419A5E13800247FE8 /* MDAPIManager+Task.m in Sources */,
 				F7B3F59118862D3E00F186DB /* MDMessage.m in Sources */,
+				F76B83AA19A5E11700247FE8 /* MDTaskReplyMessage.m in Sources */,
 				F7B3F58B18862D3E00F186DB /* MDErrorParser.m in Sources */,
+				F76B83A819A5E11700247FE8 /* MDTaskMessage.m in Sources */,
 				F7B3F59818862D3E00F186DB /* MDTask.m in Sources */,
 				F7B3F59018862D3E00F186DB /* MDGroup.m in Sources */,
 				F7B3F59218862D3E00F186DB /* MDMessageAll.m in Sources */,
 				F7677E6C18B44CD100C58FED /* MDAuthPanel.m in Sources */,
+				F76B83D519A5E13800247FE8 /* MDAPIManager+User.m in Sources */,
+				F76B83D219A5E13800247FE8 /* MDAPIManager+Passport.m in Sources */,
 				F7B3F59A18862D3E00F186DB /* MDUser.m in Sources */,
 				F7B3F58E18862D3E00F186DB /* MDCompany.m in Sources */,
 				F7B3F59718862D3E00F186DB /* MDTag.m in Sources */,
