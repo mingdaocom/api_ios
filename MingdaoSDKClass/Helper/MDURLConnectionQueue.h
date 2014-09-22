@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^MDAPIConnectionQueueHandler)(NSInteger lastFinishedIndex, CGFloat progress, NSData *data, NSError *error);
+typedef void (^MDAPIConnectionQueueHandler)(NSInteger lastFinishedIndex, float progress, NSData *data, NSError *error);
 
 @interface MDURLConnectionQueue : NSObject
 - (MDURLConnectionQueue *)initWithRequest:(NSArray *)requests handler:(MDAPIConnectionQueueHandler)handler;

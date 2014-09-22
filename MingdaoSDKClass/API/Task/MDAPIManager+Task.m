@@ -7,6 +7,7 @@
 //
 
 #import "MDAPIManager+Task.h"
+#import <UIKit/UIKit.h>
 
 @implementation MDAPIManager (Task)
 #pragma mark -

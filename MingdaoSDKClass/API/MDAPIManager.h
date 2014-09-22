@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MDAPIHandler.h"
-#import "UIDevice+IdentifierAddition.h"
 #import "MDErrorParser.h"
 
 #define MDAPIDefaultServerAddress @"https://api.mingdao.com"

@@ -31,4 +31,4 @@ typedef void (^MDAPINSIntegerHandler)(NSInteger count, NSError *error);
 typedef void (^MDAPINSDictionaryHandler)(NSDictionary *dictionary, NSError *error);
 typedef void (^MDAPINSArrayHandler)(NSArray *objects, NSError *error);
 typedef void (^MDAPINSStringHandler)(NSString *string, NSError *error);
-typedef void (^MDAPIQueueBoolHandler)(NSInteger lastFinishedIndex, CGFloat progress, BOOL succeed, NSError *error);
+typedef void (^MDAPIQueueBoolHandler)(NSInteger lastFinishedIndex, float progress, BOOL succeed, NSError *error);

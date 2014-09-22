@@ -7,6 +7,7 @@
 //
 
 #import "MDAPIManager.h"
+#import <UIKit/UIKit.h>
 
 @interface MDAPIManager (Passport)
 #pragma mark - 账号接口

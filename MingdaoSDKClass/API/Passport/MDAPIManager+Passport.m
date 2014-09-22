@@ -7,6 +7,7 @@
 //
 
 #import "MDAPIManager+Passport.h"
+#import <UIKit/UIKit.h>
 
 @implementation MDAPIManager (Passport)
 

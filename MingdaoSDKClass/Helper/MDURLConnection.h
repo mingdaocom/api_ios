@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef void (^MDAPINSDataHandler)(NSData *data, NSError *error);
-typedef void (^MDAPICGFloatHandler)(CGFloat fValue);
+typedef void (^MDAPICGFloatHandler)(float fValue);
 
 @interface MDURLConnection : NSObject
 - (MDURLConnection *)initWithRequest:(NSURLRequest *)request handler:(MDAPINSDataHandler)handler;

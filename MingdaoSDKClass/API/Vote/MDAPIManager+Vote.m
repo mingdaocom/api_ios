@@ -7,6 +7,7 @@
 //
 
 #import "MDAPIManager+Vote.h"
+#import <UIKit/UIKit.h>
 
 @implementation MDAPIManager (Vote)
 #pragma mark - 投票接口

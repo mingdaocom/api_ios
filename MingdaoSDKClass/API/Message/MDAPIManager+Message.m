@@ -7,6 +7,7 @@
 //
 
 #import "MDAPIManager+Message.h"
+#import <UIKit/UIKit.h>
 
 @implementation MDAPIManager (Message)
 #pragma mark - 私信接口

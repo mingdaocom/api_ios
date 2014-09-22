@@ -74,10 +74,10 @@
 }
 
 
-- (CGFloat)progress
+- (float)progress
 {
-    CGFloat queue = self.currentQueue;
-    CGFloat count = self.requests.count;
+    float queue = self.currentQueue;
+    float count = self.requests.count;
     return queue/count;
 }
 

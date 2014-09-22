@@ -277,7 +277,7 @@
         [requests addObject:req];
     }
     
-    MDURLConnectionQueue *queue = [[MDURLConnectionQueue alloc] initWithRequest:requests handler:^(NSInteger lastFinishedIndex, CGFloat progress, NSData *data, NSError *error){
+    MDURLConnectionQueue *queue = [[MDURLConnectionQueue alloc] initWithRequest:requests handler:^(NSInteger lastFinishedIndex, float progress, NSData *data, NSError *error){
         
         NSURLRequest *req = requests[lastFinishedIndex];
         if (error) {

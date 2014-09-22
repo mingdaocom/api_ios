@@ -7,6 +7,7 @@
 //
 
 #import "MDAPIManager+Post.h"
+#import <UIKit/UIKit.h>
 
 @implementation MDAPIManager (Post)
 #pragma mark -
