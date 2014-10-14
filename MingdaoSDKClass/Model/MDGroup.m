@@ -17,6 +17,9 @@
         self.objectName = [aDic objectForKey:@"name"];
         self.avatar = [aDic objectForKey:@"avstar"];
         self.about = [aDic objectForKey:@"about"];
+        if (![self.about isKindOfClass:[NSString class]]) {
+            self.about = @"";
+        }
         self.isPublic = [[aDic objectForKey:@"is_public"] boolValue];
         self.status = [[aDic objectForKey:@"status"] intValue];
         self.isJoined = [[aDic objectForKey:@"followed_status"] boolValue];

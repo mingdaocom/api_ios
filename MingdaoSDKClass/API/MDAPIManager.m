@@ -233,6 +233,36 @@ static MDAPIManager *sharedManager = nil;
     return connection;
 }
 
+- (MDURLConnection *)refreshTokenWithRefreshToken:(NSString *)refreshToken
+                                          handler:(MDAPINSDictionaryHandler)handler;
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/oauth2/access_token?format=json"];
+    [urlString appendFormat:@"&app_key=%@&app_secret=%@&refresh_token=%@", self.appKey, self.appSecret, refreshToken];
+    [urlString appendString:@"&grant_type=refresh_token"];
+    
+    NSString *urlStr = urlString;
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(NO, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        handler(dic, error);
+    }];
+    return connection;
+}
+
 - (NSString *)localEncode:(NSString *)string
 {
     NSMutableString *passwordTmp = [string mutableCopy];

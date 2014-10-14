@@ -75,5 +75,6 @@ extern NSString * const MDAPIManagerNewTokenSetNotification;
                          redirectURL:(NSString *)redirectURL
                              handler:(MDAPINSDictionaryHandler)handler;
 
-
+- (MDURLConnection *)refreshTokenWithRefreshToken:(NSString *)refreshToken
+                                          handler:(MDAPINSDictionaryHandler)handler;
 @end
