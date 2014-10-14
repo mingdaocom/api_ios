@@ -800,14 +800,15 @@
     [urlString appendFormat:@"&access_token=%@&p_type=1", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&l_title=%@", [self localEncode:link]];
-    [urlString appendFormat:@"&l_uri=%@", link];
-    [urlString appendFormat:@"&p_msg=%@", [self localEncode:text]];
     [urlString appendFormat:@"&s_type=%ld", (long)shareType];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
+    
+    NSString *str = [NSString stringWithFormat:@"p_msg=%@&l_title=%@&l_uri=%@", [self localEncode:text], title, link];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [req setHTTPBody:data];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         if (error) {
