@@ -50,15 +50,11 @@
 {
     self = [super init];
     if (self) {
-        self.isAnonymous = [[dic objectForKey:@"Anonymous"] boolValue];
-        self.maxChoiceCount = [[dic objectForKey:@"AvailableNumber"] intValue];
-        self.deadLineString = [dic objectForKey:@"Deadline"];
         self.isInCenter = [[dic objectForKey:@"is_center"] boolValue];
+
         self.linkDes = [dic objectForKey:@"link_des"];
         self.linkTitle = [dic objectForKey:@"link_title"];
         self.linkURL = [dic objectForKey:@"link_url"];
-        self.fileType = [[dic objectForKey:@"file_type"] intValue];
-        self.fileSize = [[dic objectForKey:@"filesize"] longLongValue];
         
         self.thumbnailPic = [dic objectForKey:@"thumbnail_pic"];
         self.middlePic = [dic objectForKey:@"middle_pic"];
@@ -71,7 +67,14 @@
         self.fileName = [dic objectForKey:@"original_filename"];
         
         self.videoUrl = [dic objectForKey:@"video_url"];
+        self.videoThumb = [dic objectForKey:@"video_thumbUrl"];
+        self.videoTitle = [dic objectForKey:@"video_fileName"];
         
+        self.fileType = [[dic objectForKey:@"file_type"] intValue];
+        self.fileSize = [[dic objectForKey:@"filesize"] longLongValue];
+        self.isAnonymous = [[dic objectForKey:@"Anonymous"] boolValue];
+        self.maxChoiceCount = [[dic objectForKey:@"AvailableNumber"] intValue];
+        self.deadLineString = [dic objectForKey:@"Deadline"];
         self.isVisble = [[dic objectForKey:@"Visble"] boolValue];
         self.isDownloadable = [[dic objectForKey:@"allow_down"] boolValue];
         NSArray *voteOptionDics = [dic objectForKey:@"options"];
@@ -112,22 +115,29 @@
 {
     id object = [[[self class] alloc] init];
     MDPostDetail *copyObject = object;
+    copyObject.isInCenter = self.isInCenter;
+    
+    copyObject.linkDes = [self.linkDes copy];
+    copyObject.linkTitle = [self.linkTitle copy];
+    
+    copyObject.thumbnailPic = [self.thumbnailPic copy];
+    copyObject.middlePic = [self.middlePic copy];
+    copyObject.originalPic = [self.originalPic copy];
+    
+    copyObject.originalDoc = [self.originalDoc copy];
+    copyObject.fileName = [self.fileName copy];
+    copyObject.fileType = self.fileType;
+    copyObject.fileSize = self.fileSize;
+    copyObject.isDownloadable = self.isDownloadable;
+    
+    copyObject.videoUrl = [self.videoUrl copy];
+    copyObject.videoTitle = [self.videoTitle copy];
+    copyObject.videoThumb = [self.videoThumb copy];
+    
     copyObject.isAnonymous = self.isAnonymous;
     copyObject.maxChoiceCount = self.maxChoiceCount;
     copyObject.deadLineString = [self.deadLineString copy];
-    copyObject.isInCenter = self.isInCenter;
-    copyObject.linkDes = [self.linkDes copy];
-    copyObject.linkTitle = [self.linkTitle copy];
-    copyObject.middlePic = [self.middlePic copy];
-    copyObject.originalPic = [self.originalPic copy];
-    copyObject.originalDoc = [self.originalDoc copy];
-    copyObject.thumbnailPic = [self.thumbnailPic copy];
-    copyObject.fileName = [self.fileName copy];
     copyObject.isVisble = self.isVisble;
-    copyObject.isDownloadable = self.isDownloadable;
-    copyObject.fileType = self.fileType;
-    copyObject.fileSize = self.fileSize;
-    copyObject.postID = [self.postID copy];
     NSMutableArray *voteOptions = [NSMutableArray array];
     for (MDVoteOption *d in self.voteOptions) {
         MDVoteOption *dd = [d copy];
@@ -197,7 +207,6 @@
             for (NSDictionary *detailDic in detailDics) {
                 if ([detailDic isKindOfClass:[NSDictionary class]]) {
                     MDPostDetail *detail = [[MDPostDetail alloc] initWithDictionary:detailDic];
-                    detail.postID = self.objectID;
                     if (detail.fileType == MDAttachmentFileTypeImage) {
                         if (!images) {
                             images = [NSMutableArray array];

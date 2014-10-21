@@ -28,23 +28,32 @@ enum {
 typedef int MDAttachmentFileType;
 
 @interface MDPostDetail : NSObject
+@property (assign, nonatomic) BOOL isInCenter;
+
+// Link
+@property (strong, nonatomic) NSString *linkDes, *linkTitle, *linkURL;
+
+// Video
+@property (strong, nonatomic) NSString *videoUrl, *videoThumb, *videoTitle;
+
+// Image
+@property (strong, nonatomic) NSString *thumbnailPic, *middlePic, *originalPic;
+
+// File
+@property (strong, nonatomic) NSString *fileName, *originalDoc;
+@property (assign, nonatomic) long long fileSize;
+
+@property (assign, nonatomic) MDAttachmentFileType fileType;
+@property (assign, nonatomic) BOOL isDownloadable;
+
+// Vote
+@property (strong, nonatomic) NSArray *voteOptions;
+@property (readonly, nonatomic) BOOL voted;
+@property (readonly, nonatomic) int totalVoteCount;
 @property (assign, nonatomic) BOOL isAnonymous, isVisble;
 @property (assign, nonatomic) int maxChoiceCount;
 @property (strong, nonatomic) NSString *deadLineString;
-@property (strong, nonatomic) NSString *postGUID;
-@property (assign, nonatomic) BOOL isInCenter;
-@property (strong, nonatomic) NSString *linkDes, *linkTitle, *linkURL;
-@property (strong, nonatomic) NSString *middlePic, *originalPic, *fileName, *thumbnailPic, *originalDoc;
-@property (assign, nonatomic) MDAttachmentFileType fileType;
-@property (strong, nonatomic) NSString *videoUrl;
-@property (strong, nonatomic) NSArray *voteOptions;
-@property (assign, nonatomic) BOOL isDownloadable;
-@property (assign, nonatomic) long long fileSize;
 
-@property (strong, nonatomic) NSString *postID;
-
-@property (readonly, nonatomic) BOOL voted;
-@property (readonly, nonatomic) int totalVoteCount;
 - (MDPostDetail *)initWithDictionary:(NSDictionary *)dic;
 @end
 
