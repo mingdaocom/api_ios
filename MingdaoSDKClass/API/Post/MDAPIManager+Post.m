@@ -609,6 +609,60 @@
     return connection;
 }
 
+- (MDURLConnection *)loadVideoPostsWithGroupID:(NSString *)groupID
+                                      Keywords:(NSString *)keywords
+                                    filterType:(NSInteger)filterType
+                                       sinceID:(NSString *)sinceID
+                                         maxID:(NSString *)maxID
+                                      pagesize:(NSInteger)size
+                                       handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/post/video?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (groupID && groupID.length > 0)
+        [urlString appendFormat:@"&g_id=%@", groupID];
+    if (sinceID && sinceID.length > 0)
+        [urlString appendFormat:@"&since_id=%@", sinceID];
+    if (maxID && maxID.length > 0)
+        [urlString appendFormat:@"&max_id=%@", maxID];
+    if (size > 0)
+        [urlString appendFormat:@"&pagesize=%ld", (long)size];
+    if (filterType != 0)
+        [urlString appendFormat:@"&filter_type=%ld", (long)filterType];
+    if (keywords && keywords.length > 0)
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSArray *postDics = [dic objectForKey:@"posts"];
+        NSMutableArray *posts = [NSMutableArray array];
+        for (NSDictionary *postDic in postDics) {
+            if (![postDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPost *post = [[MDPost alloc] initWithDictionary:postDic];
+            [posts addObject:post];
+        }
+        handler(posts, error);
+    }];
+    return connection;
+}
+
 - (MDURLConnection *)loadToppedPostsWithHandler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];

@@ -88,6 +88,13 @@
                                        maxID:(NSString *)maxID
                                     pagesize:(NSInteger)size
                                      handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadVideoPostsWithGroupID:(NSString *)groupID
+                                      Keywords:(NSString *)keywords
+                                    filterType:(NSInteger)filterType
+                                       sinceID:(NSString *)sinceID
+                                         maxID:(NSString *)maxID
+                                      pagesize:(NSInteger)size
+                                       handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadToppedPostsWithHandler:(MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
