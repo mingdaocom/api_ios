@@ -47,7 +47,7 @@ static MDAPIManager *sharedManager = nil;
 {
     if (!_serverAddress) {
         _serverAddress = MDAPIDefaultServerAddress;
-        //_serverAddress = @"http://172.16.23.247/MD.api.Web";
+        _serverAddress = @"http://172.16.23.247/MD.api.Web";
         return _serverAddress;
     }
     return _serverAddress;
@@ -118,17 +118,17 @@ static MDAPIManager *sharedManager = nil;
     NSString *urlStr = urlString;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         if (error) {
-            sHandler(NO, error);
+            sHandler(nil, error);
             return ;
         }
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            sHandler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            sHandler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
         }
         NSString *errorCode = [dic objectForKey:@"error_code"];
         if (errorCode) {
-            sHandler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            sHandler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return;
         }
         
@@ -180,17 +180,17 @@ static MDAPIManager *sharedManager = nil;
     NSString *urlStr = urlString;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         if (error) {
-            handler(NO, error);
+            handler(nil, error);
             return ;
         }
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
         }
         NSString *errorCode = [dic objectForKey:@"error_code"];
         if (errorCode) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return;
         }
         
@@ -214,17 +214,17 @@ static MDAPIManager *sharedManager = nil;
     NSString *urlStr = urlString;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         if (error) {
-            handler(NO, error);
+            handler(nil, error);
             return ;
         }
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
         }
         NSString *errorCode = [dic objectForKey:@"error_code"];
         if (errorCode) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return;
         }
         
@@ -244,17 +244,17 @@ static MDAPIManager *sharedManager = nil;
     NSString *urlStr = urlString;
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         if (error) {
-            handler(NO, error);
+            handler(nil, error);
             return ;
         }
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return ;
         }
         NSString *errorCode = [dic objectForKey:@"error_code"];
         if (errorCode) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return;
         }
         

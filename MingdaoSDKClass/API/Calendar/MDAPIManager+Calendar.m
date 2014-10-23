@@ -30,7 +30,7 @@
         }
         NSString *errorCode = [dic objectForKey:@"error_code"];
         if (errorCode) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
             return;
         }
         
@@ -103,7 +103,7 @@
         }
         NSString *errorCode = [dic objectForKey:@"error_code"];
         if (errorCode) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return;
         }
         
@@ -248,7 +248,7 @@
         }
         NSString *errorCode = [dic objectForKey:@"error_code"];
         if (errorCode) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
             return;
         }
         
@@ -288,7 +288,7 @@
         }
         NSString *errorCode = [dic objectForKey:@"error_code"];
         if (errorCode) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return;
         }
         
@@ -332,7 +332,7 @@
         }
         NSString *errorCode = [dic objectForKey:@"error_code"];
         if (errorCode) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return;
         }
         
@@ -374,7 +374,7 @@
         }
         NSString *errorCode = [dic objectForKey:@"error_code"];
         if (errorCode) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return;
         }
         
@@ -414,7 +414,7 @@
         }
         NSString *errorCode = [dic objectForKey:@"error_code"];
         if (errorCode) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
             return;
         }
         
