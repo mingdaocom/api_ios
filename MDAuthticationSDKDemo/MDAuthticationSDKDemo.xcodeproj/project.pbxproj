@@ -51,8 +51,6 @@
 		F7B3F51C1886204800F186DB /* MDAuthticationSDKDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F51B1886204800F186DB /* MDAuthticationSDKDemoTests.m */; };
 		F7B3F58418862D3E00F186DB /* MDAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F54518862D3E00F186DB /* MDAPIManager.m */; };
 		F7B3F58518862D3E00F186DB /* MDAuthenticator.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F54818862D3E00F186DB /* MDAuthenticator.m */; };
-		F7B3F58618862D3E00F186DB /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F54C18862D3E00F186DB /* NSString+MD5Addition.m */; };
-		F7B3F58718862D3E00F186DB /* UIDevice+IdentifierAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F54E18862D3E00F186DB /* UIDevice+IdentifierAddition.m */; };
 		F7B3F58B18862D3E00F186DB /* MDErrorParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F55518862D3E00F186DB /* MDErrorParser.m */; };
 		F7B3F58C18862D3E00F186DB /* MDURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F55718862D3E00F186DB /* MDURLConnection.m */; };
 		F7B3F58D18862D3E00F186DB /* MDURLConnectionQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F55918862D3E00F186DB /* MDURLConnectionQueue.m */; };
@@ -156,10 +154,6 @@
 		F7B3F54518862D3E00F186DB /* MDAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAPIManager.m; sourceTree = "<group>"; };
 		F7B3F54718862D3E00F186DB /* MDAuthenticator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAuthenticator.h; sourceTree = "<group>"; };
 		F7B3F54818862D3E00F186DB /* MDAuthenticator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAuthenticator.m; sourceTree = "<group>"; };
-		F7B3F54B18862D3E00F186DB /* NSString+MD5Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5Addition.h"; sourceTree = "<group>"; };
-		F7B3F54C18862D3E00F186DB /* NSString+MD5Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5Addition.m"; sourceTree = "<group>"; };
-		F7B3F54D18862D3E00F186DB /* UIDevice+IdentifierAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+IdentifierAddition.h"; sourceTree = "<group>"; };
-		F7B3F54E18862D3E00F186DB /* UIDevice+IdentifierAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+IdentifierAddition.m"; sourceTree = "<group>"; };
 		F7B3F55418862D3E00F186DB /* MDErrorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDErrorParser.h; sourceTree = "<group>"; };
 		F7B3F55518862D3E00F186DB /* MDErrorParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDErrorParser.m; sourceTree = "<group>"; };
 		F7B3F55618862D3E00F186DB /* MDURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDURLConnection.h; sourceTree = "<group>"; };
@@ -501,7 +495,6 @@
 		F7B3F54918862D3E00F186DB /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				F7B3F54A18862D3E00F186DB /* IdentifierAddition */,
 				F7B3F55418862D3E00F186DB /* MDErrorParser.h */,
 				F7B3F55518862D3E00F186DB /* MDErrorParser.m */,
 				F7B3F55618862D3E00F186DB /* MDURLConnection.h */,
@@ -510,17 +503,6 @@
 				F7B3F55918862D3E00F186DB /* MDURLConnectionQueue.m */,
 			);
 			path = Helper;
-			sourceTree = "<group>";
-		};
-		F7B3F54A18862D3E00F186DB /* IdentifierAddition */ = {
-			isa = PBXGroup;
-			children = (
-				F7B3F54B18862D3E00F186DB /* NSString+MD5Addition.h */,
-				F7B3F54C18862D3E00F186DB /* NSString+MD5Addition.m */,
-				F7B3F54D18862D3E00F186DB /* UIDevice+IdentifierAddition.h */,
-				F7B3F54E18862D3E00F186DB /* UIDevice+IdentifierAddition.m */,
-			);
-			path = IdentifierAddition;
 			sourceTree = "<group>";
 		};
 		F7B3F55A18862D3E00F186DB /* Model */ = {
@@ -687,13 +669,11 @@
 				F7B3F4FD1886204800F186DB /* main.m in Sources */,
 				F7677E6918B44BFD00C58FED /* UARoundedRectView.m in Sources */,
 				F76B83CE19A5E13800247FE8 /* MDAPIManager+Company.m in Sources */,
-				F7B3F58718862D3E00F186DB /* UIDevice+IdentifierAddition.m in Sources */,
 				F76B83AB19A5E11700247FE8 /* MDTaskSystemMessage.m in Sources */,
 				F7B3F59318862D3E00F186DB /* MDPost.m in Sources */,
 				F76B83A919A5E11700247FE8 /* MDTaskReplyment.m in Sources */,
 				F76B83D119A5E13800247FE8 /* MDAPIManager+Message.m in Sources */,
 				F7B3F58F18862D3E00F186DB /* MDEvent.m in Sources */,
-				F7B3F58618862D3E00F186DB /* NSString+MD5Addition.m in Sources */,
 				F7B3F59618862D3E00F186DB /* MDProject.m in Sources */,
 				F7B3F59518862D3E00F186DB /* MDPostReplyment.m in Sources */,
 				F76B83D419A5E13800247FE8 /* MDAPIManager+Task.m in Sources */,
