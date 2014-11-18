@@ -64,6 +64,7 @@
         self.des = [aDic objectForKey:@"des"];
         self.address = [aDic objectForKey:@"address"];
         self.isPrivate = ![[aDic objectForKey:@"private"] boolValue];
+        self.isBusy = [[aDic objectForKey:@"isBusy"] boolValue];
         if (![aDic objectForKey:@"private"]) {
             self.isPrivate = 0;
         }
@@ -416,6 +417,7 @@
     copyObject.des = [self.des copy];
     copyObject.isAllday = self.isAllday;
     copyObject.isPrivate = self.isPrivate;
+    copyObject.isBusy = self.isBusy;
     copyObject.members = [self.members copy];
     copyObject.eventMails = [self.eventMails copy];
     copyObject.isRecur = self.isRecur;

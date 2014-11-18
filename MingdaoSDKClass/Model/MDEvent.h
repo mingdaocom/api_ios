@@ -30,6 +30,7 @@
 @property (assign, nonatomic) BOOL isPrivate;
 @property (strong, nonatomic) NSArray *members;
 @property (strong, nonatomic) NSArray *eventMails;
+@property (assign, nonatomic) BOOL isBusy;
 
 @property (assign, nonatomic) BOOL isRecur;
 @property (assign, nonatomic) int frequency, interval, recurCount;
