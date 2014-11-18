@@ -22,7 +22,8 @@
 @property (strong, nonatomic) NSString *address;
 @property (strong, nonatomic) NSString *startDateString;
 @property (strong, nonatomic) NSString *endDateString;
-
+@property (assign, nonatomic) NSInteger remindType;
+@property (assign, nonatomic) NSInteger remindTime;
 
 @property (strong, nonatomic) NSString *des;
 @property (assign, nonatomic) BOOL isAllday;

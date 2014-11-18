@@ -37,6 +37,8 @@
 - (MDURLConnection *)createEventWithEventName:(NSString *)name
                               startDateString:(NSString *)sDateString
                                 endDateString:(NSString *)eDateString
+                                   remindType:(NSInteger)remindType
+                                   remindTime:(NSInteger)remindTime
                                      isAllDay:(BOOL)isAllday
                                       address:(NSString *)address
                                   description:(NSString *)des

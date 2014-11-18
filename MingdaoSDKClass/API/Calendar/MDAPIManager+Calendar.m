@@ -43,6 +43,8 @@
 - (MDURLConnection *)createEventWithEventName:(NSString *)name
                               startDateString:(NSString *)sDateString
                                 endDateString:(NSString *)eDateString
+                                   remindType:(NSInteger)remindType
+                                   remindTime:(NSInteger)remindTime
                                      isAllDay:(BOOL)isAllday
                                       address:(NSString *)address
                                   description:(NSString *)des
@@ -63,6 +65,8 @@
     [urlString appendFormat:@"&c_name=%@", name];
     [urlString appendFormat:@"&c_stime=%@", sDateString];
     [urlString appendFormat:@"&c_etime=%@", eDateString];
+    [urlString appendFormat:@"&c_remindType=%ld",(long)remindType];
+    [urlString appendFormat:@"&c_remindTime=%ld",(long)remindTime];
     [urlString appendFormat:@"&c_allday=%@", isAllday?@"1":@"0"];
     if (address && address.length > 0)
         [urlString appendFormat:@"&c_address=%@", address];
