@@ -65,9 +65,17 @@
         self.address = [aDic objectForKey:@"address"];
         self.isPrivate = ![[aDic objectForKey:@"private"] boolValue];
         self.isBusy = [[aDic objectForKey:@"isBusy"] boolValue];
+        self.createTime = [aDic objectForKey:@"create_time"];
         if (![aDic objectForKey:@"private"]) {
             self.isPrivate = 0;
         }
+        
+        self.remindType = [[aDic objectForKey:@"RemindType"] integerValue];
+        self.remindTime = [[aDic objectForKey:@"RemindTime"] integerValue];
+        self.catID = [aDic objectForKey:@"CatID"];
+        self.catName = [aDic objectForKey:@"CatName"];
+        self.displayOrder = [aDic objectForKey:@"displayOrder"];
+        self.color = [[aDic objectForKey:@"color"] integerValue];
         
         self.isRecur = [[aDic objectForKey:@"is_recur"] boolValue];
         if (self.isRecur) {
@@ -106,7 +114,8 @@
                 }
             }
         }
-
+       
+        
         self.members = memebers;
         self.eventMails = emailMembers;
         
@@ -414,6 +423,7 @@
     copyObject.address = [self.address copy];
     copyObject.startDateString = [self.startDateString copy];
     copyObject.endDateString = [self.endDateString copy];
+    copyObject.createTime = [self.createTime copy];
     copyObject.des = [self.des copy];
     copyObject.isAllday = self.isAllday;
     copyObject.isPrivate = self.isPrivate;
@@ -426,6 +436,12 @@
     copyObject.recurCount = self.recurCount;
     copyObject.untilDateString = [self.untilDateString copy];
     copyObject.weekDay = [self.weekDay copy];
+    copyObject.catID = [self.catID copy];
+    copyObject.catName = [self.catName copy];
+    copyObject.displayOrder = [self.displayOrder copy];
+    copyObject.color = self.color;
+    copyObject.remindType = self.remindType;
+    copyObject.remindTime = self.remindTime;
     return copyObject;
 }
 @end

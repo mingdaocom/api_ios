@@ -39,6 +39,7 @@
                                 endDateString:(NSString *)eDateString
                                    remindType:(NSInteger)remindType
                                    remindTime:(NSInteger)remindTime
+                                   categoryID:(NSString *)categoryID
                                      isAllDay:(BOOL)isAllday
                                       address:(NSString *)address
                                   description:(NSString *)des
@@ -71,6 +72,9 @@
                                      name:(NSString *)name
                           startDateString:(NSString *)sDateString
                             endDateString:(NSString *)eDateString
+                               remindType:(NSInteger)remindType
+                               remindTime:(NSInteger)remindTime
+                               categoryID:(NSString *)categoryID
                                  isAllDay:(BOOL)isAllday
                                   address:(NSString *)address
                               description:(NSString *)des
@@ -142,5 +146,12 @@
 - (MDURLConnection *)acceptEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)rejectEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
 
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 获取当前登陆用户日程分类
+
+ handler - 处理MDEvent
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)loadCurrentUserEventCategory:(MDAPINSArrayHandler)handler;
 
 @end

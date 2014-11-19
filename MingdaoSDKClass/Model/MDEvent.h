@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSString *endDateString;
 @property (assign, nonatomic) NSInteger remindType;
 @property (assign, nonatomic) NSInteger remindTime;
+@property (strong, nonatomic) NSString *createTime;
 
 @property (strong, nonatomic) NSString *des;
 @property (assign, nonatomic) BOOL isAllday;
@@ -36,6 +37,9 @@
 @property (assign, nonatomic) int frequency, interval, recurCount;
 @property (strong, nonatomic) NSString *untilDateString, *weekDay;
 
+@property (strong, nonatomic) NSString *catID, *catName, *displayOrder;
+@property (assign, nonatomic) NSInteger color;
+
 @property (readonly ,nonatomic) BOOL isInOneDay;
 @property (readonly, nonatomic) NSArray *memberIDs;
 @property (readonly, nonatomic) NSArray *memberEmails;
@@ -46,6 +50,7 @@
 @property (readonly, nonatomic) NSArray *accetpedEmails, *rejectedEmails, *penddingEmails;
 @property (readonly, nonatomic) NSString *repeatDetail;
 @property (readonly, nonatomic) NSArray *selectedWeekdays;
+
 
 - (MDEvent *)initWithDictionary:(NSDictionary *)aDic;
 - (NSString *)escapedDuration;
