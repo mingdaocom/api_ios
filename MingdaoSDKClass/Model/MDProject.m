@@ -61,6 +61,8 @@
         if ([[aDic objectForKey:@"charge_user"] isKindOfClass:[NSDictionary class]]) {
             self.charger = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"charge_user"]];
         }
+        
+        // TODO: STAGES
     }
     return self;
 }
@@ -91,6 +93,7 @@
     
     copyObject.creatorID = [self.creatorID copy];
     copyObject.charger = [self.charger copy];
+    copyObject.stages = [self.stages copy];
     
     return copyObject;
 }

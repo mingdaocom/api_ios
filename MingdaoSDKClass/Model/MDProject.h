@@ -32,6 +32,7 @@
 @property (strong, nonatomic) NSString *creatorID;
 @property (strong, nonatomic) MDUser *charger;
 
+@property (strong, nonatomic) NSArray *stages;
 @property (readonly, nonatomic) BOOL isCompleted;
 - (MDTaskFolder *)initWithDictionary:(NSDictionary *)aDic;
 @end
