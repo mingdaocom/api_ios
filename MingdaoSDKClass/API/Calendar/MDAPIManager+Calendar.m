@@ -45,6 +45,7 @@
                                 endDateString:(NSString *)eDateString
                                    remindType:(NSInteger)remindType
                                    remindTime:(NSInteger)remindTime
+                                   categoryID:(NSString *)categoryID
                                      isAllDay:(BOOL)isAllday
                                       address:(NSString *)address
                                   description:(NSString *)des
@@ -67,6 +68,7 @@
     [urlString appendFormat:@"&c_etime=%@", eDateString];
     [urlString appendFormat:@"&c_remindType=%ld",(long)remindType];
     [urlString appendFormat:@"&c_remindTime=%ld",(long)remindTime];
+    [urlString appendFormat:@"&c_categoryID=%@",categoryID];
     [urlString appendFormat:@"&c_allday=%@", isAllday?@"1":@"0"];
     if (address && address.length > 0)
         [urlString appendFormat:@"&c_address=%@", address];
@@ -122,6 +124,9 @@
                                      name:(NSString *)name
                           startDateString:(NSString *)sDateString
                             endDateString:(NSString *)eDateString
+                               remindType:(NSInteger)remindType
+                               remindTime:(NSInteger)remindTime
+                               categoryID:(NSString *)categoryID
                                  isAllDay:(BOOL)isAllday
                                   address:(NSString *)address
                               description:(NSString *)des
@@ -141,6 +146,9 @@
     [urlString appendFormat:@"&c_name=%@", name];
     [urlString appendFormat:@"&c_stime=%@", sDateString];
     [urlString appendFormat:@"&c_etime=%@", eDateString];
+    [urlString appendFormat:@"&c_remindType=%ld",(long)remindType];
+    [urlString appendFormat:@"&c_remindTime=%ld",(long)remindTime];
+    [urlString appendFormat:@"&c_categoryID=%@",categoryID];
     [urlString appendFormat:@"&c_allday=%@", isAllday?@"1":@"0"];
     if (address && address.length > 0)
         [urlString appendFormat:@"&c_address=%@", address];
@@ -521,5 +529,45 @@
     }];
     return connection;
 }
+
+- (MDURLConnection *)loadCurrentUserEventCategory:(MDAPINSArrayHandler)handler
+{
+    NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/getUserAllCalCategories?u_key=%@&format=json"
+                        , self.serverAddress
+                        , self.accessToken];
+    
+    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            return;
+        }
+        
+        NSMutableArray *returnEvents = [NSMutableArray array];
+        for (NSDictionary *aDic in [dic objectForKey:@"categorys"]) {
+            if (![aDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDEvent *aEvent = [[MDEvent alloc] initWithDictionary:aDic];
+            [returnEvents addObject:aEvent];
+        }
+        
+        handler(returnEvents, error);
+    }];
+    return connection;
+
+
+}
+
 
 @end
