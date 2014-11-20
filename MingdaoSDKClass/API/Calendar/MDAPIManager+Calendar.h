@@ -154,4 +154,12 @@
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loadCurrentUserEventCategory:(MDAPINSArrayHandler)handler;
 
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 根据日程开始和结束时间获取冲突日程列表
+ @parmas:
+ handler - 处理MDEvent
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)loadBusyEventsWithStartTime:(NSString *)startDateString endTime:(NSString *)endDateString handler:(MDAPINSArrayHandler)handler;
+
 @end

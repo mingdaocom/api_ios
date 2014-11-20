@@ -565,9 +565,43 @@
         handler(returnEvents, error);
     }];
     return connection;
-
-
 }
 
+- (MDURLConnection *)loadBusyEventsWithStartTime:(NSString *)startDateString endTime:(NSString *)endDateString handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/calendar/getUserBusyCalendar?u_key=%@&format=json"
+                        , self.serverAddress
+                        , self.accessToken];
+    [urlString appendFormat:@"&c_stime=%@", startDateString];
+    [urlString appendFormat:@"&c_etime=%@", endDateString];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            return;
+        }
+        
+        NSMutableArray *returnEvents = [NSMutableArray array];
+        for (NSDictionary *aDic in [dic objectForKey:@"Calendars"]) {
+            if (![aDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDEvent *aEvent = [[MDEvent alloc] initWithDictionary:aDic];
+            [returnEvents addObject:aEvent];
+        }
+        handler(returnEvents, error);
+    }];
+    return connection;
+}
 
 @end

@@ -70,10 +70,10 @@
             self.isPrivate = 0;
         }
         
-        self.remindType = [[aDic objectForKey:@"RemindType"] integerValue];
-        self.remindTime = [[aDic objectForKey:@"RemindTime"] integerValue];
-        self.catID = [aDic objectForKey:@"CatID"];
-        self.catName = [aDic objectForKey:@"CatName"];
+        self.remindType = [[aDic objectForKey:@"remindType"] integerValue];
+        self.remindTime = [[aDic objectForKey:@"remindTime"] integerValue];
+        self.catID = [aDic objectForKey:@"catID"];
+        self.catName = [aDic objectForKey:@"catName"];
         self.displayOrder = [aDic objectForKey:@"displayOrder"];
         self.color = [[aDic objectForKey:@"color"] integerValue];
         
