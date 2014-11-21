@@ -238,6 +238,10 @@
 }
 
 - (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
+                            isWorkCalendar:(NSInteger)isWorkCalendar
+                         isPrivateCalendar:(NSInteger)isPrivateCalendar
+                            isTaskCalendar:(NSInteger)isTaskCalendar
+                                 categorys:(NSArray *)categorys
                                    handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -246,7 +250,11 @@
     if (userIDs) {
         [urlString appendFormat:@"&u_ids=%@", [userIDs componentsJoinedByString:@","]];
     }
-    
+    [urlString appendFormat:@"&isWorkCalendar=%ld",(long)isWorkCalendar];
+    [urlString appendFormat:@"&isPrivateCalendar=%ld",(long)isPrivateCalendar];
+    [urlString appendFormat:@"&isTaskCalendar=%ld",(long)isTaskCalendar];
+    [urlString appendFormat:@"&categorys=%@",categorys];
+
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         if (error) {
@@ -277,6 +285,10 @@
 
 - (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
                                     forDay:(NSString *)yearMonthAndDay
+                            isWorkCalendar:(NSInteger)isWorkCalendar
+                         isPrivateCalendar:(NSInteger)isPrivateCalendar
+                            isTaskCalendar:(NSInteger)isTaskCalendar
+                                 categorys:(NSArray *)categorys
                                    handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -286,7 +298,11 @@
     if (userIDs) {
         [urlString appendFormat:@"&u_ids=%@", [userIDs componentsJoinedByString:@","]];
     }
-    
+    [urlString appendFormat:@"&isWorkCalendar=%ld",(long)isWorkCalendar];
+    [urlString appendFormat:@"&isPrivateCalendar=%ld",(long)isPrivateCalendar];
+    [urlString appendFormat:@"&isTaskCalendar=%ld",(long)isTaskCalendar];
+    [urlString appendFormat:@"&categorys=%@",categorys];
+
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         if (error) {
@@ -320,6 +336,10 @@
 - (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
                                    forWeek:(NSInteger)week
                                       year:(NSInteger)year
+                            isWorkCalendar:(NSInteger)isWorkCalendar
+                         isPrivateCalendar:(NSInteger)isPrivateCalendar
+                            isTaskCalendar:(NSInteger)isTaskCalendar
+                                 categorys:(NSArray *)categorys
                                    handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -330,7 +350,11 @@
     if (userIDs) {
         [urlString appendFormat:@"&u_ids=%@", [userIDs componentsJoinedByString:@","]];
     }
-    
+    [urlString appendFormat:@"&isWorkCalendar=%ld",(long)isWorkCalendar];
+    [urlString appendFormat:@"&isPrivateCalendar=%ld",(long)isPrivateCalendar];
+    [urlString appendFormat:@"&isTaskCalendar=%ld",(long)isTaskCalendar];
+    [urlString appendFormat:@"&categorys=%@",categorys];
+
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         if (error) {
@@ -363,6 +387,10 @@
 
 - (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
                                   forMonth:(NSString *)yearAndMonth
+                            isWorkCalendar:(NSInteger)isWorkCalendar
+                         isPrivateCalendar:(NSInteger)isPrivateCalendar
+                            isTaskCalendar:(NSInteger)isTaskCalendar
+                                 categorys:(NSArray *)categorys
                                    handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -372,7 +400,11 @@
     if (userIDs) {
         [urlString appendFormat:@"&u_ids=%@", [userIDs componentsJoinedByString:@","]];
     }
-    
+    [urlString appendFormat:@"&isWorkCalendar=%ld",(long)isWorkCalendar];
+    [urlString appendFormat:@"&isPrivateCalendar=%ld",(long)isPrivateCalendar];
+    [urlString appendFormat:@"&isTaskCalendar=%ld",(long)isTaskCalendar];
+    [urlString appendFormat:@"&categorys=%@",categorys];
+
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         if (error) {
@@ -603,5 +635,39 @@
     }];
     return connection;
 }
+
+- (MDURLConnection *)modifyEventMemberRemindWithObjectID:(NSString *)objectID remindType:(NSInteger)remindType remindTime:(NSInteger)remindTime handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/calendar/upCalRemind?u_key=%@&format=json"
+                                  , self.serverAddress
+                                  , self.accessToken];
+    [urlString appendFormat:@"&c_id=%@",objectID];
+    [urlString appendFormat:@"&c_remindType=%ld", (long)remindType];
+    [urlString appendFormat:@"&c_remindTime=%ld", (long)remindTime];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            return;
+        }
+        
+        NSString *urlstring = [[dic objectForKey:@"count"] mutableCopy];
+        handler(urlstring, nil);
+    }];
+    return connection;
+
+    
+}
+
 
 @end

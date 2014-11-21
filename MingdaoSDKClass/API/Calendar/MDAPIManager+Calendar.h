@@ -110,16 +110,32 @@
  handler - 处理包含多个MDEvent的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
+                            isWorkCalendar:(NSInteger)isWorkCalendar
+                         isPrivateCalendar:(NSInteger)isPrivateCalendar
+                            isTaskCalendar:(NSInteger)isTaskCalendar
+                            categorys:(NSArray *)categorys
                                    handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
                                     forDay:(NSString *)yearMonthAndDay
+                            isWorkCalendar:(NSInteger)isWorkCalendar
+                         isPrivateCalendar:(NSInteger)isPrivateCalendar
+                            isTaskCalendar:(NSInteger)isTaskCalendar
+                                 categorys:(NSArray *)categorys
                                    handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
                                    forWeek:(NSInteger)week
                                       year:(NSInteger)year
+                            isWorkCalendar:(NSInteger)isWorkCalendar
+                         isPrivateCalendar:(NSInteger)isPrivateCalendar
+                            isTaskCalendar:(NSInteger)isTaskCalendar
+                                 categorys:(NSArray *)categorys
                                    handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
                                   forMonth:(NSString *)yearAndMonth
+                            isWorkCalendar:(NSInteger)isWorkCalendar
+                         isPrivateCalendar:(NSInteger)isPrivateCalendar
+                            isTaskCalendar:(NSInteger)isTaskCalendar
+                                 categorys:(NSArray *)categorys
                                    handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadUnconfirmedEventsWithPageSize:(int)pageSize
                                                   page:(int)page
@@ -161,5 +177,13 @@
  handler - 处理MDEvent
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loadBusyEventsWithStartTime:(NSString *)startDateString endTime:(NSString *)endDateString handler:(MDAPINSArrayHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 根据日程ID修改日程成员受到提醒的时间
+ @parmas:
+ handler - 处理结果
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)modifyEventMemberRemindWithObjectID:(NSString *)objectID remindType:(NSInteger)remindType remindTime:(NSInteger)remindTime handler:(MDAPINSStringHandler)handler;
 
 @end
