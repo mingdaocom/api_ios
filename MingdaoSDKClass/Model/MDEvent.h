@@ -39,6 +39,12 @@
 
 @property (strong, nonatomic) NSString *catID, *catName, *displayOrder;
 @property (assign, nonatomic) NSInteger color;
+@property (assign, nonatomic) NSInteger isWorkCalendar;
+@property (assign, nonatomic) NSInteger isPrivateCalendar;
+@property (assign, nonatomic) NSInteger isTaskCalendar;
+@property (strong, nonatomic) NSArray *categorys;
+@property (assign, nonatomic) NSInteger isTask;
+
 
 @property (readonly ,nonatomic) BOOL isInOneDay;
 @property (readonly, nonatomic) NSArray *memberIDs;

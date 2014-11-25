@@ -70,12 +70,13 @@
             self.isPrivate = 0;
         }
         
-        self.remindType = [[aDic objectForKey:@"RemindType"] integerValue];
-        self.remindTime = [[aDic objectForKey:@"RemindTime"] integerValue];
-        self.catID = [aDic objectForKey:@"CatID"];
-        self.catName = [aDic objectForKey:@"CatName"];
+        self.remindType = [[aDic objectForKey:@"remindType"] integerValue];
+        self.remindTime = [[aDic objectForKey:@"remindTime"] integerValue];
+        self.catID = [aDic objectForKey:@"catID"];
+        self.catName = [aDic objectForKey:@"catName"];
         self.displayOrder = [aDic objectForKey:@"displayOrder"];
         self.color = [[aDic objectForKey:@"color"] integerValue];
+        self.isTask  = [[aDic objectForKey:@"isTask"] integerValue];
         
         self.isRecur = [[aDic objectForKey:@"is_recur"] boolValue];
         if (self.isRecur) {
@@ -442,6 +443,7 @@
     copyObject.color = self.color;
     copyObject.remindType = self.remindType;
     copyObject.remindTime = self.remindTime;
+    copyObject.isTask = self.isTask;
     return copyObject;
 }
 @end
