@@ -37,8 +37,8 @@
 @property (assign, nonatomic) int frequency, interval, recurCount;
 @property (strong, nonatomic) NSString *untilDateString, *weekDay;
 
-@property (strong, nonatomic) NSString *catID, *catName, *displayOrder;
-@property (assign, nonatomic) NSInteger color;
+@property (strong, nonatomic) NSString *catID, *catName;
+@property (assign, nonatomic) NSInteger color, displayOrder;
 @property (assign, nonatomic) NSInteger isWorkCalendar;
 @property (assign, nonatomic) NSInteger isPrivateCalendar;
 @property (assign, nonatomic) NSInteger isTaskCalendar;
