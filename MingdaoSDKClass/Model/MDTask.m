@@ -45,6 +45,10 @@
             self.folder = [[MDTaskFolder alloc] initWithDictionary:[aDic objectForKey:@"folder"]];
         }
         
+        if ([aDic[@"stage"] isKindOfClass:[NSDictionary class]]) {
+            self.stage = [[MDTaskFolderStage alloc] initWithDictionary:aDic[@"stage"]];
+        }
+        
         NSMutableArray *memebers = [NSMutableArray array];
         NSDictionary *userDics = [aDic objectForKey:@"members"];
         for (NSDictionary *userDic in userDics) {

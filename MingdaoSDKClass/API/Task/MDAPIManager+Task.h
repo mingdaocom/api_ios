@@ -220,4 +220,11 @@
 - (MDURLConnection *)deleteFolderWithFolderID:(NSString *)folderID
                                 isDeleteTasks:(BOOL)isDeleteTasks
                                       handler:(MDAPIBoolHandler)handler;
+
+- (MDURLConnection *)saveFolderStagesWithFolderID:(NSString *)folderID
+                                        newStages:(NSArray *)stages
+                                          handler:(MDAPIBoolHandler)handler;
+
+- (MDURLConnection *)loadFolderStagesWithFolderID:(NSString *)folderID
+                                          handler:(MDAPINSArrayHandler)handler;
 @end

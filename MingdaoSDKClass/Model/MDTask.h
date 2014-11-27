@@ -41,7 +41,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MDUser.h"
-#import "MDProject.h"
+#import "MDTaskFolder.h"
 
 @interface MDTask : NSObject
 @property (strong, nonatomic) NSString *objectID;
@@ -68,6 +68,7 @@
 @property (assign, nonatomic) int colorType;
 
 @property (strong, nonatomic) MDTaskFolder *folder;
+@property (strong, nonatomic) MDTaskFolderStage *stage;
 
 @property (readonly, nonatomic) BOOL finished, expired;
 
