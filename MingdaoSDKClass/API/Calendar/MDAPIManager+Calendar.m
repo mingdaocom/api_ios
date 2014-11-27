@@ -241,7 +241,7 @@
                             isWorkCalendar:(NSInteger)isWorkCalendar
                          isPrivateCalendar:(NSInteger)isPrivateCalendar
                             isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSArray *)categorys
+                                 categorys:(NSString *)categorys
                                    handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -288,7 +288,7 @@
                             isWorkCalendar:(NSInteger)isWorkCalendar
                          isPrivateCalendar:(NSInteger)isPrivateCalendar
                             isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSArray *)categorys
+                                 categorys:(NSString *)categorys
                                    handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -339,7 +339,7 @@
                             isWorkCalendar:(NSInteger)isWorkCalendar
                          isPrivateCalendar:(NSInteger)isPrivateCalendar
                             isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSArray *)categorys
+                                 categorys:(NSString *)categorys
                                    handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -390,7 +390,7 @@
                             isWorkCalendar:(NSInteger)isWorkCalendar
                          isPrivateCalendar:(NSInteger)isPrivateCalendar
                             isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSArray *)categorys
+                                 categorys:(NSString *)categorys
                                    handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];

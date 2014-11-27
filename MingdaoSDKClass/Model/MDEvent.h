@@ -42,7 +42,7 @@
 @property (assign, nonatomic) NSInteger isWorkCalendar;
 @property (assign, nonatomic) NSInteger isPrivateCalendar;
 @property (assign, nonatomic) NSInteger isTaskCalendar;
-@property (strong, nonatomic) NSArray *categorys;
+@property (strong, nonatomic) NSString *categorys;
 @property (assign, nonatomic) NSInteger isTask;
 
 

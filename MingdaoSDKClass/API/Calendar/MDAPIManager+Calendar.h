@@ -113,14 +113,14 @@
                             isWorkCalendar:(NSInteger)isWorkCalendar
                          isPrivateCalendar:(NSInteger)isPrivateCalendar
                             isTaskCalendar:(NSInteger)isTaskCalendar
-                            categorys:(NSArray *)categorys
+                            categorys:(NSString *)categorys
                                    handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
                                     forDay:(NSString *)yearMonthAndDay
                             isWorkCalendar:(NSInteger)isWorkCalendar
                          isPrivateCalendar:(NSInteger)isPrivateCalendar
                             isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSArray *)categorys
+                                 categorys:(NSString *)categorys
                                    handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
                                    forWeek:(NSInteger)week
@@ -128,14 +128,14 @@
                             isWorkCalendar:(NSInteger)isWorkCalendar
                          isPrivateCalendar:(NSInteger)isPrivateCalendar
                             isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSArray *)categorys
+                                 categorys:(NSString *)categorys
                                    handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
                                   forMonth:(NSString *)yearAndMonth
                             isWorkCalendar:(NSInteger)isWorkCalendar
                          isPrivateCalendar:(NSInteger)isPrivateCalendar
                             isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSArray *)categorys
+                                 categorys:(NSString *)categorys
                                    handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadUnconfirmedEventsWithPageSize:(int)pageSize
                                                   page:(int)page
