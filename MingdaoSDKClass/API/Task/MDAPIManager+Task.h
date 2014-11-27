@@ -204,6 +204,7 @@
                              chargeUserID:(NSString *)userID
                                 colorType:(int)colorType
                                  deadLine:(NSString *)deadLine
+                                   stages:(NSArray *)stages
                                   handler:(MDAPINSStringHandler)handler;
 
 - (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
@@ -221,10 +222,30 @@
                                 isDeleteTasks:(BOOL)isDeleteTasks
                                       handler:(MDAPIBoolHandler)handler;
 
-- (MDURLConnection *)saveFolderStagesWithFolderID:(NSString *)folderID
-                                        newStages:(NSArray *)stages
-                                          handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveStagesSeqWithFolderID:(NSString *)folderID
+                                     newStages:(NSArray *)stages
+                                       handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)loadFolderStagesWithFolderID:(NSString *)folderID
                                           handler:(MDAPINSArrayHandler)handler;
+
+
+- (MDURLConnection *)addStageToFolder:(NSString *)folderID
+                            stageName:(NSString *)stageName
+                              handler:(MDAPINSStringHandler)handler;
+
+- (MDURLConnection *)saveStageNameWithFolderID:(NSString *)folderID
+                                       stageID:(NSString *)stageID
+                                  newStageName:(NSString *)stageName
+                                       handler:(MDAPIBoolHandler)handler;
+
+- (MDURLConnection *)validateStageNeedToTransferTasksBeforeDelete:(NSString *)folderID
+                                                          stageID:(NSString *)stageID
+                                                          handler:(MDAPIBoolHandler)handler;
+
+- (MDURLConnection *)deleteStageWithFolderID:(NSString *)folderID
+                                     stageID:(NSString *)stageID
+                                toNewStageID:(NSString *)newStageID
+                                     handler:(MDAPIBoolHandler)handler;
+
 @end

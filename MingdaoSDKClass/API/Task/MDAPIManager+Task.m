@@ -989,6 +989,7 @@
                              chargeUserID:(NSString *)userID
                                 colorType:(int)colorType
                                  deadLine:(NSString *)deadLine
+                                   stages:(NSArray *)stages
                                   handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -1021,6 +1022,30 @@
         [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"deadline"]dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", deadLine] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    if (stages.count > 0) {
+        NSMutableArray *stageDics = [NSMutableArray array];
+        for (MDTaskFolderStage *stage in stages) {
+            if ([stage isKindOfClass:[MDTaskFolderStage class]]) {
+                if (stage.objectName) {
+                    NSMutableDictionary *stageDic = [NSMutableDictionary dictionary];
+                    [stageDic setObject:stage.objectName forKey:@"stageName"];
+                    [stageDics addObject:stageDic];
+                }
+            }
+        }
+        
+        NSString *jsonString = nil;
+        NSError *error = nil;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:stageDics
+                                                           options:0
+                                                             error:&error];
+        
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"newstages"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", jsonString] dataUsingEncoding:NSUTF8StringEncoding]];
     }
 
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -1252,12 +1277,12 @@
     return connection;
 }
 
-- (MDURLConnection *)saveFolderStagesWithFolderID:(NSString *)folderID
-                                        newStages:(NSArray *)stages
-                                          handler:(MDAPIBoolHandler)handler
+- (MDURLConnection *)saveStagesSeqWithFolderID:(NSString *)folderID
+                                     newStages:(NSArray *)stages
+                                       handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/editFoldarStage.aspx?format=json"];
+    [urlString appendString:@"/task/editFolderStage.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_folderID=%@", folderID];
     
@@ -1269,13 +1294,9 @@
         NSMutableArray *stageDics = [NSMutableArray array];
         for (MDTaskFolderStage *stage in stages) {
             if ([stage isKindOfClass:[MDTaskFolderStage class]]) {
-                if (stage.objectName) {
+                if (stage.objectID) {
                     NSMutableDictionary *stageDic = [NSMutableDictionary dictionary];
-                    [stageDic setObject:stage.objectName forKey:@"stageName"];
-                    if (stage.objectID) {
-                        [stageDic setObject:stage.objectID forKey:@"stageID"];
-                    }
-                    [stageDic setObject:[NSNumber numberWithInt:stage.number] forKey:@"stageNo"];
+                    [stageDic setObject:stage.objectID forKey:@"stageID"];
                     [stageDics addObject:stageDic];
                 }
             }
@@ -1286,12 +1307,7 @@
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:stageDics
                                                            options:0
                                                              error:&error];
-        if (!jsonData || error != nil) {
-            handler(NO, error);
-        } else {
-            jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        }
-        //[urlString appendFormat:@"&newstages=%@", jsonString];
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         NSString *boundary = @"----------MINGDAO";
         NSString *boundaryPrefix = @"--";
         
@@ -1321,7 +1337,6 @@
 - (MDURLConnection *)loadFolderStagesWithFolderID:(NSString *)folderID
                                           handler:(MDAPINSArrayHandler)handler
 {
-    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/getFolderStage.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@",self.accessToken];
@@ -1355,6 +1370,126 @@
         handler(messages, error);
     }];
     
+    return connection;
+}
+
+- (MDURLConnection *)addStageToFolder:(NSString *)folderID
+                            stageName:(NSString *)stageName
+                              handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/addFolderStage.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@",self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    [urlString appendFormat:@"&stageName=%@", stageName];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSString *postID = [dic objectForKey:@"stageID"];
+        handler(postID, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)saveStageNameWithFolderID:(NSString *)folderID
+                                       stageID:(NSString *)stageID
+                                  newStageName:(NSString *)stageName
+                                       handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/editStageName.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    [urlString appendFormat:@"&t_sid=%@", stageID];
+    [urlString appendFormat:@"&stageName=%@", stageName];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)validateStageNeedToTransferTasksBeforeDelete:(NSString *)folderID
+                                                          stageID:(NSString *)stageID
+                                                          handler:(MDAPIBoolHandler)handler
+{
+    
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/validateStageHasTask.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    [urlString appendFormat:@"&t_sid=%@", stageID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        
+        if (error) {
+            handler(NO, error);
+            return ;
+        }
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        if ([[dic objectForKey:@"isHas"] boolValue]) {
+            handler(YES, error);
+        } else {
+            handler(NO, error);
+        }
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)deleteStageWithFolderID:(NSString *)folderID
+                                     stageID:(NSString *)stageID
+                                toNewStageID:(NSString *)newStageID
+                                     handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/delMoveFolderStage.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    [urlString appendFormat:@"&t_sid=%@", stageID];
+    if (newStageID) {
+        [urlString appendFormat:@"&newSid=%@", newStageID];
+    }
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
     return connection;
 }
 @end
