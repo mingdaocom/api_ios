@@ -241,7 +241,7 @@
                             isWorkCalendar:(NSInteger)isWorkCalendar
                          isPrivateCalendar:(NSInteger)isPrivateCalendar
                             isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSArray *)categorys
+                                 categorys:(NSString *)categorys
                                    handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -288,7 +288,7 @@
                             isWorkCalendar:(NSInteger)isWorkCalendar
                          isPrivateCalendar:(NSInteger)isPrivateCalendar
                             isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSArray *)categorys
+                                 categorys:(NSString *)categorys
                                    handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -339,7 +339,7 @@
                             isWorkCalendar:(NSInteger)isWorkCalendar
                          isPrivateCalendar:(NSInteger)isPrivateCalendar
                             isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSArray *)categorys
+                                 categorys:(NSString *)categorys
                                    handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -390,7 +390,7 @@
                             isWorkCalendar:(NSInteger)isWorkCalendar
                          isPrivateCalendar:(NSInteger)isPrivateCalendar
                             isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSArray *)categorys
+                                 categorys:(NSString *)categorys
                                    handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -597,6 +597,97 @@
         handler(returnEvents, error);
     }];
     return connection;
+}
+
+- (MDURLConnection *)addCurrentUserEventCategoryWithCatName:(NSString *)catName color:(NSInteger)color handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/calendar/addUserCalCategory?u_key=%@&format=json"
+                                  , self.serverAddress
+                                  , self.accessToken];
+    [urlString appendFormat:@"&catName=%@", catName];
+    [urlString appendFormat:@"&color=%ld", (long)color];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            return;
+        }
+        
+        NSString *urlstring = [[dic objectForKey:@"count"] mutableCopy];
+        handler(urlstring, nil);
+    }];
+    return connection;
+    
+
+}
+
+- (MDURLConnection *)editCurrentUserEventCategoryWithCatName:(NSString *)catName catID:(NSString *)catID color:(NSInteger)color handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/calendar/upUserCalCategory?u_key=%@&format=json"
+                                  , self.serverAddress
+                                  , self.accessToken];
+    [urlString appendFormat:@"&catName=%@", catName];
+    [urlString appendFormat:@"&catID=%@",catID];
+    [urlString appendFormat:@"&color=%ld", (long)color];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            return;
+        }
+        NSString *urlstring = [[dic objectForKey:@"count"] mutableCopy];
+        handler(urlstring, nil);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)deleteCurrentUserEventCategoryWithCatID:(NSString *)catID handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/calendar/delUserCalCategory?u_key=%@&format=json"
+                                  , self.serverAddress
+                                  , self.accessToken];
+    [urlString appendFormat:@"&catID=%@",catID];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
+            return;
+        }
+        NSString *urlstring = [[dic objectForKey:@"count"] mutableCopy];
+        handler(urlstring, nil);
+    }];
+    return connection;
+
 }
 
 - (MDURLConnection *)loadBusyEventsWithStartTime:(NSString *)startDateString endTime:(NSString *)endDateString handler:(MDAPINSArrayHandler)handler

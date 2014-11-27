@@ -74,7 +74,7 @@
         self.remindTime = [[aDic objectForKey:@"remindTime"] integerValue];
         self.catID = [aDic objectForKey:@"catID"];
         self.catName = [aDic objectForKey:@"catName"];
-        self.displayOrder = [aDic objectForKey:@"displayOrder"];
+        self.displayOrder = [[aDic objectForKey:@"displayOrder"] integerValue];
         self.color = [[aDic objectForKey:@"color"] integerValue];
         self.isTask  = [[aDic objectForKey:@"isTask"] integerValue];
         
@@ -439,7 +439,7 @@
     copyObject.weekDay = [self.weekDay copy];
     copyObject.catID = [self.catID copy];
     copyObject.catName = [self.catName copy];
-    copyObject.displayOrder = [self.displayOrder copy];
+    copyObject.displayOrder = self.displayOrder;
     copyObject.color = self.color;
     copyObject.remindType = self.remindType;
     copyObject.remindTime = self.remindTime;
