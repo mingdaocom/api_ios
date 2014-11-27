@@ -146,6 +146,7 @@
                                    chargerID:(NSString *)chargerID
                                    memberIDs:(NSArray *)memberIDs
                                    projectID:(NSString *)projectID
+                                      stageID:(NSString *)stageID
                                     parentID:(NSString *)parentID
                                    colorType:(int)colorType
                                      handler:(MDAPINSStringHandler)handler;
@@ -162,6 +163,7 @@
 
 - (MDURLConnection *)loadTasksWithKeywords:(NSString *)keywords
                                   folderID:(NSString *)folderID
+                                   stageID:(NSString *)stageID
                                 filterType:(int)filterType
                                  colorType:(int)colorType
                                   finished:(BOOL)finished

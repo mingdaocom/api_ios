@@ -706,6 +706,7 @@
 #pragma mark -
 - (MDURLConnection *)loadTasksWithKeywords:(NSString *)keywords
                                   folderID:(NSString *)folderID
+                                   stageID:(NSString *)stageID
                                 filterType:(int)filterType
                                  colorType:(int)colorType
                                   finished:(BOOL)finished
@@ -723,6 +724,9 @@
     }
     if (folderID) {
         [urlString appendFormat:@"&t_folderID=%@", folderID];
+        if (stageID) {
+            [urlString appendFormat:@"&t_sid=%@", stageID];
+        }
     }
     if (filterType == 2 || filterType == 3) {
         [urlString appendFormat:@"&filter_type=%d", filterType];
@@ -1086,6 +1090,7 @@
                                    chargerID:(NSString *)chargerID
                                    memberIDs:(NSArray *)memberIDs
                                    projectID:(NSString *)projectID
+                                      stageID:(NSString *)stageID
                                     parentID:(NSString *)parentID
                                    colorType:(int)colorType
                                 handler:(MDAPINSStringHandler)handler
@@ -1132,6 +1137,12 @@
         [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"t_folderID"]dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", projectID] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        if (stageID.length > 0) {
+            [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"t_sid"]dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", stageID] dataUsingEncoding:NSUTF8StringEncoding]];
+        }
     }
     
     if (parentID && parentID.length > 0) {
