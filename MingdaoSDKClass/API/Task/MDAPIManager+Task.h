@@ -229,7 +229,7 @@
                                        handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)loadFolderStagesWithFolderID:(NSString *)folderID
-                                          handler:(MDAPINSArrayHandler)handler;
+                                          handler:(MDAPIObjectHandler)handler;
 
 
 - (MDURLConnection *)addStageToFolder:(NSString *)folderID

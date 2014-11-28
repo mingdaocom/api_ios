@@ -1346,7 +1346,7 @@
 }
 
 - (MDURLConnection *)loadFolderStagesWithFolderID:(NSString *)folderID
-                                          handler:(MDAPINSArrayHandler)handler
+                                          handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/getFolderStage.aspx?format=json"];
@@ -1370,6 +1370,7 @@
             return;
         }
         
+        NSMutableDictionary *mDic = [dic mutableCopy];
         NSArray *msgDics = [dic objectForKey:@"stages"];
         NSMutableArray *messages = [NSMutableArray array];
         for (NSDictionary *msgDic in msgDics) {
@@ -1378,7 +1379,8 @@
             MDTaskFolderStage *message = [[MDTaskFolderStage alloc] initWithDictionary:msgDic];
             [messages addObject:message];
         }
-        handler(messages, error);
+        [mDic setObject:messages forKey:@"stages"];
+        handler(mDic, error);
     }];
     
     return connection;
