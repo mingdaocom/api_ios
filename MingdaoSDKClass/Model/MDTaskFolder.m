@@ -30,7 +30,15 @@
             self.charger = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"charge_user"]];
         }
         
-        // TODO: STAGES
+        if ([[aDic objectForKey:@"stages"] isKindOfClass:[NSArray class]]) {
+            NSArray *stageDics = aDic[@"stages"];
+            NSMutableArray *stages = [NSMutableArray array];
+            for (NSDictionary *sDic in stageDics) {
+                MDTaskFolderStage *stage = [[MDTaskFolderStage alloc] initWithDictionary:sDic];
+                [stages addObject:stage];
+            }
+            self.stages = stages;
+        }
     }
     return self;
 }

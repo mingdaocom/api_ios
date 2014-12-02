@@ -112,10 +112,12 @@
     copyObject.charger = [self.charger copy];
 
     copyObject.folder = [self.folder copy];
+    copyObject.stage = [self.stage copy];
     
     copyObject.members = [self.members copy];
     
     copyObject.colorType = self.colorType;
+    copyObject.isNoticed = self.isNoticed;
     
     if (self.subTasks.count > 0) {
         copyObject.subTasks = [self.subTasks copy];

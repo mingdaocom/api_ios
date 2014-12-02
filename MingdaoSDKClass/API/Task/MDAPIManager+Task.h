@@ -250,4 +250,7 @@
                                 toNewStageID:(NSString *)newStageID
                                      handler:(MDAPIBoolHandler)handler;
 
+- (MDURLConnection *)saveTaskToStage:(NSString *)taskID
+                             stageID:(NSString *)stageID
+                             handler:(MDAPIBoolHandler)handler;
 @end
