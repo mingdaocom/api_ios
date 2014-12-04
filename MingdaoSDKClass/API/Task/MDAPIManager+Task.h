@@ -166,6 +166,7 @@
                                    stageID:(NSString *)stageID
                                 filterType:(int)filterType
                                  colorType:(int)colorType
+                                 orderType:(int)orderType
                                   finished:(BOOL)finished
                                categortIDs:(NSString *)categortIDs
                                     userID:(NSString *)userID

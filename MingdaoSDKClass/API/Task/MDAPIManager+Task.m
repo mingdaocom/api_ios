@@ -709,6 +709,7 @@
                                    stageID:(NSString *)stageID
                                 filterType:(int)filterType
                                  colorType:(int)colorType
+                                 orderType:(int)orderType
                                   finished:(BOOL)finished
                                categortIDs:(NSString *)categortIDs
                                     userID:(NSString *)userID
@@ -745,6 +746,9 @@
         [urlString appendFormat:@"&pagesize=%d", pageSize];
     if (pageIndex > 0)
         [urlString appendFormat:@"&pageindex=%d", pageIndex];
+    if (orderType >= 1 && orderType <= 2) {
+        [urlString appendFormat:@"&order_type=%d", orderType];
+    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
