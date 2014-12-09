@@ -63,8 +63,6 @@ static MDAPIManager *sharedManager = nil;
 
 - (void)handleBoolData:(NSData *)data error:(NSError *)error URLString:(NSString *)urlString handler:(MDAPIBoolHandler)handler
 {
-    handler(NO, [MDErrorParser errorWithMDDic:nil URLString:urlString]);
-    return;
     if (error) {
         handler(NO, error);
         return ;
