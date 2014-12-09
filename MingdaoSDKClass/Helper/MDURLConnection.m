@@ -70,13 +70,6 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    if (self.statusCode != 200) {
-        NSError *error = [MDErrorParser errorWithHttpErrorCode:self.statusCode URLString:self.req.URL.absoluteString];
-        self.handler(self.appendingData, error);
-        self.handler = nil;
-        return;
-    }
-    
     self.handler(self.appendingData, nil);
     self.handler = nil;
 }

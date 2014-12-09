@@ -47,7 +47,7 @@ static MDAPIManager *sharedManager = nil;
 {
     if (!_serverAddress) {
         _serverAddress = MDAPIDefaultServerAddress;
-        //_serverAddress = @"http://172.16.23.247/MD.api.Web2";
+        //_serverAddress = @"http://172.16.23.247/MD.api.Web";
         return _serverAddress;
     }
     return _serverAddress;
@@ -63,6 +63,8 @@ static MDAPIManager *sharedManager = nil;
 
 - (void)handleBoolData:(NSData *)data error:(NSError *)error URLString:(NSString *)urlString handler:(MDAPIBoolHandler)handler
 {
+    handler(NO, [MDErrorParser errorWithMDDic:nil URLString:urlString]);
+    return;
     if (error) {
         handler(NO, error);
         return ;
