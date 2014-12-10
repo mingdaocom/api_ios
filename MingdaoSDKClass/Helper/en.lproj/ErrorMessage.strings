@@ -1,0 +1,57 @@
+/* 
+  ErrorMessage.strings
+  MingdaoV2
+
+  Created by Wee Tom on 14/12/9.
+  Copyright (c) 2014年 Mingdao. All rights reserved.
+*/
+"0" = "Sorry, server error, call us for help, 400-021-6464";
+// TODO:Translate
+//100 Bad Request:請求數據不合法
+"10001" = "Parameters missing";
+"10002" = "Invalid parameters";
+"10003" = "Error Operation";
+"10004" = "No right to access this group";
+"10005" = "Internal error";
+"10006" = "No right to access this task";
+"10007" = "Data requested does not exit";
+"10008" = "No right to access this event";
+"10009" = "No right to modify this task";
+"10010" = "No right to modify this event";
+"10011" = "No right to modify this group";
+"10012" = "No right to modify this post";
+"10013" = "No right to access this post";
+"10014" = "No right to access this group";
+"10015" = "No right to modify this group";
+"10016" = "No right to modify this project";
+"10017" = "Task exist";
+"10018" = "Manager Only";
+"10019" = "Broadcaster Only";
+"10020" = "Manager Only";
+"10021" = "Your Api level need upgrade";
+//101 User Unauthorized: 用戶身份驗證限制
+"10101" = "Login Failed";
+"10102" = "Login Failed";
+"10103" = "Account does not exist";
+"10104" = "Password Error";
+"10105" = "";
+"10106" = "External users disabled";
+"10107" = "Your account has been locked for 20 minutes due to too many times failed login";
+"10108" = "Login Expired";
+"10109" = "Your account is disabled, contact your network manager for help";
+//102 Bad Invite:邀請失敗
+"10201" = "Invalid Email";
+"10202" = "Email registered";
+"10203" = "妳邀請的郵箱非本網絡域名郵箱，只有高級模式的網絡管理員才能邀請該類型郵箱用戶";
+"10204" = "Failed to invite";
+"10205" = "您邀請的郵箱為本網絡域名郵箱，無法通過外聯群組進行邀請";
+"10206" = "抱歉，您無權邀請外聯群組用戶";
+//103 Bad Invite:請求限制
+"10301" = "All latest";
+"10302" = "抱歉，僅限企業應用可以使用";
+"10303" = "抱歉，該功能僅限高級模式網絡的管理員可以使用";
+"10304" = "抱歉，該功能需要升級到高級模式";
+"10305" = "抱歉，該功能僅限應用創建者可已使用";
+//104 App Unauthorized: 擴展應用用戶身份驗證限制
+"10401" = "該應該未安裝";
+"10402" = "擴展應用沒權限直接通過用戶賬號獲取令牌";
