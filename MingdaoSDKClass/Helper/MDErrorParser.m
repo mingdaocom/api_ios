@@ -21,11 +21,15 @@
 {
     if (dic) {
         NSString *errorCode = [dic objectForKey:@"error_code"];
+        NSString *errorMessage = [dic objectForKey:@"error_msg"];
         if (!errorCode) {
             return nil;
         }
         NSInteger code = [errorCode integerValue];
         NSString *localizedDescription = [self errorStringWithErrorCode:[dic objectForKey:@"error_code"]];
+        if (!localizedDescription) {
+            localizedDescription = errorMessage;
+        }
         
         NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
         [userInfo setObject:localizedDescription forKey:NSLocalizedDescriptionKey];
