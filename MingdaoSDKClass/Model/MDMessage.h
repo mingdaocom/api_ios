@@ -20,7 +20,10 @@ typedef enum {
 typedef enum {
     MDMessageEventTypePrivate = 0,
     MDMessageEventTypeCalendarConfirm = 1,
-    MDMessageEventTypeTaskApply = 2
+    MDMessageEventTypeTaskApply = 2,
+    MDMessageEventTypeGroupApply = 3,
+    MDMessageEventTypeCalendarPush = 4,
+    MDMessageEventTypeTaskOperate = 5
 } MDMessageEventType;
 
 @interface MDMessageDetail : NSObject

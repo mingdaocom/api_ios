@@ -586,15 +586,15 @@
             return;
         }
         
-        NSMutableArray *returnEvents = [NSMutableArray array];
+        NSMutableArray *returnCalendars = [NSMutableArray array];
         for (NSDictionary *aDic in [dic objectForKey:@"categorys"]) {
             if (![aDic isKindOfClass:[NSDictionary class]])
                 continue;
-            MDEvent *aEvent = [[MDEvent alloc] initWithDictionary:aDic];
-            [returnEvents addObject:aEvent];
+            MDCalendarCategory *calendar = [[MDCalendarCategory alloc]initWithDictionary:aDic];
+            [returnCalendars addObject:calendar];
         }
         
-        handler(returnEvents, error);
+        handler(returnCalendars, error);
     }];
     return connection;
 }

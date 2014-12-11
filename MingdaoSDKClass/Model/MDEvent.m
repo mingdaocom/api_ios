@@ -72,11 +72,10 @@
         
         self.remindType = [[aDic objectForKey:@"remindType"] integerValue];
         self.remindTime = [[aDic objectForKey:@"remindTime"] integerValue];
-        self.catID = [aDic objectForKey:@"catID"];
-        self.catName = [aDic objectForKey:@"catName"];
-        self.displayOrder = [[aDic objectForKey:@"displayOrder"] integerValue];
-        self.color = [[aDic objectForKey:@"color"] integerValue];
         self.isTask  = [[aDic objectForKey:@"isTask"] integerValue];
+        
+        MDCalendarCategory *calendarCategory = [[MDCalendarCategory alloc]initWithDictionary:aDic];
+        self.calendarCategory = calendarCategory;
         
         self.isRecur = [[aDic objectForKey:@"is_recur"] boolValue];
         if (self.isRecur) {
@@ -437,10 +436,7 @@
     copyObject.recurCount = self.recurCount;
     copyObject.untilDateString = [self.untilDateString copy];
     copyObject.weekDay = [self.weekDay copy];
-    copyObject.catID = [self.catID copy];
-    copyObject.catName = [self.catName copy];
-    copyObject.displayOrder = self.displayOrder;
-    copyObject.color = self.color;
+    copyObject.calendarCategory = [self.calendarCategory copy];
     copyObject.remindType = self.remindType;
     copyObject.remindTime = self.remindTime;
     copyObject.isTask = self.isTask;

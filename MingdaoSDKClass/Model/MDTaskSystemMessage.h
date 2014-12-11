@@ -11,7 +11,8 @@
 typedef enum {
     MDTaskEventTypePrivate = 0,
     MDTaskEventTypeEventApply = 1,
-    MDTaskEventTypeTaskApply = 2
+    MDTaskEventTypeTaskApply = 2,
+    MDTaskEventTypeTaskOperate = 5,
 }MDTaskEventType;
 
 @interface MDTaskSystemMessage : NSObject

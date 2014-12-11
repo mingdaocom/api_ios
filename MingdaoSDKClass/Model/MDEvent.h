@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MDUser.h"
+#import "MDCalendarCategory.h"
 
 @interface MDEventEmail : NSObject
 @property (strong, nonatomic) NSString *memail;
@@ -37,14 +38,10 @@
 @property (assign, nonatomic) int frequency, interval, recurCount;
 @property (strong, nonatomic) NSString *untilDateString, *weekDay;
 
-@property (strong, nonatomic) NSString *catID, *catName;
-@property (assign, nonatomic) NSInteger color, displayOrder;
+@property (strong, nonatomic) MDCalendarCategory *calendarCategory;
 @property (assign, nonatomic) NSInteger isWorkCalendar;
 @property (assign, nonatomic) NSInteger isPrivateCalendar;
-@property (assign, nonatomic) NSInteger isTaskCalendar;
-@property (strong, nonatomic) NSString *categorys;
 @property (assign, nonatomic) NSInteger isTask;
-
 
 @property (readonly ,nonatomic) BOOL isInOneDay;
 @property (readonly, nonatomic) NSArray *memberIDs;

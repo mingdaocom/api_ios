@@ -23,7 +23,7 @@
             self.isMessageUnread = [[msgDic objectForKey:@"status"] boolValue];
             self.eventType = [[msgDic objectForKey:@"event_type"] intValue];
             
-            if (self.eventType == MDTaskEventTypeTaskApply) {
+            if (self.eventType == MDTaskEventTypeTaskApply || self.eventType == MDTaskEventTypeTaskOperate) {
                 self.eventContent = [msgDic objectForKey:@"event_content"];
                 NSArray *arr = [NSArray arrayWithArray:[self.eventContent componentsSeparatedByString:@"|"]];
                 self.taskID = arr[0];
