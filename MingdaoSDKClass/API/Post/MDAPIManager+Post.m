@@ -1010,6 +1010,84 @@
     return connection;
 }
 
+- (MDURLConnection *)createFilePostWithText:(NSString *)text
+                                   fileName:(NSString *)fileName
+                                       file:(NSData *)fileData
+                                   groupIDs:(NSArray *)groupIDs
+                                  shareType:(NSInteger)shareType
+                                   toCenter:(BOOL)toCenter
+                                    handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/post/upload?format=json"];
+    [urlString appendFormat:@"&access_token=%@&f_type=document", self.accessToken];
+    if (groupIDs && groupIDs.count > 0)
+        [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
+    [urlString appendFormat:@"&s_type=%ld", (long)shareType];
+    if (toCenter) {
+        [urlString appendFormat:@"&is_center=%d", 1];
+    }
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    NSString *boundary = @"----------MINGDAO";
+    NSString *boundaryPrefix = @"--";
+    
+    NSMutableData *postBody = [NSMutableData data];
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"p_msg"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", [self localEncode:text]] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    NSMutableString *parameter = [NSMutableString string];
+    [parameter appendString:@"p_doc"];
+    
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\";\r\n\r\n", parameter, fileName] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:fileData];
+    [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
+    [req setValue:contentType forHTTPHeaderField:@"Content-type"];
+    
+    
+    [req setHTTPBody:postBody];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSString *postID = [dic objectForKey:@"post"];
+        handler(postID, error);
+    }];
+    connection.timeOut = 60*60;
+    
+    return connection;
+}
+
 - (MDURLConnection *)createRepostWithText:(NSString *)text
                                    images:(NSArray *)images
                                    postID:(NSString *)postID

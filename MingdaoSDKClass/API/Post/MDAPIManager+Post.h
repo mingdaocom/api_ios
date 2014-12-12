@@ -146,6 +146,13 @@
                                    shareType:(NSInteger)shareType
                                     toCenter:(BOOL)toCenter
                                      handler:(MDAPINSStringHandler)handler;
+- (MDURLConnection *)createFilePostWithText:(NSString *)text
+                                   fileName:(NSString *)fileName
+                                       file:(NSData *)fileData
+                                   groupIDs:(NSArray *)groupIDs
+                                  shareType:(NSInteger)shareType
+                                   toCenter:(BOOL)toCenter
+                                    handler:(MDAPINSStringHandler)handler;
 - (MDURLConnection *)createRepostWithText:(NSString *)text
                                    images:(NSArray *)images
                                    postID:(NSString *)postID
