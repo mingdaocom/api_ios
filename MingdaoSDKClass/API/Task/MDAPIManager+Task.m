@@ -250,7 +250,7 @@
         [req setHTTPBody:postBody];
     }
     else {
-        NSString *str = [NSString stringWithFormat:@"r_msg=%@", message];
+        NSString *str = [NSString stringWithFormat:@"r_msg=%@", [self localEncode:message]];
         NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
         [req setHTTPBody:data];
     }
