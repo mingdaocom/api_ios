@@ -25,8 +25,8 @@
         if (!errorCode) {
             return nil;
         }
-        NSInteger code = [errorCode integerValue];
-        NSString *localizedDescription = [self errorStringWithErrorCode:[dic objectForKey:@"error_code"]];
+        int code = [errorCode intValue];
+        NSString *localizedDescription = [self errorStringWithErrorCode:[NSString stringWithFormat:@"%d", code]];
         if (!localizedDescription) {
             localizedDescription = errorMessage;
         }
