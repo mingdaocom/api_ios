@@ -58,6 +58,9 @@
         
         self.taskMemberType = [[aDic objectForKey:@"member_type"] intValue] + 1;
         self.taskApplyStatus = [[aDic objectForKey:@"apply_status"] intValue];
+        
+        self.joinDateString = aDic[@"create_time"];
+        self.workSite = aDic[@"work_site"];
     }
     return self;
 }
@@ -112,6 +115,9 @@
     
     copyObject.taskMemberType = self.taskMemberType;
     copyObject.taskApplyStatus = self.taskApplyStatus;
+
+    copyObject.joinDateString = [self.joinDateString copy];
+    copyObject.workSite = [self.workSite copy];
     return copyObject;
 }
 

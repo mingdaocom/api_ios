@@ -100,6 +100,8 @@ typedef int MDUserTaskApplyStatus;
 @property (strong, nonatomic) NSArray *jobs;
 @property (strong, nonatomic) NSArray *educations;
 @property (strong, nonatomic) MDCompany *project;
+@property (strong, nonatomic) NSString *joinDateString;
+@property (strong, nonatomic) NSString *workSite;
 
 @property (assign, nonatomic) MDUserTaskMemberType taskMemberType;
 @property (assign, nonatomic) MDUserTaskApplyStatus taskApplyStatus;
