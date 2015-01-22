@@ -169,9 +169,9 @@
  handler - 处理MDEvent
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loadCurrentUserEventCategory:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)addCurrentUserEventCategoryWithCatName:(NSString *)catName color:(NSInteger)color handler:(MDAPINSStringHandler)handler;
-- (MDURLConnection *)editCurrentUserEventCategoryWithCatName:(NSString *)catName catID:(NSString *)catID color:(NSInteger)color handler:(MDAPINSStringHandler)handler;
-- (MDURLConnection *)deleteCurrentUserEventCategoryWithCatID:(NSString *)catID handler:(MDAPINSStringHandler)handler;
+- (MDURLConnection *)addCurrentUserEventCategoryWithCatName:(NSString *)catName color:(NSInteger)color handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)editCurrentUserEventCategoryWithCatName:(NSString *)catName catID:(NSString *)catID color:(NSInteger)color handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)deleteCurrentUserEventCategoryWithCatID:(NSString *)catID handler:(MDAPIBoolHandler)handler;
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  根据日程开始和结束时间获取冲突日程列表
