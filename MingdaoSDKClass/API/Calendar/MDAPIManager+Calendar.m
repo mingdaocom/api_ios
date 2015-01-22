@@ -603,7 +603,7 @@
     return connection;
 }
 
-- (MDURLConnection *)addCurrentUserEventCategoryWithCatName:(NSString *)catName color:(NSInteger)color handler:(MDAPINSStringHandler)handler
+- (MDURLConnection *)addCurrentUserEventCategoryWithCatName:(NSString *)catName color:(NSInteger)color handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/calendar/addUserCalCategory?u_key=%@&format=json"
                                   , self.serverAddress
@@ -612,30 +612,15 @@
     [urlString appendFormat:@"&color=%ld", (long)color];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
-            return;
-        }
-        
-        NSString *urlstring = [[dic objectForKey:@"count"] mutableCopy];
-        handler(urlstring, nil);
+        [self handleBoolData:data error:error URLString:urlStr handler:^(BOOL success, NSError *error) {
+        }];
     }];
     return connection;
     
 
 }
 
-- (MDURLConnection *)editCurrentUserEventCategoryWithCatName:(NSString *)catName catID:(NSString *)catID color:(NSInteger)color handler:(MDAPINSStringHandler)handler
+- (MDURLConnection *)editCurrentUserEventCategoryWithCatName:(NSString *)catName catID:(NSString *)catID color:(NSInteger)color handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/calendar/upUserCalCategory?u_key=%@&format=json"
                                   , self.serverAddress
@@ -645,27 +630,14 @@
     [urlString appendFormat:@"&color=%ld", (long)color];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
-            return;
-        }
-        NSString *urlstring = [[dic objectForKey:@"count"] mutableCopy];
-        handler(urlstring, nil);
+        [self handleBoolData:data error:error URLString:urlStr handler:^(BOOL success, NSError *error) {
+            
+        }];
     }];
     return connection;
 }
 
-- (MDURLConnection *)deleteCurrentUserEventCategoryWithCatID:(NSString *)catID handler:(MDAPINSStringHandler)handler
+- (MDURLConnection *)deleteCurrentUserEventCategoryWithCatID:(NSString *)catID handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/calendar/delUserCalCategory?u_key=%@&format=json"
                                   , self.serverAddress
@@ -673,22 +645,9 @@
     [urlString appendFormat:@"&catID=%@",catID];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlStr]);
-            return;
-        }
-        NSString *urlstring = [[dic objectForKey:@"count"] mutableCopy];
-        handler(urlstring, nil);
+        [self handleBoolData:data error:error URLString:urlStr handler:^(BOOL success, NSError *error) {
+            
+        }];
     }];
     return connection;
 
