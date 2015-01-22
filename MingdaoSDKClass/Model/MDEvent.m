@@ -74,7 +74,7 @@
         self.remindTime = [[aDic objectForKey:@"remindTime"] integerValue];
         self.isTask  = [[aDic objectForKey:@"isTask"] integerValue];
         
-        MDCalendarCategory *calendarCategory = [[MDCalendarCategory alloc]initWithDictionary:aDic];
+        MDCalendarCategory *calendarCategory = [[MDCalendarCategory alloc] initWithDictionary:aDic];
         self.calendarCategory = calendarCategory;
         
         self.isRecur = [[aDic objectForKey:@"is_recur"] boolValue];

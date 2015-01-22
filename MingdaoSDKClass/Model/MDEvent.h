@@ -39,8 +39,6 @@
 @property (strong, nonatomic) NSString *untilDateString, *weekDay;
 
 @property (strong, nonatomic) MDCalendarCategory *calendarCategory;
-@property (assign, nonatomic) NSInteger isWorkCalendar;
-@property (assign, nonatomic) NSInteger isPrivateCalendar;
 @property (assign, nonatomic) NSInteger isTask;
 
 @property (readonly ,nonatomic) BOOL isInOneDay;
