@@ -612,8 +612,7 @@
     [urlString appendFormat:@"&color=%ld", (long)color];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlStr handler:^(BOOL success, NSError *error) {
-        }];
+        [self handleBoolData:data error:error URLString:urlStr handler:handler];
     }];
     return connection;
     
@@ -630,9 +629,7 @@
     [urlString appendFormat:@"&color=%ld", (long)color];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlStr handler:^(BOOL success, NSError *error) {
-            
-        }];
+        [self handleBoolData:data error:error URLString:urlStr handler:handler];
     }];
     return connection;
 }
@@ -645,9 +642,7 @@
     [urlString appendFormat:@"&catID=%@",catID];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlStr handler:^(BOOL success, NSError *error) {
-            
-        }];
+        [self handleBoolData:data error:error URLString:urlStr handler:handler];
     }];
     return connection;
 
