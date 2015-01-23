@@ -17,4 +17,6 @@
 - (MDURLConnection *)loadCompanyIsDeploymentSetInfo:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)setCompanyName:(NSString *)name handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)addDeparments:(NSArray *)names handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)loadGeoInfo:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadIndustryInfo:(MDAPINSArrayHandler)handler;
 @end
