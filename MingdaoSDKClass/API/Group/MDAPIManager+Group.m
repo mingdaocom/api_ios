@@ -507,4 +507,43 @@
     return connection;
 }
 
+- (MDURLConnection *)loadNetworkGroupsWithpageSize:(NSInteger)pageSize pageIndex:(NSInteger)pageIndex status:(NSInteger)status type:(NSInteger)type handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/mdprivate/group/getGroups?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&pageSize=%ld",(long)pageSize];
+    [urlString appendFormat:@"&pageIndex=%ld",(long)pageIndex];
+    [urlString appendFormat:@"&status=%ld",(long)status];
+    [urlString appendFormat:@"type=%ld",(long)type];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSArray *groupDics = [dic objectForKey:@"groups"];
+        NSMutableArray *groups = [NSMutableArray array];
+        for (NSDictionary *groupDic in groupDics) {
+            if (![groupDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDGroup *group = [[MDGroup alloc] initWithDictionary:groupDic];
+            [groups addObject:group];
+        }
+        handler(groups, error);
+    }];
+    return connection;
+
+}
+
 @end

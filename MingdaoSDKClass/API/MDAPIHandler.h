@@ -26,6 +26,7 @@
 #import "MDPostAt.h"
 #import "MDTaskFolder.h"
 #import "MDCalendarCategory.h"
+#import "MDWorkSite.h"
 
 typedef void (^MDAPIBoolHandler)(BOOL success, NSError *error);
 typedef void (^MDAPIObjectHandler)(id object, NSError *error);

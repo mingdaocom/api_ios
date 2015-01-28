@@ -22,6 +22,7 @@
         }
         self.isPublic = [[aDic objectForKey:@"is_public"] boolValue];
         self.status = [[aDic objectForKey:@"status"] intValue];
+        self.type = [[aDic objectForKey:@"type"] intValue];
         self.isJoined = [[aDic objectForKey:@"followed_status"] boolValue];
         self.userCount = [[aDic objectForKey:@"user_count"] intValue];
         self.postCount = [[aDic objectForKey:@"post_count"] intValue];
@@ -54,6 +55,7 @@
     copyObject.about = [self.about copy];
     copyObject.isPublic = self.isPublic;
     copyObject.status = self.status;
+    copyObject.type = self.type;
     copyObject.isJoined = self.isJoined;
     copyObject.isHidden = self.isHidden;
     copyObject.userCount = self.userCount;
