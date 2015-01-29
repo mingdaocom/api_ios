@@ -25,6 +25,19 @@
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
+ 获取工作地点选择限制
+ @parmas:
+ pageSize   - 加载的个数
+ pageIndex  - 索引
+ keywords   - 关键字
+ sortType   - 0 正序  1 反序
+ handler    - 处理邀请结果
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)loadWorkSiteSeletLimitWithpageSize:(NSInteger)pageSize pageIndex:(NSInteger)pageIndex keyWords:(NSString *)keyWords sortType:(NSInteger)sortType handler:(MDAPIBoolHandler)handler;
+
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
  获取工作地点或部门的用户
  @parmas:
  type       - 0:工作地点 1:部门
