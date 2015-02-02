@@ -515,7 +515,7 @@
     [urlString appendFormat:@"&pageSize=%ld",(long)pageSize];
     [urlString appendFormat:@"&pageIndex=%ld",(long)pageIndex];
     [urlString appendFormat:@"&status=%ld",(long)status];
-    [urlString appendFormat:@"type=%ld",(long)type];
+    [urlString appendFormat:@"&type=%ld",(long)type];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
         if (error) {
             handler(nil, error);

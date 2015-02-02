@@ -91,8 +91,8 @@
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&departmentName=%@",name];
     [urlString appendFormat:@"&mappingGroupID=%@",mappingGroupID];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
+    NSString* encodedString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:encodedString]] handler:^(NSData *data, NSError *error){
         [self handleBoolData:data error:error URLString:urlString handler:handler];
     }];
     return connection;
@@ -106,8 +106,9 @@
     [urlString appendFormat:@"&departmentID=%@",departmentID];
     [urlString appendFormat:@"&departmentName=%@",departmentName];
     [urlString appendFormat:@"&mappingGroupID=%@",mappingGroupID];
- 
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
+    NSString* encodedString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:encodedString]] handler:^(NSData *data, NSError *error){
         [self handleBoolData:data error:error URLString:urlString handler:handler];
     }];
     return connection;
