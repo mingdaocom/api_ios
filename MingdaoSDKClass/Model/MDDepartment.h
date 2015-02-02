@@ -13,7 +13,7 @@
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
 @property (assign, nonatomic) NSInteger membersCount;
-@property (strong, nonatomic) NSString *groupName;
+@property (strong, nonatomic) NSString *mappingGroupName;
 @property (strong, nonatomic) NSString *mappingGroupID;
 @property (strong, nonatomic) NSString *comment;
 @property (assign, nonatomic) NSInteger allCount;

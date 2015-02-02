@@ -17,7 +17,7 @@
         self.objectID = aDic[@"departmentID"];
         self.objectName = aDic[@"departmentName"];
         self.membersCount = [aDic[@"userCount"] integerValue];
-        self.groupName = aDic[@"groupName"];
+        self.mappingGroupName = aDic[@"groupName"];
         self.mappingGroupID = aDic[@"mappingGroupID"];
         self.comment = aDic[@"comment"];
         self.allCount = [aDic[@"allCount"] integerValue];
@@ -33,7 +33,7 @@
     copyObject.objectID = [self.objectID copy];
     copyObject.objectName = [self.objectName copy];
     copyObject.membersCount = self.membersCount;
-    copyObject.groupName = [self.groupName copy];
+    copyObject.mappingGroupName = [self.mappingGroupName copy];
     copyObject.mappingGroupID = [self.mappingGroupID copy];
     copyObject.comment = [self.comment copy];
     copyObject.allCount = self.allCount;

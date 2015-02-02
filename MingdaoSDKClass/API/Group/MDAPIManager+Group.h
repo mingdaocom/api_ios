@@ -138,18 +138,6 @@ typedef enum {
                       fromGroupID:(NSString *)groupID
                           handler:(MDAPIBoolHandler)handler;
 
-/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
- @usage:
- 获取所有网络群组
- @parmas:
- pageSize   - 加载的个数
- pageIndex  - 索引
- status     - -1 所有 0 已关闭 1 正常
- type       - -1 所有 0 普通  1 官方
- handler    - 处理邀请结果
- -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-
-- (MDURLConnection *)loadNetworkGroupsWithpageSize:(NSInteger)pageSize pageIndex:(NSInteger)pageIndex status:(NSInteger)status type:(NSInteger)type handler:(MDAPINSArrayHandler)handler;
 
 
 @end
