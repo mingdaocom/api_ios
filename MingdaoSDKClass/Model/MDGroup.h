@@ -43,6 +43,7 @@
 @property (assign, nonatomic) int postCount;
 @property (strong, nonatomic) MDUser *creator;
 @property (strong, nonatomic) NSArray *admins;
+@property (strong, nonatomic) NSString *createTime;
 
 - (MDGroup *)initWithDictionary:(NSDictionary *)aDic;
 @end

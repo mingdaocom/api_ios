@@ -59,7 +59,8 @@
         self.taskMemberType = [[aDic objectForKey:@"member_type"] intValue] + 1;
         self.taskApplyStatus = [[aDic objectForKey:@"apply_status"] intValue];
         
-        self.joinDateString = aDic[@"create_time"];
+        self.lastLoginDate = aDic[@"lastLoginTime"];
+        self.joinDateString = aDic[@"enterDay"];
         self.workSite = aDic[@"work_site"];
     }
     return self;
@@ -118,6 +119,7 @@
 
     copyObject.joinDateString = [self.joinDateString copy];
     copyObject.workSite = [self.workSite copy];
+    copyObject.lastLoginDate = [self.lastLoginDate copy];
     return copyObject;
 }
 

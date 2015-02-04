@@ -29,6 +29,7 @@
         self.creator = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"user"]];
         self.isHidden = [[aDic objectForKey:@"is_hidden"] boolValue];
         self.admins = [aDic objectForKey:@"admins"];
+        self.createTime = [aDic objectForKey:@"create_time"];
     }
     return self;
 }
@@ -62,6 +63,7 @@
     copyObject.postCount = self.postCount;
     copyObject.creator = [self.creator copy];
     copyObject.admins = [self.admins copy];
+    copyObject.createTime = [self.createTime copy];
     return copyObject;
 }
 @end
