@@ -62,6 +62,10 @@
         self.lastLoginDate = aDic[@"lastLoginTime"];
         self.joinDateString = aDic[@"enterDay"];
         self.workSite = aDic[@"work_site"];
+        self.operateUserName = aDic[@"operateUserName"];
+        
+        self.approveTime = aDic[@"approveTime"];
+        self.approveDate = aDic[@"approveDate"];
     }
     return self;
 }
@@ -120,6 +124,10 @@
     copyObject.joinDateString = [self.joinDateString copy];
     copyObject.workSite = [self.workSite copy];
     copyObject.lastLoginDate = [self.lastLoginDate copy];
+    copyObject.operateUserName = [self.operateUserName copy];
+    copyObject.approveDate = [self.approveDate copy];
+    copyObject.approveTime = [self.approveTime copy];
+    
     return copyObject;
 }
 

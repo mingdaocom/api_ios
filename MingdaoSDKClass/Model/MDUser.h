@@ -103,6 +103,9 @@ typedef int MDUserTaskApplyStatus;
 @property (strong, nonatomic) NSString *joinDateString;
 @property (strong, nonatomic) NSString *lastLoginDate;
 @property (strong, nonatomic) NSString *workSite;
+@property (strong, nonatomic) NSString *operateUserName;
+@property (strong, nonatomic) NSString *approveDate;
+@property (strong, nonatomic) NSString *approveTime;
 
 @property (assign, nonatomic) MDUserTaskMemberType taskMemberType;
 @property (assign, nonatomic) MDUserTaskApplyStatus taskApplyStatus;
