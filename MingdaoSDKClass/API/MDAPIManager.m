@@ -49,6 +49,7 @@ static MDAPIManager *sharedManager = nil;
         _serverAddress = MDAPIDefaultServerAddress;
         //_serverAddress = @"http://172.16.23.247/MD.api.Web";
         //_serverAddress = @"https://api2.mingdao.com";
+        //_serverAddress = @"https://api3.mingdao.com";
 
         return _serverAddress;
     }
@@ -176,7 +177,7 @@ static MDAPIManager *sharedManager = nil;
     {
         [urlString appendFormat:@"&p_signature=%@", projectID];
     } else {
-        NSLog(@"[error]ProjectID can not be nil![error]");
+//        NSLog(@"[error]ProjectID can not be nil![error]");
     }
     
     NSString *urlStr = urlString;
