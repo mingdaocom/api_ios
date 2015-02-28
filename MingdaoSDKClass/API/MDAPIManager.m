@@ -176,7 +176,7 @@ static MDAPIManager *sharedManager = nil;
     {
         [urlString appendFormat:@"&p_signature=%@", projectID];
     } else {
-        NSLog(@"[error]ProjectID can not be nil![error]");
+//        NSLog(@"[error]ProjectID can not be nil![error]");
     }
     
     NSString *urlStr = urlString;

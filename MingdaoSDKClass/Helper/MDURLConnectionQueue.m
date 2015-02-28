@@ -45,7 +45,7 @@
         req.timeoutInterval = self.timeOut;
     } else
         req.timeoutInterval = 60;
-    NSLog(@"%@", [req.URL absoluteString]);
+//    NSLog(@"%@", [req.URL absoluteString]);
     
     self.currentAppendingData = [NSMutableData data];
     self.currentConnection = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
