@@ -405,7 +405,7 @@
     [urlString appendFormat:@"&isWorkCalendar=%ld", (long)isWorkCalendar];
     [urlString appendFormat:@"&isPrivateCalendar=%ld", (long)isPrivateCalendar];
     [urlString appendFormat:@"&isTaskCalendar=%ld", (long)isTaskCalendar];
-    if (categorys) {
+    if (categorys.length > 0) {
         [urlString appendFormat:@"&categorys=%@",categorys];
     }
 
