@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "MDAPIHandler.h"
 #import "MDErrorParser.h"
 
@@ -77,4 +78,6 @@ extern NSString * const MDAPIManagerNewTokenSetNotification;
 
 - (MDURLConnection *)refreshTokenWithRefreshToken:(NSString *)refreshToken
                                           handler:(MDAPINSDictionaryHandler)handler;
+
+- (void)postWithParameters:(NSArray *)parameters withRequest:(NSMutableURLRequest *)req;
 @end

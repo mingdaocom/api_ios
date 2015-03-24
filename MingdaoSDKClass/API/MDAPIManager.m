@@ -50,7 +50,7 @@ static MDAPIManager *sharedManager = nil;
         //_serverAddress = @"http://172.16.23.247/MD.api.Web";
         //_serverAddress = @"https://api2.mingdao.com";
         //_serverAddress = @"https://api3.mingdao.com";
-
+        //_serverAddress = @"https://devapi.mingdao.com";
         return _serverAddress;
     }
     return _serverAddress;
@@ -264,6 +264,54 @@ static MDAPIManager *sharedManager = nil;
         handler(dic, error);
     }];
     return connection;
+}
+
+- (void)postWithParameters:(NSArray *)parameters withRequest:(NSMutableURLRequest *)req
+{
+    [req setHTTPMethod:@"POST"];
+
+    NSString *boundary = @"----------MINGDAO";
+    NSString *boundaryPrefix = @"--";
+    
+    NSMutableData *postBody = [NSMutableData data];
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    for (NSDictionary *dic in parameters) {
+        id object = dic[@"object"];
+        NSString *key = dic[@"key"];
+        NSString *fileName = dic[@"fileName"];
+
+        if ([object isKindOfClass:[NSString class]]) {
+            NSString *text = object;
+            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", [self localEncode:text]] dataUsingEncoding:NSUTF8StringEncoding]];
+        } else if ([object isKindOfClass:[UIImage class]]) {
+            UIImage *image = object;
+            
+            [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\";\r\n\r\n", key, fileName] dataUsingEncoding:NSUTF8StringEncoding]];
+            NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+            [postBody appendData:imageData];
+            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        } else if ([object isKindOfClass:[NSData class]]) {
+            [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\";\r\n\r\n", key, fileName] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:object];
+            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+    }
+    
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
+    [req setValue:contentType forHTTPHeaderField:@"Content-type"];
+    [req setHTTPBody:postBody];
 }
 
 - (NSString *)localEncode:(NSString *)string

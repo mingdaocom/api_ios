@@ -210,50 +210,23 @@
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
-    [req setHTTPMethod:@"POST"];
-    
+    NSMutableArray *parameters = [NSMutableArray array];
+    if (message) {
+        [parameters addObject:@{@"key":@"r_msg", @"object":message}];
+    }
     if (images.count > 0) {
-        NSString *boundary = @"----------MINGDAO";
-        NSString *boundaryPrefix = @"--";
-        
-        NSMutableData *postBody = [NSMutableData data];
-        
-        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"r_msg"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", message] dataUsingEncoding:NSUTF8StringEncoding]];
-        
         for (int i = 0; i < images.count; i++) {
-            NSString *filename = [NSString stringWithFormat:@"photo%d.jpg", i];
+            UIImage *image = images[i];
+            NSString *fileName = [NSString stringWithFormat:@"photo%d.jpg", i+1];
             NSMutableString *parameter = [NSMutableString string];
             [parameter appendString:@"r_img"];
             if (i > 0) {
                 [parameter appendFormat:@"%d", i];
             }
-            
-            [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\";\r\n\r\n", parameter, filename] dataUsingEncoding:NSUTF8StringEncoding]];
-            NSData *imageData = UIImageJPEGRepresentation(images[i], 0.5);
-            [postBody appendData:imageData];
-            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+            [parameters addObject:@{@"key":parameter, @"object":image, @"fileName":fileName}];
         }
-        
-        [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        
-        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
-        [req setValue:contentType forHTTPHeaderField:@"Content-type"];
-        
-        [req setHTTPBody:postBody];
     }
-    else {
-        NSString *str = [NSString stringWithFormat:@"r_msg=%@", [self localEncode:message]];
-        NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-        [req setHTTPBody:data];
-    }
+    [self postWithParameters:parameters withRequest:req];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         if (error) {
