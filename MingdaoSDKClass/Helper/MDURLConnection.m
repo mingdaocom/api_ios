@@ -77,7 +77,7 @@
 - (void)start
 {
     if (self.connection) {
-//        NSLog(@"%@", [self.req.URL absoluteString]);
+        NSLog(@"%@", [self.req.URL absoluteString]);
         self.appendingData = [NSMutableData data];
         [self.connection start];
     }
