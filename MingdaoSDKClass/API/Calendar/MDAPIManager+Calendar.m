@@ -357,8 +357,9 @@
     [urlString appendFormat:@"&isWorkCalendar=%ld",(long)isWorkCalendar];
     [urlString appendFormat:@"&isPrivateCalendar=%ld",(long)isPrivateCalendar];
     [urlString appendFormat:@"&isTaskCalendar=%ld",(long)isTaskCalendar];
-    [urlString appendFormat:@"&categorys=%@",categorys];
-
+    if (categorys) {
+        [urlString appendFormat:@"&categorys=%@",categorys];
+    }
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
         if (error) {
