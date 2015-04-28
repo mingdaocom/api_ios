@@ -149,6 +149,7 @@
                                       stageID:(NSString *)stageID
                                     parentID:(NSString *)parentID
                                    colorType:(int)colorType
+                                       postID:(NSString *)postID
                                      handler:(MDAPINSStringHandler)handler;
 
 - (MDURLConnection *)loadFoldersWithKeywords:(NSString *)keywords
