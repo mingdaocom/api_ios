@@ -10,6 +10,8 @@
 #import "MDUser.h"
 #import "MDPost.h"
 
+@class MDTask;
+
 @interface MDTaskReplymentDetail : NSObject
 @property (strong, nonatomic) NSString *thumbnail_pic, *original_pic, *original_filename;
 @property (strong, nonatomic) NSString *original_file;
@@ -28,6 +30,7 @@
 
 @property (strong, nonatomic) NSArray *images, *files;
 
+@property (strong, nonatomic) MDTask *task;
 @property (strong, nonatomic) MDUser *creator;
 @property (strong, nonatomic) MDUser *replyTo;
 @property (assign, nonatomic) MDAttachmentFileType fileType;

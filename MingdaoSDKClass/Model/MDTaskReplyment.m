@@ -7,6 +7,7 @@
 //
 
 #import "MDTaskReplyment.h"
+#import "MDTask.h"
 
 @implementation MDTaskReplymentDetail
 - (MDTaskReplymentDetail *)initWithDictionary:(NSDictionary *)aDic
