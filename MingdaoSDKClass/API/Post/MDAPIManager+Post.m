@@ -861,7 +861,7 @@
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
     
-    NSString *str = [NSString stringWithFormat:@"p_msg=%@&l_title=%@&l_uri=%@", [self localEncode:text], title, link];
+    NSString *str = [NSString stringWithFormat:@"p_msg=%@&l_title=%@&l_uri=%@", [self localEncode:text], [self localEncode:title], [self localEncode:link]];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [req setHTTPBody:data];
     
