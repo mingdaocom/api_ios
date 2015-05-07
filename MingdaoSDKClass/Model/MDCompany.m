@@ -18,6 +18,7 @@
         self.nameEn = [aDic objectForKey:@"nameEn"];
         self.logo = [aDic objectForKey:@"logo"];
         self.type = [[aDic objectForKey:@"license_type"] intValue];
+        self.expireDays = [aDic objectForKey:@"expireDays"];
     }
     return self;
 }
@@ -31,6 +32,7 @@
     copyObject.nameEn = [self.nameEn copy];
     copyObject.logo = [self.logo copy];
     copyObject.type = self.type;
+    copyObject.expireDays = [self.expireDays copy];
     return copyObject;
 }
 @end
