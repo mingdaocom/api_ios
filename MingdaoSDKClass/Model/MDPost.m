@@ -71,7 +71,7 @@
         self.videoTitle = [dic objectForKey:@"video_fileName"];
         
         self.fileType = [[dic objectForKey:@"file_type"] intValue];
-        self.fileSize = [[dic objectForKey:@"filesize"] longLongValue];
+        self.fileSize = [[dic objectForKey:@"filesize"] unsignedLongLongValue];
         self.isAnonymous = [[dic objectForKey:@"Anonymous"] boolValue];
         self.maxChoiceCount = [[dic objectForKey:@"AvailableNumber"] intValue];
         self.deadLineString = [dic objectForKey:@"Deadline"];

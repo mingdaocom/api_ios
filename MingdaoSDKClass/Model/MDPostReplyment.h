@@ -20,6 +20,7 @@ typedef int MDPostReplymentType;
 @property (strong, nonatomic) NSString *middlePic, *originalPic, *fileName, *thumbnailPic, *originalDoc;
 @property (assign, nonatomic) MDAttachmentFileType fileType;
 @property (assign, nonatomic) BOOL isDownloadAble;
+@property (assign, nonatomic) long long fileSize;
 
 @property (strong, nonatomic) NSString *replyID;
 - (MDPostReplymentDetail *)initWithDictionary:(NSDictionary *)aDic;

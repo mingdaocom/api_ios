@@ -21,6 +21,8 @@
         
         self.original_file = aDic[@"original_file"];
         self.allow_down = [aDic[@"allow_down"] boolValue];
+        
+        self.fileSize = [aDic[@"filesize"] unsignedLongLongValue];
     }
     return self;
 }
@@ -36,6 +38,7 @@
     copyObject.original_filename = [self.original_filename copy];
     copyObject.allow_down = self.allow_down;
     copyObject.replyID = [self.replyID copy];
+    copyObject.fileSize = self.fileSize;
     return copyObject;
 }
 @end

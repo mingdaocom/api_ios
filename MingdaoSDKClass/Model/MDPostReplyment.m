@@ -21,6 +21,7 @@
         self.fileName = aDic[@"original_filename"];
         self.isDownloadAble = [aDic[@"allow_down"] boolValue];
         self.fileType = [aDic[@"file_type"] intValue];
+        self.fileSize = [aDic[@"filesize"] unsignedLongLongValue];
     }
     return self;
 }
@@ -37,6 +38,7 @@
     copyObject.isDownloadAble = self.isDownloadAble;
     copyObject.fileType = self.fileType;
     copyObject.replyID = [self.replyID copy];
+    copyObject.fileSize = self.fileSize;
     return copyObject;
 }
 @end

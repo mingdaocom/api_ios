@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSString *thumbnail_pic, *original_pic, *original_filename;
 @property (strong, nonatomic) NSString *original_file;
 @property (assign, nonatomic) BOOL allow_down;
+@property (assign, nonatomic) long long fileSize;
 @property (assign, nonatomic) MDAttachmentFileType file_type;
 
 @property (strong, nonatomic) NSString *replyID;
