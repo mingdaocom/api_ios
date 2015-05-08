@@ -19,5 +19,6 @@ typedef enum {
 @property (strong, nonatomic) NSString *objectName;
 @property (strong, nonatomic) NSString *nameEn, *logo;
 @property (assign, nonatomic) MDCompanyType type;
+@property (strong, nonatomic) NSString *expireDays;
 - (MDCompany *)initWithDictionary:(NSDictionary *)aDic;
 @end
