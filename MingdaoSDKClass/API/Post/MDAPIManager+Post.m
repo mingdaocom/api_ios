@@ -1038,7 +1038,7 @@
         NSString *postID = [dic objectForKey:@"post"];
         handler(postID, error);
     }];
-    connection.timeOut = 60*60;
+    connection.timeOut = 24*60*60;
     
     return connection;
 }
