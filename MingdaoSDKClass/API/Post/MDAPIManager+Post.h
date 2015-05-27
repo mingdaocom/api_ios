@@ -50,8 +50,8 @@
                                      handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
                                       postType:(MDPostType)type
-                                     pageindex:(NSInteger)pageindex
-                                      pagesize:(NSInteger)size
+                                     pageindex:(int)pageindex
+                                      pagesize:(int)size
                                        handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadMyPostsWithKeywords:(NSString *)keywords
                                     postType:(MDPostType)type
