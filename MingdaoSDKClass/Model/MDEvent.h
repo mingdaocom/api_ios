@@ -23,7 +23,7 @@
 @property (strong, nonatomic) NSString *address;
 @property (strong, nonatomic) NSString *startDateString;
 @property (strong, nonatomic) NSString *endDateString;
-@property (assign, nonatomic) NSInteger remindType;
+@property (assign, nonatomic) int remindType;
 @property (assign, nonatomic) NSInteger remindTime;
 @property (strong, nonatomic) NSString *createTime;
 

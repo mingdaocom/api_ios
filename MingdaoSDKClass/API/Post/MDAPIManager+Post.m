@@ -255,8 +255,8 @@
 
 - (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
                                       postType:(MDPostType)type
-                                     pageindex:(NSInteger)pageindex
-                                      pagesize:(NSInteger)size
+                                     pageindex:(int)pageindex
+                                      pagesize:(int)size
                                        handler:(MDAPINSArrayHandler)handler
 {
     
