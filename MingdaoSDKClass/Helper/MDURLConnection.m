@@ -46,7 +46,7 @@ NSString *MDURLConnectionIPErrorOccurred = @"MDURLConnectionIPErrorOccurred";
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    if (error.code == -1003) {
+    if (error.code == NSURLErrorCannotFindHost) {
         [[NSNotificationCenter defaultCenter] postNotificationName:MDURLConnectionIPErrorOccurred object:connection userInfo:@{@"error":error}];
     }
     self.handler(nil, error);
