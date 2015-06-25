@@ -270,13 +270,13 @@ static MDAPIManager *sharedManager = nil;
 {
     [req setHTTPMethod:@"POST"];
 
-    NSString *boundary = @"----------MINGDAO";
+    NSString *boundary = @"__MINGDAO__";
     NSString *boundaryPrefix = @"--";
     
     NSMutableData *postBody = [NSMutableData data];
-    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     
     for (NSDictionary *dic in parameters) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         id object = dic[@"object"];
         NSString *key = dic[@"key"];
         NSString *fileName = dic[@"fileName"];
@@ -284,7 +284,11 @@ static MDAPIManager *sharedManager = nil;
         if ([object isKindOfClass:[NSString class]]) {
             NSString *text = object;
             [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", [self localEncode:text]] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", text] dataUsingEncoding:NSUTF8StringEncoding]];
+        } else if ([object isKindOfClass:[NSNumber class]]) {
+            NSString *text = [object stringValue];
+            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", text] dataUsingEncoding:NSUTF8StringEncoding]];
         } else if ([object isKindOfClass:[UIImage class]]) {
             UIImage *image = object;
             
@@ -308,7 +312,8 @@ static MDAPIManager *sharedManager = nil;
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
-    
+    NSString *postBodyString = [[NSString alloc] initWithData:postBody encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", postBodyString);
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
     [req setValue:contentType forHTTPHeaderField:@"Content-type"];
     [req setHTTPBody:postBody];
