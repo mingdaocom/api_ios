@@ -922,10 +922,9 @@
         NSArray *taskActArr = [dic objectForKey:@"taskActList"];
         NSMutableArray *taskActArray = [NSMutableArray array];
         for (NSDictionary *dic in taskActArr) {
-//            MDTaskActivity *taskAct = [[MDTaskActivity alloc] initWithDictionary:dic];
-//            [taskActArray addObject:taskAct];
+            MDTaskActivity *taskAct = [[MDTaskActivity alloc] initWithDictionary:dic];
+            [taskActArray addObject:taskAct];
         }
-
         handler(taskActArray, error);
     }];
     return connection;
