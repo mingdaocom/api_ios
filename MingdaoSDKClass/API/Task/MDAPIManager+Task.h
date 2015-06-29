@@ -194,6 +194,10 @@
                                            pageIndex:(int)pageIndex
                                             pageSize:(int)pageSize
                                              handler:(MDAPINSArrayHandler)handler;
+
+- (MDURLConnection *)loadTaskActivityWithTaskID:(NSString *)taskID
+                                        handler:(MDAPINSArrayHandler)handler;
+
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  完成/删除/编辑项目
@@ -255,4 +259,12 @@
 - (MDURLConnection *)saveTaskToStage:(NSString *)taskID
                              stageID:(NSString *)stageID
                              handler:(MDAPIBoolHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 给项目或任务加星，项目或任务id只能传一个
+ 
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)editFolderOrTaskFavoriteWithFolderID:(NSString *)folderID taskID:(NSString *)taskID favorite:(NSInteger)favorite handler:(MDAPIBoolHandler)handler;
+
 @end

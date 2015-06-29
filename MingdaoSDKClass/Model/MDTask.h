@@ -64,13 +64,15 @@
 
 @property (assign, nonatomic) MDUserTaskMemberType currentUserType;
 
-@property (assign, nonatomic) int replyCount, unreadDiscussCount, subTaskCount;
+@property (assign, nonatomic) int replyCount, unreadDiscussCount, subTaskCount, subTaskCompleteCount;
 @property (assign, nonatomic) int colorType;
 
 @property (strong, nonatomic) MDTaskFolder *folder;
 @property (strong, nonatomic) MDTaskFolderStage *stage;
 
 @property (readonly, nonatomic) BOOL finished, expired;
+
+@property (assign, nonatomic) BOOL isFavorite;
 
 - (MDTask *)initWithDictionary:(NSDictionary *)aDic;
 @end

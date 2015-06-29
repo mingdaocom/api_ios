@@ -719,9 +719,8 @@
         [urlString appendFormat:@"&pagesize=%d", pageSize];
     if (pageIndex > 0)
         [urlString appendFormat:@"&pageindex=%d", pageIndex];
-    if (orderType >= 1 && orderType <= 2) {
-        [urlString appendFormat:@"&order_type=%d", orderType];
-    }
+
+    [urlString appendFormat:@"&sort=%d", orderType];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
@@ -740,15 +739,36 @@
             return;
         }
         
-        NSArray *taskDics = [dic objectForKey:@"tasks"];
-        NSMutableArray *tasks = [NSMutableArray array];
-        for (NSDictionary *taskDic in taskDics) {
-            if (![taskDic isKindOfClass:[NSDictionary class]])
-                continue;
-            MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
-            [tasks addObject:task];
+        if (orderType == 4) {
+            NSArray *folderDics = dic[@"tasks"];
+            NSMutableArray *folders = [NSMutableArray array];
+            for (NSDictionary *folderDic in folderDics) {
+                NSArray *taskDics = [folderDic objectForKey:@"tasks"];
+                NSMutableArray *tasks = [NSMutableArray array];
+                for (NSDictionary *taskDic in taskDics) {
+                    if (![taskDic isKindOfClass:[NSDictionary class]])
+                        continue;
+                    MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
+                    [tasks addObject:task];
+                }
+                
+                NSDictionary *tempDic = @{[folderDic[@"folderName"] isEqualToString:@""]?@"未关联项目":folderDic[@"folderName"]:tasks};
+                [folders addObject:tempDic];
+            }
+            handler(folders,error);
+        } else {
+            NSArray *taskDics = [dic objectForKey:@"tasks"];
+            NSMutableArray *tasks = [NSMutableArray array];
+            for (NSDictionary *taskDic in taskDics) {
+                if (![taskDic isKindOfClass:[NSDictionary class]])
+                    continue;
+                MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
+                [tasks addObject:task];
+            }
+            handler(tasks, error);
+
         }
-        handler(tasks, error);
+        
     }];
     return connection;
 }
@@ -872,6 +892,44 @@
         handler(task, error);
     }];
     return connection;
+}
+
+- (MDURLConnection *)loadTaskActivityWithTaskID:(NSString *)taskID
+                                        handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/getTaskActivityByTaskID?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@",taskID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSArray *taskActArr = [dic objectForKey:@"taskActList"];
+        NSMutableArray *taskActArray = [NSMutableArray array];
+        for (NSDictionary *dic in taskActArr) {
+//            MDTaskActivity *taskAct = [[MDTaskActivity alloc] initWithDictionary:dic];
+//            [taskActArray addObject:taskAct];
+        }
+
+        handler(taskActArray, error);
+    }];
+    return connection;
+
 }
 
 #pragma mark -
@@ -1508,4 +1566,31 @@
     }];
     return connection;
 }
+
+
+- (MDURLConnection *)editFolderOrTaskFavoriteWithFolderID:(NSString *)folderID taskID:(NSString *)taskID favorite:(NSInteger)favorite handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/editFolderOrTaskFavorite?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (taskID) {
+        [urlString appendFormat:@"&t_id=%@", taskID];
+    }
+    if (folderID) {
+        [urlString appendFormat:@"&t_folderID=%@", folderID];
+    }
+    
+    [urlString appendFormat:@"&favorite=%ld",(long)favorite];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+
+}
+
+
 @end
