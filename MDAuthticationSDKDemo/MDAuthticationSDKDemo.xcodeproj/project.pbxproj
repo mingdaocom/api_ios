@@ -7,34 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F7677E5E18B44BFD00C58FED /* UIView+JMNoise.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E4A18B44BFD00C58FED /* UIView+JMNoise.m */; };
-		F7677E5F18B44BFD00C58FED /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = F7677E4C18B44BFD00C58FED /* close.png */; };
-		F7677E6018B44BFD00C58FED /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7677E4D18B44BFD00C58FED /* close@2x.png */; };
-		F7677E6118B44BFD00C58FED /* modalButton-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = F7677E4E18B44BFD00C58FED /* modalButton-selected.png */; };
-		F7677E6218B44BFD00C58FED /* modalButton-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7677E4F18B44BFD00C58FED /* modalButton-selected@2x.png */; };
-		F7677E6318B44BFD00C58FED /* modalButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7677E5018B44BFD00C58FED /* modalButton.png */; };
-		F7677E6418B44BFD00C58FED /* modalButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7677E5118B44BFD00C58FED /* modalButton@2x.png */; };
-		F7677E6518B44BFD00C58FED /* UAModalPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E5418B44BFD00C58FED /* UAModalPanel.m */; };
-		F7677E6618B44BFD00C58FED /* UATitledModalPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E5618B44BFD00C58FED /* UATitledModalPanel.m */; };
-		F7677E6718B44BFD00C58FED /* UAGradientBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E5918B44BFD00C58FED /* UAGradientBackground.m */; };
-		F7677E6818B44BFD00C58FED /* UANoisyGradientBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E5B18B44BFD00C58FED /* UANoisyGradientBackground.m */; };
-		F7677E6918B44BFD00C58FED /* UARoundedRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E5D18B44BFD00C58FED /* UARoundedRectView.m */; };
-		F7677E6C18B44CD100C58FED /* MDAuthPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7677E6B18B44CD100C58FED /* MDAuthPanel.m */; };
-		F76B83A819A5E11700247FE8 /* MDTaskMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83A119A5E11700247FE8 /* MDTaskMessage.m */; };
-		F76B83A919A5E11700247FE8 /* MDTaskReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83A319A5E11700247FE8 /* MDTaskReplyment.m */; };
-		F76B83AA19A5E11700247FE8 /* MDTaskReplyMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83A519A5E11700247FE8 /* MDTaskReplyMessage.m */; };
-		F76B83AB19A5E11700247FE8 /* MDTaskSystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83A719A5E11700247FE8 /* MDTaskSystemMessage.m */; };
-		F76B83AE19A5E12200247FE8 /* MDTaskMentionedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83AD19A5E12200247FE8 /* MDTaskMentionedMessage.m */; };
-		F76B83CD19A5E13800247FE8 /* MDAPIManager+Calendar.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83B119A5E13800247FE8 /* MDAPIManager+Calendar.m */; };
-		F76B83CE19A5E13800247FE8 /* MDAPIManager+Company.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83B419A5E13800247FE8 /* MDAPIManager+Company.m */; };
-		F76B83CF19A5E13800247FE8 /* MDAPIManager+FullSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83B719A5E13800247FE8 /* MDAPIManager+FullSearch.m */; };
-		F76B83D019A5E13800247FE8 /* MDAPIManager+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83BA19A5E13800247FE8 /* MDAPIManager+Group.m */; };
-		F76B83D119A5E13800247FE8 /* MDAPIManager+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83BD19A5E13800247FE8 /* MDAPIManager+Message.m */; };
-		F76B83D219A5E13800247FE8 /* MDAPIManager+Passport.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83C019A5E13800247FE8 /* MDAPIManager+Passport.m */; };
-		F76B83D319A5E13800247FE8 /* MDAPIManager+Post.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83C319A5E13800247FE8 /* MDAPIManager+Post.m */; };
-		F76B83D419A5E13800247FE8 /* MDAPIManager+Task.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83C619A5E13800247FE8 /* MDAPIManager+Task.m */; };
-		F76B83D519A5E13800247FE8 /* MDAPIManager+User.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83C919A5E13800247FE8 /* MDAPIManager+User.m */; };
-		F76B83D619A5E13800247FE8 /* MDAPIManager+Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B83CC19A5E13800247FE8 /* MDAPIManager+Vote.m */; };
 		F7B3F4F11886204800F186DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B3F4F01886204800F186DB /* Foundation.framework */; };
 		F7B3F4F31886204800F186DB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B3F4F21886204800F186DB /* CoreGraphics.framework */; };
 		F7B3F4F51886204800F186DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B3F4F41886204800F186DB /* UIKit.framework */; };
@@ -49,23 +21,54 @@
 		F7B3F5121886204800F186DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B3F4F41886204800F186DB /* UIKit.framework */; };
 		F7B3F51A1886204800F186DB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F7B3F5181886204800F186DB /* InfoPlist.strings */; };
 		F7B3F51C1886204800F186DB /* MDAuthticationSDKDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F51B1886204800F186DB /* MDAuthticationSDKDemoTests.m */; };
-		F7B3F58418862D3E00F186DB /* MDAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F54518862D3E00F186DB /* MDAPIManager.m */; };
-		F7B3F58518862D3E00F186DB /* MDAuthenticator.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F54818862D3E00F186DB /* MDAuthenticator.m */; };
-		F7B3F58B18862D3E00F186DB /* MDErrorParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F55518862D3E00F186DB /* MDErrorParser.m */; };
-		F7B3F58C18862D3E00F186DB /* MDURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F55718862D3E00F186DB /* MDURLConnection.m */; };
-		F7B3F58D18862D3E00F186DB /* MDURLConnectionQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F55918862D3E00F186DB /* MDURLConnectionQueue.m */; };
-		F7B3F58E18862D3E00F186DB /* MDCompany.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F55C18862D3E00F186DB /* MDCompany.m */; };
-		F7B3F58F18862D3E00F186DB /* MDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F55E18862D3E00F186DB /* MDEvent.m */; };
-		F7B3F59018862D3E00F186DB /* MDGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F56018862D3E00F186DB /* MDGroup.m */; };
-		F7B3F59118862D3E00F186DB /* MDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F56218862D3E00F186DB /* MDMessage.m */; };
-		F7B3F59218862D3E00F186DB /* MDMessageAll.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F56418862D3E00F186DB /* MDMessageAll.m */; };
-		F7B3F59318862D3E00F186DB /* MDPost.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F56618862D3E00F186DB /* MDPost.m */; };
-		F7B3F59418862D3E00F186DB /* MDPostAt.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F56818862D3E00F186DB /* MDPostAt.m */; };
-		F7B3F59518862D3E00F186DB /* MDPostReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F56A18862D3E00F186DB /* MDPostReplyment.m */; };
-		F7B3F59618862D3E00F186DB /* MDProject.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F56C18862D3E00F186DB /* MDProject.m */; };
-		F7B3F59718862D3E00F186DB /* MDTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F56E18862D3E00F186DB /* MDTag.m */; };
-		F7B3F59818862D3E00F186DB /* MDTask.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F57018862D3E00F186DB /* MDTask.m */; };
-		F7B3F59A18862D3E00F186DB /* MDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B3F57418862D3E00F186DB /* MDUser.m */; };
+		F7C63F131B42600D00D028E7 /* MDAPIManager+Calendar.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EA41B42600C00D028E7 /* MDAPIManager+Calendar.m */; };
+		F7C63F141B42600D00D028E7 /* MDAPIManager+Company.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EA71B42600C00D028E7 /* MDAPIManager+Company.m */; };
+		F7C63F151B42600D00D028E7 /* MDAPIManager+FullSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EAA1B42600D00D028E7 /* MDAPIManager+FullSearch.m */; };
+		F7C63F161B42600D00D028E7 /* MDAPIManager+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EAD1B42600D00D028E7 /* MDAPIManager+Group.m */; };
+		F7C63F171B42600D00D028E7 /* MDAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EB01B42600D00D028E7 /* MDAPIManager.m */; };
+		F7C63F181B42600D00D028E7 /* MDAPIManager+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EB31B42600D00D028E7 /* MDAPIManager+Message.m */; };
+		F7C63F191B42600D00D028E7 /* MDAPIManager+Passport.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EB61B42600D00D028E7 /* MDAPIManager+Passport.m */; };
+		F7C63F1A1B42600D00D028E7 /* MDAPIManager+Post.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EB91B42600D00D028E7 /* MDAPIManager+Post.m */; };
+		F7C63F1B1B42600D00D028E7 /* MDAPIManager+Task.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EBC1B42600D00D028E7 /* MDAPIManager+Task.m */; };
+		F7C63F1C1B42600D00D028E7 /* MDAPIManager+User.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EBF1B42600D00D028E7 /* MDAPIManager+User.m */; };
+		F7C63F1D1B42600D00D028E7 /* MDAPIManager+Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EC21B42600D00D028E7 /* MDAPIManager+Vote.m */; };
+		F7C63F1E1B42600D00D028E7 /* MDAuthenticator.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EC51B42600D00D028E7 /* MDAuthenticator.m */; };
+		F7C63F1F1B42600D00D028E7 /* MDAuthPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EC71B42600D00D028E7 /* MDAuthPanel.m */; };
+		F7C63F201B42600D00D028E7 /* UIView+JMNoise.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63ECC1B42600D00D028E7 /* UIView+JMNoise.m */; };
+		F7C63F211B42600D00D028E7 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C63ECE1B42600D00D028E7 /* close.png */; };
+		F7C63F221B42600D00D028E7 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C63ECF1B42600D00D028E7 /* close@2x.png */; };
+		F7C63F231B42600D00D028E7 /* modalButton-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C63ED01B42600D00D028E7 /* modalButton-selected.png */; };
+		F7C63F241B42600D00D028E7 /* modalButton-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C63ED11B42600D00D028E7 /* modalButton-selected@2x.png */; };
+		F7C63F251B42600D00D028E7 /* modalButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C63ED21B42600D00D028E7 /* modalButton.png */; };
+		F7C63F261B42600D00D028E7 /* modalButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C63ED31B42600D00D028E7 /* modalButton@2x.png */; };
+		F7C63F271B42600D00D028E7 /* UAModalPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63ED61B42600D00D028E7 /* UAModalPanel.m */; };
+		F7C63F281B42600D00D028E7 /* UATitledModalPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63ED81B42600D00D028E7 /* UATitledModalPanel.m */; };
+		F7C63F291B42600D00D028E7 /* UAGradientBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EDB1B42600D00D028E7 /* UAGradientBackground.m */; };
+		F7C63F2A1B42600D00D028E7 /* UANoisyGradientBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EDD1B42600D00D028E7 /* UANoisyGradientBackground.m */; };
+		F7C63F2B1B42600D00D028E7 /* UARoundedRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EDF1B42600D00D028E7 /* UARoundedRectView.m */; };
+		F7C63F2C1B42600D00D028E7 /* ErrorMessage.strings in Resources */ = {isa = PBXBuildFile; fileRef = F7C63EE11B42600D00D028E7 /* ErrorMessage.strings */; };
+		F7C63F2D1B42600D00D028E7 /* MDErrorParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EE41B42600D00D028E7 /* MDErrorParser.m */; };
+		F7C63F2E1B42600D00D028E7 /* MDURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EE61B42600D00D028E7 /* MDURLConnection.m */; };
+		F7C63F2F1B42600D00D028E7 /* MDURLConnectionQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EE81B42600D00D028E7 /* MDURLConnectionQueue.m */; };
+		F7C63F301B42600D00D028E7 /* MDCalendarCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EEE1B42600D00D028E7 /* MDCalendarCategory.m */; };
+		F7C63F311B42600D00D028E7 /* MDCompany.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EF01B42600D00D028E7 /* MDCompany.m */; };
+		F7C63F321B42600D00D028E7 /* MDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EF21B42600D00D028E7 /* MDEvent.m */; };
+		F7C63F331B42600D00D028E7 /* MDGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EF41B42600D00D028E7 /* MDGroup.m */; };
+		F7C63F341B42600D00D028E7 /* MDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EF61B42600D00D028E7 /* MDMessage.m */; };
+		F7C63F351B42600D00D028E7 /* MDMessageAll.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EF81B42600D00D028E7 /* MDMessageAll.m */; };
+		F7C63F361B42600D00D028E7 /* MDPost.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EFA1B42600D00D028E7 /* MDPost.m */; };
+		F7C63F371B42600D00D028E7 /* MDPostAt.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EFC1B42600D00D028E7 /* MDPostAt.m */; };
+		F7C63F381B42600D00D028E7 /* MDPostReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EFE1B42600D00D028E7 /* MDPostReplyment.m */; };
+		F7C63F391B42600D00D028E7 /* MDTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63F001B42600D00D028E7 /* MDTag.m */; };
+		F7C63F3A1B42600D00D028E7 /* MDTask.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63F021B42600D00D028E7 /* MDTask.m */; };
+		F7C63F3B1B42600D00D028E7 /* MDTaskFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63F041B42600D00D028E7 /* MDTaskFolder.m */; };
+		F7C63F3C1B42600D00D028E7 /* MDTaskFolderStage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63F061B42600D00D028E7 /* MDTaskFolderStage.m */; };
+		F7C63F3D1B42600D00D028E7 /* MDTaskMentionedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63F081B42600D00D028E7 /* MDTaskMentionedMessage.m */; };
+		F7C63F3E1B42600D00D028E7 /* MDTaskMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63F0A1B42600D00D028E7 /* MDTaskMessage.m */; };
+		F7C63F3F1B42600D00D028E7 /* MDTaskReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63F0C1B42600D00D028E7 /* MDTaskReplyment.m */; };
+		F7C63F401B42600D00D028E7 /* MDTaskReplyMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63F0E1B42600D00D028E7 /* MDTaskReplyMessage.m */; };
+		F7C63F411B42600D00D028E7 /* MDTaskSystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63F101B42600D00D028E7 /* MDTaskSystemMessage.m */; };
+		F7C63F421B42600D00D028E7 /* MDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63F121B42600D00D028E7 /* MDUser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,57 +82,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F7677E4918B44BFD00C58FED /* UIView+JMNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JMNoise.h"; sourceTree = "<group>"; };
-		F7677E4A18B44BFD00C58FED /* UIView+JMNoise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JMNoise.m"; sourceTree = "<group>"; };
-		F7677E4C18B44BFD00C58FED /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
-		F7677E4D18B44BFD00C58FED /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
-		F7677E4E18B44BFD00C58FED /* modalButton-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modalButton-selected.png"; sourceTree = "<group>"; };
-		F7677E4F18B44BFD00C58FED /* modalButton-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modalButton-selected@2x.png"; sourceTree = "<group>"; };
-		F7677E5018B44BFD00C58FED /* modalButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = modalButton.png; sourceTree = "<group>"; };
-		F7677E5118B44BFD00C58FED /* modalButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modalButton@2x.png"; sourceTree = "<group>"; };
-		F7677E5318B44BFD00C58FED /* UAModalPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAModalPanel.h; sourceTree = "<group>"; };
-		F7677E5418B44BFD00C58FED /* UAModalPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAModalPanel.m; sourceTree = "<group>"; };
-		F7677E5518B44BFD00C58FED /* UATitledModalPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATitledModalPanel.h; sourceTree = "<group>"; };
-		F7677E5618B44BFD00C58FED /* UATitledModalPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATitledModalPanel.m; sourceTree = "<group>"; };
-		F7677E5818B44BFD00C58FED /* UAGradientBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAGradientBackground.h; sourceTree = "<group>"; };
-		F7677E5918B44BFD00C58FED /* UAGradientBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAGradientBackground.m; sourceTree = "<group>"; };
-		F7677E5A18B44BFD00C58FED /* UANoisyGradientBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANoisyGradientBackground.h; sourceTree = "<group>"; };
-		F7677E5B18B44BFD00C58FED /* UANoisyGradientBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANoisyGradientBackground.m; sourceTree = "<group>"; };
-		F7677E5C18B44BFD00C58FED /* UARoundedRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARoundedRectView.h; sourceTree = "<group>"; };
-		F7677E5D18B44BFD00C58FED /* UARoundedRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UARoundedRectView.m; sourceTree = "<group>"; };
-		F7677E6A18B44CD100C58FED /* MDAuthPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAuthPanel.h; sourceTree = "<group>"; };
-		F7677E6B18B44CD100C58FED /* MDAuthPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAuthPanel.m; sourceTree = "<group>"; };
-		F76B83A019A5E11700247FE8 /* MDTaskMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskMessage.h; sourceTree = "<group>"; };
-		F76B83A119A5E11700247FE8 /* MDTaskMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskMessage.m; sourceTree = "<group>"; };
-		F76B83A219A5E11700247FE8 /* MDTaskReplyment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskReplyment.h; sourceTree = "<group>"; };
-		F76B83A319A5E11700247FE8 /* MDTaskReplyment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskReplyment.m; sourceTree = "<group>"; };
-		F76B83A419A5E11700247FE8 /* MDTaskReplyMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskReplyMessage.h; sourceTree = "<group>"; };
-		F76B83A519A5E11700247FE8 /* MDTaskReplyMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskReplyMessage.m; sourceTree = "<group>"; };
-		F76B83A619A5E11700247FE8 /* MDTaskSystemMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskSystemMessage.h; sourceTree = "<group>"; };
-		F76B83A719A5E11700247FE8 /* MDTaskSystemMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskSystemMessage.m; sourceTree = "<group>"; };
-		F76B83AC19A5E12200247FE8 /* MDTaskMentionedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskMentionedMessage.h; sourceTree = "<group>"; };
-		F76B83AD19A5E12200247FE8 /* MDTaskMentionedMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskMentionedMessage.m; sourceTree = "<group>"; };
-		F76B83B019A5E13800247FE8 /* MDAPIManager+Calendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Calendar.h"; sourceTree = "<group>"; };
-		F76B83B119A5E13800247FE8 /* MDAPIManager+Calendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Calendar.m"; sourceTree = "<group>"; };
-		F76B83B319A5E13800247FE8 /* MDAPIManager+Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Company.h"; sourceTree = "<group>"; };
-		F76B83B419A5E13800247FE8 /* MDAPIManager+Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Company.m"; sourceTree = "<group>"; };
-		F76B83B619A5E13800247FE8 /* MDAPIManager+FullSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+FullSearch.h"; sourceTree = "<group>"; };
-		F76B83B719A5E13800247FE8 /* MDAPIManager+FullSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+FullSearch.m"; sourceTree = "<group>"; };
-		F76B83B919A5E13800247FE8 /* MDAPIManager+Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Group.h"; sourceTree = "<group>"; };
-		F76B83BA19A5E13800247FE8 /* MDAPIManager+Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Group.m"; sourceTree = "<group>"; };
-		F76B83BC19A5E13800247FE8 /* MDAPIManager+Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Message.h"; sourceTree = "<group>"; };
-		F76B83BD19A5E13800247FE8 /* MDAPIManager+Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Message.m"; sourceTree = "<group>"; };
-		F76B83BF19A5E13800247FE8 /* MDAPIManager+Passport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Passport.h"; sourceTree = "<group>"; };
-		F76B83C019A5E13800247FE8 /* MDAPIManager+Passport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Passport.m"; sourceTree = "<group>"; };
-		F76B83C219A5E13800247FE8 /* MDAPIManager+Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Post.h"; sourceTree = "<group>"; };
-		F76B83C319A5E13800247FE8 /* MDAPIManager+Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Post.m"; sourceTree = "<group>"; };
-		F76B83C519A5E13800247FE8 /* MDAPIManager+Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Task.h"; sourceTree = "<group>"; };
-		F76B83C619A5E13800247FE8 /* MDAPIManager+Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Task.m"; sourceTree = "<group>"; };
-		F76B83C819A5E13800247FE8 /* MDAPIManager+User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+User.h"; sourceTree = "<group>"; };
-		F76B83C919A5E13800247FE8 /* MDAPIManager+User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+User.m"; sourceTree = "<group>"; };
-		F76B83CB19A5E13800247FE8 /* MDAPIManager+Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Vote.h"; sourceTree = "<group>"; };
-		F76B83CC19A5E13800247FE8 /* MDAPIManager+Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Vote.m"; sourceTree = "<group>"; };
-		F76B83D719A5E2DB00247FE8 /* MDAPICategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAPICategory.h; sourceTree = "<group>"; };
 		F7B3F4ED1886204800F186DB /* MDAuthticationSDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDAuthticationSDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7B3F4F01886204800F186DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F7B3F4F21886204800F186DB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -149,41 +101,99 @@
 		F7B3F5171886204800F186DB /* MDAuthticationSDKDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MDAuthticationSDKDemoTests-Info.plist"; sourceTree = "<group>"; };
 		F7B3F5191886204800F186DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F7B3F51B1886204800F186DB /* MDAuthticationSDKDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDAuthticationSDKDemoTests.m; sourceTree = "<group>"; };
-		F7B3F54318862D3E00F186DB /* MDAPIHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAPIHandler.h; sourceTree = "<group>"; };
-		F7B3F54418862D3E00F186DB /* MDAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAPIManager.h; sourceTree = "<group>"; };
-		F7B3F54518862D3E00F186DB /* MDAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAPIManager.m; sourceTree = "<group>"; };
-		F7B3F54718862D3E00F186DB /* MDAuthenticator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAuthenticator.h; sourceTree = "<group>"; };
-		F7B3F54818862D3E00F186DB /* MDAuthenticator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAuthenticator.m; sourceTree = "<group>"; };
-		F7B3F55418862D3E00F186DB /* MDErrorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDErrorParser.h; sourceTree = "<group>"; };
-		F7B3F55518862D3E00F186DB /* MDErrorParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDErrorParser.m; sourceTree = "<group>"; };
-		F7B3F55618862D3E00F186DB /* MDURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDURLConnection.h; sourceTree = "<group>"; };
-		F7B3F55718862D3E00F186DB /* MDURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDURLConnection.m; sourceTree = "<group>"; };
-		F7B3F55818862D3E00F186DB /* MDURLConnectionQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDURLConnectionQueue.h; sourceTree = "<group>"; };
-		F7B3F55918862D3E00F186DB /* MDURLConnectionQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDURLConnectionQueue.m; sourceTree = "<group>"; };
-		F7B3F55B18862D3E00F186DB /* MDCompany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCompany.h; sourceTree = "<group>"; };
-		F7B3F55C18862D3E00F186DB /* MDCompany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCompany.m; sourceTree = "<group>"; };
-		F7B3F55D18862D3E00F186DB /* MDEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDEvent.h; sourceTree = "<group>"; };
-		F7B3F55E18862D3E00F186DB /* MDEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDEvent.m; sourceTree = "<group>"; };
-		F7B3F55F18862D3E00F186DB /* MDGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDGroup.h; sourceTree = "<group>"; };
-		F7B3F56018862D3E00F186DB /* MDGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDGroup.m; sourceTree = "<group>"; };
-		F7B3F56118862D3E00F186DB /* MDMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDMessage.h; sourceTree = "<group>"; };
-		F7B3F56218862D3E00F186DB /* MDMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDMessage.m; sourceTree = "<group>"; };
-		F7B3F56318862D3E00F186DB /* MDMessageAll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDMessageAll.h; sourceTree = "<group>"; };
-		F7B3F56418862D3E00F186DB /* MDMessageAll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDMessageAll.m; sourceTree = "<group>"; };
-		F7B3F56518862D3E00F186DB /* MDPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPost.h; sourceTree = "<group>"; };
-		F7B3F56618862D3E00F186DB /* MDPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPost.m; sourceTree = "<group>"; };
-		F7B3F56718862D3E00F186DB /* MDPostAt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPostAt.h; sourceTree = "<group>"; };
-		F7B3F56818862D3E00F186DB /* MDPostAt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPostAt.m; sourceTree = "<group>"; };
-		F7B3F56918862D3E00F186DB /* MDPostReplyment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPostReplyment.h; sourceTree = "<group>"; };
-		F7B3F56A18862D3E00F186DB /* MDPostReplyment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPostReplyment.m; sourceTree = "<group>"; };
-		F7B3F56B18862D3E00F186DB /* MDProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDProject.h; sourceTree = "<group>"; };
-		F7B3F56C18862D3E00F186DB /* MDProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDProject.m; sourceTree = "<group>"; };
-		F7B3F56D18862D3E00F186DB /* MDTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTag.h; sourceTree = "<group>"; };
-		F7B3F56E18862D3E00F186DB /* MDTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTag.m; sourceTree = "<group>"; };
-		F7B3F56F18862D3E00F186DB /* MDTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTask.h; sourceTree = "<group>"; };
-		F7B3F57018862D3E00F186DB /* MDTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTask.m; sourceTree = "<group>"; };
-		F7B3F57318862D3E00F186DB /* MDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDUser.h; sourceTree = "<group>"; };
-		F7B3F57418862D3E00F186DB /* MDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDUser.m; sourceTree = "<group>"; };
+		F7C63EA31B42600C00D028E7 /* MDAPIManager+Calendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Calendar.h"; sourceTree = "<group>"; };
+		F7C63EA41B42600C00D028E7 /* MDAPIManager+Calendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Calendar.m"; sourceTree = "<group>"; };
+		F7C63EA61B42600C00D028E7 /* MDAPIManager+Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Company.h"; sourceTree = "<group>"; };
+		F7C63EA71B42600C00D028E7 /* MDAPIManager+Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Company.m"; sourceTree = "<group>"; };
+		F7C63EA91B42600C00D028E7 /* MDAPIManager+FullSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+FullSearch.h"; sourceTree = "<group>"; };
+		F7C63EAA1B42600D00D028E7 /* MDAPIManager+FullSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+FullSearch.m"; sourceTree = "<group>"; };
+		F7C63EAC1B42600D00D028E7 /* MDAPIManager+Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Group.h"; sourceTree = "<group>"; };
+		F7C63EAD1B42600D00D028E7 /* MDAPIManager+Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Group.m"; sourceTree = "<group>"; };
+		F7C63EAE1B42600D00D028E7 /* MDAPIHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAPIHandler.h; sourceTree = "<group>"; };
+		F7C63EAF1B42600D00D028E7 /* MDAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAPIManager.h; sourceTree = "<group>"; };
+		F7C63EB01B42600D00D028E7 /* MDAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAPIManager.m; sourceTree = "<group>"; };
+		F7C63EB21B42600D00D028E7 /* MDAPIManager+Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Message.h"; sourceTree = "<group>"; };
+		F7C63EB31B42600D00D028E7 /* MDAPIManager+Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Message.m"; sourceTree = "<group>"; };
+		F7C63EB51B42600D00D028E7 /* MDAPIManager+Passport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Passport.h"; sourceTree = "<group>"; };
+		F7C63EB61B42600D00D028E7 /* MDAPIManager+Passport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Passport.m"; sourceTree = "<group>"; };
+		F7C63EB81B42600D00D028E7 /* MDAPIManager+Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Post.h"; sourceTree = "<group>"; };
+		F7C63EB91B42600D00D028E7 /* MDAPIManager+Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Post.m"; sourceTree = "<group>"; };
+		F7C63EBB1B42600D00D028E7 /* MDAPIManager+Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Task.h"; sourceTree = "<group>"; };
+		F7C63EBC1B42600D00D028E7 /* MDAPIManager+Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Task.m"; sourceTree = "<group>"; };
+		F7C63EBE1B42600D00D028E7 /* MDAPIManager+User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+User.h"; sourceTree = "<group>"; };
+		F7C63EBF1B42600D00D028E7 /* MDAPIManager+User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+User.m"; sourceTree = "<group>"; };
+		F7C63EC11B42600D00D028E7 /* MDAPIManager+Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDAPIManager+Vote.h"; sourceTree = "<group>"; };
+		F7C63EC21B42600D00D028E7 /* MDAPIManager+Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MDAPIManager+Vote.m"; sourceTree = "<group>"; };
+		F7C63EC41B42600D00D028E7 /* MDAuthenticator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAuthenticator.h; sourceTree = "<group>"; };
+		F7C63EC51B42600D00D028E7 /* MDAuthenticator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAuthenticator.m; sourceTree = "<group>"; };
+		F7C63EC61B42600D00D028E7 /* MDAuthPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAuthPanel.h; sourceTree = "<group>"; };
+		F7C63EC71B42600D00D028E7 /* MDAuthPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAuthPanel.m; sourceTree = "<group>"; };
+		F7C63ECB1B42600D00D028E7 /* UIView+JMNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JMNoise.h"; sourceTree = "<group>"; };
+		F7C63ECC1B42600D00D028E7 /* UIView+JMNoise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JMNoise.m"; sourceTree = "<group>"; };
+		F7C63ECE1B42600D00D028E7 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		F7C63ECF1B42600D00D028E7 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
+		F7C63ED01B42600D00D028E7 /* modalButton-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modalButton-selected.png"; sourceTree = "<group>"; };
+		F7C63ED11B42600D00D028E7 /* modalButton-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modalButton-selected@2x.png"; sourceTree = "<group>"; };
+		F7C63ED21B42600D00D028E7 /* modalButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = modalButton.png; sourceTree = "<group>"; };
+		F7C63ED31B42600D00D028E7 /* modalButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modalButton@2x.png"; sourceTree = "<group>"; };
+		F7C63ED51B42600D00D028E7 /* UAModalPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAModalPanel.h; sourceTree = "<group>"; };
+		F7C63ED61B42600D00D028E7 /* UAModalPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAModalPanel.m; sourceTree = "<group>"; };
+		F7C63ED71B42600D00D028E7 /* UATitledModalPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATitledModalPanel.h; sourceTree = "<group>"; };
+		F7C63ED81B42600D00D028E7 /* UATitledModalPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATitledModalPanel.m; sourceTree = "<group>"; };
+		F7C63EDA1B42600D00D028E7 /* UAGradientBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAGradientBackground.h; sourceTree = "<group>"; };
+		F7C63EDB1B42600D00D028E7 /* UAGradientBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAGradientBackground.m; sourceTree = "<group>"; };
+		F7C63EDC1B42600D00D028E7 /* UANoisyGradientBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANoisyGradientBackground.h; sourceTree = "<group>"; };
+		F7C63EDD1B42600D00D028E7 /* UANoisyGradientBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANoisyGradientBackground.m; sourceTree = "<group>"; };
+		F7C63EDE1B42600D00D028E7 /* UARoundedRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARoundedRectView.h; sourceTree = "<group>"; };
+		F7C63EDF1B42600D00D028E7 /* UARoundedRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UARoundedRectView.m; sourceTree = "<group>"; };
+		F7C63EE21B42600D00D028E7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ErrorMessage.strings; sourceTree = "<group>"; };
+		F7C63EE31B42600D00D028E7 /* MDErrorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDErrorParser.h; sourceTree = "<group>"; };
+		F7C63EE41B42600D00D028E7 /* MDErrorParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDErrorParser.m; sourceTree = "<group>"; };
+		F7C63EE51B42600D00D028E7 /* MDURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDURLConnection.h; sourceTree = "<group>"; };
+		F7C63EE61B42600D00D028E7 /* MDURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDURLConnection.m; sourceTree = "<group>"; };
+		F7C63EE71B42600D00D028E7 /* MDURLConnectionQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDURLConnectionQueue.h; sourceTree = "<group>"; };
+		F7C63EE81B42600D00D028E7 /* MDURLConnectionQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDURLConnectionQueue.m; sourceTree = "<group>"; };
+		F7C63EE91B42600D00D028E7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ErrorMessage.strings"; sourceTree = "<group>"; };
+		F7C63EEA1B42600D00D028E7 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/ErrorMessage.strings"; sourceTree = "<group>"; };
+		F7C63EEB1B42600D00D028E7 /* MDAPICategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAPICategory.h; sourceTree = "<group>"; };
+		F7C63EED1B42600D00D028E7 /* MDCalendarCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCalendarCategory.h; sourceTree = "<group>"; };
+		F7C63EEE1B42600D00D028E7 /* MDCalendarCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCalendarCategory.m; sourceTree = "<group>"; };
+		F7C63EEF1B42600D00D028E7 /* MDCompany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCompany.h; sourceTree = "<group>"; };
+		F7C63EF01B42600D00D028E7 /* MDCompany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCompany.m; sourceTree = "<group>"; };
+		F7C63EF11B42600D00D028E7 /* MDEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDEvent.h; sourceTree = "<group>"; };
+		F7C63EF21B42600D00D028E7 /* MDEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDEvent.m; sourceTree = "<group>"; };
+		F7C63EF31B42600D00D028E7 /* MDGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDGroup.h; sourceTree = "<group>"; };
+		F7C63EF41B42600D00D028E7 /* MDGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDGroup.m; sourceTree = "<group>"; };
+		F7C63EF51B42600D00D028E7 /* MDMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDMessage.h; sourceTree = "<group>"; };
+		F7C63EF61B42600D00D028E7 /* MDMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDMessage.m; sourceTree = "<group>"; };
+		F7C63EF71B42600D00D028E7 /* MDMessageAll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDMessageAll.h; sourceTree = "<group>"; };
+		F7C63EF81B42600D00D028E7 /* MDMessageAll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDMessageAll.m; sourceTree = "<group>"; };
+		F7C63EF91B42600D00D028E7 /* MDPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPost.h; sourceTree = "<group>"; };
+		F7C63EFA1B42600D00D028E7 /* MDPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPost.m; sourceTree = "<group>"; };
+		F7C63EFB1B42600D00D028E7 /* MDPostAt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPostAt.h; sourceTree = "<group>"; };
+		F7C63EFC1B42600D00D028E7 /* MDPostAt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPostAt.m; sourceTree = "<group>"; };
+		F7C63EFD1B42600D00D028E7 /* MDPostReplyment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPostReplyment.h; sourceTree = "<group>"; };
+		F7C63EFE1B42600D00D028E7 /* MDPostReplyment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPostReplyment.m; sourceTree = "<group>"; };
+		F7C63EFF1B42600D00D028E7 /* MDTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTag.h; sourceTree = "<group>"; };
+		F7C63F001B42600D00D028E7 /* MDTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTag.m; sourceTree = "<group>"; };
+		F7C63F011B42600D00D028E7 /* MDTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTask.h; sourceTree = "<group>"; };
+		F7C63F021B42600D00D028E7 /* MDTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTask.m; sourceTree = "<group>"; };
+		F7C63F031B42600D00D028E7 /* MDTaskFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskFolder.h; sourceTree = "<group>"; };
+		F7C63F041B42600D00D028E7 /* MDTaskFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskFolder.m; sourceTree = "<group>"; };
+		F7C63F051B42600D00D028E7 /* MDTaskFolderStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskFolderStage.h; sourceTree = "<group>"; };
+		F7C63F061B42600D00D028E7 /* MDTaskFolderStage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskFolderStage.m; sourceTree = "<group>"; };
+		F7C63F071B42600D00D028E7 /* MDTaskMentionedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskMentionedMessage.h; sourceTree = "<group>"; };
+		F7C63F081B42600D00D028E7 /* MDTaskMentionedMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskMentionedMessage.m; sourceTree = "<group>"; };
+		F7C63F091B42600D00D028E7 /* MDTaskMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskMessage.h; sourceTree = "<group>"; };
+		F7C63F0A1B42600D00D028E7 /* MDTaskMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskMessage.m; sourceTree = "<group>"; };
+		F7C63F0B1B42600D00D028E7 /* MDTaskReplyment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskReplyment.h; sourceTree = "<group>"; };
+		F7C63F0C1B42600D00D028E7 /* MDTaskReplyment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskReplyment.m; sourceTree = "<group>"; };
+		F7C63F0D1B42600D00D028E7 /* MDTaskReplyMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskReplyMessage.h; sourceTree = "<group>"; };
+		F7C63F0E1B42600D00D028E7 /* MDTaskReplyMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskReplyMessage.m; sourceTree = "<group>"; };
+		F7C63F0F1B42600D00D028E7 /* MDTaskSystemMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskSystemMessage.h; sourceTree = "<group>"; };
+		F7C63F101B42600D00D028E7 /* MDTaskSystemMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskSystemMessage.m; sourceTree = "<group>"; };
+		F7C63F111B42600D00D028E7 /* MDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDUser.h; sourceTree = "<group>"; };
+		F7C63F121B42600D00D028E7 /* MDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDUser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,161 +220,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F7677E4618B44BFD00C58FED /* UAModalPanel */ = {
-			isa = PBXGroup;
-			children = (
-				F7677E4718B44BFD00C58FED /* Panel */,
-			);
-			path = UAModalPanel;
-			sourceTree = "<group>";
-		};
-		F7677E4718B44BFD00C58FED /* Panel */ = {
-			isa = PBXGroup;
-			children = (
-				F7677E4818B44BFD00C58FED /* Categories */,
-				F7677E4B18B44BFD00C58FED /* Images */,
-				F7677E5218B44BFD00C58FED /* Panels */,
-				F7677E5718B44BFD00C58FED /* Views */,
-			);
-			path = Panel;
-			sourceTree = "<group>";
-		};
-		F7677E4818B44BFD00C58FED /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				F7677E4918B44BFD00C58FED /* UIView+JMNoise.h */,
-				F7677E4A18B44BFD00C58FED /* UIView+JMNoise.m */,
-			);
-			path = Categories;
-			sourceTree = "<group>";
-		};
-		F7677E4B18B44BFD00C58FED /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				F7677E4C18B44BFD00C58FED /* close.png */,
-				F7677E4D18B44BFD00C58FED /* close@2x.png */,
-				F7677E4E18B44BFD00C58FED /* modalButton-selected.png */,
-				F7677E4F18B44BFD00C58FED /* modalButton-selected@2x.png */,
-				F7677E5018B44BFD00C58FED /* modalButton.png */,
-				F7677E5118B44BFD00C58FED /* modalButton@2x.png */,
-			);
-			path = Images;
-			sourceTree = "<group>";
-		};
-		F7677E5218B44BFD00C58FED /* Panels */ = {
-			isa = PBXGroup;
-			children = (
-				F7677E5318B44BFD00C58FED /* UAModalPanel.h */,
-				F7677E5418B44BFD00C58FED /* UAModalPanel.m */,
-				F7677E5518B44BFD00C58FED /* UATitledModalPanel.h */,
-				F7677E5618B44BFD00C58FED /* UATitledModalPanel.m */,
-			);
-			path = Panels;
-			sourceTree = "<group>";
-		};
-		F7677E5718B44BFD00C58FED /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				F7677E5818B44BFD00C58FED /* UAGradientBackground.h */,
-				F7677E5918B44BFD00C58FED /* UAGradientBackground.m */,
-				F7677E5A18B44BFD00C58FED /* UANoisyGradientBackground.h */,
-				F7677E5B18B44BFD00C58FED /* UANoisyGradientBackground.m */,
-				F7677E5C18B44BFD00C58FED /* UARoundedRectView.h */,
-				F7677E5D18B44BFD00C58FED /* UARoundedRectView.m */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		F76B83AF19A5E13800247FE8 /* Calendar */ = {
-			isa = PBXGroup;
-			children = (
-				F76B83B019A5E13800247FE8 /* MDAPIManager+Calendar.h */,
-				F76B83B119A5E13800247FE8 /* MDAPIManager+Calendar.m */,
-			);
-			path = Calendar;
-			sourceTree = "<group>";
-		};
-		F76B83B219A5E13800247FE8 /* Company */ = {
-			isa = PBXGroup;
-			children = (
-				F76B83B319A5E13800247FE8 /* MDAPIManager+Company.h */,
-				F76B83B419A5E13800247FE8 /* MDAPIManager+Company.m */,
-			);
-			path = Company;
-			sourceTree = "<group>";
-		};
-		F76B83B519A5E13800247FE8 /* FullSearch */ = {
-			isa = PBXGroup;
-			children = (
-				F76B83B619A5E13800247FE8 /* MDAPIManager+FullSearch.h */,
-				F76B83B719A5E13800247FE8 /* MDAPIManager+FullSearch.m */,
-			);
-			path = FullSearch;
-			sourceTree = "<group>";
-		};
-		F76B83B819A5E13800247FE8 /* Group */ = {
-			isa = PBXGroup;
-			children = (
-				F76B83B919A5E13800247FE8 /* MDAPIManager+Group.h */,
-				F76B83BA19A5E13800247FE8 /* MDAPIManager+Group.m */,
-			);
-			path = Group;
-			sourceTree = "<group>";
-		};
-		F76B83BB19A5E13800247FE8 /* Message */ = {
-			isa = PBXGroup;
-			children = (
-				F76B83BC19A5E13800247FE8 /* MDAPIManager+Message.h */,
-				F76B83BD19A5E13800247FE8 /* MDAPIManager+Message.m */,
-			);
-			path = Message;
-			sourceTree = "<group>";
-		};
-		F76B83BE19A5E13800247FE8 /* Passport */ = {
-			isa = PBXGroup;
-			children = (
-				F76B83BF19A5E13800247FE8 /* MDAPIManager+Passport.h */,
-				F76B83C019A5E13800247FE8 /* MDAPIManager+Passport.m */,
-			);
-			path = Passport;
-			sourceTree = "<group>";
-		};
-		F76B83C119A5E13800247FE8 /* Post */ = {
-			isa = PBXGroup;
-			children = (
-				F76B83C219A5E13800247FE8 /* MDAPIManager+Post.h */,
-				F76B83C319A5E13800247FE8 /* MDAPIManager+Post.m */,
-			);
-			path = Post;
-			sourceTree = "<group>";
-		};
-		F76B83C419A5E13800247FE8 /* Task */ = {
-			isa = PBXGroup;
-			children = (
-				F76B83C519A5E13800247FE8 /* MDAPIManager+Task.h */,
-				F76B83C619A5E13800247FE8 /* MDAPIManager+Task.m */,
-			);
-			path = Task;
-			sourceTree = "<group>";
-		};
-		F76B83C719A5E13800247FE8 /* User */ = {
-			isa = PBXGroup;
-			children = (
-				F76B83C819A5E13800247FE8 /* MDAPIManager+User.h */,
-				F76B83C919A5E13800247FE8 /* MDAPIManager+User.m */,
-			);
-			path = User;
-			sourceTree = "<group>";
-		};
-		F76B83CA19A5E13800247FE8 /* Vote */ = {
-			isa = PBXGroup;
-			children = (
-				F76B83CB19A5E13800247FE8 /* MDAPIManager+Vote.h */,
-				F76B83CC19A5E13800247FE8 /* MDAPIManager+Vote.m */,
-			);
-			path = Vote;
-			sourceTree = "<group>";
-		};
 		F7B3F4E41886204800F186DB = {
 			isa = PBXGroup;
 			children = (
@@ -442,106 +297,266 @@
 		F7B3F52918862D3E00F186DB /* MingdaoSDK */ = {
 			isa = PBXGroup;
 			children = (
-				F7B3F54118862D3E00F186DB /* MingdaoSDKClass */,
+				F7C63EA01B42600C00D028E7 /* MingdaoSDKClass */,
 			);
 			name = MingdaoSDK;
 			path = ..;
 			sourceTree = "<group>";
 		};
-		F7B3F54118862D3E00F186DB /* MingdaoSDKClass */ = {
+		F7C63EA01B42600C00D028E7 /* MingdaoSDKClass */ = {
 			isa = PBXGroup;
 			children = (
-				F76B83D719A5E2DB00247FE8 /* MDAPICategory.h */,
-				F7B3F54218862D3E00F186DB /* API */,
-				F7B3F54618862D3E00F186DB /* Authenticaor */,
-				F7B3F54918862D3E00F186DB /* Helper */,
-				F7B3F55A18862D3E00F186DB /* Model */,
+				F7C63EA11B42600C00D028E7 /* API */,
+				F7C63EC31B42600D00D028E7 /* Authenticaor */,
+				F7C63EE01B42600D00D028E7 /* Helper */,
+				F7C63EEB1B42600D00D028E7 /* MDAPICategory.h */,
+				F7C63EEC1B42600D00D028E7 /* Model */,
 			);
 			path = MingdaoSDKClass;
 			sourceTree = "<group>";
 		};
-		F7B3F54218862D3E00F186DB /* API */ = {
+		F7C63EA11B42600C00D028E7 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				F7B3F54318862D3E00F186DB /* MDAPIHandler.h */,
-				F7B3F54418862D3E00F186DB /* MDAPIManager.h */,
-				F7B3F54518862D3E00F186DB /* MDAPIManager.m */,
-				F76B83AF19A5E13800247FE8 /* Calendar */,
-				F76B83B219A5E13800247FE8 /* Company */,
-				F76B83B519A5E13800247FE8 /* FullSearch */,
-				F76B83B819A5E13800247FE8 /* Group */,
-				F76B83BB19A5E13800247FE8 /* Message */,
-				F76B83BE19A5E13800247FE8 /* Passport */,
-				F76B83C119A5E13800247FE8 /* Post */,
-				F76B83C419A5E13800247FE8 /* Task */,
-				F76B83C719A5E13800247FE8 /* User */,
-				F76B83CA19A5E13800247FE8 /* Vote */,
+				F7C63EA21B42600C00D028E7 /* Calendar */,
+				F7C63EA51B42600C00D028E7 /* Company */,
+				F7C63EA81B42600C00D028E7 /* FullSearch */,
+				F7C63EAB1B42600D00D028E7 /* Group */,
+				F7C63EAE1B42600D00D028E7 /* MDAPIHandler.h */,
+				F7C63EAF1B42600D00D028E7 /* MDAPIManager.h */,
+				F7C63EB01B42600D00D028E7 /* MDAPIManager.m */,
+				F7C63EB11B42600D00D028E7 /* Message */,
+				F7C63EB41B42600D00D028E7 /* Passport */,
+				F7C63EB71B42600D00D028E7 /* Post */,
+				F7C63EBA1B42600D00D028E7 /* Task */,
+				F7C63EBD1B42600D00D028E7 /* User */,
+				F7C63EC01B42600D00D028E7 /* Vote */,
 			);
 			path = API;
 			sourceTree = "<group>";
 		};
-		F7B3F54618862D3E00F186DB /* Authenticaor */ = {
+		F7C63EA21B42600C00D028E7 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				F7677E4618B44BFD00C58FED /* UAModalPanel */,
-				F7B3F54718862D3E00F186DB /* MDAuthenticator.h */,
-				F7B3F54818862D3E00F186DB /* MDAuthenticator.m */,
-				F7677E6A18B44CD100C58FED /* MDAuthPanel.h */,
-				F7677E6B18B44CD100C58FED /* MDAuthPanel.m */,
+				F7C63EA31B42600C00D028E7 /* MDAPIManager+Calendar.h */,
+				F7C63EA41B42600C00D028E7 /* MDAPIManager+Calendar.m */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		F7C63EA51B42600C00D028E7 /* Company */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63EA61B42600C00D028E7 /* MDAPIManager+Company.h */,
+				F7C63EA71B42600C00D028E7 /* MDAPIManager+Company.m */,
+			);
+			path = Company;
+			sourceTree = "<group>";
+		};
+		F7C63EA81B42600C00D028E7 /* FullSearch */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63EA91B42600C00D028E7 /* MDAPIManager+FullSearch.h */,
+				F7C63EAA1B42600D00D028E7 /* MDAPIManager+FullSearch.m */,
+			);
+			path = FullSearch;
+			sourceTree = "<group>";
+		};
+		F7C63EAB1B42600D00D028E7 /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63EAC1B42600D00D028E7 /* MDAPIManager+Group.h */,
+				F7C63EAD1B42600D00D028E7 /* MDAPIManager+Group.m */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
+		F7C63EB11B42600D00D028E7 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63EB21B42600D00D028E7 /* MDAPIManager+Message.h */,
+				F7C63EB31B42600D00D028E7 /* MDAPIManager+Message.m */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		F7C63EB41B42600D00D028E7 /* Passport */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63EB51B42600D00D028E7 /* MDAPIManager+Passport.h */,
+				F7C63EB61B42600D00D028E7 /* MDAPIManager+Passport.m */,
+			);
+			path = Passport;
+			sourceTree = "<group>";
+		};
+		F7C63EB71B42600D00D028E7 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63EB81B42600D00D028E7 /* MDAPIManager+Post.h */,
+				F7C63EB91B42600D00D028E7 /* MDAPIManager+Post.m */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		F7C63EBA1B42600D00D028E7 /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63EBB1B42600D00D028E7 /* MDAPIManager+Task.h */,
+				F7C63EBC1B42600D00D028E7 /* MDAPIManager+Task.m */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		F7C63EBD1B42600D00D028E7 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63EBE1B42600D00D028E7 /* MDAPIManager+User.h */,
+				F7C63EBF1B42600D00D028E7 /* MDAPIManager+User.m */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		F7C63EC01B42600D00D028E7 /* Vote */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63EC11B42600D00D028E7 /* MDAPIManager+Vote.h */,
+				F7C63EC21B42600D00D028E7 /* MDAPIManager+Vote.m */,
+			);
+			path = Vote;
+			sourceTree = "<group>";
+		};
+		F7C63EC31B42600D00D028E7 /* Authenticaor */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63EC41B42600D00D028E7 /* MDAuthenticator.h */,
+				F7C63EC51B42600D00D028E7 /* MDAuthenticator.m */,
+				F7C63EC61B42600D00D028E7 /* MDAuthPanel.h */,
+				F7C63EC71B42600D00D028E7 /* MDAuthPanel.m */,
+				F7C63EC81B42600D00D028E7 /* UAModalPanel */,
 			);
 			path = Authenticaor;
 			sourceTree = "<group>";
 		};
-		F7B3F54918862D3E00F186DB /* Helper */ = {
+		F7C63EC81B42600D00D028E7 /* UAModalPanel */ = {
 			isa = PBXGroup;
 			children = (
-				F7B3F55418862D3E00F186DB /* MDErrorParser.h */,
-				F7B3F55518862D3E00F186DB /* MDErrorParser.m */,
-				F7B3F55618862D3E00F186DB /* MDURLConnection.h */,
-				F7B3F55718862D3E00F186DB /* MDURLConnection.m */,
-				F7B3F55818862D3E00F186DB /* MDURLConnectionQueue.h */,
-				F7B3F55918862D3E00F186DB /* MDURLConnectionQueue.m */,
+				F7C63EC91B42600D00D028E7 /* Panel */,
+			);
+			path = UAModalPanel;
+			sourceTree = "<group>";
+		};
+		F7C63EC91B42600D00D028E7 /* Panel */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63ECA1B42600D00D028E7 /* Categories */,
+				F7C63ECD1B42600D00D028E7 /* Images */,
+				F7C63ED41B42600D00D028E7 /* Panels */,
+				F7C63ED91B42600D00D028E7 /* Views */,
+			);
+			path = Panel;
+			sourceTree = "<group>";
+		};
+		F7C63ECA1B42600D00D028E7 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63ECB1B42600D00D028E7 /* UIView+JMNoise.h */,
+				F7C63ECC1B42600D00D028E7 /* UIView+JMNoise.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		F7C63ECD1B42600D00D028E7 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63ECE1B42600D00D028E7 /* close.png */,
+				F7C63ECF1B42600D00D028E7 /* close@2x.png */,
+				F7C63ED01B42600D00D028E7 /* modalButton-selected.png */,
+				F7C63ED11B42600D00D028E7 /* modalButton-selected@2x.png */,
+				F7C63ED21B42600D00D028E7 /* modalButton.png */,
+				F7C63ED31B42600D00D028E7 /* modalButton@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		F7C63ED41B42600D00D028E7 /* Panels */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63ED51B42600D00D028E7 /* UAModalPanel.h */,
+				F7C63ED61B42600D00D028E7 /* UAModalPanel.m */,
+				F7C63ED71B42600D00D028E7 /* UATitledModalPanel.h */,
+				F7C63ED81B42600D00D028E7 /* UATitledModalPanel.m */,
+			);
+			path = Panels;
+			sourceTree = "<group>";
+		};
+		F7C63ED91B42600D00D028E7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63EDA1B42600D00D028E7 /* UAGradientBackground.h */,
+				F7C63EDB1B42600D00D028E7 /* UAGradientBackground.m */,
+				F7C63EDC1B42600D00D028E7 /* UANoisyGradientBackground.h */,
+				F7C63EDD1B42600D00D028E7 /* UANoisyGradientBackground.m */,
+				F7C63EDE1B42600D00D028E7 /* UARoundedRectView.h */,
+				F7C63EDF1B42600D00D028E7 /* UARoundedRectView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F7C63EE01B42600D00D028E7 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				F7C63EE11B42600D00D028E7 /* ErrorMessage.strings */,
+				F7C63EE31B42600D00D028E7 /* MDErrorParser.h */,
+				F7C63EE41B42600D00D028E7 /* MDErrorParser.m */,
+				F7C63EE51B42600D00D028E7 /* MDURLConnection.h */,
+				F7C63EE61B42600D00D028E7 /* MDURLConnection.m */,
+				F7C63EE71B42600D00D028E7 /* MDURLConnectionQueue.h */,
+				F7C63EE81B42600D00D028E7 /* MDURLConnectionQueue.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
 		};
-		F7B3F55A18862D3E00F186DB /* Model */ = {
+		F7C63EEC1B42600D00D028E7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F7B3F55B18862D3E00F186DB /* MDCompany.h */,
-				F7B3F55C18862D3E00F186DB /* MDCompany.m */,
-				F7B3F55D18862D3E00F186DB /* MDEvent.h */,
-				F7B3F55E18862D3E00F186DB /* MDEvent.m */,
-				F7B3F55F18862D3E00F186DB /* MDGroup.h */,
-				F7B3F56018862D3E00F186DB /* MDGroup.m */,
-				F7B3F56118862D3E00F186DB /* MDMessage.h */,
-				F7B3F56218862D3E00F186DB /* MDMessage.m */,
-				F7B3F56318862D3E00F186DB /* MDMessageAll.h */,
-				F7B3F56418862D3E00F186DB /* MDMessageAll.m */,
-				F7B3F56518862D3E00F186DB /* MDPost.h */,
-				F7B3F56618862D3E00F186DB /* MDPost.m */,
-				F7B3F56718862D3E00F186DB /* MDPostAt.h */,
-				F7B3F56818862D3E00F186DB /* MDPostAt.m */,
-				F7B3F56918862D3E00F186DB /* MDPostReplyment.h */,
-				F7B3F56A18862D3E00F186DB /* MDPostReplyment.m */,
-				F7B3F56B18862D3E00F186DB /* MDProject.h */,
-				F7B3F56C18862D3E00F186DB /* MDProject.m */,
-				F7B3F56D18862D3E00F186DB /* MDTag.h */,
-				F7B3F56E18862D3E00F186DB /* MDTag.m */,
-				F7B3F56F18862D3E00F186DB /* MDTask.h */,
-				F7B3F57018862D3E00F186DB /* MDTask.m */,
-				F76B83A019A5E11700247FE8 /* MDTaskMessage.h */,
-				F76B83A119A5E11700247FE8 /* MDTaskMessage.m */,
-				F76B83A219A5E11700247FE8 /* MDTaskReplyment.h */,
-				F76B83A319A5E11700247FE8 /* MDTaskReplyment.m */,
-				F76B83A419A5E11700247FE8 /* MDTaskReplyMessage.h */,
-				F76B83A519A5E11700247FE8 /* MDTaskReplyMessage.m */,
-				F76B83A619A5E11700247FE8 /* MDTaskSystemMessage.h */,
-				F76B83A719A5E11700247FE8 /* MDTaskSystemMessage.m */,
-				F76B83AC19A5E12200247FE8 /* MDTaskMentionedMessage.h */,
-				F76B83AD19A5E12200247FE8 /* MDTaskMentionedMessage.m */,
-				F7B3F57318862D3E00F186DB /* MDUser.h */,
-				F7B3F57418862D3E00F186DB /* MDUser.m */,
+				F7C63EED1B42600D00D028E7 /* MDCalendarCategory.h */,
+				F7C63EEE1B42600D00D028E7 /* MDCalendarCategory.m */,
+				F7C63EEF1B42600D00D028E7 /* MDCompany.h */,
+				F7C63EF01B42600D00D028E7 /* MDCompany.m */,
+				F7C63EF11B42600D00D028E7 /* MDEvent.h */,
+				F7C63EF21B42600D00D028E7 /* MDEvent.m */,
+				F7C63EF31B42600D00D028E7 /* MDGroup.h */,
+				F7C63EF41B42600D00D028E7 /* MDGroup.m */,
+				F7C63EF51B42600D00D028E7 /* MDMessage.h */,
+				F7C63EF61B42600D00D028E7 /* MDMessage.m */,
+				F7C63EF71B42600D00D028E7 /* MDMessageAll.h */,
+				F7C63EF81B42600D00D028E7 /* MDMessageAll.m */,
+				F7C63EF91B42600D00D028E7 /* MDPost.h */,
+				F7C63EFA1B42600D00D028E7 /* MDPost.m */,
+				F7C63EFB1B42600D00D028E7 /* MDPostAt.h */,
+				F7C63EFC1B42600D00D028E7 /* MDPostAt.m */,
+				F7C63EFD1B42600D00D028E7 /* MDPostReplyment.h */,
+				F7C63EFE1B42600D00D028E7 /* MDPostReplyment.m */,
+				F7C63EFF1B42600D00D028E7 /* MDTag.h */,
+				F7C63F001B42600D00D028E7 /* MDTag.m */,
+				F7C63F011B42600D00D028E7 /* MDTask.h */,
+				F7C63F021B42600D00D028E7 /* MDTask.m */,
+				F7C63F031B42600D00D028E7 /* MDTaskFolder.h */,
+				F7C63F041B42600D00D028E7 /* MDTaskFolder.m */,
+				F7C63F051B42600D00D028E7 /* MDTaskFolderStage.h */,
+				F7C63F061B42600D00D028E7 /* MDTaskFolderStage.m */,
+				F7C63F071B42600D00D028E7 /* MDTaskMentionedMessage.h */,
+				F7C63F081B42600D00D028E7 /* MDTaskMentionedMessage.m */,
+				F7C63F091B42600D00D028E7 /* MDTaskMessage.h */,
+				F7C63F0A1B42600D00D028E7 /* MDTaskMessage.m */,
+				F7C63F0B1B42600D00D028E7 /* MDTaskReplyment.h */,
+				F7C63F0C1B42600D00D028E7 /* MDTaskReplyment.m */,
+				F7C63F0D1B42600D00D028E7 /* MDTaskReplyMessage.h */,
+				F7C63F0E1B42600D00D028E7 /* MDTaskReplyMessage.m */,
+				F7C63F0F1B42600D00D028E7 /* MDTaskSystemMessage.h */,
+				F7C63F101B42600D00D028E7 /* MDTaskSystemMessage.m */,
+				F7C63F111B42600D00D028E7 /* MDUser.h */,
+				F7C63F121B42600D00D028E7 /* MDUser.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -605,6 +620,8 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = F7B3F4E41886204800F186DB;
 			productRefGroup = F7B3F4EE1886204800F186DB /* Products */;
@@ -622,14 +639,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7677E6118B44BFD00C58FED /* modalButton-selected.png in Resources */,
-				F7677E6018B44BFD00C58FED /* close@2x.png in Resources */,
+				F7C63F231B42600D00D028E7 /* modalButton-selected.png in Resources */,
+				F7C63F221B42600D00D028E7 /* close@2x.png in Resources */,
 				F7B3F5091886204800F186DB /* Images.xcassets in Resources */,
-				F7677E6318B44BFD00C58FED /* modalButton.png in Resources */,
+				F7C63F2C1B42600D00D028E7 /* ErrorMessage.strings in Resources */,
+				F7C63F251B42600D00D028E7 /* modalButton.png in Resources */,
 				F7B3F4FB1886204800F186DB /* InfoPlist.strings in Resources */,
-				F7677E6418B44BFD00C58FED /* modalButton@2x.png in Resources */,
-				F7677E6218B44BFD00C58FED /* modalButton-selected@2x.png in Resources */,
-				F7677E5F18B44BFD00C58FED /* close.png in Resources */,
+				F7C63F261B42600D00D028E7 /* modalButton@2x.png in Resources */,
+				F7C63F241B42600D00D028E7 /* modalButton-selected@2x.png in Resources */,
+				F7C63F211B42600D00D028E7 /* close.png in Resources */,
 				F7B3F5041886204800F186DB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -649,48 +667,50 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7B3F59418862D3E00F186DB /* MDPostAt.m in Sources */,
-				F76B83D019A5E13800247FE8 /* MDAPIManager+Group.m in Sources */,
-				F76B83D619A5E13800247FE8 /* MDAPIManager+Vote.m in Sources */,
-				F76B83AE19A5E12200247FE8 /* MDTaskMentionedMessage.m in Sources */,
-				F76B83CF19A5E13800247FE8 /* MDAPIManager+FullSearch.m in Sources */,
+				F7C63F281B42600D00D028E7 /* UATitledModalPanel.m in Sources */,
+				F7C63F3F1B42600D00D028E7 /* MDTaskReplyment.m in Sources */,
+				F7C63F371B42600D00D028E7 /* MDPostAt.m in Sources */,
+				F7C63F161B42600D00D028E7 /* MDAPIManager+Group.m in Sources */,
+				F7C63F401B42600D00D028E7 /* MDTaskReplyMessage.m in Sources */,
+				F7C63F2F1B42600D00D028E7 /* MDURLConnectionQueue.m in Sources */,
+				F7C63F1C1B42600D00D028E7 /* MDAPIManager+User.m in Sources */,
+				F7C63F381B42600D00D028E7 /* MDPostReplyment.m in Sources */,
+				F7C63F141B42600D00D028E7 /* MDAPIManager+Company.m in Sources */,
+				F7C63F3A1B42600D00D028E7 /* MDTask.m in Sources */,
+				F7C63F1B1B42600D00D028E7 /* MDAPIManager+Task.m in Sources */,
+				F7C63F1A1B42600D00D028E7 /* MDAPIManager+Post.m in Sources */,
 				F7B3F5071886204800F186DB /* ViewController.m in Sources */,
-				F76B83D319A5E13800247FE8 /* MDAPIManager+Post.m in Sources */,
-				F7677E5E18B44BFD00C58FED /* UIView+JMNoise.m in Sources */,
-				F7B3F58C18862D3E00F186DB /* MDURLConnection.m in Sources */,
-				F7677E6618B44BFD00C58FED /* UATitledModalPanel.m in Sources */,
+				F7C63F301B42600D00D028E7 /* MDCalendarCategory.m in Sources */,
+				F7C63F331B42600D00D028E7 /* MDGroup.m in Sources */,
+				F7C63F151B42600D00D028E7 /* MDAPIManager+FullSearch.m in Sources */,
+				F7C63F181B42600D00D028E7 /* MDAPIManager+Message.m in Sources */,
+				F7C63F191B42600D00D028E7 /* MDAPIManager+Passport.m in Sources */,
+				F7C63F2B1B42600D00D028E7 /* UARoundedRectView.m in Sources */,
+				F7C63F421B42600D00D028E7 /* MDUser.m in Sources */,
+				F7C63F1D1B42600D00D028E7 /* MDAPIManager+Vote.m in Sources */,
+				F7C63F131B42600D00D028E7 /* MDAPIManager+Calendar.m in Sources */,
+				F7C63F1F1B42600D00D028E7 /* MDAuthPanel.m in Sources */,
+				F7C63F1E1B42600D00D028E7 /* MDAuthenticator.m in Sources */,
+				F7C63F3B1B42600D00D028E7 /* MDTaskFolder.m in Sources */,
+				F7C63F201B42600D00D028E7 /* UIView+JMNoise.m in Sources */,
+				F7C63F2E1B42600D00D028E7 /* MDURLConnection.m in Sources */,
 				F7B3F5011886204800F186DB /* AppDelegate.m in Sources */,
-				F7B3F58518862D3E00F186DB /* MDAuthenticator.m in Sources */,
-				F7677E6818B44BFD00C58FED /* UANoisyGradientBackground.m in Sources */,
-				F76B83CD19A5E13800247FE8 /* MDAPIManager+Calendar.m in Sources */,
-				F7677E6518B44BFD00C58FED /* UAModalPanel.m in Sources */,
-				F7677E6718B44BFD00C58FED /* UAGradientBackground.m in Sources */,
-				F7B3F58D18862D3E00F186DB /* MDURLConnectionQueue.m in Sources */,
+				F7C63F311B42600D00D028E7 /* MDCompany.m in Sources */,
+				F7C63F3C1B42600D00D028E7 /* MDTaskFolderStage.m in Sources */,
+				F7C63F3E1B42600D00D028E7 /* MDTaskMessage.m in Sources */,
 				F7B3F4FD1886204800F186DB /* main.m in Sources */,
-				F7677E6918B44BFD00C58FED /* UARoundedRectView.m in Sources */,
-				F76B83CE19A5E13800247FE8 /* MDAPIManager+Company.m in Sources */,
-				F76B83AB19A5E11700247FE8 /* MDTaskSystemMessage.m in Sources */,
-				F7B3F59318862D3E00F186DB /* MDPost.m in Sources */,
-				F76B83A919A5E11700247FE8 /* MDTaskReplyment.m in Sources */,
-				F76B83D119A5E13800247FE8 /* MDAPIManager+Message.m in Sources */,
-				F7B3F58F18862D3E00F186DB /* MDEvent.m in Sources */,
-				F7B3F59618862D3E00F186DB /* MDProject.m in Sources */,
-				F7B3F59518862D3E00F186DB /* MDPostReplyment.m in Sources */,
-				F76B83D419A5E13800247FE8 /* MDAPIManager+Task.m in Sources */,
-				F7B3F59118862D3E00F186DB /* MDMessage.m in Sources */,
-				F76B83AA19A5E11700247FE8 /* MDTaskReplyMessage.m in Sources */,
-				F7B3F58B18862D3E00F186DB /* MDErrorParser.m in Sources */,
-				F76B83A819A5E11700247FE8 /* MDTaskMessage.m in Sources */,
-				F7B3F59818862D3E00F186DB /* MDTask.m in Sources */,
-				F7B3F59018862D3E00F186DB /* MDGroup.m in Sources */,
-				F7B3F59218862D3E00F186DB /* MDMessageAll.m in Sources */,
-				F7677E6C18B44CD100C58FED /* MDAuthPanel.m in Sources */,
-				F76B83D519A5E13800247FE8 /* MDAPIManager+User.m in Sources */,
-				F76B83D219A5E13800247FE8 /* MDAPIManager+Passport.m in Sources */,
-				F7B3F59A18862D3E00F186DB /* MDUser.m in Sources */,
-				F7B3F58E18862D3E00F186DB /* MDCompany.m in Sources */,
-				F7B3F59718862D3E00F186DB /* MDTag.m in Sources */,
-				F7B3F58418862D3E00F186DB /* MDAPIManager.m in Sources */,
+				F7C63F351B42600D00D028E7 /* MDMessageAll.m in Sources */,
+				F7C63F2A1B42600D00D028E7 /* UANoisyGradientBackground.m in Sources */,
+				F7C63F411B42600D00D028E7 /* MDTaskSystemMessage.m in Sources */,
+				F7C63F341B42600D00D028E7 /* MDMessage.m in Sources */,
+				F7C63F361B42600D00D028E7 /* MDPost.m in Sources */,
+				F7C63F2D1B42600D00D028E7 /* MDErrorParser.m in Sources */,
+				F7C63F291B42600D00D028E7 /* UAGradientBackground.m in Sources */,
+				F7C63F271B42600D00D028E7 /* UAModalPanel.m in Sources */,
+				F7C63F171B42600D00D028E7 /* MDAPIManager.m in Sources */,
+				F7C63F391B42600D00D028E7 /* MDTag.m in Sources */,
+				F7C63F321B42600D00D028E7 /* MDEvent.m in Sources */,
+				F7C63F3D1B42600D00D028E7 /* MDTaskMentionedMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,6 +755,16 @@
 				F7B3F5191886204800F186DB /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F7C63EE11B42600D00D028E7 /* ErrorMessage.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F7C63EE21B42600D00D028E7 /* en */,
+				F7C63EE91B42600D00D028E7 /* zh-Hans */,
+				F7C63EEA1B42600D00D028E7 /* zh-Hant */,
+			);
+			name = ErrorMessage.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
