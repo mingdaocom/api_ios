@@ -64,6 +64,6 @@ iOS平台：https://github.com/meihua-info/api_ios
 
 （5）示例
 
-![image](https://raw.githubusercontent.com/meihua-info/api_ios/master/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/5.jpeg)
+![image](https://raw.githubusercontent.com/meihua-info/api_ios/master/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/5.png)
 
 ***
