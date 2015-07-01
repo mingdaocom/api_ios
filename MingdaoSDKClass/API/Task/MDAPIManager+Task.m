@@ -702,9 +702,7 @@
             [urlString appendFormat:@"&t_sid=%@", stageID];
         }
     }
-    if (filterType == 2 || filterType == 3) {
-        [urlString appendFormat:@"&filter_type=%d", filterType];
-    }
+    [urlString appendFormat:@"&filter_type=%d", filterType];
     if (colorType >= 0 && colorType <= 5) {
         [urlString appendFormat:@"&color=%d", colorType];
     }
@@ -1390,7 +1388,7 @@
                                           handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/getFolderStage.aspx?format=json"];
+    [urlString appendString:@"/task/v2/getFolderStage.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@",self.accessToken];
     [urlString appendFormat:@"&t_folderID=%@", folderID];
     
@@ -1591,5 +1589,71 @@
 
 }
 
+- (MDURLConnection *)getFolderTaskListWithFolderID:(NSString *)folderID
+                                            status:(NSInteger)status
+                                         pageindex:(NSInteger)pageindex
+                                          pagesize:(NSInteger)pagesize
+                                              sort:(NSInteger)sort
+                                          keywords:(NSString *)keywords
+                                       filterType:(NSInteger)filterType
+                                           handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/getFolderTaskList?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+  
+    if (folderID) {
+        [urlString appendFormat:@"&t_folderID=%@", folderID];
+    }
+    
+    [urlString appendFormat:@"&status=%ld",(long)status];
+    [urlString appendFormat:@"&pageindex=%ld",(long)pageindex];
+
+    [urlString appendFormat:@"&pagesize=%ld",(long)pagesize];
+
+    if (keywords) {
+        [urlString appendFormat:@"&keywords=%@",keywords];
+    }
+    [urlString appendFormat:@"&filter_type=%ld",(long)filterType];
+
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSArray *tasks = [dic objectForKey:@"tasks"];
+        NSMutableArray *stageArray = [NSMutableArray array];
+        for (NSDictionary *stageDic in tasks) {
+            NSMutableArray *tempArray = [[NSMutableArray alloc]init];
+            if (![stageDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDTaskFolderStage *stage = [[MDTaskFolderStage alloc] initWithDictionary:stageDic];
+            NSArray *taskArr = stageDic[@"Task"];
+            for (NSDictionary *taskDic in taskArr) {
+                MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
+                [tempArray addObject:task];
+            }
+            [stageArray addObject:@{@"stage":stage,@"tasks":tempArray}];
+        }
+        handler(stageArray, error);
+    }];
+    
+    return connection;
+
+
+
+}
 
 @end

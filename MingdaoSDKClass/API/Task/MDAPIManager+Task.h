@@ -265,6 +265,18 @@
  给项目或任务加星，项目或任务id只能传一个
  
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)editFolderOrTaskFavoriteWithFolderID:(NSString *)folderID taskID:(NSString *)taskID favorite:(NSInteger)favorite handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)editFolderOrTaskFavoriteWithFolderID:(NSString *)folderID
+                                                   taskID:(NSString *)taskID
+                                                 favorite:(NSInteger)favorite
+                                                  handler:(MDAPIBoolHandler)handler;
+
+- (MDURLConnection *)getFolderTaskListWithFolderID:(NSString *)folderID
+                                            status:(NSInteger)status
+                                         pageindex:(NSInteger)pageindex
+                                          pagesize:(NSInteger)pagesize
+                                              sort:(NSInteger)sort
+                                          keywords:(NSString *)keywords
+                                       filterType:(NSInteger)filterType
+                                           handler:(MDAPINSArrayHandler)handler;
 
 @end

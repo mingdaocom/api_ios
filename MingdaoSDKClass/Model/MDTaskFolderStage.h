@@ -11,5 +11,6 @@
 @interface MDTaskFolderStage : NSObject
 @property (strong, nonatomic) NSString *objectName, *objectID;
 @property (assign, nonatomic) int number;
+@property (assign, nonatomic) NSInteger sort,taskNum;
 - (MDTaskFolderStage *)initWithDictionary:(NSDictionary *)dic;
 @end

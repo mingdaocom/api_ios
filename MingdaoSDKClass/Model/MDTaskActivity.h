@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSString *avatar;
 @property (assign, nonatomic) NSInteger actType;
 @property (strong, nonatomic) NSString *msg;
+@property (strong, nonatomic) NSString *createTime;
 
 
 - (MDTaskActivity *)initWithDictionary:(NSDictionary *)aDic;

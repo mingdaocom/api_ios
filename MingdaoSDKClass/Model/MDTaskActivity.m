@@ -19,6 +19,7 @@
         self.avatar = aDic[@"avatar"];
         self.actType = [aDic[@"actType"] integerValue];
         self.msg = aDic[@"msg"];
+        self.createTime = aDic[@"create_time"];
     }
     return self;
 }
@@ -31,7 +32,8 @@
     copyObject.userName = [self.userName copy];
     copyObject.avatar = [self.avatar copy];
     copyObject.actType = self.actType;
-    copyObject.msg = self.msg;
+    copyObject.msg = [self.msg copy];
+    copyObject.createTime = [self.createTime copy];
     return copyObject;
 }
 
