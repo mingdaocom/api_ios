@@ -61,43 +61,46 @@
                                       handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/create?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&c_name=%@", name];
-    [urlString appendFormat:@"&c_stime=%@", sDateString];
-    [urlString appendFormat:@"&c_etime=%@", eDateString];
-    [urlString appendFormat:@"&c_remindType=%ld",(long)remindType];
-    [urlString appendFormat:@"&c_remindTime=%ld",(long)remindTime];
-    [urlString appendFormat:@"&c_categoryID=%@",categoryID];
-    [urlString appendFormat:@"&c_allday=%@", isAllday?@"1":@"0"];
+    [urlString appendString:@"/calendar/create"];
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"c_name", @"object":name}];
+    [parameters addObject:@{@"key":@"c_stime", @"object":sDateString}];
+    [parameters addObject:@{@"key":@"c_etime", @"object":eDateString}];
+    [parameters addObject:@{@"key":@"c_remindType", @"object":@(remindType)}];
+    [parameters addObject:@{@"key":@"c_remindTime", @"object":@(remindTime)}];
+    [parameters addObject:@{@"key":@"c_categoryID", @"object":categoryID}];
+    [parameters addObject:@{@"key":@"c_allday", @"object":isAllday?@1:@0}];
+    [parameters addObject:@{@"key":@"c_private", @"object":isPrivate?@0:@1}];
+
     if (address && address.length > 0)
-        [urlString appendFormat:@"&c_address=%@", address];
+        [parameters addObject:@{@"key":@"c_address", @"object":address}];
     if (des && des.length > 0)
-        [urlString appendFormat:@"&c_des=%@", des];
-    [urlString appendFormat:@"&c_private=%@", isPrivate?@"0":@"1"];
+        [parameters addObject:@{@"key":@"c_des", @"object":des}];
     if (uIDs && uIDs.count > 0)
-        [urlString appendFormat:@"&c_mids=%@", [uIDs componentsJoinedByString:@","]];
+        [parameters addObject:@{@"key":@"c_mids", @"object":[uIDs componentsJoinedByString:@","]}];
     if (emails && emails.count > 0)
-        [urlString appendFormat:@"&c_memails=%@", [emails componentsJoinedByString:@","]];
+        [parameters addObject:@{@"key":@"c_memails", @"object":[emails componentsJoinedByString:@","]}];
     if (isRecur) {
-        [urlString appendString:@"&is_recur=1"];
-        [urlString appendFormat:@"&frequency=%ld", (long)frequency];
-        [urlString appendFormat:@"&interval=%ld", (long)interval];
+        [parameters addObject:@{@"key":@"is_recur", @"object":@1}];
+        [parameters addObject:@{@"key":@"frequency", @"object":@(frequency)}];
+        [parameters addObject:@{@"key":@"interval", @"object":@(interval)}];
         if (frequency == 2) {
             weekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
-            [urlString appendFormat:@"&week_day=%@", weekDays];
+            [parameters addObject:@{@"key":@"week_day", @"object":weekDays}];
         }
         if (recurCount > 0) {
-            [urlString appendFormat:@"&recur_count=%ld", (long)recurCount];
+            [parameters addObject:@{@"key":@"recur_count", @"object":@(recurCount)}];
         }
         if (untilDate && untilDate.length > 0) {
-            [urlString appendFormat:@"&until_date=%@", untilDate];
+            [parameters addObject:@{@"key":@"until_date", @"object":untilDate}];
         }
     }
     
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [self postWithParameters:parameters withRequest:req];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         if (error) {
             handler(nil, error);
             return ;
@@ -140,39 +143,43 @@
                                   handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/edit?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&c_id=%@", eID];
-    [urlString appendFormat:@"&c_name=%@", name];
-    [urlString appendFormat:@"&c_stime=%@", sDateString];
-    [urlString appendFormat:@"&c_etime=%@", eDateString];
-    [urlString appendFormat:@"&c_remindType=%ld",(long)remindType];
-    [urlString appendFormat:@"&c_remindTime=%ld",(long)remindTime];
-    [urlString appendFormat:@"&c_categoryID=%@",categoryID];
-    [urlString appendFormat:@"&c_allday=%@", isAllday?@"1":@"0"];
+    [urlString appendString:@"/calendar/edit"];
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
+    [parameters addObject:@{@"key":@"c_name", @"object":name}];
+    [parameters addObject:@{@"key":@"c_stime", @"object":sDateString}];
+    [parameters addObject:@{@"key":@"c_etime", @"object":eDateString}];
+    [parameters addObject:@{@"key":@"c_remindType", @"object":@(remindType)}];
+    [parameters addObject:@{@"key":@"c_remindTime", @"object":@(remindTime)}];
+    [parameters addObject:@{@"key":@"c_categoryID", @"object":categoryID}];
+    [parameters addObject:@{@"key":@"c_allday", @"object":isAllday?@1:@0}];
+    [parameters addObject:@{@"key":@"c_private", @"object":isPrivate?@0:@1}];
+    
     if (address && address.length > 0)
-        [urlString appendFormat:@"&c_address=%@", address];
+        [parameters addObject:@{@"key":@"c_address", @"object":address}];
     if (des && des.length > 0)
-        [urlString appendFormat:@"&c_des=%@", des];
-    [urlString appendFormat:@"&c_private=%@", isPrivate?@"0":@"1"];
+        [parameters addObject:@{@"key":@"c_des", @"object":des}];
     if (isRecur) {
-        [urlString appendString:@"&is_recur=1"];
-        [urlString appendFormat:@"&frequency=%ld", (long)frequency];
-        [urlString appendFormat:@"&interval=%ld", (long)interval];
+        [parameters addObject:@{@"key":@"is_recur", @"object":@1}];
+        [parameters addObject:@{@"key":@"frequency", @"object":@(frequency)}];
+        [parameters addObject:@{@"key":@"interval", @"object":@(interval)}];
         if (frequency == 2) {
             weekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
-            [urlString appendFormat:@"&week_day=%@", weekDays];
+            [parameters addObject:@{@"key":@"week_day", @"object":weekDays}];
         }
         if (recurCount > 0) {
-            [urlString appendFormat:@"&recur_count=%ld", (long)recurCount];
+            [parameters addObject:@{@"key":@"recur_count", @"object":@(recurCount)}];
         }
         if (untilDate && untilDate.length > 0) {
-            [urlString appendFormat:@"&until_date=%@", untilDate];
+            [parameters addObject:@{@"key":@"until_date", @"object":untilDate}];
         }
     }
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [self postWithParameters:parameters withRequest:req];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         [self handleBoolData:data error:error URLString:urlString handler:handler];
     }];
     return connection;

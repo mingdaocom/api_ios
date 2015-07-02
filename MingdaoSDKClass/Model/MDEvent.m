@@ -70,8 +70,8 @@
             self.isPrivate = 0;
         }
         
-        self.remindType = [[aDic objectForKey:@"remindType"] integerValue];
-        self.remindTime = [[aDic objectForKey:@"remindTime"] integerValue];
+        self.remindType = [[aDic objectForKey:@"remindType"] intValue];
+        self.remindTime = [[aDic objectForKey:@"remindTime"] intValue];
         self.isTask  = [[aDic objectForKey:@"isTask"] integerValue];
         
         MDCalendarCategory *calendarCategory = [[MDCalendarCategory alloc] initWithDictionary:aDic];

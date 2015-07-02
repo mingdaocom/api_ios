@@ -260,17 +260,20 @@
                                       handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/group/create?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&g_name=%@", [self localEncode:gName]];
-    [urlString appendFormat:@"&about=%@", [self  localEncode:detail]];
-    [urlString appendFormat:@"&is_public=%d", isPub?1:0];
-    if (!isPub) {
-        [urlString appendFormat:@"&is_hidden=%d", isHidden?1:0];
-    }
+    [urlString appendString:@"/group/create"];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"g_name", @"object":gName}];
+    [parameters addObject:@{@"key":@"about", @"object":detail}];
+    [parameters addObject:@{@"key":@"is_public", @"object":isPub?@1:@0}];
+    if (!isPub) {
+        [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
+    }
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [self postWithParameters:parameters withRequest:req];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         if (error) {
             handler(nil, error);
             return ;
@@ -301,18 +304,21 @@
 {
     
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/group/setting?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&g_id=%@", groupID];
-    [urlString appendFormat:@"&g_name=%@", [self localEncode:gName]];
-    [urlString appendFormat:@"&about=%@", [self localEncode:detail]];
-    [urlString appendFormat:@"&is_public=%d", isPub?1:0];
+    [urlString appendString:@"/group/setting"];
+
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"g_id", @"object":groupID}];
+    [parameters addObject:@{@"key":@"g_name", @"object":gName}];
+    [parameters addObject:@{@"key":@"about", @"object":detail}];
+    [parameters addObject:@{@"key":@"is_public", @"object":isPub?@1:@0}];
     if (!isPub) {
-        [urlString appendFormat:@"&is_hidden=%d", isHidden?1:0];
+        [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
     }
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [self postWithParameters:parameters withRequest:req];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
         [self handleBoolData:data error:error URLString:urlString handler:handler];
     }];
     return connection;
