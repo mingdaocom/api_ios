@@ -13,9 +13,11 @@
 {
     self = [super init];
     if (self) {
-        self.objectID = dic[@"stageID"];
-        self.objectName = dic[@"stageName"];
+        self.objectID = dic[@"StageID"];
+        self.objectName = dic[@"StageName"];
         self.number = [dic[@"stageNo"] intValue];
+        self.taskNum = [dic[@"TaskNum"] integerValue];
+        self.sort = [dic[@"Sort"] integerValue];
     }
     return self;
 }
@@ -35,6 +37,8 @@
     stage.objectID = [self.objectID copy];
     stage.objectName = [self.objectName copy];
     stage.number = self.number;
+    stage.sort = self.sort;
+    stage.taskNum = self.taskNum;
     return stage;
 }
 @end
