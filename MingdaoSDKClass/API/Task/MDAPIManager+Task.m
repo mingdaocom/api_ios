@@ -1643,9 +1643,10 @@
             NSArray *taskArr = stageDic[@"Task"];
             for (NSDictionary *taskDic in taskArr) {
                 MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
-                [tempArray addObject:task];
+                NSMutableDictionary *dic = [@{@"level":@0,@"open":@NO,@"task":task} mutableCopy];
+                [tempArray addObject:dic];
             }
-            [stageArray addObject:@{@"stage":stage,@"tasks":tempArray}];
+            [stageArray addObject:[@{@"stage":stage,@"tasks":tempArray} mutableCopy]];
         }
         handler(stageArray, error);
     }];
