@@ -270,6 +270,11 @@
                                                  favorite:(NSInteger)favorite
                                                   handler:(MDAPIBoolHandler)handler;
 
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 获取项目里的所有阶段下的一级任务
+ 
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)getFolderTaskListWithFolderID:(NSString *)folderID
                                             status:(NSInteger)status
                                          pageindex:(NSInteger)pageindex
