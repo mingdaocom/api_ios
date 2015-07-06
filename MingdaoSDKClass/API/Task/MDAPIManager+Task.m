@@ -1640,7 +1640,7 @@
             if (![stageDic isKindOfClass:[NSDictionary class]])
                 continue;
             MDTaskFolderStage *stage = [[MDTaskFolderStage alloc] initWithDictionary:stageDic];
-            NSArray *taskArr = stageDic[@"Task"];
+            NSArray *taskArr = stageDic[@"tasks"];
             for (NSDictionary *taskDic in taskArr) {
                 MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
                 NSMutableDictionary *dic = [@{@"level":@0,@"open":@NO,@"task":task} mutableCopy];
