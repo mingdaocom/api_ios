@@ -210,16 +210,17 @@
 
 - (MDURLConnection *)createFolderWithName:(NSString *)folderName
                              chargeUserID:(NSString *)userID
-                                colorType:(int)colorType
                                  deadLine:(NSString *)deadLine
-                                   stages:(NSArray *)stages
+                               isFavorite:(NSInteger)isFavorite
+                                  members:(NSString *)members
                                   handler:(MDAPINSStringHandler)handler;
 
 - (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
                                  folderName:(NSString *)folderName
                                  chargeUser:(NSString *)chargeUser
-                                  colorType:(int)colorType
                                    deadLine:(NSString *)deadLine
+                                 isFavorite:(NSInteger)isFavorite
+                                    members:(NSString *)members
                                     handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
@@ -235,6 +236,9 @@
                                        handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)loadFolderStagesWithFolderID:(NSString *)folderID
+                                          handler:(MDAPIObjectHandler)handler;
+
+- (MDURLConnection *)loadFolderDetailWithFolderID:(NSString *)folderID
                                           handler:(MDAPIObjectHandler)handler;
 
 

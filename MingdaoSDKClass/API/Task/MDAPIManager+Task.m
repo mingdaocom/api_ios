@@ -1238,8 +1238,9 @@
 - (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
                                  folderName:(NSString *)folderName
                                  chargeUser:(NSString *)chargeUser
-                                  colorType:(int)colorType
                                    deadLine:(NSString *)deadLine
+                                 isFavorite:(NSInteger)isFavorite
+                                    members:(NSString *)members
                                     handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -1269,11 +1270,18 @@
         [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", chargeUser] dataUsingEncoding:NSUTF8StringEncoding]];
     }
     
-    if (colorType >= 0) {
-        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"color"]dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%d\r\n", colorType] dataUsingEncoding:NSUTF8StringEncoding]];
-    }
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"isFavorite"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", isFavorite] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"members"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", members] dataUsingEncoding:NSUTF8StringEncoding]];
+//    if (colorType >= 0) {
+//        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"color"]dataUsingEncoding:NSUTF8StringEncoding]];
+//        [postBody appendData:[[NSString stringWithFormat:@"%d\r\n", colorType] dataUsingEncoding:NSUTF8StringEncoding]];
+//    }
     
     if (deadLine && deadLine.length > 0) {
         [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -1432,6 +1440,40 @@
     
     return connection;
 }
+
+- (MDURLConnection *)loadFolderDetailWithFolderID:(NSString *)folderID
+                                          handler:(MDAPIObjectHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v2/getFolderDetail?format=json"];
+    [urlString appendFormat:@"&access_token=%@",self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        MDTaskFolder *folder = [[MDTaskFolder alloc] initWithDictionary:dic];
+        handler(folder, error);
+    }];
+    
+    return connection;
+
+}
+
 
 - (MDURLConnection *)addStageToFolder:(NSString *)folderID
                             stageName:(NSString *)stageName

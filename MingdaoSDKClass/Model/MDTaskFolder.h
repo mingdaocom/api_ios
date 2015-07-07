@@ -28,5 +28,9 @@
 
 @property (strong, nonatomic) NSArray *stages;
 @property (readonly, nonatomic) BOOL isCompleted;
+
+@property (strong, nonatomic) NSArray *members;
+@property (assign ,nonatomic) NSInteger isFavorite;
+
 - (MDTaskFolder *)initWithDictionary:(NSDictionary *)aDic;
 @end
