@@ -139,5 +139,5 @@ typedef enum {
                           handler:(MDAPIBoolHandler)handler;
 
 
-
+- (MDURLConnection *)loadEGroupUsersListWithHandler:(MDAPINSDictionaryHandler)handler;
 @end
