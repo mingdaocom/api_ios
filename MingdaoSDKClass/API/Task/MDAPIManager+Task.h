@@ -276,6 +276,7 @@
  
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)getFolderTaskListWithFolderID:(NSString *)folderID
+                                            stageID:(NSString *)stageID
                                             status:(NSInteger)status
                                          pageindex:(NSInteger)pageindex
                                           pagesize:(NSInteger)pagesize

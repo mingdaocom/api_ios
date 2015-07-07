@@ -1023,9 +1023,9 @@
 
 - (MDURLConnection *)createFolderWithName:(NSString *)folderName
                              chargeUserID:(NSString *)userID
-                                colorType:(int)colorType
                                  deadLine:(NSString *)deadLine
-                                   stages:(NSArray *)stages
+                               isFavorite:(NSInteger)isFavorite
+                                  members:(NSString *)members
                                   handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -1048,41 +1048,49 @@
     [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"chargeUserID"]dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", userID] dataUsingEncoding:NSUTF8StringEncoding]];
 
-    if (colorType >= 0) {
-        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"color"]dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%d\r\n", colorType] dataUsingEncoding:NSUTF8StringEncoding]];
-    }
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"isFavorite"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", isFavorite] dataUsingEncoding:NSUTF8StringEncoding]];
     
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"members"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", members] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+//    if (colorType >= 0) {
+//        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"color"]dataUsingEncoding:NSUTF8StringEncoding]];
+//        [postBody appendData:[[NSString stringWithFormat:@"%d\r\n", colorType] dataUsingEncoding:NSUTF8StringEncoding]];
+//    }
+//    
     if (deadLine && deadLine.length > 0) {
         [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"deadline"]dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", deadLine] dataUsingEncoding:NSUTF8StringEncoding]];
     }
+//
+//    if (stages.count > 0) {
+//        NSMutableArray *stageDics = [NSMutableArray array];
+//        for (MDTaskFolderStage *stage in stages) {
+//            if ([stage isKindOfClass:[MDTaskFolderStage class]]) {
+//                if (stage.objectName) {
+//                    NSMutableDictionary *stageDic = [NSMutableDictionary dictionary];
+//                    [stageDic setObject:stage.objectName forKey:@"stageName"];
+//                    [stageDics addObject:stageDic];
+//                }
+//            }
+//        }
     
-    if (stages.count > 0) {
-        NSMutableArray *stageDics = [NSMutableArray array];
-        for (MDTaskFolderStage *stage in stages) {
-            if ([stage isKindOfClass:[MDTaskFolderStage class]]) {
-                if (stage.objectName) {
-                    NSMutableDictionary *stageDic = [NSMutableDictionary dictionary];
-                    [stageDic setObject:stage.objectName forKey:@"stageName"];
-                    [stageDics addObject:stageDic];
-                }
-            }
-        }
-        
-        NSString *jsonString = nil;
-        NSError *error = nil;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:stageDics
-                                                           options:0
-                                                             error:&error];
-        
-        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"newstages"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", jsonString] dataUsingEncoding:NSUTF8StringEncoding]];
-    }
+//        NSString *jsonString = nil;
+//        NSError *error = nil;
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:stageDics
+//                                                           options:0
+//                                                             error:&error];
+//        
+//        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"newstages"] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", jsonString] dataUsingEncoding:NSUTF8StringEncoding]];
+//    }
 
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -1590,6 +1598,7 @@
 }
 
 - (MDURLConnection *)getFolderTaskListWithFolderID:(NSString *)folderID
+                                           stageID:(NSString *)stageID
                                             status:(NSInteger)status
                                          pageindex:(NSInteger)pageindex
                                           pagesize:(NSInteger)pagesize
@@ -1602,9 +1611,15 @@
     [urlString appendString:@"/task/v2/getFolderTaskList?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
   
+    
     if (folderID) {
         [urlString appendFormat:@"&t_folderID=%@", folderID];
     }
+
+    if (stageID) {
+        [urlString appendFormat:@"&t_sid=%@", stageID];
+    } 
+
     
     [urlString appendFormat:@"&status=%ld",(long)status];
     [urlString appendFormat:@"&pageindex=%ld",(long)pageindex];
