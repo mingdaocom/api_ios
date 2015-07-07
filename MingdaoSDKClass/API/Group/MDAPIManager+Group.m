@@ -513,5 +513,53 @@
     return connection;
 }
 
-
+- (MDURLConnection *)loadEGroupUsersListWithHandler:(MDAPINSDictionaryHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/group/my_withegroupgroup.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return ;
+        }
+        NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (errorCode) {
+            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+            return;
+        }
+        
+        NSArray *userDics = [dic objectForKey:@"groups"];
+        NSMutableDictionary *resultDic = [NSMutableDictionary dictionary];
+        NSMutableArray *groups = [NSMutableArray array];
+        NSMutableArray *users = [NSMutableArray array];
+        
+        for (NSDictionary *dic in userDics) {
+            MDGroup *group = [[MDGroup alloc] init];
+            group.objectID = dic[@"id"];
+            group.objectName = dic[@"name"];
+            group.avatar = dic[@"avatar"];
+            [groups addObject:group];
+            
+            NSMutableArray *members = [NSMutableArray array];
+            NSArray *memberDics = dic[@"members"];
+            for (NSDictionary *memDic in memberDics) {
+                MDUser *user = [[MDUser alloc] initWithDictionary:memDic];
+                [members addObject:user];
+            }
+            [users addObject:members];
+        }
+        [resultDic setObject:groups forKey:@"Groups"];
+        [resultDic setObject:users forKey:@"Users"];
+        handler(resultDic, error);
+    }];
+    return connection;
+}
 @end
