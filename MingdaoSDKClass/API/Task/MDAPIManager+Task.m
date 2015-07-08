@@ -1595,13 +1595,15 @@
     return connection;
 }
 
-- (MDURLConnection *)saveTaskToStage:(NSString *)taskID
+- (MDURLConnection *)editTaskToStageTaskID:(NSString *)taskID
+                                  folderID:(NSString *)folderID
                              stageID:(NSString *)stageID
                              handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/editTaskStage?format=json"];
+    [urlString appendString:@"/task/v4/editTaskStage?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@",folderID];
     [urlString appendFormat:@"&t_id=%@", taskID];
     [urlString appendFormat:@"&t_sid=%@", stageID];
     
@@ -1612,6 +1614,32 @@
         [self handleBoolData:data error:error URLString:urlString handler:handler];
     }];
     return connection;
+}
+
+- (MDURLConnection *)editFolderStageWithFolderID:(NSString *)folderID
+                                         stageID:(NSString *)stageID
+                                       stageName:(NSString *)stageName
+                                            sort:(NSInteger)sort
+                                         handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/editFolderStage?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    [urlString appendFormat:@"&t_sid=%@", stageID];
+    if (stageName) {
+        [urlString appendFormat:@"&stageName=%@", stageName];
+    }
+    [urlString appendFormat:@"&sort=%ld", (long)sort];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+
 }
 
 
