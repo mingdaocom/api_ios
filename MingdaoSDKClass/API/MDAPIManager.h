@@ -11,6 +11,7 @@
 #import "MDAPIHandler.h"
 #import "MDErrorParser.h"
 
+#define MDAPIVersion @"58"
 #define MDAPIDefaultServerAddress @"https://api.mingdao.com"
 
 extern NSString * const MDAPIManagerNewTokenSetNotification;
