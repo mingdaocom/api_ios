@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *MDURLConnectionIPErrorOccurred;
+extern NSString *MDURLConnectionErrorOccurred;
 
 typedef void (^MDAPINSDataHandler)(NSData *data, NSError *error);
 typedef void (^MDAPICGFloatHandler)(float fValue);

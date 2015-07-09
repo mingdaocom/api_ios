@@ -9,7 +9,7 @@
 #import "MDURLConnection.h"
 #import "MDErrorParser.h"
 
-NSString *MDURLConnectionIPErrorOccurred = @"MDURLConnectionIPErrorOccurred";
+NSString *MDURLConnectionErrorOccurred = @"MDURLConnectionErrorOccurred";
 
 @interface MDURLConnection () <NSURLConnectionDataDelegate>
 @property (strong, nonatomic) NSMutableURLRequest *req;
@@ -46,8 +46,8 @@ NSString *MDURLConnectionIPErrorOccurred = @"MDURLConnectionIPErrorOccurred";
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    if (error.code == NSURLErrorCannotFindHost) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:MDURLConnectionIPErrorOccurred object:connection userInfo:@{@"error":error}];
+    if (error) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:MDURLConnectionErrorOccurred object:self userInfo:@{@"error":error}];
     }
     self.handler(nil, error);
     self.handler = nil;
