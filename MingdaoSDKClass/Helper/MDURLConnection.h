@@ -10,11 +10,13 @@
 
 extern NSString *MDURLConnectionErrorOccurred;
 
-typedef void (^MDAPINSDataHandler)(NSData *data, NSError *error);
+@class MDURLConnection;
+typedef void (^MDAPIHandler)(MDURLConnection *theConnection, id jsonObjectOrRawDataIfError, NSError *error);
 typedef void (^MDAPICGFloatHandler)(float fValue);
 
 @interface MDURLConnection : NSObject
-- (MDURLConnection *)initWithRequest:(NSURLRequest *)request handler:(MDAPINSDataHandler)handler;
+- (MDURLConnection *)initWithRequest:(NSURLRequest *)request handler:(MDAPIHandler)handler;
+@property (assign, nonatomic) BOOL errorNotification; // default: Yes
 @property (readonly, nonatomic) NSURLRequest *request;
 @property (assign, nonatomic) NSTimeInterval timeOut;
 @property (copy, nonatomic) MDAPICGFloatHandler downloadProgressHandler, uploadProgressHandler;

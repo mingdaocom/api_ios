@@ -15,13 +15,13 @@ NSString *MDURLConnectionErrorOccurred = @"MDURLConnectionErrorOccurred";
 @property (strong, nonatomic) NSMutableURLRequest *req;
 @property (strong, nonatomic) NSURLConnection *connection;
 @property (strong, nonatomic) NSMutableData *appendingData;
-@property (copy,   nonatomic) MDAPINSDataHandler handler;
+@property (copy,   nonatomic) MDAPIHandler handler;
 @property (assign, nonatomic) long long totalLength, currentLength;
 @property (assign, nonatomic) int statusCode;
 @end
 
 @implementation MDURLConnection
-- (MDURLConnection *)initWithRequest:(NSURLRequest *)request handler:(MDAPINSDataHandler)handler
+- (MDURLConnection *)initWithRequest:(NSURLRequest *)request handler:(MDAPIHandler)handler
 {
     self = [super init];
     if (self) {
@@ -33,6 +33,8 @@ NSString *MDURLConnectionErrorOccurred = @"MDURLConnectionErrorOccurred";
         }
         self.connection = [[NSURLConnection alloc] initWithRequest:self.req delegate:self startImmediately:NO];
         self.handler = handler;
+        
+        self.errorNotification = YES;
     }
     return self;
 }
@@ -46,11 +48,13 @@ NSString *MDURLConnectionErrorOccurred = @"MDURLConnectionErrorOccurred";
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    if (error) {
+    if (error && self.errorNotification) {
         [[NSNotificationCenter defaultCenter] postNotificationName:MDURLConnectionErrorOccurred object:self userInfo:@{@"error":error}];
     }
-    self.handler(nil, error);
+    self.handler(self, nil, error);
     self.handler = nil;
+    self.downloadProgressHandler = nil;
+    self.uploadProgressHandler = nil;
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
@@ -75,8 +79,42 @@ NSString *MDURLConnectionErrorOccurred = @"MDURLConnectionErrorOccurred";
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    self.handler(self.appendingData, nil);
+    NSData *data = self.appendingData;
+    NSError *jsonError = nil;
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+    if (!jsonObject) {
+        NSError *error = [MDErrorParser errorWithMDDic:nil URLString:self.req.URL.absoluteString];
+        if (error && self.errorNotification) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:MDURLConnectionErrorOccurred object:self userInfo:@{@"error":error}];
+        }
+        self.handler(self, data, error);
+        self.handler = nil;
+        self.downloadProgressHandler = nil;
+        self.uploadProgressHandler = nil;
+        return ;
+    }
+    
+    if ([jsonObject isKindOfClass:[NSArray class]]) {
+        self.handler(self, jsonObject, nil);
+        return;
+    } else if ([jsonObject isKindOfClass:[NSDictionary class]]) {
+        NSError *error = [MDErrorParser errorWithMDDic:jsonObject URLString:self.req.URL.absoluteString];
+        if (error) {
+            if (self.errorNotification) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:MDURLConnectionErrorOccurred object:self userInfo:@{@"error":error}];
+            }
+            self.handler(self, jsonObject, error);
+            self.handler = nil;
+            self.downloadProgressHandler = nil;
+            self.uploadProgressHandler = nil;
+            return;
+        }
+    }
+    
+    self.handler(self, jsonObject, nil);
     self.handler = nil;
+    self.downloadProgressHandler = nil;
+    self.uploadProgressHandler = nil;
 }
 
 - (void)start

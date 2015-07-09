@@ -26,7 +26,7 @@ extern NSString * const MDAPIManagerNewTokenSetNotification;
 + (void)setAppKey:(NSString *)appKey;
 + (void)setAppSecret:(NSString *)appSecret;
 
-- (void)handleBoolData:(NSData *)data error:(NSError *)error URLString:(NSString *)urlString handler:(MDAPIBoolHandler)handler;
+- (void)handleBoolData:(NSDictionary *)dic error:(NSError *)error URLString:(NSString *)urlString handler:(MDAPIBoolHandler)handler;
 
 - (NSString *)localEncode:(NSString *)string;
 #pragma mark - 登录/验证接口
