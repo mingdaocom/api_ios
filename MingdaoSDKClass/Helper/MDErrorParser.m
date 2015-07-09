@@ -27,7 +27,7 @@
         }
         int code = [errorCode intValue];
         NSString *localizedDescription = [self errorStringWithErrorCode:[NSString stringWithFormat:@"%d", code]];
-        if (!localizedDescription) {
+        if ([localizedDescription isEqualToString:errorCode] && errorMessage) {
             localizedDescription = errorMessage;
         }
         
