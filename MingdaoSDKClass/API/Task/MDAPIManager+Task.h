@@ -260,9 +260,17 @@
                                 toNewStageID:(NSString *)newStageID
                                      handler:(MDAPIBoolHandler)handler;
 
-- (MDURLConnection *)saveTaskToStage:(NSString *)taskID
-                             stageID:(NSString *)stageID
-                             handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)editTaskToStageTaskID:(NSString *)taskID
+                                  folderID:(NSString *)folderID
+                                   stageID:(NSString *)stageID
+                                   handler:(MDAPIBoolHandler)handler;
+
+- (MDURLConnection *)editFolderStageWithFolderID:(NSString *)folderID
+                                         stageID:(NSString *)stageID
+                                       stageName:(NSString *)stageName
+                                            sort:(NSInteger)sort
+                                         handler:(MDAPIBoolHandler)handler;
+
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
