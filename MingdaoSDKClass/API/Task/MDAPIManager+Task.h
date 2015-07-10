@@ -297,4 +297,22 @@
                                        filterType:(NSInteger)filterType
                                            handler:(MDAPINSArrayHandler)handler;
 
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+项目阶段视图里创建任务
+ 
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)createTaskV4AtFolderStageWithName:(NSString *)name
+                                              parentID:(NSString *)parentID
+                                                   des:(NSString *)des
+                                               endDate:(NSString *)endDate
+                                             chargerID:(NSString *)chargerID
+                                               members:(NSString *)members
+                                              folderID:(NSString *)folderID
+                                                 color:(NSInteger)color
+                                                postID:(NSString *)postID
+                                               stageID:(NSString *)stageID
+                                            isFavorite:(NSInteger)isFavorite
+                                               handler:(MDAPINSStringHandler)handler;
+
 @end

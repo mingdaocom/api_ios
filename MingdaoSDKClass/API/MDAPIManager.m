@@ -47,8 +47,8 @@ static MDAPIManager *sharedManager = nil;
 {
     if (!_serverAddress) {
         _serverAddress = MDAPIDefaultServerAddress;
-        //_serverAddress = @"http://172.16.23.247/MD.api.Web";
-        //_serverAddress = @"http://172.16.23.247/MD.api.Web2";
+        _serverAddress = @"http://172.16.23.247/MD.api.Web";
+        _serverAddress = @"http://172.16.23.247/MD.api.Web2";
         //_serverAddress = @"https://api2.mingdao.com";
         //_serverAddress = @"https://api3.mingdao.com";
         //_serverAddress = @"https://devapi.mingdao.com";
