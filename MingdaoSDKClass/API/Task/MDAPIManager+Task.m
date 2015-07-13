@@ -1280,6 +1280,7 @@
 
 - (MDURLConnection *)addStageToFolder:(NSString *)folderID
                             stageName:(NSString *)stageName
+                                 sort:(NSInteger)sort
                               handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -1287,6 +1288,7 @@
     [urlString appendFormat:@"&access_token=%@",self.accessToken];
     [urlString appendFormat:@"&t_folderID=%@", folderID];
     [urlString appendFormat:@"&stageName=%@", stageName];
+    [urlString appendFormat:@"&sort=%ld", (long)sort];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];

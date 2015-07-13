@@ -244,6 +244,7 @@
 
 - (MDURLConnection *)addStageToFolder:(NSString *)folderID
                             stageName:(NSString *)stageName
+                                 sort:(NSInteger)sort
                               handler:(MDAPINSStringHandler)handler;
 
 - (MDURLConnection *)saveStageNameWithFolderID:(NSString *)folderID
