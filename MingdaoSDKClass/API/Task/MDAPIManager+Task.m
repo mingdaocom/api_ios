@@ -735,6 +735,36 @@
     return connection;
 }
 
+- (MDURLConnection *)loadParentTasksWithTaskID:(NSString *)taskID
+                                       handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/getTaskParentsAndSubs?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", taskID];
+
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        
+        NSArray *taskDics = [dic objectForKey:@"parentTasks"];
+        NSMutableArray *tasks = [NSMutableArray array];
+        for (NSDictionary *taskDic in taskDics) {
+            if (![taskDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
+            [tasks addObject:task];
+        }
+        handler(tasks, error);
+    }];
+    return connection;
+
+}
+
+
 - (MDURLConnection *)loadCanBeRelatedTasksWithTaskID:(NSString *)taskID
                                             keywords:(NSString *)keywords
                                              handler:(MDAPINSArrayHandler)handler
@@ -1284,7 +1314,7 @@
                               handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v4/addFolderStage.aspx?format=json"];
+    [urlString appendString:@"/task/v4/addFolderV4?format=json"];
     [urlString appendFormat:@"&access_token=%@",self.accessToken];
     [urlString appendFormat:@"&t_folderID=%@", folderID];
     [urlString appendFormat:@"&stageName=%@", stageName];
@@ -1356,17 +1386,13 @@
 
 - (MDURLConnection *)deleteStageWithFolderID:(NSString *)folderID
                                      stageID:(NSString *)stageID
-                                toNewStageID:(NSString *)newStageID
                                      handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/delMoveFolderStage.aspx?format=json"];
+    [urlString appendString:@"/task/v4/deleteFolderStage?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_folderID=%@", folderID];
     [urlString appendFormat:@"&t_sid=%@", stageID];
-    if (newStageID) {
-        [urlString appendFormat:@"&newSid=%@", newStageID];
-    }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];

@@ -183,6 +183,10 @@
                                      pageSize:(int)pageSize
                                       handler:(MDAPINSArrayHandler)handler;
 
+- (MDURLConnection *)loadParentTasksWithTaskID:(NSString *)taskID
+                                       handler:(MDAPINSArrayHandler)handler;
+
+
 - (MDURLConnection *)loadCanBeRelatedTasksWithTaskID:(NSString *)taskID
                                               keywords:(NSString *)keywords
                                                handler:(MDAPINSArrayHandler)handler;
@@ -258,7 +262,6 @@
 
 - (MDURLConnection *)deleteStageWithFolderID:(NSString *)folderID
                                      stageID:(NSString *)stageID
-                                toNewStageID:(NSString *)newStageID
                                      handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)editTaskToStageTaskID:(NSString *)taskID
