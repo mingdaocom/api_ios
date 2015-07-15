@@ -1314,7 +1314,7 @@
                               handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v4/addFolderV4?format=json"];
+    [urlString appendString:@"/task/v4/addFolderStage?format=json"];
     [urlString appendFormat:@"&access_token=%@",self.accessToken];
     [urlString appendFormat:@"&t_folderID=%@", folderID];
     [urlString appendFormat:@"&stageName=%@", stageName];
