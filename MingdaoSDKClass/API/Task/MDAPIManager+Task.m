@@ -49,7 +49,7 @@
                                           handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v3/getTopicListByTaskID?format=json"];
+    [urlString appendString:@"/task/v4/getTopicListByTaskID?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     if (maxTID)
@@ -555,12 +555,7 @@
 #pragma mark -
 - (MDURLConnection *)loadFoldersWithKeywords:(NSString *)keywords
                                   filterType:(int)type
-                                   colorType:(int)colorType
                                    orderType:(int)orderType
-                           isShowEmptyFolder:(BOOL)isShowEmptyFolder
-                       isShowCompletedFolder:(BOOL)isShowCompletedFolder
-                                    pageSize:(int)pageSize
-                                   pageIndex:(int)pageIndex
                                      handler:(void(^)(NSArray *folders, MDTaskFolder *noFolderTaskInfo, NSError *error))handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -569,22 +564,9 @@
     if (keywords && keywords.length > 0){
         [urlString appendFormat:@"&keywords=%@", keywords];
     }
-    if (type == 2 || type == 3) {
-        [urlString appendFormat:@"&filter_type=%d", type];
-    }
-    if (colorType >= 0 && colorType <= 5) {
-        [urlString appendFormat:@"&color=%d", colorType];
-    }
+    [urlString appendFormat:@"&filterType=%d", type];
 
     [urlString appendFormat:@"&sort=%d", orderType];
-    if (pageSize > 0) {
-        [urlString appendFormat:@"&pagesize=%d", pageSize];
-    }
-    if (pageIndex > 0) {
-        [urlString appendFormat:@"&pageindex=%d", pageIndex];
-    }
-    [urlString appendFormat:@"&is_showEmptyFolder=%d", isShowEmptyFolder?1:0];
-    [urlString appendFormat:@"&is_showCompletedFolder=%d", isShowCompletedFolder?1:0];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
@@ -598,19 +580,16 @@
         for (NSDictionary *projectDic in projectDics) {
             if (![projectDic isKindOfClass:[NSDictionary class]])
                 continue;
-            MDTaskFolder *task = [[MDTaskFolder alloc] initWithDictionary:projectDic];
-            [projects addObject:task];
+                MDTaskFolder *task = [[MDTaskFolder alloc] initWithDictionary:projectDic];
+                [projects addObject:task];
         }
         
-        if ([[dic objectForKey:@"nullFolder_notificationCount"] intValue] == -1 || [[dic objectForKey:@"nullFolder_unCompleteCount"] intValue] == -1 || [[dic objectForKey:@"nullFolder_completedCount"] intValue] == -1) {
+//        if ([[dic objectForKey:@"nullFolder_notificationCount"] intValue] == -1 || [[dic objectForKey:@"nullFolder_unCompleteCount"] intValue] == -1 || [[dic objectForKey:@"nullFolder_completedCount"] intValue] == -1) {
+//            handler(projects, nil, error);
+//        } else {
+            //MDTaskFolder *noFolderTaskInfo = [[MDTaskFolder alloc] init];
             handler(projects, nil, error);
-        } else {
-            MDTaskFolder *noFolderTaskInfo = [[MDTaskFolder alloc] init];
-            noFolderTaskInfo.unreadDiscussCount = [[dic objectForKey:@"nullFolder_notificationCount"] intValue];
-            noFolderTaskInfo.taskInProgressCount = [[dic objectForKey:@"nullFolder_unCompleteCount"] intValue];
-            noFolderTaskInfo.taskCompletedCount = [[dic objectForKey:@"nullFolder_completedCount"] intValue];
-            handler(projects, noFolderTaskInfo, error);
-        }
+       // }
     }];
     return connection;
 }
@@ -1640,5 +1619,26 @@
     }];
     return connection;
 }
+
+- (MDURLConnection *)filterTaskCounhandler:(MDAPINSDictionaryHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/filterTaskCount?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    MDURLConnection *connection = [[MDURLConnection alloc]initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        if (dic && [dic isKindOfClass:[NSDictionary class]]) {
+            handler(dic, error);
+        } else {
+            handler(nil, error);
+        }
+    }];
+    return connection;
+
+}
+
 
 @end

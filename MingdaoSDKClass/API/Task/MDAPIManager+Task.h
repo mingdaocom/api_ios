@@ -154,12 +154,7 @@
 
 - (MDURLConnection *)loadFoldersWithKeywords:(NSString *)keywords
                                   filterType:(int)type
-                                   colorType:(int)colorType
                                    orderType:(int)orderType
-                           isShowEmptyFolder:(BOOL)isShowEmptyFolder
-                       isShowCompletedFolder:(BOOL)isShowCompletedFolder
-                                    pageSize:(int)pageSize
-                                   pageIndex:(int)pageIndex
                                      handler:(void(^)(NSArray *folders, MDTaskFolder *noFolderTaskInfo, NSError *error))handler;
 
 - (MDURLConnection *)loadTasksWithKeywords:(NSString *)keywords
@@ -318,5 +313,14 @@
                                                stageID:(NSString *)stageID
                                             isFavorite:(NSInteger)isFavorite
                                                handler:(MDAPINSStringHandler)handler;
+
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 获取我负责、托付、参与任务的各讨论数
+ 
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+- (MDURLConnection *)filterTaskCounhandler:(MDAPINSDictionaryHandler)handler;
 
 @end
