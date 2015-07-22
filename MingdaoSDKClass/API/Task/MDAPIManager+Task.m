@@ -556,7 +556,7 @@
 - (MDURLConnection *)loadFoldersWithKeywords:(NSString *)keywords
                                   filterType:(int)type
                                    orderType:(int)orderType
-                                     handler:(void(^)(NSArray *folders, MDTaskFolder *noFolderTaskInfo, NSError *error))handler
+                                     handler:(void(^)(NSArray *folders, NSArray *rankFolders, NSError *error))handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/v4/getFolders?format=json"];
@@ -577,19 +577,22 @@
         
         NSArray *projectDics = [dic objectForKey:@"folders"];
         NSMutableArray *projects = [NSMutableArray array];
+        NSMutableArray *rankFolders = [NSMutableArray array];
         for (NSDictionary *projectDic in projectDics) {
             if (![projectDic isKindOfClass:[NSDictionary class]])
                 continue;
+            if (![projectDic[@"id"] isEqualToString:@"2"]) {
                 MDTaskFolder *task = [[MDTaskFolder alloc] initWithDictionary:projectDic];
                 [projects addObject:task];
+            } else {
+                NSArray *tempArr = projectDic[@"folders"];
+                for (NSDictionary *dic in tempArr) {
+                    MDTaskFolder *task = [[MDTaskFolder alloc] initWithDictionary:dic];
+                    [rankFolders addObject:task];
+                }
+            }
         }
-        
-//        if ([[dic objectForKey:@"nullFolder_notificationCount"] intValue] == -1 || [[dic objectForKey:@"nullFolder_unCompleteCount"] intValue] == -1 || [[dic objectForKey:@"nullFolder_completedCount"] intValue] == -1) {
-//            handler(projects, nil, error);
-//        } else {
-            //MDTaskFolder *noFolderTaskInfo = [[MDTaskFolder alloc] init];
-            handler(projects, nil, error);
-       // }
+        handler(projects, rankFolders, error);
     }];
     return connection;
 }
