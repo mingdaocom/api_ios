@@ -1501,7 +1501,8 @@
         [urlString appendFormat:@"&t_sid=%@", stageID];
     } 
 
-    
+    [urlString appendFormat:@"&sort=%ld",(long)sort];
+
     [urlString appendFormat:@"&status=%ld",(long)status];
     [urlString appendFormat:@"&pageindex=%ld",(long)pageindex];
 
