@@ -1178,6 +1178,40 @@
     return connection;
 }
 
+- (MDURLConnection *)removeFolderMemberWiFolderID:(NSString *)folderID
+                                          handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/removeFolderMember?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)editFolderArchivedWithFolderID:(NSString *)folderID
+                                         isArchived:(NSString *)isArchived
+                                            handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/editFolderArchived?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    [urlString appendFormat:@"&isArchived=%@", folderID];
+
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
 - (MDURLConnection *)saveStagesSeqWithFolderID:(NSString *)folderID
                                      newStages:(NSArray *)stages
                                        handler:(MDAPIBoolHandler)handler

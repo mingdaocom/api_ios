@@ -230,6 +230,13 @@
                                 isDeleteTasks:(BOOL)isDeleteTasks
                                       handler:(MDAPIBoolHandler)handler;
 
+- (MDURLConnection *)removeFolderMemberWiFolderID:(NSString *)folderID
+                                          handler:(MDAPIBoolHandler)handler;
+
+- (MDURLConnection *)editFolderArchivedWithFolderID:(NSString *)folderID
+                                         isArchived:(NSString *)isArchived
+                                            handler:(MDAPIBoolHandler)handler;
+
 - (MDURLConnection *)saveStagesSeqWithFolderID:(NSString *)folderID
                                      newStages:(NSArray *)stages
                                        handler:(MDAPIBoolHandler)handler;
@@ -317,7 +324,7 @@
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
- 获取我负责、托付、参与任务的各讨论数
+ 获取我负责、托付、参与任务是否有讨论
  
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 
