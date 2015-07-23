@@ -737,18 +737,20 @@
                                      handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/upload?format=json"];
-    [urlString appendFormat:@"&access_token=%@&f_type=picture", self.accessToken];
-    if (groupIDs && groupIDs.count > 0)
-        [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&s_type=%ld", (long)shareType];
-    if (toCenter) {
-        [urlString appendFormat:@"&is_center=%d", 1];
-    }
+    [urlString appendString:@"/post/upload"];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"f_type", @"object":@"picture"}];
+    if (groupIDs && groupIDs.count > 0)
+        [parameters addObject:@{@"key":@"g_id", @"object":[groupIDs componentsJoinedByString:@","]}];
+    [parameters addObject:@{@"key":@"s_type", @"object":@(shareType)}];
+    if (toCenter) {
+        [parameters addObject:@{@"key":@"is_center", @"object":@"1"}];
+    }
     if (text) {
         [parameters addObject:@{@"key":@"p_msg", @"object":text}];
     }
