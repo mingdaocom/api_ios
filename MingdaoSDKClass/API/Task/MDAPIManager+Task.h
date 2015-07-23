@@ -163,7 +163,7 @@
                                 filterType:(int)filterType
                                  colorType:(int)colorType
                                  orderType:(int)orderType
-                                  finished:(BOOL)finished
+                                  finished:(int)finishedStatus
                                categortIDs:(NSString *)categortIDs
                                     userID:(NSString *)userID
                                  pageIndex:(int)pageIndex

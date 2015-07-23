@@ -604,7 +604,7 @@
                                 filterType:(int)filterType
                                  colorType:(int)colorType
                                  orderType:(int)orderType
-                                  finished:(BOOL)finished
+                                  finished:(int)finishedStatus
                                categortIDs:(NSString *)categortIDs
                                     userID:(NSString *)userID
                                  pageIndex:(int)pageIndex
@@ -627,7 +627,7 @@
     if (colorType >= 0 && colorType <= 5) {
         [urlString appendFormat:@"&color=%d", colorType];
     }
-    [urlString appendFormat:@"&status=%d", finished?1:0];
+    [urlString appendFormat:@"&status=%d", finishedStatus];
     if (categortIDs) {
         [urlString appendFormat:@"&categoryIDs=%@", categortIDs];
     }
