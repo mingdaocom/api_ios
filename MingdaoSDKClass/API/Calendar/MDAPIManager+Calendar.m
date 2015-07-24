@@ -40,6 +40,7 @@
                                       address:(NSString *)address
                                   description:(NSString *)des
                                     isPrivate:(BOOL)isPrivate
+                              visibleGroupIDs:(NSArray *)visibleGroupIDs
                                       userIDs:(NSArray *)uIDs
                                        emails:(NSArray *)emails
                                       isRecur:(BOOL)isRecur
@@ -63,7 +64,12 @@
     [parameters addObject:@{@"key":@"c_categoryID", @"object":categoryID}];
     [parameters addObject:@{@"key":@"c_allday", @"object":isAllday?@1:@0}];
     [parameters addObject:@{@"key":@"c_private", @"object":isPrivate?@0:@1}];
-
+    if (isPrivate) {
+        NSString *groupIDsString = [visibleGroupIDs componentsJoinedByString:@","];
+        if (groupIDsString) {
+            [parameters addObject:@{@"key":@"g_ids", @"object":groupIDsString}];
+        }
+    }
     if (address && address.length > 0)
         [parameters addObject:@{@"key":@"c_address", @"object":address}];
     if (des && des.length > 0)

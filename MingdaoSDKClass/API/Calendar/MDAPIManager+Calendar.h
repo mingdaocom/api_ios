@@ -44,6 +44,7 @@
                                       address:(NSString *)address
                                   description:(NSString *)des
                                     isPrivate:(BOOL)isPrivate
+                              visibleGroupIDs:(NSArray *)visibleGroupIDs
                                       userIDs:(NSArray *)uIDs
                                        emails:(NSArray *)emails
                                       isRecur:(BOOL)isRecur
