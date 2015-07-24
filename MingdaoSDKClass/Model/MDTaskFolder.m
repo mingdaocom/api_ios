@@ -41,6 +41,7 @@
         }
         
         self.isFavorite = [aDic[@"isFavorite"] integerValue];
+        self.isArchived = [aDic[@"isArchived"] integerValue];
         
         if ([[aDic objectForKey:@"members"] isKindOfClass:[NSArray class]]) {
             NSArray *membersArr = aDic[@"members"];
@@ -85,6 +86,7 @@
     copyObject.stages = [self.stages copy];
     copyObject.isFavorite = self.isFavorite;
     copyObject.members = [self.members copy];
+    copyObject.isArchived = self.isArchived;
     
     return copyObject;
 }

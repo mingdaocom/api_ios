@@ -234,7 +234,7 @@
                                           handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)editFolderArchivedWithFolderID:(NSString *)folderID
-                                         isArchived:(NSString *)isArchived
+                                         isArchived:(NSInteger)isArchived
                                             handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)saveStagesSeqWithFolderID:(NSString *)folderID

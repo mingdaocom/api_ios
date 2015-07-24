@@ -1195,14 +1195,14 @@
 }
 
 - (MDURLConnection *)editFolderArchivedWithFolderID:(NSString *)folderID
-                                         isArchived:(NSString *)isArchived
+                                         isArchived:(NSInteger)isArchived
                                             handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/v4/editFolderArchived?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_folderID=%@", folderID];
-    [urlString appendFormat:@"&isArchived=%@", folderID];
+    [urlString appendFormat:@"&isArchived=%ld", (long)isArchived];
 
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];

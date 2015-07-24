@@ -31,6 +31,7 @@
 
 @property (strong, nonatomic) NSArray *members;
 @property (assign ,nonatomic) NSInteger isFavorite;
+@property (assign, nonatomic) NSInteger isArchived;
 
 - (MDTaskFolder *)initWithDictionary:(NSDictionary *)aDic;
 @end
