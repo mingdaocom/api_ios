@@ -784,7 +784,7 @@
                                        handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/getTaskDetail?format=json"];
+    [urlString appendString:@"/task/v4/getTaskDetail?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@",taskID];
     
