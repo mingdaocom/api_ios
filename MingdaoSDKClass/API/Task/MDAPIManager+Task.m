@@ -920,7 +920,7 @@
                                   handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v4/addFolder?format=json"];
+    [urlString appendString:@"/task/v4/addFolderV4?format=json"];
     [urlString appendFormat:@"&access_token=%@",self.accessToken];
     
     NSMutableData *postBody = [NSMutableData data];
