@@ -263,8 +263,6 @@ static MDAPIManager *sharedManager = nil;
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
-    NSString *postBodyString = [[NSString alloc] initWithData:postBody encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", postBodyString);
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
     [req setValue:contentType forHTTPHeaderField:@"Content-type"];
     [req setHTTPBody:postBody];
