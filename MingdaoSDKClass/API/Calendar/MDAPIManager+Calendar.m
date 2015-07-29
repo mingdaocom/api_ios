@@ -83,8 +83,8 @@
         [parameters addObject:@{@"key":@"frequency", @"object":@(frequency)}];
         [parameters addObject:@{@"key":@"interval", @"object":@(interval)}];
         if (frequency == 2) {
-            weekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
-            [parameters addObject:@{@"key":@"week_day", @"object":weekDays}];
+            NSString *finalWeekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
+            [parameters addObject:@{@"key":@"week_day", @"object":finalWeekDays}];
         }
         if (recurCount > 0) {
             [parameters addObject:@{@"key":@"recur_count", @"object":@(recurCount)}];
@@ -151,8 +151,8 @@
         [parameters addObject:@{@"key":@"frequency", @"object":@(frequency)}];
         [parameters addObject:@{@"key":@"interval", @"object":@(interval)}];
         if (frequency == 2) {
-            weekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
-            [parameters addObject:@{@"key":@"week_day", @"object":weekDays}];
+            NSString *finalWeekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
+            [parameters addObject:@{@"key":@"week_day", @"object":finalWeekDays}];
         }
         if (recurCount > 0) {
             [parameters addObject:@{@"key":@"recur_count", @"object":@(recurCount)}];

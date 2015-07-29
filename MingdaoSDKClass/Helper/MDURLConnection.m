@@ -80,8 +80,7 @@ NSString *MDURLConnectionErrorOccurred = @"MDURLConnectionErrorOccurred";
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     NSData *data = self.appendingData;
-    NSError *jsonError = nil;
-    id jsonObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:NULL];
     if (!jsonObject) {
         NSError *error = [MDErrorParser errorWithMDDic:nil URLString:self.req.URL.absoluteString];
         if (error && self.errorNotification) {
@@ -121,7 +120,7 @@ NSString *MDURLConnectionErrorOccurred = @"MDURLConnectionErrorOccurred";
 {
     if (self.connection) {
 
-        NSLog(@"%@", [self.req.URL absoluteString]);
+//        NSLog(@"%@", [self.req.URL absoluteString]);
 
         self.appendingData = [NSMutableData data];
         [self.connection start];
