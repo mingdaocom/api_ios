@@ -717,6 +717,41 @@
     return connection;
 }
 
+
+- (MDURLConnection *)loadTaskSubTasksWithParentID:(NSString *)parentID
+                                        pageIndex:(int)pageIndex
+                                         pageSize:(int)pageSize
+                                          handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/getTaskSubTasks?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", parentID];
+    if (pageSize > 0)
+        [urlString appendFormat:@"&pagesize=%d", pageSize];
+    if (pageIndex > 0)
+        [urlString appendFormat:@"&pageindex=%d", pageIndex];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        
+        NSArray *taskDics = [dic objectForKey:@"tasks"];
+        NSMutableArray *tasks = [NSMutableArray array];
+        for (NSDictionary *taskDic in taskDics) {
+            if (![taskDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
+            [tasks addObject:task];
+        }
+        handler(tasks, error);
+    }];
+    return connection;
+}
+
 - (MDURLConnection *)loadParentTasksWithTaskID:(NSString *)taskID
                                        handler:(MDAPINSArrayHandler)handler
 {
