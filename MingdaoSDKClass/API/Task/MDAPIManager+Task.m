@@ -283,7 +283,7 @@
     [req setHTTPMethod:@"POST"];
     
     if (des && des.length > 0) {
-        NSString *str = [NSString stringWithFormat:@"des=%@", des];
+        NSString *str = [NSString stringWithFormat:@"des=%@",des];
         NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
         [req setHTTPBody:data];
     }
