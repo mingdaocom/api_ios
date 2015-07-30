@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F748812C1B69BE17005BAA74 /* MDTaskActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = F748812B1B69BE17005BAA74 /* MDTaskActivity.m */; };
 		F7B3F4F11886204800F186DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B3F4F01886204800F186DB /* Foundation.framework */; };
 		F7B3F4F31886204800F186DB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B3F4F21886204800F186DB /* CoreGraphics.framework */; };
 		F7B3F4F51886204800F186DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B3F4F41886204800F186DB /* UIKit.framework */; };
@@ -82,6 +83,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F748812A1B69BE17005BAA74 /* MDTaskActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTaskActivity.h; sourceTree = "<group>"; };
+		F748812B1B69BE17005BAA74 /* MDTaskActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTaskActivity.m; sourceTree = "<group>"; };
 		F7B3F4ED1886204800F186DB /* MDAuthticationSDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDAuthticationSDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7B3F4F01886204800F186DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F7B3F4F21886204800F186DB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -541,6 +544,8 @@
 				F7C63F001B42600D00D028E7 /* MDTag.m */,
 				F7C63F011B42600D00D028E7 /* MDTask.h */,
 				F7C63F021B42600D00D028E7 /* MDTask.m */,
+				F748812A1B69BE17005BAA74 /* MDTaskActivity.h */,
+				F748812B1B69BE17005BAA74 /* MDTaskActivity.m */,
 				F7C63F031B42600D00D028E7 /* MDTaskFolder.h */,
 				F7C63F041B42600D00D028E7 /* MDTaskFolder.m */,
 				F7C63F051B42600D00D028E7 /* MDTaskFolderStage.h */,
@@ -685,6 +690,7 @@
 				F7C63F151B42600D00D028E7 /* MDAPIManager+FullSearch.m in Sources */,
 				F7C63F181B42600D00D028E7 /* MDAPIManager+Message.m in Sources */,
 				F7C63F191B42600D00D028E7 /* MDAPIManager+Passport.m in Sources */,
+				F748812C1B69BE17005BAA74 /* MDTaskActivity.m in Sources */,
 				F7C63F2B1B42600D00D028E7 /* UARoundedRectView.m in Sources */,
 				F7C63F421B42600D00D028E7 /* MDUser.m in Sources */,
 				F7C63F1D1B42600D00D028E7 /* MDAPIManager+Vote.m in Sources */,
