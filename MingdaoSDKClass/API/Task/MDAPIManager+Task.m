@@ -20,20 +20,10 @@
         [urlString appendFormat:@"&keywords=%@", keywords];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSArray *projectDics = [dic objectForKey:@"projects"];
@@ -59,7 +49,7 @@
                                           handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v3/getTopicListByTaskID?format=json"];
+    [urlString appendString:@"/task/v4/getTopicListByTaskID?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
     if (maxTID)
@@ -72,22 +62,12 @@
     
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
         }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
-        
+
         NSArray *replyDics = [dic objectForKey:@"replyments"];
         NSMutableArray *replies = [NSMutableArray array];
         for (NSDictionary *replyDic in replyDics) {
@@ -138,20 +118,10 @@
         [req setHTTPBody:data];
     }
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSString *taskID = [dic objectForKey:@"task"];
@@ -172,20 +142,10 @@
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     [req setHTTPMethod:@"POST"];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSString *projectID = [dic objectForKey:@"project"];
@@ -228,20 +188,10 @@
     }
     [self postWithParameters:parameters withRequest:req];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSString *replementID = [dic objectForKey:@"replyment"];
@@ -262,8 +212,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -278,8 +228,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -294,8 +244,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -313,8 +263,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlStr handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlStr handler:handler];
     }];
     return connection;
 }
@@ -333,14 +283,14 @@
     [req setHTTPMethod:@"POST"];
     
     if (des && des.length > 0) {
-        NSString *str = [NSString stringWithFormat:@"des=%@", des];
+        NSString *str = [NSString stringWithFormat:@"des=%@",des];
         NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
         [req setHTTPBody:data];
     }
     
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -358,8 +308,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -377,8 +327,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -398,8 +348,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -417,8 +367,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -436,8 +386,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -454,8 +404,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
    
@@ -476,8 +426,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -507,8 +457,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -526,8 +476,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -547,8 +497,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -566,8 +516,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -596,8 +546,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -605,73 +555,44 @@
 #pragma mark -
 - (MDURLConnection *)loadFoldersWithKeywords:(NSString *)keywords
                                   filterType:(int)type
-                                   colorType:(int)colorType
                                    orderType:(int)orderType
-                           isShowEmptyFolder:(BOOL)isShowEmptyFolder
-                       isShowCompletedFolder:(BOOL)isShowCompletedFolder
-                                    pageSize:(int)pageSize
-                                   pageIndex:(int)pageIndex
-                                     handler:(void(^)(NSArray *folders, MDTaskFolder *noFolderTaskInfo, NSError *error))handler
+                                     handler:(void(^)(NSArray *folders, NSArray *rankFolders, NSError *error))handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/getFolders?format=json"];
+    [urlString appendString:@"/task/v4/getFolders?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0){
         [urlString appendFormat:@"&keywords=%@", keywords];
     }
-    if (type == 2 || type == 3) {
-        [urlString appendFormat:@"&filter_type=%d", type];
-    }
-    if (colorType >= 0 && colorType <= 5) {
-        [urlString appendFormat:@"&color=%d", colorType];
-    }
-    if (orderType >= 1 && orderType <= 2) {
-        [urlString appendFormat:@"&order_type=%d", orderType];
-    }
-    if (pageSize > 0) {
-        [urlString appendFormat:@"&pagesize=%d", pageSize];
-    }
-    if (pageIndex > 0) {
-        [urlString appendFormat:@"&pageindex=%d", pageIndex];
-    }
-    [urlString appendFormat:@"&is_showEmptyFolder=%d", isShowEmptyFolder?1:0];
-    [urlString appendFormat:@"&is_showCompletedFolder=%d", isShowCompletedFolder?1:0];
+    [urlString appendFormat:@"&filterType=%d", type];
+
+    [urlString appendFormat:@"&sort=%d", orderType];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, nil, error);
             return ;
         }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
         
         NSArray *projectDics = [dic objectForKey:@"folders"];
         NSMutableArray *projects = [NSMutableArray array];
+        NSMutableArray *rankFolders = [NSMutableArray array];
         for (NSDictionary *projectDic in projectDics) {
             if (![projectDic isKindOfClass:[NSDictionary class]])
                 continue;
-            MDTaskFolder *task = [[MDTaskFolder alloc] initWithDictionary:projectDic];
-            [projects addObject:task];
+            if (![projectDic[@"id"] isEqualToString:@"2"]) {
+                MDTaskFolder *task = [[MDTaskFolder alloc] initWithDictionary:projectDic];
+                [projects addObject:task];
+            } else {
+                NSArray *tempArr = projectDic[@"folders"];
+                for (NSDictionary *dic in tempArr) {
+                    MDTaskFolder *task = [[MDTaskFolder alloc] initWithDictionary:dic];
+                    [rankFolders addObject:task];
+                }
+            }
         }
-        
-        if ([[dic objectForKey:@"nullFolder_notificationCount"] intValue] == -1 || [[dic objectForKey:@"nullFolder_unCompleteCount"] intValue] == -1 || [[dic objectForKey:@"nullFolder_completedCount"] intValue] == -1) {
-            handler(projects, nil, error);
-        } else {
-            MDTaskFolder *noFolderTaskInfo = [[MDTaskFolder alloc] init];
-            noFolderTaskInfo.unreadDiscussCount = [[dic objectForKey:@"nullFolder_notificationCount"] intValue];
-            noFolderTaskInfo.taskInProgressCount = [[dic objectForKey:@"nullFolder_unCompleteCount"] intValue];
-            noFolderTaskInfo.taskCompletedCount = [[dic objectForKey:@"nullFolder_completedCount"] intValue];
-            handler(projects, noFolderTaskInfo, error);
-        }
+        handler(projects, rankFolders, error);
     }];
     return connection;
 }
@@ -683,7 +604,7 @@
                                 filterType:(int)filterType
                                  colorType:(int)colorType
                                  orderType:(int)orderType
-                                  finished:(BOOL)finished
+                                  finished:(int)finishedStatus
                                categortIDs:(NSString *)categortIDs
                                     userID:(NSString *)userID
                                  pageIndex:(int)pageIndex
@@ -691,7 +612,7 @@
                                    handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/getTaskList?format=json"];
+    [urlString appendString:@"/task/v4/getTaskList?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0){
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -702,13 +623,11 @@
             [urlString appendFormat:@"&t_sid=%@", stageID];
         }
     }
-    if (filterType == 2 || filterType == 3) {
-        [urlString appendFormat:@"&filter_type=%d", filterType];
-    }
+    [urlString appendFormat:@"&filter_type=%d", filterType];
     if (colorType >= 0 && colorType <= 5) {
         [urlString appendFormat:@"&color=%d", colorType];
     }
-    [urlString appendFormat:@"&status=%d", finished?1:0];
+    [urlString appendFormat:@"&status=%d", finishedStatus];
     if (categortIDs) {
         [urlString appendFormat:@"&categoryIDs=%@", categortIDs];
     }
@@ -719,25 +638,70 @@
         [urlString appendFormat:@"&pagesize=%d", pageSize];
     if (pageIndex > 0)
         [urlString appendFormat:@"&pageindex=%d", pageIndex];
-    if (orderType >= 1 && orderType <= 2) {
-        [urlString appendFormat:@"&order_type=%d", orderType];
-    }
+
+    [urlString appendFormat:@"&sort=%d", orderType];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
         }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
+        
+        if (orderType == 4) {
+            NSArray *folderDics = dic[@"tasks"];
+            NSMutableArray *folders = [NSMutableArray array];
+            for (NSDictionary *folderDic in folderDics) {
+                NSArray *taskDics = [folderDic objectForKey:@"tasks"];
+                NSMutableArray *tasks = [NSMutableArray array];
+                for (NSDictionary *taskDic in taskDics) {
+                    if (![taskDic isKindOfClass:[NSDictionary class]])
+                        continue;
+                    MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
+                    [tasks addObject:task];
+                }
+                
+                NSDictionary *tempDic = @{[folderDic[@"folderName"] isEqualToString:@""]?@"未关联项目":folderDic[@"folderName"]:tasks};
+                [folders addObject:tempDic];
+            }
+            handler(folders,error);
+        } else {
+            NSArray *taskDics = [dic objectForKey:@"tasks"];
+            NSMutableArray *tasks = [NSMutableArray array];
+            for (NSDictionary *taskDic in taskDics) {
+                if (![taskDic isKindOfClass:[NSDictionary class]])
+                    continue;
+                MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
+                [tasks addObject:task];
+            }
+            handler(tasks, error);
+
         }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
+        
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadSubTasksWithParentID:(NSString *)parentID
+                                    pageIndex:(int)pageIndex
+                                     pageSize:(int)pageSize
+                                      handler:(MDAPINSArrayHandler)handler
+{
+    
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/getSubTasks?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_parentID=%@", parentID];
+    if (pageSize > 0)
+        [urlString appendFormat:@"&pagesize=%d", pageSize];
+    if (pageIndex > 0)
+        [urlString appendFormat:@"&pageindex=%d", pageIndex];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
         }
         
         NSArray *taskDics = [dic objectForKey:@"tasks"];
@@ -753,36 +717,26 @@
     return connection;
 }
 
-- (MDURLConnection *)loadSubTasksWithParentID:(NSString *)parentID
-                                    pageIndex:(int)pageIndex
-                                     pageSize:(int)pageSize
-                                      handler:(MDAPINSArrayHandler)handler
+
+- (MDURLConnection *)loadTaskSubTasksWithParentID:(NSString *)parentID
+                                        pageIndex:(int)pageIndex
+                                         pageSize:(int)pageSize
+                                          handler:(MDAPINSArrayHandler)handler
 {
-    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/getSubTasks?format=json"];
+    [urlString appendString:@"/task/v4/getTaskSubTasks?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&t_parentID=%@", parentID];
+    [urlString appendFormat:@"&t_id=%@", parentID];
     if (pageSize > 0)
         [urlString appendFormat:@"&pagesize=%d", pageSize];
     if (pageIndex > 0)
         [urlString appendFormat:@"&pageindex=%d", pageIndex];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSArray *taskDics = [dic objectForKey:@"tasks"];
@@ -797,6 +751,36 @@
     }];
     return connection;
 }
+
+- (MDURLConnection *)loadParentTasksWithTaskID:(NSString *)taskID
+                                       handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/getTaskParentsAndSubs?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", taskID];
+
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        
+        NSArray *taskDics = [dic objectForKey:@"parentTasks"];
+        NSMutableArray *tasks = [NSMutableArray array];
+        for (NSDictionary *taskDic in taskDics) {
+            if (![taskDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
+            [tasks addObject:task];
+        }
+        handler(tasks, error);
+    }];
+    return connection;
+
+}
+
 
 - (MDURLConnection *)loadCanBeRelatedTasksWithTaskID:(NSString *)taskID
                                             keywords:(NSString *)keywords
@@ -811,22 +795,12 @@
     }
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
         }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
-        
+
         NSArray *taskDics = [dic objectForKey:@"tasks"];
         NSMutableArray *tasks = [NSMutableArray array];
         for (NSDictionary *taskDic in taskDics) {
@@ -845,25 +819,15 @@
                                        handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/getTaskDetail?format=json"];
+    [urlString appendString:@"/task/v4/getTaskDetail?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@",taskID];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSDictionary *taskDics = [dic objectForKey:@"task"];
@@ -872,6 +836,33 @@
         handler(task, error);
     }];
     return connection;
+}
+
+- (MDURLConnection *)loadTaskActivityWithTaskID:(NSString *)taskID
+                                        handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/getTaskActivityByTaskID?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@",taskID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        
+        NSArray *taskActArr = [dic objectForKey:@"taskActList"];
+        NSMutableArray *taskActArray = [NSMutableArray array];
+        for (NSDictionary *dic in taskActArr) {
+            MDTaskActivity *taskAct = [[MDTaskActivity alloc] initWithDictionary:dic];
+            [taskActArray addObject:taskAct];
+        }
+        handler(taskActArray, error);
+    }];
+    return connection;
+
 }
 
 #pragma mark -
@@ -900,20 +891,10 @@
         [urlString appendFormat:@"&pagesize=%d",pageSize];
     }
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSArray *msgDics = [dic objectForKey:@"taskMessages"];
@@ -959,8 +940,8 @@
     [req setValue:contentType forHTTPHeaderField:@"Content-type"];
     [req setHTTPBody:postBody];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error) {
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     
     return connection;
@@ -968,13 +949,13 @@
 
 - (MDURLConnection *)createFolderWithName:(NSString *)folderName
                              chargeUserID:(NSString *)userID
-                                colorType:(int)colorType
                                  deadLine:(NSString *)deadLine
-                                   stages:(NSArray *)stages
+                               isFavorite:(NSInteger)isFavorite
+                                  members:(NSString *)members
                                   handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/addFolder?format=json"];
+    [urlString appendString:@"/task/v4/addFolderV4?format=json"];
     [urlString appendFormat:@"&access_token=%@",self.accessToken];
     
     NSMutableData *postBody = [NSMutableData data];
@@ -993,40 +974,18 @@
     [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"chargeUserID"]dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", userID] dataUsingEncoding:NSUTF8StringEncoding]];
 
-    if (colorType >= 0) {
-        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"color"]dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%d\r\n", colorType] dataUsingEncoding:NSUTF8StringEncoding]];
-    }
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"isFavorite"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", (long)isFavorite] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"members"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", members] dataUsingEncoding:NSUTF8StringEncoding]];
     
     if (deadLine && deadLine.length > 0) {
         [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"deadline"]dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", deadLine] dataUsingEncoding:NSUTF8StringEncoding]];
-    }
-    
-    if (stages.count > 0) {
-        NSMutableArray *stageDics = [NSMutableArray array];
-        for (MDTaskFolderStage *stage in stages) {
-            if ([stage isKindOfClass:[MDTaskFolderStage class]]) {
-                if (stage.objectName) {
-                    NSMutableDictionary *stageDic = [NSMutableDictionary dictionary];
-                    [stageDic setObject:stage.objectName forKey:@"stageName"];
-                    [stageDics addObject:stageDic];
-                }
-            }
-        }
-        
-        NSString *jsonString = nil;
-        NSError *error = nil;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:stageDics
-                                                           options:0
-                                                             error:&error];
-        
-        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"newstages"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", jsonString] dataUsingEncoding:NSUTF8StringEncoding]];
     }
 
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -1038,26 +997,15 @@
     [req setValue:contentType forHTTPHeaderField:@"Content-type"];
     [req setHTTPBody:postBody];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
         }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
-        }
         
-        NSString *postID = [dic objectForKey:@"folderId"];
-        handler(postID, error);
-    }];
-    return connection;
+        NSString *folderID = [dic objectForKey:@"folderId"];
+        handler(folderID, error);
+    }];    return connection;
 }
 
 #pragma mark -
@@ -1150,20 +1098,10 @@
     [req setValue:contentType forHTTPHeaderField:@"Content-type"];
     [req setHTTPBody:postBody];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSString *postID = [dic objectForKey:@"task"];
@@ -1175,12 +1113,13 @@
 - (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
                                  folderName:(NSString *)folderName
                                  chargeUser:(NSString *)chargeUser
-                                  colorType:(int)colorType
                                    deadLine:(NSString *)deadLine
+                                 isFavorite:(NSInteger)isFavorite
+                                    members:(NSString *)members
                                     handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/editFolderInfo?format=json"];
+    [urlString appendString:@"/task/v4/editFolderInfo?format=json"];
     [urlString appendFormat:@"&access_token=%@",self.accessToken];
     
     NSMutableData *postBody = [NSMutableData data];
@@ -1206,12 +1145,14 @@
         [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", chargeUser] dataUsingEncoding:NSUTF8StringEncoding]];
     }
     
-    if (colorType >= 0) {
-        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"color"]dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%d\r\n", colorType] dataUsingEncoding:NSUTF8StringEncoding]];
-    }
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"isFavorite"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", (long)isFavorite] dataUsingEncoding:NSUTF8StringEncoding]];
     
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"members"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", members] dataUsingEncoding:NSUTF8StringEncoding]];
+
     if (deadLine && deadLine.length > 0) {
         [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"deadline"]dataUsingEncoding:NSUTF8StringEncoding]];
@@ -1227,8 +1168,8 @@
     [req setValue:contentType forHTTPHeaderField:@"Content-type"];
     [req setHTTPBody:postBody];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error) {
-        [self handleBoolData:data error:error URLString:urlStr handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlStr handler:handler];
     }];
     return connection;
 }
@@ -1246,8 +1187,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -1266,8 +1207,42 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)removeFolderMemberWiFolderID:(NSString *)folderID
+                                          handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/removeFolderMember?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)editFolderArchivedWithFolderID:(NSString *)folderID
+                                         isArchived:(NSInteger)isArchived
+                                            handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/editFolderArchived?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    [urlString appendFormat:@"&isArchived=%ld", (long)isArchived];
+
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -1277,7 +1252,7 @@
                                        handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/editFolderStage.aspx?format=json"];
+    [urlString appendString:@"/task/v4/editFolderStage.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_folderID=%@", folderID];
     
@@ -1323,8 +1298,8 @@
         [req setHTTPBody:postBody];
     }
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -1333,25 +1308,15 @@
                                           handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/getFolderStage.aspx?format=json"];
+    [urlString appendString:@"/task/v4/getFolderStage.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@",self.accessToken];
     [urlString appendFormat:@"&t_folderID=%@", folderID];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSMutableDictionary *mDic = [dic mutableCopy];
@@ -1370,33 +1335,49 @@
     return connection;
 }
 
-- (MDURLConnection *)addStageToFolder:(NSString *)folderID
-                            stageName:(NSString *)stageName
-                              handler:(MDAPINSStringHandler)handler
+- (MDURLConnection *)loadFolderDetailWithFolderID:(NSString *)folderID
+                                          handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/addFolderStage.aspx?format=json"];
+    [urlString appendString:@"/task/v4/getFolderDetail?format=json"];
     [urlString appendFormat:@"&access_token=%@",self.accessToken];
     [urlString appendFormat:@"&t_folderID=%@", folderID];
-    [urlString appendFormat:@"&stageName=%@", stageName];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
-
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
         }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
+        
+        MDTaskFolder *folder = [[MDTaskFolder alloc] initWithDictionary:dic];
+        handler(folder, error);
+    }];
+    
+    return connection;
+
+}
+
+
+- (MDURLConnection *)addStageToFolder:(NSString *)folderID
+                            stageName:(NSString *)stageName
+                                 sort:(NSInteger)sort
+                              handler:(MDAPINSStringHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/addFolderStage?format=json"];
+    [urlString appendFormat:@"&access_token=%@",self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    [urlString appendFormat:@"&stageName=%@", stageName];
+    [urlString appendFormat:@"&sort=%ld", (long)sort];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
             return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSString *postID = [dic objectForKey:@"stageID"];
@@ -1420,8 +1401,8 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -1430,7 +1411,6 @@
                                                           stageID:(NSString *)stageID
                                                           handler:(MDAPIBoolHandler)handler
 {
-    
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/validateStageHasTask.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
@@ -1440,22 +1420,10 @@
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(NO, error);
             return ;
-        }
-        
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(NO, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         if ([[dic objectForKey:@"isHas"] boolValue]) {
@@ -1469,43 +1437,302 @@
 
 - (MDURLConnection *)deleteStageWithFolderID:(NSString *)folderID
                                      stageID:(NSString *)stageID
-                                toNewStageID:(NSString *)newStageID
                                      handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/delMoveFolderStage.aspx?format=json"];
+    [urlString appendString:@"/task/v4/deleteFolderStage?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&t_folderID=%@", folderID];
-    [urlString appendFormat:@"&t_sid=%@", stageID];
-    if (newStageID) {
-        [urlString appendFormat:@"&newSid=%@", newStageID];
-    }
     
+    
+    NSMutableData *postBody = [NSMutableData data];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    NSString *boundary = @"--------MINGDAO";
+    NSString *boundaryPrefix = @"--";
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"t_folderID"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", folderID] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"t_sid"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", stageID] dataUsingEncoding:NSUTF8StringEncoding]];
+
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
+    [req setValue:contentType forHTTPHeaderField:@"Content-type"];
+    [req setHTTPBody:postBody];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
 
-- (MDURLConnection *)saveTaskToStage:(NSString *)taskID
+- (MDURLConnection *)editTaskToStageTaskID:(NSString *)taskID
+                                  folderID:(NSString *)folderID
                              stageID:(NSString *)stageID
                              handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/editTaskStage?format=json"];
+    [urlString appendString:@"/task/v4/editTaskStage?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@",folderID];
     [urlString appendFormat:@"&t_id=%@", taskID];
     [urlString appendFormat:@"&t_sid=%@", stageID];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
+
+- (MDURLConnection *)editFolderStageWithFolderID:(NSString *)folderID
+                                         stageID:(NSString *)stageID
+                                       stageName:(NSString *)stageName
+                                            sort:(NSInteger)sort
+                                         handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/editFolderStage?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    [urlString appendFormat:@"&t_sid=%@", stageID];
+    if (stageName) {
+        [urlString appendFormat:@"&stageName=%@", stageName];
+    }
+    [urlString appendFormat:@"&sort=%ld", (long)sort];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+
+}
+
+
+- (MDURLConnection *)editFolderOrTaskFavoriteWithFolderID:(NSString *)folderID taskID:(NSString *)taskID favorite:(NSInteger)favorite handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/editFolderOrTaskFavorite?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (taskID) {
+        [urlString appendFormat:@"&t_id=%@", taskID];
+    }
+    if (folderID) {
+        [urlString appendFormat:@"&t_folderID=%@", folderID];
+    }
+    
+    [urlString appendFormat:@"&isFavorite=%ld",(long)favorite];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+
+}
+
+- (MDURLConnection *)getFolderTaskListWithFolderID:(NSString *)folderID
+                                           stageID:(NSString *)stageID
+                                            status:(NSInteger)status
+                                         pageindex:(NSInteger)pageindex
+                                          pagesize:(NSInteger)pagesize
+                                              sort:(NSInteger)sort
+                                          keywords:(NSString *)keywords
+                                       filterType:(NSInteger)filterType
+                                           handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/getFolderTaskList?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+  
+    
+    if (folderID) {
+        [urlString appendFormat:@"&t_folderID=%@", folderID];
+    }
+
+    if (stageID) {
+        [urlString appendFormat:@"&t_sid=%@", stageID];
+    } 
+
+    [urlString appendFormat:@"&sort=%ld",(long)sort];
+
+    [urlString appendFormat:@"&status=%ld",(long)status];
+    [urlString appendFormat:@"&pageindex=%ld",(long)pageindex];
+
+    [urlString appendFormat:@"&pagesize=%ld",(long)pagesize];
+
+    if (keywords) {
+        [urlString appendFormat:@"&keywords=%@",keywords];
+    }
+    [urlString appendFormat:@"&filter_type=%ld",(long)filterType];
+
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        
+        NSArray *tasks = [dic objectForKey:@"tasks"];
+        NSMutableArray *stageArray = [NSMutableArray array];
+        for (NSDictionary *stageDic in tasks) {
+            NSMutableArray *tempArray = [[NSMutableArray alloc]init];
+            if (![stageDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDTaskFolderStage *stage = [[MDTaskFolderStage alloc] initWithDictionary:stageDic];
+            NSArray *taskArr = stageDic[@"tasks"];
+            for (NSDictionary *taskDic in taskArr) {
+                MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
+                NSMutableDictionary *dic = [@{@"level":@0,@"open":@NO,@"task":task} mutableCopy];
+                [tempArray addObject:dic];
+            }
+            [stageArray addObject:[@{@"stage":stage,@"tasks":tempArray} mutableCopy]];
+        }
+        handler(stageArray, error);
+    }];
+    
+    return connection;
+}
+
+
+- (MDURLConnection *)createTaskV4AtFolderStageWithName:(NSString *)name
+                                              parentID:(NSString *)parentID
+                                                   des:(NSString *)des
+                                               endDate:(NSString *)endDate
+                                             chargerID:(NSString *)chargerID
+                                               members:(NSString *)members
+                                              folderID:(NSString *)folderID
+                                                 color:(NSInteger)color
+                                                postID:(NSString *)postID
+                                               stageID:(NSString *)stageID
+                                            isFavorite:(NSInteger)isFavorite
+                                               handler:(MDAPINSStringHandler)handler
+{
+    
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/addTask?format=json"];
+    [urlString appendFormat:@"&access_token=%@",self.accessToken];
+    
+    NSMutableData *postBody = [NSMutableData data];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [req setHTTPMethod:@"POST"];
+    
+    NSString *boundary = @"--------MINGDAO";
+    NSString *boundaryPrefix = @"--";
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"t_title"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", name] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    if (des && des.length > 0) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"t_des"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", des] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    if (endDate && endDate.length > 0) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"t_ed"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", endDate] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"u_id"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", chargerID] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    if (members && members.length > 0) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"t_mids"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", members] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    if (folderID && folderID.length > 0) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"t_folderID"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", folderID] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        if (stageID.length > 0) {
+            [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"t_sid"]dataUsingEncoding:NSUTF8StringEncoding]];
+            [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", stageID] dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+    }
+    
+    if (parentID && parentID.length > 0) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"t_parentID"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", parentID] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    if (color >= 0) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"color"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", (long)color] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    if (postID && postID.length > 0) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"p_id"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", postID] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
+    [req setValue:contentType forHTTPHeaderField:@"Content-type"];
+    [req setHTTPBody:postBody];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        
+        NSString *taskID = [dic objectForKey:@"task"];
+        handler(taskID, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)filterTaskCounhandler:(MDAPINSDictionaryHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/filterTaskCount?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    MDURLConnection *connection = [[MDURLConnection alloc]initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        if (dic && [dic isKindOfClass:[NSDictionary class]]) {
+            handler(dic, error);
+        } else {
+            handler(nil, error);
+        }
+    }];
+    return connection;
+
+}
+
+
 @end

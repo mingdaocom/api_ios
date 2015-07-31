@@ -14,12 +14,17 @@
 @implementation MDErrorParser
 + (NSString *)errorStringWithErrorCode:(NSString *)errorCode
 {
-    return MDErrorLocalizedString(errorCode, nil);
+    NSString *tempString = MDErrorLocalizedString(errorCode, nil);
+    if ([tempString isEqualToString:errorCode]) {
+        return nil;
+    } else {
+        return tempString;
+    }
 }
 
 + (NSError *)errorWithMDDic:(NSDictionary *)dic URLString:(NSString *)urlString
 {
-    if (dic) {
+    if ([dic isKindOfClass:[NSDictionary class]]) {
         NSString *errorCode = [dic objectForKey:@"error_code"];
         NSString *errorMessage = [dic objectForKey:@"error_msg"];
         if (!errorCode) {

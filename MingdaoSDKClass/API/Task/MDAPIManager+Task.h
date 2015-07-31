@@ -154,13 +154,8 @@
 
 - (MDURLConnection *)loadFoldersWithKeywords:(NSString *)keywords
                                   filterType:(int)type
-                                   colorType:(int)colorType
                                    orderType:(int)orderType
-                           isShowEmptyFolder:(BOOL)isShowEmptyFolder
-                       isShowCompletedFolder:(BOOL)isShowCompletedFolder
-                                    pageSize:(int)pageSize
-                                   pageIndex:(int)pageIndex
-                                     handler:(void(^)(NSArray *folders, MDTaskFolder *noFolderTaskInfo, NSError *error))handler;
+                                     handler:(void(^)(NSArray *folders, NSArray *rankFolders, NSError *error))handler;
 
 - (MDURLConnection *)loadTasksWithKeywords:(NSString *)keywords
                                   folderID:(NSString *)folderID
@@ -168,7 +163,7 @@
                                 filterType:(int)filterType
                                  colorType:(int)colorType
                                  orderType:(int)orderType
-                                  finished:(BOOL)finished
+                                  finished:(int)finishedStatus
                                categortIDs:(NSString *)categortIDs
                                     userID:(NSString *)userID
                                  pageIndex:(int)pageIndex
@@ -183,6 +178,15 @@
                                      pageSize:(int)pageSize
                                       handler:(MDAPINSArrayHandler)handler;
 
+- (MDURLConnection *)loadTaskSubTasksWithParentID:(NSString *)parentID
+                                    pageIndex:(int)pageIndex
+                                     pageSize:(int)pageSize
+                                      handler:(MDAPINSArrayHandler)handler;
+
+- (MDURLConnection *)loadParentTasksWithTaskID:(NSString *)taskID
+                                       handler:(MDAPINSArrayHandler)handler;
+
+
 - (MDURLConnection *)loadCanBeRelatedTasksWithTaskID:(NSString *)taskID
                                               keywords:(NSString *)keywords
                                                handler:(MDAPINSArrayHandler)handler;
@@ -194,6 +198,10 @@
                                            pageIndex:(int)pageIndex
                                             pageSize:(int)pageSize
                                              handler:(MDAPINSArrayHandler)handler;
+
+- (MDURLConnection *)loadTaskActivityWithTaskID:(NSString *)taskID
+                                        handler:(MDAPINSArrayHandler)handler;
+
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  完成/删除/编辑项目
@@ -206,16 +214,17 @@
 
 - (MDURLConnection *)createFolderWithName:(NSString *)folderName
                              chargeUserID:(NSString *)userID
-                                colorType:(int)colorType
                                  deadLine:(NSString *)deadLine
-                                   stages:(NSArray *)stages
+                               isFavorite:(NSInteger)isFavorite
+                                  members:(NSString *)members
                                   handler:(MDAPINSStringHandler)handler;
 
 - (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
                                  folderName:(NSString *)folderName
                                  chargeUser:(NSString *)chargeUser
-                                  colorType:(int)colorType
                                    deadLine:(NSString *)deadLine
+                                 isFavorite:(NSInteger)isFavorite
+                                    members:(NSString *)members
                                     handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
@@ -226,6 +235,13 @@
                                 isDeleteTasks:(BOOL)isDeleteTasks
                                       handler:(MDAPIBoolHandler)handler;
 
+- (MDURLConnection *)removeFolderMemberWiFolderID:(NSString *)folderID
+                                          handler:(MDAPIBoolHandler)handler;
+
+- (MDURLConnection *)editFolderArchivedWithFolderID:(NSString *)folderID
+                                         isArchived:(NSInteger)isArchived
+                                            handler:(MDAPIBoolHandler)handler;
+
 - (MDURLConnection *)saveStagesSeqWithFolderID:(NSString *)folderID
                                      newStages:(NSArray *)stages
                                        handler:(MDAPIBoolHandler)handler;
@@ -233,9 +249,13 @@
 - (MDURLConnection *)loadFolderStagesWithFolderID:(NSString *)folderID
                                           handler:(MDAPIObjectHandler)handler;
 
+- (MDURLConnection *)loadFolderDetailWithFolderID:(NSString *)folderID
+                                          handler:(MDAPIObjectHandler)handler;
+
 
 - (MDURLConnection *)addStageToFolder:(NSString *)folderID
                             stageName:(NSString *)stageName
+                                 sort:(NSInteger)sort
                               handler:(MDAPINSStringHandler)handler;
 
 - (MDURLConnection *)saveStageNameWithFolderID:(NSString *)folderID
@@ -249,10 +269,70 @@
 
 - (MDURLConnection *)deleteStageWithFolderID:(NSString *)folderID
                                      stageID:(NSString *)stageID
-                                toNewStageID:(NSString *)newStageID
                                      handler:(MDAPIBoolHandler)handler;
 
-- (MDURLConnection *)saveTaskToStage:(NSString *)taskID
-                             stageID:(NSString *)stageID
-                             handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)editTaskToStageTaskID:(NSString *)taskID
+                                  folderID:(NSString *)folderID
+                                   stageID:(NSString *)stageID
+                                   handler:(MDAPIBoolHandler)handler;
+
+- (MDURLConnection *)editFolderStageWithFolderID:(NSString *)folderID
+                                         stageID:(NSString *)stageID
+                                       stageName:(NSString *)stageName
+                                            sort:(NSInteger)sort
+                                         handler:(MDAPIBoolHandler)handler;
+
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 给项目或任务加星，项目或任务id只能传一个
+ 
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)editFolderOrTaskFavoriteWithFolderID:(NSString *)folderID
+                                                   taskID:(NSString *)taskID
+                                                 favorite:(NSInteger)favorite
+                                                  handler:(MDAPIBoolHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 获取项目里的所有阶段下的一级任务
+ 
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)getFolderTaskListWithFolderID:(NSString *)folderID
+                                            stageID:(NSString *)stageID
+                                            status:(NSInteger)status
+                                         pageindex:(NSInteger)pageindex
+                                          pagesize:(NSInteger)pagesize
+                                              sort:(NSInteger)sort
+                                          keywords:(NSString *)keywords
+                                       filterType:(NSInteger)filterType
+                                           handler:(MDAPINSArrayHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+项目阶段视图里创建任务
+ 
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)createTaskV4AtFolderStageWithName:(NSString *)name
+                                              parentID:(NSString *)parentID
+                                                   des:(NSString *)des
+                                               endDate:(NSString *)endDate
+                                             chargerID:(NSString *)chargerID
+                                               members:(NSString *)members
+                                              folderID:(NSString *)folderID
+                                                 color:(NSInteger)color
+                                                postID:(NSString *)postID
+                                               stageID:(NSString *)stageID
+                                            isFavorite:(NSInteger)isFavorite
+                                               handler:(MDAPINSStringHandler)handler;
+
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ 获取我负责、托付、参与任务是否有讨论
+ 
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+- (MDURLConnection *)filterTaskCounhandler:(MDAPINSDictionaryHandler)handler;
+
 @end

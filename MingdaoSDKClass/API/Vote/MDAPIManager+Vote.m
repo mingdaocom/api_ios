@@ -27,20 +27,10 @@
         [urlString appendFormat:@"&keywords=%@", keywords];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSArray *postDics = [dic objectForKey:@"posts"];
@@ -73,20 +63,10 @@
         [urlString appendFormat:@"&keywords=%@", keywords];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSArray *postDics = [dic objectForKey:@"posts"];
@@ -118,20 +98,10 @@
         [urlString appendFormat:@"&keywords=%@", keywords];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSArray *postDics = [dic objectForKey:@"posts"];
@@ -156,20 +126,10 @@
     [urlString appendFormat:@"&p_id=%@", pID];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSDictionary *postDic = [dic objectForKey:@"post"];
@@ -190,8 +150,8 @@
     [urlString appendFormat:@"&options=%@", optionString];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -292,20 +252,10 @@
     [req setValue:contentType forHTTPHeaderField:@"Content-type"];
     [req setHTTPBody:postBody];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSString *postID = [dic objectForKey:@"post"];

@@ -39,6 +39,20 @@
             }
             self.stages = stages;
         }
+        
+        self.isFavorite = [aDic[@"isFavorite"] integerValue];
+        self.isArchived = [aDic[@"isArchived"] integerValue];
+        
+        if ([[aDic objectForKey:@"members"] isKindOfClass:[NSArray class]]) {
+            NSArray *membersArr = aDic[@"members"];
+            NSMutableArray *tempArr = [NSMutableArray array];
+            for (NSDictionary *dic in membersArr) {
+                MDUser *member = [[MDUser alloc] initWithDictionary:dic];
+                [tempArr addObject:member];
+            }
+            self.members = tempArr;
+        }
+        
     }
     return self;
 }
@@ -70,6 +84,9 @@
     copyObject.creatorID = [self.creatorID copy];
     copyObject.charger = [self.charger copy];
     copyObject.stages = [self.stages copy];
+    copyObject.isFavorite = self.isFavorite;
+    copyObject.members = [self.members copy];
+    copyObject.isArchived = self.isArchived;
     
     return copyObject;
 }

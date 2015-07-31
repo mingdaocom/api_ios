@@ -25,6 +25,7 @@
         self.creator = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"create_user"]];
         
         self.subTaskCount = [[aDic objectForKey:@"sub_count"] intValue];
+        self.subTaskCompleteCount = [[aDic objectForKey:@"complete_count"] intValue];
         
         self.replyCount = [[aDic objectForKey:@"reply_count"] intValue];
         self.unreadDiscussCount = [[aDic objectForKey:@"unread_count"] intValue];
@@ -34,6 +35,7 @@
         self.isLocked = [[aDic objectForKey:@"is_lock"] boolValue];
         self.isNoticed = [[aDic objectForKey:@"is_notice"] boolValue];
         self.isContainMe = [[aDic objectForKey:@"isContainMe"] boolValue];
+        self.isFavorite = [[aDic objectForKey:@"isFavorite"] boolValue];
         
         self.currentUserType = [[aDic objectForKey:@"currentUserType"] intValue] + 1;
         

@@ -16,6 +16,3 @@
 #import "MDAPIManager+Post.h"
 #import "MDAPIManager+Vote.h"
 #import "MDAPIManager+Company.h"
-
-
-

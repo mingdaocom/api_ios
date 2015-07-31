@@ -17,20 +17,10 @@
     [urlString appendString:@"/message/all?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSArray *messagesDic = [dic objectForKey:@"messages"];
@@ -58,20 +48,10 @@
     [urlString appendFormat:@"&pageindex=%ld", (long)pages];
     [urlString appendFormat:@"&pagesize=%ld", (long)size];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSArray *messageDics = [dic objectForKey:@"messages"];
@@ -147,20 +127,10 @@
         [req setHTTPBody:data];
     }
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(nil, [MDErrorParser errorWithMDDic:dic URLString:urlString]);
-            return;
         }
         
         NSString *objectID = [dic objectForKey:@"message"];
@@ -177,8 +147,8 @@
     [urlString appendFormat:@"&m_id=%@", mID];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
@@ -191,8 +161,8 @@
     [urlString appendFormat:@"&m_id=%@", mID];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(NSData *data, NSError *error){
-        [self handleBoolData:data error:error URLString:urlString handler:handler];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
