@@ -201,6 +201,26 @@
     return connection;
 }
 
+
+- (MDURLConnection *)deleteTaskReplymentOnTaskWithTaskID:(NSString *)tID
+                                 replyToReplymentWithRID:(NSString *)rID
+                                                 handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/delete_topic?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", tID];
+    [urlString appendFormat:@"&r_id=%@",rID];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+    
+}
+
+
 #pragma mark -
 - (MDURLConnection *)finishTaskWithTaskID:(NSString *)tID handler:(MDAPIBoolHandler)handler
 {

@@ -80,6 +80,10 @@
                                                   images:(NSArray *)images
                                                  handler:(MDAPINSStringHandler)handler;
 
+- (MDURLConnection *)deleteTaskReplymentOnTaskWithTaskID:(NSString *)tID
+                                 replyToReplymentWithRID:(NSString *)rID
+                                                 handler:(MDAPIBoolHandler)handler;
+
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  完成/删除/编辑任务
