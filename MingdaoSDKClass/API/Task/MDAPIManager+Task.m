@@ -183,7 +183,9 @@
             if (i > 0) {
                 [parameter appendFormat:@"%d", i];
             }
-            [parameters addObject:@{@"key":parameter, @"object":image, @"fileName":fileName}];
+            if (parameter && image && fileName) {
+                [parameters addObject:@{@"key":parameter, @"object":image, @"fileName":fileName}];
+            }
         }
     }
     [self postWithParameters:parameters withRequest:req];
