@@ -23,30 +23,30 @@
  size - 指定要返回的记录条数
  handler - 包含多个MDPost的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadPostWithTagName:(NSString *)tagName
-                                keywords:(NSString *)keywords
-                                   maxID:(NSString *)maxID
-                                pageSize:(NSInteger)size
-                                 handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadPostsWithTagName:(NSString *)tagName
+                                 keywords:(NSString *)keywords
+                                    maxID:(NSString *)maxID
+                                 pageSize:(int)size
+                                  handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadAllPostsWithKeywords:(NSString *)keywords
                                      postType:(MDPostType)type
                                       sinceID:(NSString *)sinceID
                                         maxID:(NSString *)maxID
-                                     pagesize:(NSInteger)size
+                                     pagesize:(int)size
                                       handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadFavouritedPostsWithKeywords:(NSString *)keywords
                                             postType:(MDPostType)type
                                              sinceID:(NSString *)sinceID
                                                maxID:(NSString *)maxID
-                                            pagesize:(NSInteger)size
+                                            pagesize:(int)size
                                              handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadReplyMePostsWithKeywords:(NSString *)keywords
                                             maxID:(NSString *)maxID
-                                         pagesize:(NSInteger)size
+                                         pagesize:(int)size
                                           handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadMyReplyWithKeywords:(NSString *)keywords
                                        maxID:(NSString *)maxID
-                                    pagesize:(NSInteger)size
+                                    pagesize:(int)size
                                      handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
                                       postType:(MDPostType)type
@@ -56,44 +56,44 @@
 - (MDURLConnection *)loadMyPostsWithKeywords:(NSString *)keywords
                                     postType:(MDPostType)type
                                        maxID:(NSString *)maxID
-                                    pagesize:(NSInteger)size
+                                    pagesize:(int)size
                                      handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadUserPostsWithUserID:(NSString *)userID
                                        maxID:(NSString *)maxID
-                                    pagesize:(NSInteger)size
+                                    pagesize:(int)size
                                      handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadGroupPostsWithGroupID:(NSString *)groupID
                                       Keywords:(NSString *)keywords
                                          maxID:(NSString *)maxID
-                                      pagesize:(NSInteger)size
+                                      pagesize:(int)size
                                        handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadDocumentPostsWithGroupID:(NSString *)groupID
                                          Keywords:(NSString *)keywords
-                                       filterType:(NSInteger)filterType
+                                       filterType:(int)filterType
                                           sinceID:(NSString *)sinceID
                                             maxID:(NSString *)maxID
-                                         pagesize:(NSInteger)size
+                                         pagesize:(int)size
                                           handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadImagePostsWithGroupID:(NSString *)groupID
                                       Keywords:(NSString *)keywords
-                                    filterType:(NSInteger)filterType
+                                    filterType:(int)filterType
                                        sinceID:(NSString *)sinceID
                                          maxID:(NSString *)maxID
-                                      pagesize:(NSInteger)size
+                                      pagesize:(int)size
                                        handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadFAQPostsWithGroupID:(NSString *)groupID
                                     Keywords:(NSString *)keywords
-                                  filterType:(NSInteger)filterType
+                                  filterType:(int)filterType
                                      sinceID:(NSString *)sinceID
                                        maxID:(NSString *)maxID
-                                    pagesize:(NSInteger)size
+                                    pagesize:(int)size
                                      handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadVideoPostsWithGroupID:(NSString *)groupID
                                       Keywords:(NSString *)keywords
-                                    filterType:(NSInteger)filterType
+                                    filterType:(int)filterType
                                        sinceID:(NSString *)sinceID
                                          maxID:(NSString *)maxID
-                                      pagesize:(NSInteger)size
+                                      pagesize:(int)size
                                        handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadToppedPostsWithHandler:(MDAPINSArrayHandler)handler;
 
@@ -128,36 +128,36 @@
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)createTextPostWithText:(NSString *)text
                                    groupIDs:(NSArray *)groupIDs
-                                  shareType:(NSInteger)shareType
+                                  shareType:(int)shareType
                                     handler:(MDAPINSStringHandler)handler;
 - (MDURLConnection *)createURLPostWithText:(NSString *)text
                                   urlTitle:(NSString *)title
                                    urlLink:(NSString *)link
                                   groupIDs:(NSArray *)groupIDs
-                                 shareType:(NSInteger)shareType
+                                 shareType:(int)shareType
                                    handler:(MDAPINSStringHandler)handler;
 - (MDURLConnection *)createFAQPostWithText:(NSString *)text
                                   groupIDs:(NSArray *)groupIDs
-                                 shareType:(NSInteger)shareType
+                                 shareType:(int)shareType
                                    handler:(MDAPINSStringHandler)handler;
 - (MDURLConnection *)createImagePostWithText:(NSString *)text
                                       images:(NSArray *)images
                                     groupIDs:(NSArray *)groupIDs
-                                   shareType:(NSInteger)shareType
+                                   shareType:(int)shareType
                                     toCenter:(BOOL)toCenter
                                      handler:(MDAPINSStringHandler)handler;
 - (MDURLConnection *)createFilePostWithText:(NSString *)text
                                    fileName:(NSString *)fileName
                                        file:(NSData *)fileData
                                    groupIDs:(NSArray *)groupIDs
-                                  shareType:(NSInteger)shareType
+                                  shareType:(int)shareType
                                    toCenter:(BOOL)toCenter
                                     handler:(MDAPINSStringHandler)handler;
 - (MDURLConnection *)createRepostWithText:(NSString *)text
                                    images:(NSArray *)images
                                    postID:(NSString *)postID
                                  groupIDs:(NSArray *)groupIDs
-                                shareType:(NSInteger)shareType
+                                shareType:(int)shareType
                     commentToOriginalPost:(BOOL)yesOrNo
                                   handler:(MDAPINSStringHandler)handler;
 
@@ -186,7 +186,7 @@
                                                   images:(NSArray *)images
                                               isReshared:(BOOL)yesOrNo
                                                 groupIDs:(NSArray *)groupIDs
-                                               shareType:(NSInteger)shareType
+                                               shareType:(int)shareType
                                                  handler:(MDAPINSStringHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -231,8 +231,8 @@
  handler - 处理包含多个MDTag的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loadAllTagsWithKeywords:(NSString *)keywords
-                                    pagesize:(NSInteger)size
-                                        page:(NSInteger)page
+                                    pagesize:(int)size
+                                        page:(int)page
                                      handler:(MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
