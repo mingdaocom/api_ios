@@ -120,8 +120,9 @@ NSString *MDURLConnectionErrorOccurred = @"MDURLConnectionErrorOccurred";
 {
     if (self.connection) {
 
+#ifdef DEBUG
         NSLog(@"%@", [self.req.URL absoluteString]);
-
+#endif
         self.appendingData = [NSMutableData data];
         [self.connection start];
     }
