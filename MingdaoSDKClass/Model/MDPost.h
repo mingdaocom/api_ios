@@ -65,7 +65,7 @@ enum {
     MDPostShareTypeSelf = 3,
     MDPostShareTypeAll = 4
 };
-typedef NSInteger MDPostShareType;
+typedef int MDPostShareType;
 
 enum {
     MDPostTypeAll = -1,
@@ -78,7 +78,7 @@ enum {
     MDPostTypeVideoAndAudio = 8,
     MDPostTypeAttachments = 9
 };
-typedef NSInteger MDPostType;
+typedef int MDPostType;
 
 @interface MDPost : NSObject
 @property (strong, nonatomic) NSString *objectID;

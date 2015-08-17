@@ -11,25 +11,24 @@
 
 @implementation MDAPIManager (Post)
 #pragma mark -
-- (MDURLConnection *)loadPostWithTagName:(NSString *)tagName
+- (MDURLConnection *)loadPostsWithTagName:(NSString *)tagName
                                 keywords:(NSString *)keywords
                                    maxID:(NSString *)maxID
-                                pageSize:(NSInteger)size
+                                pageSize:(int)size
                                  handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/post/v2/tag?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&tag=%@", tagName];
+    [urlString appendFormat:@"&tag=%@", [tagName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", (int)size];
+        [urlString appendFormat:@"&pagesize=%d", size];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -52,26 +51,25 @@
                                      postType:(MDPostType)type
                                       sinceID:(NSString *)sinceID
                                         maxID:(NSString *)maxID
-                                     pagesize:(NSInteger)size
+                                     pagesize:(int)size
                                       handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/post/v2/all?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (sinceID && sinceID.length > 0)
         [urlString appendFormat:@"&since_id=%@", sinceID];
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", (int)size];
+        [urlString appendFormat:@"&pagesize=%d", size];
     if (type != -1) {
-        [urlString appendFormat:@"&post_type=%d", (int)type];
+        [urlString appendFormat:@"&post_type=%d", type];
     }
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -94,26 +92,25 @@
                                             postType:(MDPostType)type
                                              sinceID:(NSString *)sinceID
                                                maxID:(NSString *)maxID
-                                            pagesize:(NSInteger)size
+                                            pagesize:(int)size
                                              handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/post/v2/favorite?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (sinceID && sinceID.length > 0)
         [urlString appendFormat:@"&since_id=%@", sinceID];
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", (int)size];
+        [urlString appendFormat:@"&pagesize=%d", size];
     if (type != -1) {
-        [urlString appendFormat:@"&post_type=%d", (int)type];
+        [urlString appendFormat:@"&post_type=%d", type];
     }
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -134,21 +131,20 @@
 
 - (MDURLConnection *)loadReplyMePostsWithKeywords:(NSString *)keywords
                                             maxID:(NSString *)maxID
-                                         pagesize:(NSInteger)size
+                                         pagesize:(int)size
                                           handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/post/v2/replyme?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", (int)size];
+        [urlString appendFormat:@"&pagesize=%d", size];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -169,7 +165,7 @@
 
 - (MDURLConnection *)loadMyReplyWithKeywords:(NSString *)keywords
                                        maxID:(NSString *)maxID
-                                    pagesize:(NSInteger)size
+                                    pagesize:(int)size
                                      handler:(MDAPINSArrayHandler)handler
 {
     
@@ -177,14 +173,13 @@
     [urlString appendString:@"/post/v2/replybyme?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", (int)size];
+        [urlString appendFormat:@"&pagesize=%d", size];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -214,18 +209,17 @@
     [urlString appendString:@"/post/v2/atme_2?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (pageindex > 1) {
         [urlString appendFormat:@"&pageindex=%d", pageindex];
     }
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", (int)size];
+        [urlString appendFormat:@"&pagesize=%d", size];
     if (type != -1) {
-        [urlString appendFormat:@"&post_type=%d", (int)type];
+        [urlString appendFormat:@"&post_type=%d", type];
     }
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -248,24 +242,23 @@
 - (MDURLConnection *)loadMyPostsWithKeywords:(NSString *)keywords
                                     postType:(MDPostType)type
                                        maxID:(NSString *)maxID
-                                    pagesize:(NSInteger)size
+                                    pagesize:(int)size
                                      handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/post/v2/my?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", (int)size];
+        [urlString appendFormat:@"&pagesize=%d", size];
     if (type != -1) {
-        [urlString appendFormat:@"&post_type=%d", (int)type];
+        [urlString appendFormat:@"&post_type=%d", type];
     }
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -286,7 +279,7 @@
 
 - (MDURLConnection *)loadUserPostsWithUserID:(NSString *)userID
                                        maxID:(NSString *)maxID
-                                    pagesize:(NSInteger)size
+                                    pagesize:(int)size
                                      handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -296,11 +289,10 @@
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", (int)size];
+        [urlString appendFormat:@"&pagesize=%d", size];
     
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -322,7 +314,7 @@
 - (MDURLConnection *)loadGroupPostsWithGroupID:(NSString *)groupID
                                       Keywords:(NSString *)keywords
                                          maxID:(NSString *)maxID
-                                      pagesize:(NSInteger)size
+                                      pagesize:(int)size
                                        handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -330,14 +322,13 @@
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&g_id=%@", groupID];
     if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", (int)size];
+        [urlString appendFormat:@"&pagesize=%d", size];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -358,10 +349,10 @@
 
 - (MDURLConnection *)loadDocumentPostsWithGroupID:(NSString *)groupID
                                          Keywords:(NSString *)keywords
-                                       filterType:(NSInteger)filterType
+                                       filterType:(int)filterType
                                           sinceID:(NSString *)sinceID
                                             maxID:(NSString *)maxID
-                                         pagesize:(NSInteger)size
+                                         pagesize:(int)size
                                           handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -370,19 +361,18 @@
     if (groupID && groupID.length > 0)
         [urlString appendFormat:@"&g_id=%@", groupID];
     if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (sinceID && sinceID.length > 0)
         [urlString appendFormat:@"&since_id=%@", sinceID];
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", (int)size];
+        [urlString appendFormat:@"&pagesize=%d", size];
     if (filterType != 0) {
-        [urlString appendFormat:@"&filter_type=%d", (int)filterType];
+        [urlString appendFormat:@"&filter_type=%d", filterType];
     }
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -403,10 +393,10 @@
 
 - (MDURLConnection *)loadImagePostsWithGroupID:(NSString *)groupID
                                       Keywords:(NSString *)keywords
-                                    filterType:(NSInteger)filterType
+                                    filterType:(int)filterType
                                        sinceID:(NSString *)sinceID
                                          maxID:(NSString *)maxID
-                                      pagesize:(NSInteger)size
+                                      pagesize:(int)size
                                        handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -419,14 +409,13 @@
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", (int)size];
+        [urlString appendFormat:@"&pagesize=%d", size];
     if (filterType != 0)
-        [urlString appendFormat:@"&filter_type=%d", (int)filterType];
+        [urlString appendFormat:@"&filter_type=%d", filterType];
     if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -447,10 +436,10 @@
 
 - (MDURLConnection *)loadFAQPostsWithGroupID:(NSString *)groupID
                                     Keywords:(NSString *)keywords
-                                  filterType:(NSInteger)filterType
+                                  filterType:(int)filterType
                                      sinceID:(NSString *)sinceID
                                        maxID:(NSString *)maxID
-                                    pagesize:(NSInteger)size
+                                    pagesize:(int)size
                                      handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -463,14 +452,13 @@
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", (int)size];
+        [urlString appendFormat:@"&pagesize=%d", size];
     if (filterType != 0)
-        [urlString appendFormat:@"&filter_type=%d", (int)filterType];
+        [urlString appendFormat:@"&filter_type=%d", filterType];
     if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -491,10 +479,10 @@
 
 - (MDURLConnection *)loadVideoPostsWithGroupID:(NSString *)groupID
                                       Keywords:(NSString *)keywords
-                                    filterType:(NSInteger)filterType
+                                    filterType:(int)filterType
                                        sinceID:(NSString *)sinceID
                                          maxID:(NSString *)maxID
-                                      pagesize:(NSInteger)size
+                                      pagesize:(int)size
                                        handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -507,14 +495,13 @@
     if (maxID && maxID.length > 0)
         [urlString appendFormat:@"&max_id=%@", maxID];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%d", (int)size];
+        [urlString appendFormat:@"&pagesize=%d", size];
     if (filterType != 0)
-        [urlString appendFormat:@"&filter_type=%d", (int)filterType];
+        [urlString appendFormat:@"&filter_type=%d", filterType];
     if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -539,8 +526,7 @@
     [urlString appendString:@"/post/v2/list_toppost?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -566,8 +552,7 @@
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -587,8 +572,7 @@
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -614,8 +598,7 @@
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -632,7 +615,7 @@
 #pragma mark -
 - (MDURLConnection *)createTextPostWithText:(NSString *)text
                                    groupIDs:(NSArray *)groupIDs
-                                  shareType:(NSInteger)shareType
+                                  shareType:(int)shareType
                                     handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -640,10 +623,9 @@
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&s_type=%ld", (long)shareType];
+    [urlString appendFormat:@"&s_type=%d", shareType];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     NSMutableArray *parameters = [NSMutableArray array];
     if (text) {
@@ -667,7 +649,7 @@
                                   urlTitle:(NSString *)title
                                    urlLink:(NSString *)link
                                   groupIDs:(NSArray *)groupIDs
-                                 shareType:(NSInteger)shareType
+                                 shareType:(int)shareType
                                    handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -675,10 +657,9 @@
     [urlString appendFormat:@"&access_token=%@&p_type=1", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&s_type=%ld", (long)shareType];
+    [urlString appendFormat:@"&s_type=%d", shareType];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [req setHTTPMethod:@"POST"];
     
     NSString *str = [NSString stringWithFormat:@"p_msg=%@&l_title=%@&l_uri=%@", [self localEncode:text], [self localEncode:title], [self localEncode:link]];
@@ -699,7 +680,7 @@
 
 - (MDURLConnection *)createFAQPostWithText:(NSString *)text
                                   groupIDs:(NSArray *)groupIDs
-                                 shareType:(NSInteger)shareType
+                                 shareType:(int)shareType
                                    handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -707,10 +688,9 @@
     [urlString appendFormat:@"&access_token=%@&p_type=4&is_reward=1", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&s_type=%d", (int)shareType];
+    [urlString appendFormat:@"&s_type=%d", shareType];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     NSMutableArray *parameters = [NSMutableArray array];
     if (text) {
         [parameters addObject:@{@"key":@"p_msg", @"object":text}];
@@ -732,15 +712,14 @@
 - (MDURLConnection *)createImagePostWithText:(NSString *)text
                                       images:(NSArray *)images
                                     groupIDs:(NSArray *)groupIDs
-                                   shareType:(NSInteger)shareType
+                                   shareType:(int)shareType
                                     toCenter:(BOOL)toCenter
                                      handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/post/upload"];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
@@ -763,7 +742,9 @@
             if (i > 0) {
                 [parameter appendFormat:@"%d", i];
             }
-            [parameters addObject:@{@"key":parameter, @"object":image, @"fileName":fileName}];
+            if (parameter && image && fileName) {
+                [parameters addObject:@{@"key":parameter, @"object":image, @"fileName":fileName}];
+            }
         }
     }
     [self postWithParameters:parameters withRequest:req];
@@ -786,7 +767,7 @@
                                    fileName:(NSString *)fileName
                                        file:(NSData *)fileData
                                    groupIDs:(NSArray *)groupIDs
-                                  shareType:(NSInteger)shareType
+                                  shareType:(int)shareType
                                    toCenter:(BOOL)toCenter
                                     handler:(MDAPINSStringHandler)handler
 {
@@ -795,13 +776,12 @@
     [urlString appendFormat:@"&access_token=%@&f_type=document", self.accessToken];
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&s_type=%ld", (long)shareType];
+    [urlString appendFormat:@"&s_type=%d", shareType];
     if (toCenter) {
         [urlString appendFormat:@"&is_center=%d", 1];
     }
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     NSMutableArray *parameters = [NSMutableArray array];
     if (text) {
         [parameters addObject:@{@"key":@"p_msg", @"object":text}];
@@ -829,7 +809,7 @@
                                    images:(NSArray *)images
                                    postID:(NSString *)postID
                                  groupIDs:(NSArray *)groupIDs
-                                shareType:(NSInteger)shareType
+                                shareType:(int)shareType
                     commentToOriginalPost:(BOOL)yesOrNo
                                   handler:(MDAPINSStringHandler)handler
 {
@@ -839,15 +819,15 @@
     if (groupIDs && groupIDs.count > 0)
         [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
     [urlString appendFormat:@"&re_p_id=%@", postID];
-    [urlString appendFormat:@"&s_type=%ld", (long)shareType];
+    [urlString appendFormat:@"&s_type=%d", shareType];
     if (images.count > 0) {
         [urlString appendFormat:@"&f_type=%@", @"picture"];
     }
     if (yesOrNo) {
         [urlString appendString:@"&withComment=1"];
     }
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     NSMutableArray *parameters = [NSMutableArray array];
     if (text) {
         [parameters addObject:@{@"key":@"p_msg", @"object":text}];
@@ -861,7 +841,9 @@
             if (i > 0) {
                 [parameter appendFormat:@"%d", i];
             }
-            [parameters addObject:@{@"key":parameter, @"object":image, @"fileName":fileName}];
+            if (parameter && image && fileName) {
+                [parameters addObject:@{@"key":parameter, @"object":image, @"fileName":fileName}];
+            }
         }
     }
     [self postWithParameters:parameters withRequest:req];
@@ -887,8 +869,7 @@
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
@@ -900,9 +881,8 @@
     [urlString appendString:@"/post/add_favorite?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
@@ -914,9 +894,8 @@
     [urlString appendString:@"/post/delete_favorite?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
@@ -928,9 +907,8 @@
     [urlString appendString:@"/post/add_like?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
@@ -942,9 +920,8 @@
     [urlString appendString:@"/post/delete_like?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
@@ -957,7 +934,7 @@
                                                   images:(NSArray *)images
                                               isReshared:(BOOL)yesOrNo
                                                 groupIDs:(NSArray *)groupIDs
-                                               shareType:(NSInteger)shareType
+                                               shareType:(int)shareType
                                                  handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -973,11 +950,10 @@
         [urlString appendString:@"&isReshared=1"];
         if (groupIDs && groupIDs.count > 0)
             [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-        [urlString appendFormat:@"&s_type=%ld", (long)shareType];
+        [urlString appendFormat:@"&s_type=%d", shareType];
     }
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     NSMutableArray *parameters = [NSMutableArray array];
     if (msg) {
         [parameters addObject:@{@"key":@"r_msg", @"object":msg}];
@@ -991,12 +967,12 @@
             if (i > 0) {
                 [parameter appendFormat:@"%d", i];
             }
-            [parameters addObject:@{@"key":parameter, @"object":image, @"fileName":fileName}];
+            if (parameter && image && fileName) {
+                [parameters addObject:@{@"key":parameter, @"object":image, @"fileName":fileName}];
+            }
         }
     }
     [self postWithParameters:parameters withRequest:req];
-    
-    
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
@@ -1022,8 +998,7 @@
     [urlString appendFormat:@"&p_id=%@", pID];
     [urlString appendFormat:@"&r_id=%@", rID];
     
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
@@ -1031,22 +1006,21 @@
 
 #pragma mark -
 - (MDURLConnection *)loadAllTagsWithKeywords:(NSString *)keywords
-                                    pagesize:(NSInteger)size
-                                        page:(NSInteger)page
+                                    pagesize:(int)size
+                                        page:(int)page
                                      handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/post/list_tag?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0)
-        [urlString appendFormat:@"&keywords=%@", keywords];
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (page > 0)
-        [urlString appendFormat:@"&pageindex=%ld", (long)page];
+        [urlString appendFormat:@"&pageindex=%d", page];
     if (size > 0)
-        [urlString appendFormat:@"&pagesize=%ld", (long)size];
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [urlString appendFormat:@"&pagesize=%d", size];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -1074,9 +1048,8 @@
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
     [urlString appendFormat:@"&tag=%@", tagName];
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
@@ -1090,10 +1063,9 @@
     [urlString appendString:@"/post/delete_tag?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&p_id=%@", pID];
-    [urlString appendFormat:@"&tag=%@", tagName];
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [urlString appendFormat:@"&tag=%@", [tagName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
