@@ -33,5 +33,7 @@
 @property (assign ,nonatomic) NSInteger isFavorite;
 @property (assign, nonatomic) NSInteger isArchived;
 
+@property (assign, nonatomic) NSInteger currentUserType;
+
 - (MDTaskFolder *)initWithDictionary:(NSDictionary *)aDic;
 @end

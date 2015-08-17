@@ -42,6 +42,8 @@
         
         self.isFavorite = [aDic[@"isFavorite"] integerValue];
         self.isArchived = [aDic[@"isArchived"] integerValue];
+        self.currentUserType = [aDic[@"currentUserType"] integerValue];
+
         
         if ([[aDic objectForKey:@"members"] isKindOfClass:[NSArray class]]) {
             NSArray *membersArr = aDic[@"members"];
@@ -87,6 +89,7 @@
     copyObject.isFavorite = self.isFavorite;
     copyObject.members = [self.members copy];
     copyObject.isArchived = self.isArchived;
+    copyObject.currentUserType = self.currentUserType;
     
     return copyObject;
 }
