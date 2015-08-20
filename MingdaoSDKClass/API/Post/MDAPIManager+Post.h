@@ -153,6 +153,14 @@
                                   shareType:(int)shareType
                                    toCenter:(BOOL)toCenter
                                     handler:(MDAPINSStringHandler)handler;
+- (MDURLConnection *)createRepostWithText:(NSString *)text
+                                   images:(NSArray *)images
+                                   postID:(NSString *)postID
+                                 groupIDs:(NSArray *)groupIDs
+                                shareType:(int)shareType
+                    commentToOriginalPost:(BOOL)yesOrNo
+                                  handler:(MDAPINSStringHandler)handler;
+
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
