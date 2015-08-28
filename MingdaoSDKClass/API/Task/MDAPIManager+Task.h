@@ -219,12 +219,8 @@
 - (MDURLConnection *)createFolderWithName:(NSString *)folderName
                              chargeUserID:(NSString *)userID
                                  deadLine:(NSString *)deadLine
-                                    isTop:(NSInteger)isTop
+                               isFavorite:(NSInteger)isFavorite
                                   members:(NSString *)members
-                                   admins:(NSString *)admins
-                               visibility:(NSInteger)visibility
-                                 groupIDs:(NSString *)groupIDs
-                                   fileID:(NSString *)fileID
                                   handler:(MDAPINSStringHandler)handler;
 
 - (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
@@ -342,35 +338,5 @@
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 
 - (MDURLConnection *)filterTaskCounhandler:(MDAPINSDictionaryHandler)handler;
-
-
-/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
- @usage:
- 项目文件夹的各项操作
- 
- -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-
-- (MDURLConnection *)getFolderFileshandler:(MDAPINSArrayHandler)handler;
-
-- (MDURLConnection *)addFolderUserFileWithFolderID:(NSString *)folderID
-                                          fileName:(NSString *)fileName
-                                              sort:(NSInteger)sort
-                                           handler:(MDAPINSDictionaryHandler)handler;
-
-- (MDURLConnection *)deleteFolderUserFileWithFileID:(NSString *)fileID
-                                            handler:(MDAPIBoolHandler)handler;
-
-- (MDURLConnection *)editFolderUserFileWithFileID:(NSString *)fileID
-                                         fileName:(NSString *)fileName
-                                             sort:(NSInteger)sort
-                                          handler:(MDAPIBoolHandler)handler;
-
-- (MDURLConnection *)editUserFolderWithFolderID:(NSString *)folderID
-                                         fileID:(NSString *)fileID
-                                        isAdmin:(NSInteger)isAdmin
-                                           type:(NSInteger)type
-                                          isTop:(NSInteger)isTop
-                                         userID:(NSString *)userID
-                                        handler:(MDAPIBoolHandler)handler;
 
 @end

@@ -27,7 +27,6 @@
 #import "MDTaskFolder.h"
 #import "MDCalendarCategory.h"
 #import "MDTaskActivity.h"
-#import "MDTaskFolderFile.h"
 
 typedef void (^MDAPIBoolHandler)(BOOL success, NSError *error);
 typedef void (^MDAPIObjectHandler)(id object, NSError *error);
