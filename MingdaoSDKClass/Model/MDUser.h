@@ -77,6 +77,14 @@ enum {
 };
 typedef int MDUserTaskApplyStatus;
 
+enum {
+    MDUserFolderTypeNone = 0,
+    MDUserFolderTypeMember = 1,
+    MDUserFolderTypeTransfor = 2,
+    MDUserFolderTypeApply = 4,
+};
+typedef int MDUserFolderType;
+
 @interface MDUser : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
@@ -109,6 +117,9 @@ typedef int MDUserTaskApplyStatus;
 
 @property (assign, nonatomic) MDUserTaskMemberType taskMemberType;
 @property (assign, nonatomic) MDUserTaskApplyStatus taskApplyStatus;
+@property (assign, nonatomic) MDUserFolderType folderType;
+@property (assign, nonatomic) BOOL isFolderAdmin;
+
 
 - (MDUser *)initWithDictionary:(NSDictionary *)aDic;
 @end
