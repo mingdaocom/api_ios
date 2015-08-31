@@ -106,24 +106,30 @@
                               handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/passport/edit?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (name && name.length > 0)
-        [urlString appendFormat:@"&name=%@", [name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    if (dep && dep.length > 0)
-        [urlString appendFormat:@"&dep=%@", [dep stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    if (job && job.length > 0)
-        [urlString appendFormat:@"&job=%@", [job stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    if (mpn && mpn.length > 0)
-        [urlString appendFormat:@"&mobile_phone=%@", [mpn stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    if (wpn && wpn.length > 0)
-        [urlString appendFormat:@"&work_phone=%@", [wpn stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    if (birthday && birthday.length > 0)
-        [urlString appendFormat:@"&birth=%@", [birthday stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    if (gender != 0)
-        [urlString appendFormat:@"&gender=%ld", (long)gender];
+    [urlString appendString:@"/passport/edit"];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    if (name && name.length > 0)
+        [parameters addObject:@{@"key":@"name", @"object":name}];
+    if (dep && dep.length > 0)
+        [parameters addObject:@{@"key":@"dep", @"object":dep}];
+    if (job && job.length > 0)
+        [parameters addObject:@{@"key":@"job", @"object":job}];
+    if (mpn && mpn.length > 0)
+        [parameters addObject:@{@"key":@"mobile_phone", @"object":mpn}];
+    if (wpn && wpn.length > 0)
+        [parameters addObject:@{@"key":@"work_phone", @"object":wpn}];
+    if (birthday && birthday.length > 0)
+        [parameters addObject:@{@"key":@"birth", @"object":birthday}];
+    if (gender != 0)
+        [parameters addObject:@{@"key":@"gender", @"object":[NSNumber numberWithInteger:gender]}];
+    
+    NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+    [self postWithParameters:parameters withRequest:req];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
