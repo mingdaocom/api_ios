@@ -35,7 +35,7 @@
     file.objectID = [self.objectID copy];
     file.objectName = [self.objectName copy];
     file.sort = self.sort;
-    file.folders = [self.folders copy];
+    file.folders = [self.folders mutableCopy];
     return file;
 }
 

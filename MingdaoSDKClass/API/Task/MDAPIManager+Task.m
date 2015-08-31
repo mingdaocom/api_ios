@@ -1891,7 +1891,9 @@
     [urlString appendFormat:@"&isAdmin=%ld", (long)isAdmin];
     [urlString appendFormat:@"&type=%ld", (long)type];
     [urlString appendFormat:@"&isTop=%ld", (long)isTop];
-    [urlString appendFormat:@"&userID=%@", userID];
+    if (userID) {
+        [urlString appendFormat:@"&userID=%@", userID];
+    }
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlString handler:handler];
