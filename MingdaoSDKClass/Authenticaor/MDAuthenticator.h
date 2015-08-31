@@ -12,7 +12,7 @@
 extern NSString *const MDAuthErrorKey;
 extern NSString *const MDAuthAccessTokenKey;
 extern NSString *const MDAuthRefreshTokenKey;
-extern NSString *const MDAuthExpiresTimeKeyl;
+extern NSString *const MDAuthExpiresTimeKey;
 
 typedef enum {
     MDAuthorizeDisplayTypeDefault = 0,	//默认的授权页面，适用于web浏览器。
