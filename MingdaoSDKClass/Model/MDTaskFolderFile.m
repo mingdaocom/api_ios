@@ -14,10 +14,10 @@
 {
     self = [super init];
     if (self) {
-        self.objectID = dic[@"FFileID"];
-        self.objectName = dic[@"FFileName"];
-        self.sort = [dic[@"Sort"] integerValue];
-        NSArray *folderArr = dic[@"Folders"];
+        self.objectID = dic[@"fFileID"];
+        self.objectName = dic[@"fFileName"];
+        self.sort = [dic[@"sort"] integerValue];
+        NSArray *folderArr = dic[@"folders"];
         NSMutableArray *folders = [NSMutableArray array];
         for (NSDictionary *d in folderArr) {
             MDTaskFolder *folder = [[MDTaskFolder alloc] initWithDictionary:d];

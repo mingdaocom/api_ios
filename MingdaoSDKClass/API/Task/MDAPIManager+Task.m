@@ -594,7 +594,7 @@
                                      handler:(void(^)(NSArray *folders, NSArray *rankFolders, NSError *error))handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v4/getFolders?format=json"];
+    [urlString appendString:@"/task/v4/getAllFolders.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0){
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -1792,24 +1792,37 @@
 }
 
 
-- (MDURLConnection *)getFolderFileshandler:(MDAPINSArrayHandler)handler
+- (MDURLConnection *)getFolderFileshandler:(void(^)(NSArray *files, NSArray *topFolders, NSArray *hideFolders, NSError *error))handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/v4/getFolderFiles.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     MDURLConnection *connection = [[MDURLConnection alloc]initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
-            handler(nil, error);
+            handler(nil, nil, nil, error);
             return ;
         }
         
         NSMutableArray *files = [NSMutableArray array];
+        NSMutableArray *tops = [NSMutableArray array];
+        NSMutableArray *hides = [NSMutableArray array];
+
         NSArray *fileArr = dic[@"fFiles"];
         for (NSDictionary *d in fileArr) {
             MDTaskFolderFile *file = [[MDTaskFolderFile alloc] initWithDictionary:d];
             [files addObject:file];
         }
-        handler(files,error);
+        NSArray *topArr = dic[@"topFolders"];
+        for (NSDictionary *d in topArr) {
+            MDTaskFolder *folder = [[MDTaskFolder alloc] initWithDictionary:d];
+            [tops addObject:folder];
+        }
+        NSArray *hideArr = dic[@"hiddenFolders"];
+        for (NSDictionary *d in hideArr) {
+            MDTaskFolder *folder = [[MDTaskFolder alloc] initWithDictionary:d];
+            [hides addObject:folder];
+        }
+        handler(files,tops,hides,error);
     }];
     return connection;
 }

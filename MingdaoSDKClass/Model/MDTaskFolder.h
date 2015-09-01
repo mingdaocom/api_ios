@@ -32,7 +32,7 @@
 @property (strong, nonatomic) NSMutableArray *members;
 @property (assign ,nonatomic) NSInteger isFavorite;
 @property (assign, nonatomic) NSInteger isArchived;
-@property (assign, nonatomic) NSInteger isTop,taskAuth;
+@property (assign, nonatomic) NSInteger isTop,taskAuth,isVisibility;
 
 @property (assign, nonatomic) NSInteger currentUserType;
 @property (assign, nonatomic) NSInteger applyCount;

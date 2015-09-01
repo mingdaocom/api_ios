@@ -350,7 +350,7 @@
  
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 
-- (MDURLConnection *)getFolderFileshandler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)getFolderFileshandler:(void(^)(NSArray *files, NSArray *topFolders, NSArray *hideFolders, NSError *error))handler;
 
 - (MDURLConnection *)addFolderUserFileWithFolderID:(NSString *)folderID
                                           fileName:(NSString *)fileName
