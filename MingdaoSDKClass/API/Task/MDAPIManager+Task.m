@@ -1915,4 +1915,20 @@
 
 }
 
+- (MDURLConnection *)applyFolderMemberWithFolderID:(NSString *)folderID
+                                            reason:(NSString *)reason
+                                           handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/editUserFolder.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    [urlString appendFormat:@"&fFileID=%@", reason];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
 @end

@@ -373,4 +373,10 @@
                                          userID:(NSString *)userID
                                         handler:(MDAPIBoolHandler)handler;
 
+- (MDURLConnection *)applyFolderMemberWithFolderID:(NSString *)folderID
+                                            reason:(NSString *)reason
+                                           handler:(MDAPIBoolHandler)handler;
+
+
+
 @end
