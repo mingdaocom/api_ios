@@ -231,8 +231,12 @@
                                  folderName:(NSString *)folderName
                                  chargeUser:(NSString *)chargeUser
                                    deadLine:(NSString *)deadLine
-                                 isFavorite:(NSInteger)isFavorite
+                                      isTop:(NSInteger)isTop
                                     members:(NSString *)members
+                                     admins:(NSString *)admins
+                                 visibility:(NSInteger)visibility
+                                   groupIDs:(NSString *)groupIDs
+                                     fileID:(NSString *)fileID
                                     handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
