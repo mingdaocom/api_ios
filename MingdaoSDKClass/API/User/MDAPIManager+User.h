@@ -72,19 +72,19 @@
 - (MDURLConnection *)followUserWithUserID:(NSString *)userID handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)unfollowUserWithUserID:(NSString *)userID handler:(MDAPIBoolHandler)handler;
 
-/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
- @usage:
- 邀请用户（同事邮箱）加入企业网络
- @parmas:
- type -	邀请类型。默认值0，表示网络内有效邮箱域名邀请；1表示来宾邀请（仅限高级模式）可选
- email - 邀请的邮箱 必须
- fullname - 被邀请人姓名 必须
- msg - 邀请的消息 必须
- handler    - 处理邀请结果
- -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnectionQueue *)inviteUserToCompanyWithEmail:(NSString *)email
-                              baseAuthenticationDomain:(NSString *)baseAuthenticationDomain
-                                               handler:(MDAPIQueueBoolHandler)handler;
+/**
+ *  邀请用户（同事邮箱）加入企业网络
+ *
+ *  @param emails                   邀请用户email 多个邮箱用逗号隔开
+ *  @param phones                   邀请用户手机号码 多个手机号码用逗号隔开
+ *  @param baseAuthenticationDomain 公司邮箱域名
+ *  @param handler                  处理结果
+ *
+ *  @return 队列
+ */
+- (MDURLConnection *)inviteUserToCompanyWithEmails:(NSString *)emails
+                                            phones:(NSString *)phones
+                                           handler:(MDAPINSDictionaryHandler)handler;
 
 - (MDURLConnection *)reinviteUserWithEmails:(NSArray *)emails handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)cancelInviteToUserWithEmails:(NSArray *)emails tokens:(NSArray *)tokens handler:(MDAPIBoolHandler)handler;
