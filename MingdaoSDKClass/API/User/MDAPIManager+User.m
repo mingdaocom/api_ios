@@ -222,26 +222,13 @@
     return connection;
 }
 
-- (MDURLConnection *)reinviteUserWithEmails:(NSArray *)emails handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/invite/again_inviteuser?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&emails=%@", [emails componentsJoinedByString:@","]];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)cancelInviteToUserWithEmails:(NSArray *)emails tokens:(NSArray *)tokens handler:(MDAPIBoolHandler)handler
+- (MDURLConnection *)cancelInviteToUserWithTokens:(NSArray *)tokens authTypes:(NSArray *)authTypes handler:(MDAPIBoolHandler)handler;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/invite/close_inviteuser?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&emails=%@", [emails componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&tokens=%@", [tokens componentsJoinedByString:@","]];
+    [urlString appendFormat:@"&authTypes=%@", [[authTypes componentsJoinedByString:@","] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [urlString appendFormat:@"&tokens=%@", [[tokens componentsJoinedByString:@","] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlString handler:handler];

@@ -86,8 +86,7 @@
                                             phones:(NSString *)phones
                                            handler:(MDAPINSDictionaryHandler)handler;
 
-- (MDURLConnection *)reinviteUserWithEmails:(NSArray *)emails handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)cancelInviteToUserWithEmails:(NSArray *)emails tokens:(NSArray *)tokens handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)cancelInviteToUserWithTokens:(NSArray *)tokens authTypes:(NSArray *)authTypes handler:(MDAPIBoolHandler)handler;
 
 typedef enum
 {
