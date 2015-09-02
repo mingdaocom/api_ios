@@ -161,6 +161,12 @@
                                    orderType:(int)orderType
                                      handler:(void(^)(NSArray *folders, NSArray *rankFolders, NSError *error))handler;
 
+- (MDURLConnection *)loadParticipateFoldersWithKeywords:(NSString *)keywords
+                                  filterType:(int)type
+                                   orderType:(int)orderType
+                                     handler:(void(^)(NSArray *folders, NSArray *rankFolders, NSError *error))handler;
+
+
 - (MDURLConnection *)loadTasksWithKeywords:(NSString *)keywords
                                   folderID:(NSString *)folderID
                                    stageID:(NSString *)stageID

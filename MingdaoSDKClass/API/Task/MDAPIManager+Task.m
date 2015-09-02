@@ -632,6 +632,51 @@
     return connection;
 }
 
+- (MDURLConnection *)loadParticipateFoldersWithKeywords:(NSString *)keywords
+                                        filterType:(int)type
+                                         orderType:(int)orderType
+                                           handler:(void(^)(NSArray *folders, NSArray *rankFolders, NSError *error))handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/getFolders?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords && keywords.length > 0){
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    }
+    [urlString appendFormat:@"&filterType=%d", type];
+    
+    [urlString appendFormat:@"&sort=%d", orderType];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, nil, error);
+            return ;
+        }
+        
+        NSArray *projectDics = [dic objectForKey:@"folders"];
+        NSMutableArray *projects = [NSMutableArray array];
+        NSMutableArray *rankFolders = [NSMutableArray array];
+        for (NSDictionary *projectDic in projectDics) {
+            if (![projectDic isKindOfClass:[NSDictionary class]])
+                continue;
+            if (![projectDic[@"id"] isEqualToString:@"2"]) {
+                MDTaskFolder *task = [[MDTaskFolder alloc] initWithDictionary:projectDic];
+                [projects addObject:task];
+            } else {
+                NSArray *tempArr = projectDic[@"folders"];
+                for (NSDictionary *dic in tempArr) {
+                    MDTaskFolder *task = [[MDTaskFolder alloc] initWithDictionary:dic];
+                    [rankFolders addObject:task];
+                }
+            }
+        }
+        handler(projects, rankFolders, error);
+    }];
+    return connection;
+
+}
+
 #pragma mark -
 - (MDURLConnection *)loadTasksWithKeywords:(NSString *)keywords
                                   folderID:(NSString *)folderID
