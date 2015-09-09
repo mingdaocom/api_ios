@@ -29,6 +29,12 @@
                 self.taskID = arr[0];
                 self.applyUserID = arr[1];
             }
+            
+            if (self.eventType == MDTaskEventTypeFolder) {
+                self.eventContent = [msgDic objectForKey:@"event_content"];
+                NSArray *arr = [NSArray arrayWithArray:[self.eventContent componentsSeparatedByString:@"|"]];
+                self.folderID = arr[0];
+            }
         }
     }
     return self;
@@ -48,6 +54,7 @@
     copyObject.eventContent = [self.eventContent copy];
     copyObject.taskID = [self.taskID copy];
     copyObject.applyUserID = [self.applyUserID copy];
+    copyObject.folderID = [self.folderID copy];
     return copyObject;
 }
 

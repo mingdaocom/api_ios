@@ -1107,7 +1107,8 @@
         
         NSString *folderID = [dic objectForKey:@"folderId"];
         handler(folderID, error);
-    }];    return connection;
+    }];
+    return connection;
 }
 
 #pragma mark -
