@@ -1979,7 +1979,6 @@
         [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
-
 }
 
 - (MDURLConnection *)applyFolderMemberWithFolderID:(NSString *)folderID
