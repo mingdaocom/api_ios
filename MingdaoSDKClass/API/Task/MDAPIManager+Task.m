@@ -755,9 +755,7 @@
                 [tasks addObject:task];
             }
             handler(tasks, error);
-
         }
-        
     }];
     return connection;
 }
@@ -1946,7 +1944,7 @@
     [urlString appendString:@"/task/v4/editUserFile.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&fFileID=%@", fileID];
-    [urlString appendFormat:@"&fFileName=%@", fileName];
+    [urlString appendFormat:@"&fFileName=%@", [fileName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     [urlString appendFormat:@"&sort=%ld", (long)sort];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
