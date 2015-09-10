@@ -31,7 +31,7 @@
         
         NSString *accessToken = result[MDAuthAccessTokenKey];
         //    NSString *refeshToken = result[MDAuthRefreshTokenKey];
-        //    NSString *expireTime = result[MDAuthExpiresTimeKeyl];
+        //    NSString *expireTime = result[MDAuthExpiresTimeKey];
         [MDAPIManager sharedManager].accessToken = accessToken;
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Succeed!" message:[NSString stringWithFormat:@"token = %@", accessToken] delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];

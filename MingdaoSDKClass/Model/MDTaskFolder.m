@@ -42,6 +42,12 @@
         
         self.isFavorite = [aDic[@"isFavorite"] integerValue];
         self.isArchived = [aDic[@"isArchived"] integerValue];
+
+        self.isTop = [aDic[@"isTop"] integerValue];
+        self.taskAuth = [aDic[@"taskAuth"] integerValue];
+        self.isVisibility = [aDic[@"isVisibility"] integerValue];
+
+
         self.currentUserType = [aDic[@"currentUserType"] integerValue];
 
         
@@ -90,6 +96,11 @@
     copyObject.members = [self.members copy];
     copyObject.isArchived = self.isArchived;
     copyObject.currentUserType = self.currentUserType;
+
+    copyObject.isTop = self.isTop;
+    copyObject.taskAuth = self.taskAuth;
+    copyObject.isVisibility = self.isVisibility;
+
     
     return copyObject;
 }

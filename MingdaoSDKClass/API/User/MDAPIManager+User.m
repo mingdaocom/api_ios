@@ -193,77 +193,42 @@
     return connection;
 }
 
-- (MDURLConnectionQueue *)inviteUserToCompanyWithEmail:(NSString *)email
-                              baseAuthenticationDomain:(NSString *)baseAuthenticationDomain
-                                               handler:(MDAPIQueueBoolHandler)handler;
-{
-    NSArray *emails = [email componentsSeparatedByString:@","];
-    NSMutableArray *requests = [NSMutableArray array];
-    for (NSString *s in emails) {
-        NSString *anEmail = s;
-        NSMutableString *urlString = [self.serverAddress mutableCopy];
-        [urlString appendString:@"/user/invite?format=json"];
-        [urlString appendFormat:@"&access_token=%@", self.accessToken];
-        [urlString appendFormat:@"&email=%@", anEmail];
-        [urlString appendFormat:@"&fullname=%@", [anEmail substringToIndex:[anEmail rangeOfString:@"@"].location]];
-        [urlString appendFormat:@"&msg=%@", @"这是公司专属的企业和信息协作平台，使用明道网络和您的同事沟通协作，分享文档，问答，图片等，创建群组，并可使用不断增加的企业信息服务和应用程序。"];
-        NSInteger type = 1;
-        if ([anEmail hasSuffix:baseAuthenticationDomain]) {
-            type = 0;
-        }
-        [urlString appendFormat:@"&type=%ld", (long)type];
-        NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
-        [requests addObject:req];
-    }
-    
-    MDURLConnectionQueue *queue = [[MDURLConnectionQueue alloc] initWithRequest:requests handler:^(NSInteger lastFinishedIndex, float progress, NSData *data, NSError *error){
-        
-        NSURLRequest *req = requests[lastFinishedIndex];
-        if (error) {
-            handler(lastFinishedIndex, progress ,NO, error);
-            return ;
-        }
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        if (!dic  || ![dic isKindOfClass:[NSDictionary class]]) {
-            handler(lastFinishedIndex, progress ,NO, [MDErrorParser errorWithMDDic:dic URLString:req.URL.absoluteString]);
-            return ;
-        }
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode) {
-            handler(lastFinishedIndex,progress ,NO, [MDErrorParser errorWithMDDic:dic URLString:req.URL.absoluteString]);
-            return;
-        }
-        
-        if ([[dic objectForKey:@"count"] boolValue]) {
-            handler(lastFinishedIndex,progress, YES, error);
-        } else {
-            handler(lastFinishedIndex,progress ,NO, error);
-        }
-    }];
-    return queue;
-}
-
-- (MDURLConnection *)reinviteUserWithEmails:(NSArray *)emails handler:(MDAPIBoolHandler)handler
+- (MDURLConnection *)inviteUserToCompanyWithEmails:(NSString *)emails
+                                            phones:(NSString *)phones
+                                           handler:(MDAPINSDictionaryHandler)handler;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/invite/again_inviteuser?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&emails=%@", [emails componentsJoinedByString:@","]];
+    [urlString appendString:@"/user/v2/invite"];
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    if (emails && emails.length > 0)
+        [parameters addObject:@{@"key":@"emails", @"object":emails}];
+    if (phones && phones.length > 0)
+        [parameters addObject:@{@"key":@"mobilePhones", @"object":phones}];
+    
+    NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+    [self postWithParameters:parameters withRequest:req];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        
+        handler(dic, error);
     }];
     return connection;
 }
 
-- (MDURLConnection *)cancelInviteToUserWithEmails:(NSArray *)emails tokens:(NSArray *)tokens handler:(MDAPIBoolHandler)handler
+- (MDURLConnection *)cancelInviteToUserWithTokens:(NSArray *)tokens authTypes:(NSArray *)authTypes handler:(MDAPIBoolHandler)handler;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/invite/close_inviteuser?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&emails=%@", [emails componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&tokens=%@", [tokens componentsJoinedByString:@","]];
+    [urlString appendFormat:@"&authTypes=%@", [[authTypes componentsJoinedByString:@","] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [urlString appendFormat:@"&tokens=%@", [[tokens componentsJoinedByString:@","] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlString handler:handler];

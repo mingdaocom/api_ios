@@ -594,7 +594,7 @@
                                      handler:(void(^)(NSArray *folders, NSArray *rankFolders, NSError *error))handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v4/getFolders?format=json"];
+    [urlString appendString:@"/task/v4/getAllFolders.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     if (keywords && keywords.length > 0){
         [urlString appendFormat:@"&keywords=%@", keywords];
@@ -630,6 +630,51 @@
         handler(projects, rankFolders, error);
     }];
     return connection;
+}
+
+- (MDURLConnection *)loadParticipateFoldersWithKeywords:(NSString *)keywords
+                                        filterType:(int)type
+                                         orderType:(int)orderType
+                                           handler:(void(^)(NSArray *folders, NSArray *rankFolders, NSError *error))handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/getFolders?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords && keywords.length > 0){
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    }
+    [urlString appendFormat:@"&filterType=%d", type];
+    
+    [urlString appendFormat:@"&sort=%d", orderType];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, nil, error);
+            return ;
+        }
+        
+        NSArray *projectDics = [dic objectForKey:@"folders"];
+        NSMutableArray *projects = [NSMutableArray array];
+        NSMutableArray *rankFolders = [NSMutableArray array];
+        for (NSDictionary *projectDic in projectDics) {
+            if (![projectDic isKindOfClass:[NSDictionary class]])
+                continue;
+            if (![projectDic[@"id"] isEqualToString:@"2"]) {
+                MDTaskFolder *task = [[MDTaskFolder alloc] initWithDictionary:projectDic];
+                [projects addObject:task];
+            } else {
+                NSArray *tempArr = projectDic[@"folders"];
+                for (NSDictionary *dic in tempArr) {
+                    MDTaskFolder *task = [[MDTaskFolder alloc] initWithDictionary:dic];
+                    [rankFolders addObject:task];
+                }
+            }
+        }
+        handler(projects, rankFolders, error);
+    }];
+    return connection;
+
 }
 
 #pragma mark -
@@ -710,9 +755,7 @@
                 [tasks addObject:task];
             }
             handler(tasks, error);
-
         }
-        
     }];
     return connection;
 }
@@ -1040,7 +1083,8 @@
         
         NSString *folderID = [dic objectForKey:@"folderId"];
         handler(folderID, error);
-    }];    return connection;
+    }];
+    return connection;
 }
 
 #pragma mark -
@@ -1149,8 +1193,12 @@
                                  folderName:(NSString *)folderName
                                  chargeUser:(NSString *)chargeUser
                                    deadLine:(NSString *)deadLine
-                                 isFavorite:(NSInteger)isFavorite
+                                      isTop:(NSInteger)isTop
                                     members:(NSString *)members
+                                     admins:(NSString *)admins
+                                 visibility:(NSInteger)visibility
+                                   groupIDs:(NSString *)groupIDs
+                                     fileID:(NSString *)fileID
                                     handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -1181,18 +1229,36 @@
     }
     
     [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"isFavorite"]dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", (long)isFavorite] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"isTop"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", (long)isTop] dataUsingEncoding:NSUTF8StringEncoding]];
     
     [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"members"]dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", members] dataUsingEncoding:NSUTF8StringEncoding]];
 
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"admins"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", admins] dataUsingEncoding:NSUTF8StringEncoding]];
+    
     if (deadLine && deadLine.length > 0) {
         [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"deadline"]dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", deadLine] dataUsingEncoding:NSUTF8StringEncoding]];
     }
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"visibility"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", (long)visibility] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    if (visibility == 1) {
+        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"groupIDs"]dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", groupIDs] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"fFileID"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", fileID] dataUsingEncoding:NSUTF8StringEncoding]];
     
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -1769,5 +1835,146 @@
 
 }
 
+
+
+- (MDURLConnection *)getFolderFileshandler:(void(^)(NSArray *files, NSArray *topFolders, NSArray *hideFolders, NSError *error))handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/getFolderFiles.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    MDURLConnection *connection = [[MDURLConnection alloc]initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, nil, nil, error);
+            return ;
+        }
+        
+        NSMutableArray *files = [NSMutableArray array];
+        NSMutableArray *tops = [NSMutableArray array];
+        NSMutableArray *hides = [NSMutableArray array];
+
+        NSArray *fileArr = dic[@"fFiles"];
+        for (NSDictionary *d in fileArr) {
+            MDTaskFolderFile *file = [[MDTaskFolderFile alloc] initWithDictionary:d];
+            [files addObject:file];
+        }
+        NSArray *topArr = dic[@"topFolders"];
+        for (NSDictionary *d in topArr) {
+            MDTaskFolder *folder = [[MDTaskFolder alloc] initWithDictionary:d];
+            [tops addObject:folder];
+        }
+        NSArray *hideArr = dic[@"hiddenFolders"];
+        for (NSDictionary *d in hideArr) {
+            MDTaskFolder *folder = [[MDTaskFolder alloc] initWithDictionary:d];
+            [hides addObject:folder];
+        }
+        handler(files,tops,hides,error);
+    }];
+    return connection;
+}
+
+
+- (MDURLConnection *)addFolderUserFileWithFolderID:(NSString *)folderID
+                                          fileName:(NSString *)fileName
+                                              sort:(NSInteger)sort
+                                           handler:(MDAPINSDictionaryHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/addUserFile.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (folderID) {
+        [urlString appendFormat:@"&t_folderID=%@", folderID];
+    }
+    [urlString appendFormat:@"&fFileName=%@", fileName];
+    [urlString appendFormat:@"&sort=%ld", (long)sort];
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc]initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        handler(dic,error);
+    }];
+    return connection;
+
+}
+
+- (MDURLConnection *)deleteFolderUserFileWithFileID:(NSString *)fileID
+                                            handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/deleteUserFile.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&fFileID=%@", fileID];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+
+}
+
+- (MDURLConnection *)editFolderUserFileWithFileID:(NSString *)fileID
+                                         fileName:(NSString *)fileName
+                                             sort:(NSInteger)sort
+                                          handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/editUserFile.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&fFileID=%@", fileID];
+    [urlString appendFormat:@"&fFileName=%@", [fileName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [urlString appendFormat:@"&sort=%ld", (long)sort];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+
+- (MDURLConnection *)editUserFolderWithFolderID:(NSString *)folderID
+                                         fileID:(NSString *)fileID
+                                        isAdmin:(NSInteger)isAdmin
+                                           type:(NSInteger)type
+                                          isTop:(NSInteger)isTop
+                                         userID:(NSString *)userID
+                                        handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/editUserFolder.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    [urlString appendFormat:@"&fFileID=%@", fileID];
+    [urlString appendFormat:@"&isAdmin=%ld", (long)isAdmin];
+    [urlString appendFormat:@"&type=%ld", (long)type];
+    [urlString appendFormat:@"&isTop=%ld", (long)isTop];
+    if (userID) {
+        [urlString appendFormat:@"&userID=%@", userID];
+    }
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)applyFolderMemberWithFolderID:(NSString *)folderID
+                                            reason:(NSString *)reason
+                                           handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v4/applyFolderMember.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_folderID=%@", folderID];
+    [urlString appendFormat:@"&fFileID=%@", reason];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
 
 @end

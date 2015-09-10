@@ -84,15 +84,15 @@
             self.frequency = [[dic objectForKey:@"frequency"] intValue];
             self.interval = [[dic objectForKey:@"interval"] intValue];
             
-//          NSArray *weekdayNames = [[[NSDateFormatter alloc] init] shortWeekdaySymbols];
-//          weekdayNames starts on Sunday witch from server goes with @"7"
-
+            //          NSArray *weekdayNames = [[[NSDateFormatter alloc] init] shortWeekdaySymbols];
+            //          weekdayNames starts on Sunday witch from server goes with @"7"
+            
             self.weekDay = [[dic objectForKey:@"week_day"] stringByReplacingOccurrencesOfString:@"7" withString:@"0"];
             
             self.recurCount = [[dic objectForKey:@"recur_count"] intValue];
             self.untilDateString = [dic objectForKey:@"until_date"];
         }
-
+        
         
         NSMutableArray *memebers = [NSMutableArray array];
         NSDictionary *joinedDic = [aDic objectForKey:@"joined"];
@@ -114,7 +114,7 @@
                 }
             }
         }
-       
+        
         
         self.members = memebers;
         self.eventMails = emailMembers;
@@ -205,12 +205,12 @@
 
 - (NSDateComponents *)startDateComponents
 {
-    return [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:self.startDate];
+    return [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitMinute fromDate:self.startDate];
 }
 
 - (NSDateComponents *)endDateComponents
 {
-    return [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:self.endDate];
+    return [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitMinute fromDate:self.endDate];
 }
 
 - (NSArray *)memberIDs
@@ -296,8 +296,8 @@
         return @"";
     }
     
-    NSDateComponents *sComp = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:startDate];
-    NSDateComponents *eComp = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:endDate];
+    NSDateComponents *sComp = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitMinute fromDate:startDate];
+    NSDateComponents *eComp = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitMinute fromDate:endDate];
     
     NSMutableString *string = [NSMutableString string];
     NSDateFormatter *fm = [[NSDateFormatter alloc] init];

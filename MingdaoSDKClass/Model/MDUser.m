@@ -128,6 +128,9 @@
     copyObject.approveDate = [self.approveDate copy];
     copyObject.approveTime = [self.approveTime copy];
     
+    copyObject.folderType = self.folderType;
+    copyObject.isFolderAdmin = self.isFolderAdmin;
+    
     return copyObject;
 }
 

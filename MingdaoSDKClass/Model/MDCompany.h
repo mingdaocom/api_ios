@@ -10,8 +10,8 @@
 
 typedef enum {
     MDCompanyTypeFree = 0,
-    MDCompanyTypeUse = 1,
-    MDCompanyTypeTop = 2
+    MDCompanyTypeTrial = 1,
+    MDCompanyTypePremium = 2
 } MDCompanyType;
 
 @interface MDCompany : NSObject
