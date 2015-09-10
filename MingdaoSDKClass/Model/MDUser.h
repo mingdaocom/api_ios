@@ -110,5 +110,8 @@ typedef int MDUserTaskApplyStatus;
 @property (assign, nonatomic) MDUserTaskMemberType taskMemberType;
 @property (assign, nonatomic) MDUserTaskApplyStatus taskApplyStatus;
 
+@property (assign, nonatomic) NSInteger folderType;
+
+
 - (MDUser *)initWithDictionary:(NSDictionary *)aDic;
 @end

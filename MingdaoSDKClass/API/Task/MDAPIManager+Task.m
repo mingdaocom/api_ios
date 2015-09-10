@@ -1836,7 +1836,6 @@
 }
 
 
-
 - (MDURLConnection *)getFolderFileshandler:(void(^)(NSArray *files, NSArray *topFolders, NSArray *hideFolders, NSError *error))handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];

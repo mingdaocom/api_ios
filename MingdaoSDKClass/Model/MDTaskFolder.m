@@ -47,7 +47,6 @@
         self.taskAuth = [aDic[@"taskAuth"] integerValue];
         self.isVisibility = [aDic[@"isVisibility"] integerValue];
 
-
         self.currentUserType = [aDic[@"currentUserType"] integerValue];
 
         
@@ -99,8 +98,12 @@
 
     copyObject.isTop = self.isTop;
     copyObject.taskAuth = self.taskAuth;
+
     copyObject.isVisibility = self.isVisibility;
 
+
+    copyObject.applyCount = self.applyCount;
+    copyObject.isVisibility = self.isVisibility;
     
     return copyObject;
 }

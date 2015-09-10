@@ -36,6 +36,8 @@
 @property (assign, nonatomic) NSInteger isTop,taskAuth,isVisibility;
 
 @property (assign, nonatomic) NSInteger currentUserType;
+@property (assign, nonatomic) NSInteger applyCount;
+
 
 - (MDTaskFolder *)initWithDictionary:(NSDictionary *)aDic;
 @end
