@@ -37,6 +37,8 @@
         self.isContainMe = [[aDic objectForKey:@"isContainMe"] boolValue];
         self.isFavorite = [[aDic objectForKey:@"isFavorite"] boolValue];
         
+        self.isNewTask = [[aDic objectForKey:@"isNewTask"] boolValue];
+        
         self.currentUserType = [[aDic objectForKey:@"currentUserType"] intValue] + 1;
         
         if ([[aDic objectForKey:@"parent_task"] isKindOfClass:[NSDictionary class]]) {
@@ -120,6 +122,7 @@
     
     copyObject.colorType = self.colorType;
     copyObject.isNoticed = self.isNoticed;
+    copyObject.isNewTask = self.isNewTask;
     
     if (self.subTasks.count > 0) {
         copyObject.subTasks = [self.subTasks copy];

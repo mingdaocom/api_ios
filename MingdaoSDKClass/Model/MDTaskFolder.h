@@ -40,6 +40,7 @@
 @property (assign, nonatomic) NSInteger applyCount;
 
 @property (strong, nonatomic) NSString *fileID;
+@property (strong, nonatomic) NSMutableArray *groupsArr;
 
 - (MDTaskFolder *)initWithDictionary:(NSDictionary *)aDic;
 @end
