@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MDUser.h"
 #import "MDTaskFolderStage.h"
+#import "MDGroup.h"
 
 @interface MDTaskFolder : NSObject
 @property (strong, nonatomic) NSString *objectID;
