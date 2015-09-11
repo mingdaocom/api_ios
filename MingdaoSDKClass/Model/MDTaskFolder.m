@@ -48,6 +48,7 @@
 
         self.currentUserType = [aDic[@"currentUserType"] integerValue];
         self.applyCount = [aDic[@"applyCount"] integerValue];
+        self.fileID = aDic[@"fFileID"];
 
         
         if ([[aDic objectForKey:@"members"] isKindOfClass:[NSArray class]]) {
@@ -103,7 +104,9 @@
 
 
     copyObject.applyCount = self.applyCount;
-    copyObject.isVisibility = self.isVisibility;
+    copyObject.fileID = [self.fileID copy];
+    
+    
     
     return copyObject;
 }

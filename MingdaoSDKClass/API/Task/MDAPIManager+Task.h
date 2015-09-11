@@ -254,6 +254,7 @@
                                       handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)removeFolderMemberWiFolderID:(NSString *)folderID
+                                           userID:(NSString *)userID
                                           handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)editFolderArchivedWithFolderID:(NSString *)folderID

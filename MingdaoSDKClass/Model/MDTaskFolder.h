@@ -39,5 +39,7 @@
 @property (assign, nonatomic) NSInteger currentUserType;
 @property (assign, nonatomic) NSInteger applyCount;
 
+@property (strong, nonatomic) NSString *fileID;
+
 - (MDTaskFolder *)initWithDictionary:(NSDictionary *)aDic;
 @end
