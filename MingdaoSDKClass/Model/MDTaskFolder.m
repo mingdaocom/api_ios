@@ -61,6 +61,16 @@
             self.members = [tempArr mutableCopy];
         }
         
+        if ([[aDic objectForKey:@"groups"] isKindOfClass:[NSArray class]]) {
+            NSArray *groupArr = aDic[@"groups"];
+            NSMutableArray *tempArr = [NSMutableArray array];
+            for (NSDictionary *dic in groupArr) {
+                MDGroup *group = [[MDGroup alloc] initWithDictionary:dic];
+                [tempArr addObject:group];
+            }
+            self.groupsArr = [tempArr mutableCopy];
+        }
+        
     }
     return self;
 }
@@ -105,6 +115,7 @@
 
     copyObject.applyCount = self.applyCount;
     copyObject.fileID = [self.fileID copy];
+    copyObject.groupsArr = [self.groupsArr copy];
     
     
     

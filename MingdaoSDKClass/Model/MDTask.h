@@ -73,6 +73,7 @@
 @property (readonly, nonatomic) BOOL finished, expired;
 
 @property (assign, nonatomic) BOOL isFavorite;
+@property (assign, nonatomic) BOOL isNewTask;
 
 - (MDTask *)initWithDictionary:(NSDictionary *)aDic;
 @end
