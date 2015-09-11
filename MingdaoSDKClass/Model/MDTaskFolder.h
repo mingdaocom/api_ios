@@ -29,15 +29,15 @@
 @property (strong, nonatomic) NSArray *stages;
 @property (readonly, nonatomic) BOOL isCompleted;
 
-@property (strong, nonatomic) NSArray *members;
+@property (strong, nonatomic) NSMutableArray *members;
 @property (assign ,nonatomic) NSInteger isFavorite;
 @property (assign, nonatomic) NSInteger isArchived;
+@property (assign, nonatomic) NSInteger isTop, taskAuth;
 
-@property (assign, nonatomic) NSInteger isTop,taskAuth,isVisibility;
+@property (assign, nonatomic) NSInteger isVisibility;
 
 @property (assign, nonatomic) NSInteger currentUserType;
 @property (assign, nonatomic) NSInteger applyCount;
-
 
 - (MDTaskFolder *)initWithDictionary:(NSDictionary *)aDic;
 @end

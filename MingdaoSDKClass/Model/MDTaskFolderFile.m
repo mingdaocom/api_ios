@@ -9,7 +9,6 @@
 #import "MDTaskFolderFile.h"
 #import "MDTaskFolder.h"
 @implementation MDTaskFolderFile
-
 - (MDTaskFolderFile *)initWithDictionary:(NSDictionary *)dic
 {
     self = [super init];
@@ -28,7 +27,6 @@
     return self;
 }
 
-
 - (id)copy
 {
     MDTaskFolderFile *file = [[MDTaskFolderFile alloc] init];
@@ -38,7 +36,4 @@
     file.folders = [self.folders mutableCopy];
     return file;
 }
-
-
-
 @end

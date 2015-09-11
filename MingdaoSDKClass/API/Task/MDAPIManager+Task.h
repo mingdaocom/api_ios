@@ -225,8 +225,12 @@
 - (MDURLConnection *)createFolderWithName:(NSString *)folderName
                              chargeUserID:(NSString *)userID
                                  deadLine:(NSString *)deadLine
-                               isFavorite:(NSInteger)isFavorite
+                                    isTop:(NSInteger)isTop
                                   members:(NSString *)members
+                                   admins:(NSString *)admins
+                               visibility:(NSInteger)visibility
+                                 groupIDs:(NSString *)groupIDs
+                                   fileID:(NSString *)fileID
                                   handler:(MDAPINSStringHandler)handler;
 
 - (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
@@ -349,8 +353,6 @@
 
 - (MDURLConnection *)filterTaskCounhandler:(MDAPINSDictionaryHandler)handler;
 
-
-
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  项目文件夹的各项操作
@@ -383,7 +385,4 @@
 - (MDURLConnection *)applyFolderMemberWithFolderID:(NSString *)folderID
                                             reason:(NSString *)reason
                                            handler:(MDAPIBoolHandler)handler;
-
-
-
 @end

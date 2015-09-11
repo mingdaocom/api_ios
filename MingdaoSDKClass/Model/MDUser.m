@@ -58,6 +58,8 @@
         
         self.taskMemberType = [[aDic objectForKey:@"member_type"] intValue] + 1;
         self.taskApplyStatus = [[aDic objectForKey:@"apply_status"] intValue];
+        self.folderType = [aDic[@"type"] intValue];
+        self.isFolderAdmin = [aDic[@"isAdmin"] boolValue];
         
         self.lastLoginDate = aDic[@"lastLoginTime"];
         self.joinDateString = aDic[@"enterDay"];

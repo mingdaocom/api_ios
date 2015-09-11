@@ -42,12 +42,12 @@
         
         self.isFavorite = [aDic[@"isFavorite"] integerValue];
         self.isArchived = [aDic[@"isArchived"] integerValue];
-
         self.isTop = [aDic[@"isTop"] integerValue];
         self.taskAuth = [aDic[@"taskAuth"] integerValue];
         self.isVisibility = [aDic[@"isVisibility"] integerValue];
 
         self.currentUserType = [aDic[@"currentUserType"] integerValue];
+        self.applyCount = [aDic[@"applyCount"] integerValue];
 
         
         if ([[aDic objectForKey:@"members"] isKindOfClass:[NSArray class]]) {
@@ -57,7 +57,7 @@
                 MDUser *member = [[MDUser alloc] initWithDictionary:dic];
                 [tempArr addObject:member];
             }
-            self.members = tempArr;
+            self.members = [tempArr mutableCopy];
         }
         
     }
