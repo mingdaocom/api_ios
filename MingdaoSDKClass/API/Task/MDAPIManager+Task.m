@@ -1996,7 +1996,7 @@
     [urlString appendString:@"/task/v4/applyFolderMember.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_folderID=%@", folderID];
-    [urlString appendFormat:@"&fFileID=%@", reason];
+    [urlString appendFormat:@"&applyInfo=%@", reason];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
