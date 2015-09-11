@@ -140,6 +140,10 @@
     if (!date) {
         [formatter setDateFormat:@"yyyy/MM/dd HH:mm"];
         date = [formatter dateFromString:dateString];
+        if (!date && self.isAllday) {
+            [formatter setDateFormat:@"yyyy-MM-dd"];
+            date = [formatter dateFromString:dateString];
+        }
     }
     return date;
 }
