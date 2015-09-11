@@ -385,4 +385,16 @@
 - (MDURLConnection *)applyFolderMemberWithFolderID:(NSString *)folderID
                                             reason:(NSString *)reason
                                            handler:(MDAPIBoolHandler)handler;
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+项目加入成员
+ 
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)addFolderMemberFolderID:(NSString *)folderID
+                                     members:(NSString *)members
+                                     handler:(MDAPIBoolHandler)handler;
+
+
+
 @end
