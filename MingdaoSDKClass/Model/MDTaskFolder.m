@@ -49,7 +49,6 @@
         self.currentUserType = [aDic[@"currentUserType"] integerValue];
         self.applyCount = [aDic[@"applyCount"] integerValue];
         self.fileID = aDic[@"fFileID"];
-
         
         if ([[aDic objectForKey:@"members"] isKindOfClass:[NSArray class]]) {
             NSArray *membersArr = aDic[@"members"];
