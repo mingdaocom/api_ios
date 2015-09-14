@@ -170,60 +170,28 @@
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/vote/create?format=json"];
-    [urlString appendFormat:@"&access_token=%@",self.accessToken];
     
-    NSMutableData *postBody = [NSMutableData data];
-
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
-    [req setHTTPMethod:@"POST"];
-    
-    NSString *boundary = @"----------MINGDAO";
-    NSString *boundaryPrefix = @"--";
-    
-    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"p_msg"] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", [self localEncode:text]] dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"vote_options"] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", options] dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"vote_lasttime"] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", endDateString] dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"available_number"] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", (long)maxChoice] dataUsingEncoding:NSUTF8StringEncoding]];
-    
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"", @"object":@""}];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"p_msg", @"object":text}];
+    [parameters addObject:@{@"key":@"vote_options", @"object":options}];
+    [parameters addObject:@{@"key":@"vote_lasttime", @"object":endDateString}];
+    [parameters addObject:@{@"key":@"available_number", @"object":[NSNumber numberWithInteger:maxChoice]}];
     if (imageOptions) {
-        
-        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"v_img_options"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", imageOptions] dataUsingEncoding:NSUTF8StringEncoding]];
+        [parameters addObject:@{@"key":@"v_img_options", @"object":imageOptions}];
     }
     if (isAnonymous) {
-        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"vote_anonymous"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%d\r\n", 1] dataUsingEncoding:NSUTF8StringEncoding]];
+        [parameters addObject:@{@"key":@"vote_anonymous", @"object":@1}];
     }
     if (isVisible) {
-        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"vote_visble"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%d\r\n", 1] dataUsingEncoding:NSUTF8StringEncoding]];
+        [parameters addObject:@{@"key":@"vote_visble", @"object":@1}];
     }
     if (groupIDs &&groupIDs.count>0) {
-        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"g_id"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", [groupIDs componentsJoinedByString:@","]] dataUsingEncoding:NSUTF8StringEncoding]];
+        [parameters addObject:@{@"key":@"g_id", @"object":[groupIDs componentsJoinedByString:@","]}];
     }
-    
-    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"s_type"] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", (long)shareType] dataUsingEncoding:NSUTF8StringEncoding]];
-    
+    [parameters addObject:@{@"key":@"s_type", @"object":[NSNumber numberWithInteger:shareType]}];
     if (images.count > 0) {
         for (int i = 0; i < images.count; i++) {
             NSString *filename = [NSString stringWithFormat:@"photo%d.jpg", i];
@@ -232,25 +200,12 @@
             if (i > 0) {
                 [parameter appendFormat:@"%d", i];
             }
-            
-            [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\";\r\n\r\n", parameter, filename] dataUsingEncoding:NSUTF8StringEncoding]];
-            NSData *imageData = UIImageJPEGRepresentation(images[i], 0.5);
-            [postBody appendData:imageData];
-            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+            [parameters addObject:@{@"key":parameter, @"fileName":filename, @"object":images[i]}];
         }
     }
     
-    [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    
-    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
-    [req setValue:contentType forHTTPHeaderField:@"Content-type"];
-    [req setHTTPBody:postBody];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [self postWithParameters:parameters withRequest:req];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
