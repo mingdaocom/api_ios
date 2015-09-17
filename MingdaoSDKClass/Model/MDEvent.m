@@ -417,6 +417,15 @@
     return array;
 }
 
+- (BOOL)isEqual:(id)object
+{
+    if ([object isKindOfClass:[self class]]) {
+        MDEvent *anEvent = (MDEvent *)object;
+        return [self.objectID isEqualToString:anEvent.objectID];
+    }
+    return NO;
+}
+
 - (id)copy
 {
     id object = [[[self class] alloc] init];
