@@ -567,13 +567,13 @@
     [urlString appendString:@"/task/duplicate_task?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
-    [urlString appendFormat:@"&u_id=%@", chargerID];
     [urlString appendFormat:@"&title=%@", title];
+    [urlString appendFormat:@"&u_id=%@", chargerID];
+
     if (options.count == 6) {
         [urlString appendFormat:@"&is_taskdesc=%d", [options[0] boolValue]?1:0];
         [urlString appendFormat:@"&is_folderID=%d", [options[1] boolValue]?1:0];
-        [urlString appendFormat:@"&is_members=%d", [options[2] boolValue]?1:0];
-        [urlString appendFormat:@"&is_observers=%d", [options[3] boolValue]?1:0];
+        [urlString appendFormat:@"&is_members=%d", [options[3] boolValue]?1:0];
         [urlString appendFormat:@"&is_deadline=%d", [options[4] boolValue]?1:0];
         [urlString appendFormat:@"&is_subtask=%d", [options[5] boolValue]?1:0];
     }
