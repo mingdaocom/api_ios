@@ -7,6 +7,7 @@
 //
 
 #import "MDEvent.h"
+#import "MDTaskReplyment.h"
 
 @implementation MDEventEmail
 - (MDEventEmail *)initWithDictionary:(NSDictionary *)aDic
@@ -127,6 +128,32 @@
                 self.creator = [self.members objectAtIndex:0];
             }
         }
+        
+        NSArray *fileDics = aDic[@"files"];
+        NSMutableArray *images = nil;
+        NSMutableArray *files = nil;
+        for (NSDictionary *dd in fileDics) {
+            MDTaskReplymentDetail *detail = [[MDTaskReplymentDetail alloc] initWithDictionary:dd];
+            detail.replyID = self.objectID;
+            if (detail.file_type == MDAttachmentFileTypeImage) {
+                if (!images) {
+                    images = [NSMutableArray array];
+                }
+                [images addObject:detail];
+            }
+            if (detail.file_type == MDAttachmentFileTypeZip ||
+                detail.file_type == MDAttachmentFileTypeFile) {
+                if (!files) {
+                    files = [NSMutableArray array];
+                }
+                [files addObject:detail];
+            }
+        }
+        self.images = images;
+        self.files = files;
+
+        
+        
     }
     return self;
 }
@@ -444,6 +471,8 @@
     copyObject.remindType = self.remindType;
     copyObject.remindTime = self.remindTime;
     copyObject.isTask = self.isTask;
+    copyObject.images = [self.images copy];
+    copyObject.files = [self.files copy];
     return copyObject;
 }
 @end
