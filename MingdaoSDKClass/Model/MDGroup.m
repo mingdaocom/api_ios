@@ -27,9 +27,11 @@
         self.userCount = [[aDic objectForKey:@"user_count"] intValue];
         self.postCount = [[aDic objectForKey:@"post_count"] intValue];
         self.creator = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"user"]];
-        self.isHidden = [[aDic objectForKey:@"is_hidden"] boolValue];
+        self.isHidden = [[aDic objectForKey:@"isHidden"] boolValue];
         self.admins = [aDic objectForKey:@"admins"];
         self.createTime = [aDic objectForKey:@"create_time"];
+        self.isApproval = [[aDic objectForKey:@"isApproval"] boolValue];
+        self.isPost = [[aDic objectForKey:@"isPost"] boolValue];
     }
     return self;
 }
@@ -64,6 +66,8 @@
     copyObject.creator = [self.creator copy];
     copyObject.admins = [self.admins copy];
     copyObject.createTime = [self.createTime copy];
+    copyObject.isPost = self.isPost;
+    copyObject.isApproval = self.isApproval;
     return copyObject;
 }
 @end

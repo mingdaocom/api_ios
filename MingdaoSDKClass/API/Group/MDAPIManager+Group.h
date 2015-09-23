@@ -77,8 +77,10 @@
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)createGroupWithGroupName:(NSString *)gName
                                        detail:(NSString *)detail
-                                     isPublic:(BOOL)isPub
                                      isHidden:(BOOL)isHidden
+                                   isApproval:(BOOL)isApproval
+                                       isPost:(BOOL)isPost
+                                       deptID:(NSString *)deptID
                                       handler:(MDAPIObjectHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
