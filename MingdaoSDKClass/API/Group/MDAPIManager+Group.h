@@ -142,4 +142,10 @@ typedef enum {
 
 
 - (MDURLConnection *)loadEGroupUsersListWithHandler:(MDAPINSDictionaryHandler)handler;
+
+
+- (MDURLConnection *)chatToPostWithChatGroupID:(NSString *)groupID
+                                       handler:(MDAPIBoolHandler)handler;
+
+
 @end
