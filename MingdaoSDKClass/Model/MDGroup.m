@@ -32,6 +32,16 @@
         self.createTime = [aDic objectForKey:@"create_time"];
         self.isApproval = [[aDic objectForKey:@"isApproval"] boolValue];
         self.isPost = [[aDic objectForKey:@"isPost"] boolValue];
+        self.isVerified = [[aDic objectForKey:@"isVerified"] boolValue];
+        self.isPush = [[aDic objectForKey:@"isPush"] boolValue];
+
+        
+        NSMutableArray *members = [NSMutableArray array];
+        for (NSDictionary *dic in aDic[@"users"]) {
+            MDUser *user = [[MDUser alloc] initWithDictionary:dic];
+            [members addObject:user];
+        }
+        self.members = members;
     }
     return self;
 }
@@ -68,6 +78,10 @@
     copyObject.createTime = [self.createTime copy];
     copyObject.isPost = self.isPost;
     copyObject.isApproval = self.isApproval;
+    copyObject.isVerified = self.isVerified;
+    copyObject.members = [self.members copy];
+    copyObject.department = [self.department copy];
+    copyObject.isPush = self.isPush;
     return copyObject;
 }
 @end
