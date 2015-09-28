@@ -15,7 +15,7 @@
     if (self) {
         self.objectID = [aDic objectForKey:@"id"];
         self.objectName = [aDic objectForKey:@"name"];
-        self.avatar = [aDic objectForKey:@"avstar"];
+        self.avatar = [aDic objectForKey:@"logo"];
         self.about = [aDic objectForKey:@"about"];
         if (![self.about isKindOfClass:[NSString class]]) {
             self.about = @"";
@@ -34,7 +34,7 @@
         self.isPost = [[aDic objectForKey:@"isPost"] boolValue];
         self.isVerified = [[aDic objectForKey:@"isVerified"] boolValue];
         self.isPush = [[aDic objectForKey:@"isPush"] boolValue];
-
+        self.isGroupAdmin = [[aDic objectForKey:@"isAdmin"] boolValue];
         
         NSMutableArray *members = [NSMutableArray array];
         for (NSDictionary *dic in aDic[@"users"]) {
@@ -82,6 +82,7 @@
     copyObject.members = [self.members copy];
     copyObject.department = [self.department copy];
     copyObject.isPush = self.isPush;
+    copyObject.isGroupAdmin = self.isGroupAdmin;
     return copyObject;
 }
 @end

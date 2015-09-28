@@ -94,8 +94,9 @@
 - (MDURLConnection *)editGroupWithGroupID:(NSString *)groupID
                                      name:(NSString *)gName
                                    detail:(NSString *)detail
-                                 isPublic:(BOOL)isPub
                                  isHidden:(BOOL)isHidden
+                               isApproval:(BOOL)isApproval
+                                   isPost:(BOOL)isPost
                                   handler:(MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-

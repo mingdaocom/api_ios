@@ -47,6 +47,7 @@
 @property (strong, nonatomic) NSString *createTime;
 @property (strong, nonatomic) NSArray *members;
 @property (strong, nonatomic) MDDepartment *department;
+@property (assign, nonatomic) BOOL isGroupAdmin;
 
 
 - (MDGroup *)initWithDictionary:(NSDictionary *)aDic;

@@ -243,8 +243,9 @@
 - (MDURLConnection *)editGroupWithGroupID:(NSString *)groupID
                                      name:(NSString *)gName
                                    detail:(NSString *)detail
-                                 isPublic:(BOOL)isPub
                                  isHidden:(BOOL)isHidden
+                               isApproval:(BOOL)isApproval
+                                   isPost:(BOOL)isPost
                                   handler:(MDAPIBoolHandler)handler
 {
     
@@ -257,10 +258,10 @@
     [parameters addObject:@{@"key":@"g_id", @"object":groupID}];
     [parameters addObject:@{@"key":@"g_name", @"object":gName}];
     [parameters addObject:@{@"key":@"about", @"object":detail}];
-    [parameters addObject:@{@"key":@"is_public", @"object":isPub?@1:@0}];
-    if (!isPub) {
-        [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
-    }
+    [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
+    [parameters addObject:@{@"key":@"isApproval", @"object":isApproval?@1:@0}];
+    [parameters addObject:@{@"key":@"isPost", @"object":isPost?@1:@0}];
+
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [self postWithParameters:parameters withRequest:req];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
