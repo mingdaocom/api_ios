@@ -141,6 +141,8 @@
 - (MDURLConnection *)loadUnconfirmedEventsWithPageSize:(int)pageSize
                                                   page:(int)page
                                                handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadUpComingEventsForChatCardWithKeywors:(NSString *)keywords
+                                                      handler:(MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
