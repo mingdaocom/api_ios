@@ -1,7 +1,17 @@
 
 ##明道iOS 版本的SDK，包含了移动应用SSO授权
 
+###更新
+iOS 9适配
 
+###iOS 9下，canOpenURL方法需要预先设置信任的URL Schema，请先到应用Info.plist下插入代码：
+***
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>mingdao</string>
+	</array>
+
+###原HD应用将不再继续使用，即只支持mingdaoAppKey的应用，不再支持mingdaoHDAppKey的应用
 ***
 
 ##1、SSO授权功能介绍
@@ -47,8 +57,8 @@ iOS平台：https://github.com/meihua-info/api_ios
 
 ![image](https://raw.githubusercontent.com/meihua-info/api_ios/master/%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/1.jpeg)
 
-（2）添加URLScheme 
-    注: iPhone/iPod URLScheme为mingdaoApp'AppKey', 
+（2）添加URLScheme
+    注: iPhone/iPod URLScheme为mingdaoApp'AppKey',
         iPad URLScheme为mingdaoAppHD'AppKey',
         明道会优先将回调信息回传到iPad版应用,
         引号内内容创建应用时获取的AppKey, 不包括引号
