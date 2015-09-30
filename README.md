@@ -11,7 +11,7 @@ iOS 9适配
 		<string>mingdao</string>
 	</array>
 
-###原HD应用将不再继续使用，即只支持mingdaoAppKey的应用，不再支持mingdaoHDAppKey的应用
+###原HD应用将不再继续使用，即只支持mingdaoApp+AppKey的应用，不再支持mingdaoAppHD+AppKey的应用
 ***
 
 ##1、SSO授权功能介绍
