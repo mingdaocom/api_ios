@@ -16,29 +16,16 @@ NSString *const MDAuthExpiresTimeKey = @"expires_in";
 @implementation MDAuthenticator
 + (BOOL)canOpenMingdaoAppForAuth
 {
-    NSMutableString *ipadString = [NSMutableString stringWithString:@"mingdaoHD://"];
-    
-    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:ipadString]]) {
-        return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:ipadString]];
-    } else {
-        NSMutableString *string = [NSMutableString stringWithString:@"mingdao://"];
-        return [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
-    }
+    NSMutableString *string = [NSMutableString stringWithString:@"mingdao://"];
+    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:string]];
 }
 
 + (BOOL)authorizeByMingdaoAppWithAppKey:(NSString *)appKey appSecret:(NSString *)appSecret
 {
-    NSMutableString *ipadString = [NSMutableString stringWithString:@"mingdaoHD://app.mingdao.com/authentication/?"];
-    [ipadString appendFormat:@"appKey==%@&&appSecret==%@", appKey, appSecret];
+    NSMutableString *string = [NSMutableString stringWithString:@"mingdao://app.mingdao.com/authentication/?"];
+    [string appendFormat:@"appKey==%@&&appSecret==%@", appKey, appSecret];
     
-    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:ipadString]]) {
-        return [[UIApplication sharedApplication] openURL:[NSURL URLWithString:ipadString]];
-    } else {
-        NSMutableString *string = [NSMutableString stringWithString:@"mingdao://app.mingdao.com/authentication/?"];
-        [string appendFormat:@"appKey==%@&&appSecret==%@", appKey, appSecret];
-        
-        return [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
-    }
+    return [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
 }
 
 + (NSDictionary *)mingdaoAppDidFinishAuthenticationWithURL:(NSURL *)url
