@@ -260,7 +260,6 @@
     [parameters addObject:@{@"key":@"about", @"object":detail}];
     [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
     [parameters addObject:@{@"key":@"isApproval", @"object":isApproval?@1:@0}];
-    [parameters addObject:@{@"key":@"isPost", @"object":isPost?@1:@0}];
 
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [self postWithParameters:parameters withRequest:req];
