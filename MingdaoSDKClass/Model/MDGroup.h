@@ -30,14 +30,13 @@
 
 #import <Foundation/Foundation.h>
 #import "MDUser.h"
-#import "MDDepartment.h"
 
 @interface MDGroup : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
 @property (strong, nonatomic) NSString *about;
 @property (strong, nonatomic) NSString *avatar;
-@property (assign, nonatomic) BOOL isPublic, isJoined, isHidden, isApproval, isPost, isVerified, isPush;
+@property (assign, nonatomic) BOOL isPublic, isJoined, isHidden, isApproval, isPost, isPush;
 @property (assign, nonatomic) int status;
 @property (assign, nonatomic) int type;
 @property (assign, nonatomic) int userCount;
@@ -46,7 +45,7 @@
 @property (strong, nonatomic) NSArray *admins;
 @property (strong, nonatomic) NSString *createTime;
 @property (strong, nonatomic) NSMutableArray *members;
-@property (strong, nonatomic) MDDepartment *department;
+@property (strong, nonatomic) NSString *mapDepID, *mapDepName;
 @property (assign, nonatomic) BOOL isGroupAdmin;
 
 

@@ -32,7 +32,6 @@
         self.createTime = [aDic objectForKey:@"create_time"];
         self.isApproval = [[aDic objectForKey:@"isApproval"] boolValue];
         self.isPost = [[aDic objectForKey:@"isPost"] boolValue];
-        self.isVerified = [[aDic objectForKey:@"isVerified"] boolValue];
         self.isPush = [[aDic objectForKey:@"isPush"] boolValue];
         self.isGroupAdmin = [[aDic objectForKey:@"isAdmin"] boolValue];
         
@@ -42,6 +41,11 @@
             [members addObject:user];
         }
         self.members = members;
+        
+        self.mapDepID = aDic[@"mapAutoID"];
+        self.mapDepName = aDic[@"mapDeptName"];
+        
+        
     }
     return self;
 }
@@ -78,9 +82,9 @@
     copyObject.createTime = [self.createTime copy];
     copyObject.isPost = self.isPost;
     copyObject.isApproval = self.isApproval;
-    copyObject.isVerified = self.isVerified;
     copyObject.members = [self.members copy];
-    copyObject.department = [self.department copy];
+    copyObject.mapDepID = [self.mapDepID copy];
+    copyObject.mapDepName = [self.mapDepName copy];
     copyObject.isPush = self.isPush;
     copyObject.isGroupAdmin = self.isGroupAdmin;
     return copyObject;
