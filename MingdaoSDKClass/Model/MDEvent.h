@@ -52,6 +52,10 @@
 @property (readonly, nonatomic) NSString *repeatDetail;
 @property (readonly, nonatomic) NSArray *selectedWeekdays;
 
+@property (strong, nonatomic) NSArray *images;
+@property (strong, nonatomic) NSArray *files;
+
+
 
 - (MDEvent *)initWithDictionary:(NSDictionary *)aDic;
 - (NSString *)escapedDuration;

@@ -77,8 +77,10 @@
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)createGroupWithGroupName:(NSString *)gName
                                        detail:(NSString *)detail
-                                     isPublic:(BOOL)isPub
                                      isHidden:(BOOL)isHidden
+                                   isApproval:(BOOL)isApproval
+                                       isPost:(BOOL)isPost
+                                       deptID:(NSString *)deptID
                                       handler:(MDAPIObjectHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -92,8 +94,9 @@
 - (MDURLConnection *)editGroupWithGroupID:(NSString *)groupID
                                      name:(NSString *)gName
                                    detail:(NSString *)detail
-                                 isPublic:(BOOL)isPub
                                  isHidden:(BOOL)isHidden
+                               isApproval:(BOOL)isApproval
+                                   isPost:(BOOL)isPost
                                   handler:(MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -140,4 +143,10 @@ typedef enum {
 
 
 - (MDURLConnection *)loadEGroupUsersListWithHandler:(MDAPINSDictionaryHandler)handler;
+
+
+- (MDURLConnection *)chatToPostWithChatGroupID:(NSString *)groupID
+                                       handler:(MDAPIBoolHandler)handler;
+
+
 @end

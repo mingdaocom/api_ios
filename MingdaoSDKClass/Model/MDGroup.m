@@ -15,7 +15,7 @@
     if (self) {
         self.objectID = [aDic objectForKey:@"id"];
         self.objectName = [aDic objectForKey:@"name"];
-        self.avatar = [aDic objectForKey:@"avstar"];
+        self.avatar = [aDic objectForKey:@"logo"];
         self.about = [aDic objectForKey:@"about"];
         if (![self.about isKindOfClass:[NSString class]]) {
             self.about = @"";
@@ -27,9 +27,25 @@
         self.userCount = [[aDic objectForKey:@"user_count"] intValue];
         self.postCount = [[aDic objectForKey:@"post_count"] intValue];
         self.creator = [[MDUser alloc] initWithDictionary:[aDic objectForKey:@"user"]];
-        self.isHidden = [[aDic objectForKey:@"is_hidden"] boolValue];
+        self.isHidden = [[aDic objectForKey:@"isHidden"] boolValue];
         self.admins = [aDic objectForKey:@"admins"];
         self.createTime = [aDic objectForKey:@"create_time"];
+        self.isApproval = [[aDic objectForKey:@"isApproval"] boolValue];
+        self.isPost = [[aDic objectForKey:@"isPost"] boolValue];
+        self.isPush = [[aDic objectForKey:@"isPush"] boolValue];
+        self.isGroupAdmin = [[aDic objectForKey:@"isAdmin"] boolValue];
+        
+        NSMutableArray *members = [NSMutableArray array];
+        for (NSDictionary *dic in aDic[@"users"]) {
+            MDUser *user = [[MDUser alloc] initWithDictionary:dic];
+            [members addObject:user];
+        }
+        self.members = members;
+        
+        self.mapDepID = aDic[@"mapAutoID"];
+        self.mapDepName = aDic[@"mapDeptName"];
+        
+        
     }
     return self;
 }
@@ -64,6 +80,13 @@
     copyObject.creator = [self.creator copy];
     copyObject.admins = [self.admins copy];
     copyObject.createTime = [self.createTime copy];
+    copyObject.isPost = self.isPost;
+    copyObject.isApproval = self.isApproval;
+    copyObject.members = [self.members copy];
+    copyObject.mapDepID = [self.mapDepID copy];
+    copyObject.mapDepName = [self.mapDepName copy];
+    copyObject.isPush = self.isPush;
+    copyObject.isGroupAdmin = self.isGroupAdmin;
     return copyObject;
 }
 @end

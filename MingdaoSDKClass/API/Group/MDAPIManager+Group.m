@@ -205,8 +205,10 @@
 
 - (MDURLConnection *)createGroupWithGroupName:(NSString *)gName
                                        detail:(NSString *)detail
-                                     isPublic:(BOOL)isPub
                                      isHidden:(BOOL)isHidden
+                                   isApproval:(BOOL)isApproval
+                                       isPost:(BOOL)isPost
+                                       deptID:(NSString *)deptID
                                       handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -217,10 +219,13 @@
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"g_name", @"object":gName}];
     [parameters addObject:@{@"key":@"about", @"object":detail}];
-    [parameters addObject:@{@"key":@"is_public", @"object":isPub?@1:@0}];
-    if (!isPub) {
-        [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
+    [parameters addObject:@{@"key":@"isApproval", @"object":isApproval?@1:@0}];
+    [parameters addObject:@{@"key":@"isPost", @"object":isPost?@1:@0}];
+    [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
+    if (deptID.length > 0) {
+        [parameters addObject:@{@"key":@"deptID", @"object":deptID}];
     }
+
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [self postWithParameters:parameters withRequest:req];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
@@ -238,8 +243,9 @@
 - (MDURLConnection *)editGroupWithGroupID:(NSString *)groupID
                                      name:(NSString *)gName
                                    detail:(NSString *)detail
-                                 isPublic:(BOOL)isPub
                                  isHidden:(BOOL)isHidden
+                               isApproval:(BOOL)isApproval
+                                   isPost:(BOOL)isPost
                                   handler:(MDAPIBoolHandler)handler
 {
     
@@ -252,10 +258,9 @@
     [parameters addObject:@{@"key":@"g_id", @"object":groupID}];
     [parameters addObject:@{@"key":@"g_name", @"object":gName}];
     [parameters addObject:@{@"key":@"about", @"object":detail}];
-    [parameters addObject:@{@"key":@"is_public", @"object":isPub?@1:@0}];
-    if (!isPub) {
-        [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
-    }
+    [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
+    [parameters addObject:@{@"key":@"isApproval", @"object":isApproval?@1:@0}];
+
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [self postWithParameters:parameters withRequest:req];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
@@ -472,4 +477,21 @@
     }];
     return connection;
 }
+
+
+- (MDURLConnection *)chatToPostWithChatGroupID:(NSString *)groupID
+                                       handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/group/chatToPost.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&g_id=%@", groupID];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+
+}
+
 @end

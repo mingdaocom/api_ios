@@ -424,6 +424,37 @@
     return connection;
 }
 
+- (MDURLConnection *)loadUpComingEventsForChatCardWithKeywors:(NSString *)keywords
+                                                      handler:(MDAPINSArrayHandler)handler
+{
+    
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/calendar/getChatCalendars.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords) {
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    }
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        
+        NSMutableArray *returnEvents = [NSMutableArray array];
+        for (NSDictionary *aDic in [dic objectForKey:@"calendars"]) {
+            if (![aDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDEvent *aEvent = [[MDEvent alloc] initWithDictionary:aDic];
+            [returnEvents addObject:aEvent];
+        }
+        
+        handler(returnEvents, error);
+    }];
+    return connection;
+}
+
 - (MDURLConnection *)loadEventWithObjectID:(NSString *)objectID handler:(MDAPIObjectHandler)handler
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/detail?u_key=%@&c_id=%@&format=json"
