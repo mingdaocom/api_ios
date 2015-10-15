@@ -16,7 +16,7 @@
 {
     NSString *tempString = MDErrorLocalizedString(errorCode, nil);
     if ([tempString isEqualToString:errorCode]) {
-        return nil;
+        return errorCode;
     } else {
         return tempString;
     }
@@ -44,6 +44,7 @@
         return error;
     }
 
-    return [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey:[MDErrorParser errorStringWithErrorCode:@"0"],@"NSErrorFailingURLStringKey":urlString}];
+    NSString *errorString = [MDErrorParser errorStringWithErrorCode:@"0"];
+    return [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey:errorString, @"NSErrorFailingURLStringKey":urlString}];
 }
 @end
