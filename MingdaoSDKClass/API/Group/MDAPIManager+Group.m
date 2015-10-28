@@ -292,8 +292,7 @@
         [parameters addObject:@{@"key":@"eGroupMobilePhone", @"object":[phoneNumbers componentsJoinedByString:@","]}];
     }
     
-    //NSURLRequest *req = [MDAPIManager postWithParameters:parameters baseURL:urlString];
-    NSURLRequest *req = [MDAPIManager getWithParameters:parameters baseURL:urlString];
+    NSURLRequest *req = [MDAPIManager postWithParameters:parameters baseURL:urlString];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         handler(dic, error);
     }];
