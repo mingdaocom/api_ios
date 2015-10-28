@@ -36,7 +36,7 @@
 @property (strong, nonatomic) NSString *objectName;
 @property (strong, nonatomic) NSString *about;
 @property (strong, nonatomic) NSString *avatar;
-@property (assign, nonatomic) BOOL isPublic, isJoined, isHidden, isApproval, isPost, isPush;
+@property (assign, nonatomic) BOOL isJoined, isHidden, isApproval, isPost, isPush;
 @property (assign, nonatomic) int status;
 @property (assign, nonatomic) int type;
 @property (assign, nonatomic) int userCount;

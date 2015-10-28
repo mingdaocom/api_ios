@@ -20,7 +20,6 @@
         if (![self.about isKindOfClass:[NSString class]]) {
             self.about = @"";
         }
-        self.isPublic = [[aDic objectForKey:@"is_public"] boolValue];
         self.status = [[aDic objectForKey:@"status"] intValue];
         self.type = [[aDic objectForKey:@"type"] intValue];
         self.isJoined = [[aDic objectForKey:@"followed_status"] boolValue];
@@ -70,7 +69,6 @@
     copyObject.objectName = [self.objectName copy];
     copyObject.avatar = [self.avatar copy];
     copyObject.about = [self.about copy];
-    copyObject.isPublic = self.isPublic;
     copyObject.status = self.status;
     copyObject.type = self.type;
     copyObject.isJoined = self.isJoined;

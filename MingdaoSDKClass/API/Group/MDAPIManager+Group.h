@@ -99,6 +99,12 @@
                                    isPost:(BOOL)isPost
                                   handler:(MDAPIBoolHandler)handler;
 
+- (MDURLConnection *)inviteUserToGroupWithGroupID:(NSString *)gID
+                                          userIDs:(NSArray *)userIDs
+                                           emails:(NSArray *)emails
+                                     phoneNumbers:(NSArray *)phoneNumbers
+                                          handler:(MDAPINSDictionaryHandler)handler;
+
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  邀请用户（同事邮箱）加入群组

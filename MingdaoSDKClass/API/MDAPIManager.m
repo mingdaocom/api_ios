@@ -268,6 +268,33 @@ static MDAPIManager *sharedManager = nil;
     [req setHTTPBody:postBody];
 }
 
++ (NSURLRequest *)postWithParameters:(NSArray *)parameters baseURL:(NSString *)baseURL
+{
+    // temp
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:baseURL]];
+    [[MDAPIManager sharedManager] postWithParameters:parameters withRequest:req];
+    return req;
+}
+
++ (NSURLRequest *)getWithParameters:(NSArray *)parameters baseURL:(NSString *)baseURL
+{
+    NSMutableString *fullURL = [NSMutableString stringWithString:baseURL];
+    [fullURL appendString:@"?"];
+    for (int i = 0; i < parameters.count; i++) {
+        NSDictionary *paraDic = parameters[i];
+        NSString *key = paraDic[@"key"];
+        NSString *object = paraDic[@"object"];
+        if (![object isKindOfClass:[NSString class]]) {
+            NSLog(@"error paramters");
+            continue;
+        }
+        [fullURL appendFormat:@"%@=%@", key, object];
+        [fullURL appendString:@"&"];
+    }
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:fullURL]];
+    return req;
+}
+
 - (NSString *)localEncode:(NSString *)string
 {
     NSMutableString *passwordTmp = [string mutableCopy];

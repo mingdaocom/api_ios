@@ -7,7 +7,7 @@
  */
 "0" = "Sorry, server is not responding. Please call our service line:400-021-6464,we will fix as soon as possible.";
 //100 Bad Request:请求数据不合法
-"10001" = "Bug: Parameters missing, please feedback to us or call our service line:400-021-6464 ,we will fix as soon as possible.";
+"10001" = "Bug: Parameters missing, please feedback to us or call our service line:400-021-6464, we will fix as soon as possible.";
 "10002" = "Bug: Invalid parameters, please feedback to us or call our service line:400-021-6464, we will fix as soon as possible.";
 "10003" = "Sorry ,you are not authorized to operate.";
 "10004" = "Sorry, you are not authorized to access this group";

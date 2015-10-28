@@ -81,4 +81,7 @@ extern NSString * const MDAPIManagerNewTokenSetNotification;
                                           handler:(MDAPINSDictionaryHandler)handler;
 
 - (void)postWithParameters:(NSArray *)parameters withRequest:(NSMutableURLRequest *)req;
+
++ (NSURLRequest *)postWithParameters:(NSArray *)parameters baseURL:(NSString *)baseURL;
++ (NSURLRequest *)getWithParameters:(NSArray *)parameters baseURL:(NSString *)baseURL;
 @end

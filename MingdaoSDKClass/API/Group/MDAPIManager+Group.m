@@ -270,6 +270,37 @@
 }
 
 - (MDURLConnection *)inviteUserToGroupWithGroupID:(NSString *)gID
+                                          userIDs:(NSArray *)userIDs
+                                           emails:(NSArray *)emails
+                                     phoneNumbers:(NSArray *)phoneNumbers
+                                          handler:(MDAPINSDictionaryHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/group/v2/invite"];
+
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"g_id", @"object":gID}];
+    if (userIDs.count > 0) {
+        [parameters addObject:@{@"key":@"u_ids", @"object":[userIDs componentsJoinedByString:@","]}];
+    }
+    if (emails.count > 0) {
+        [parameters addObject:@{@"key":@"eGroupEmail", @"object":[emails componentsJoinedByString:@","]}];
+    }
+    if (phoneNumbers.count > 0) {
+        [parameters addObject:@{@"key":@"eGroupMobilePhone", @"object":[phoneNumbers componentsJoinedByString:@","]}];
+    }
+    
+    //NSURLRequest *req = [MDAPIManager postWithParameters:parameters baseURL:urlString];
+    NSURLRequest *req = [MDAPIManager getWithParameters:parameters baseURL:urlString];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        handler(dic, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)inviteUserToGroupWithGroupID:(NSString *)gID
                                            emails:(NSArray *)emails
                                        inviteType:(NSInteger)type
                                           handler:(MDAPIBoolHandler)handler
