@@ -31,13 +31,20 @@
 #import <Foundation/Foundation.h>
 #import "MDUser.h"
 
+enum {
+    MDGroupStatusClosed = 0,
+    MDGroupStatusActive = 1,
+    MDGroupStatusDismissedOrDeleted = 2
+};
+typedef int MDGroupStatus;
+
 @interface MDGroup : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
 @property (strong, nonatomic) NSString *about;
 @property (strong, nonatomic) NSString *avatar;
 @property (assign, nonatomic) BOOL isJoined, isHidden, isApproval, isPost, isPush;
-@property (assign, nonatomic) int status;
+@property (assign, nonatomic) MDGroupStatus status;
 @property (assign, nonatomic) int type;
 @property (assign, nonatomic) int userCount;
 @property (assign, nonatomic) int postCount;
