@@ -299,25 +299,6 @@
     return connection;
 }
 
-- (MDURLConnection *)inviteUserToGroupWithGroupID:(NSString *)gID
-                                           emails:(NSArray *)emails
-                                       inviteType:(NSInteger)type
-                                          handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/groupinvite/again_inviteuser?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&g_id=%@", gID];
-    [urlString appendFormat:@"&invite_type=%ld", (long)type];
-    [urlString appendFormat:@"&emails=%@", [emails componentsJoinedByString:@","]];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
 - (MDURLConnection *)cancelInviteToUserToGroupWithTokens:(NSArray *)tokens
                                                  handler:(MDAPIBoolHandler)handler
 {
