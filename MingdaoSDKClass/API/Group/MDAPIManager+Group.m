@@ -218,7 +218,9 @@
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"g_name", @"object":gName}];
-    [parameters addObject:@{@"key":@"about", @"object":detail}];
+    if (detail) {
+        [parameters addObject:@{@"key":@"about", @"object":detail}];
+    }
     [parameters addObject:@{@"key":@"isApproval", @"object":isApproval?@1:@0}];
     [parameters addObject:@{@"key":@"isPost", @"object":isPost?@1:@0}];
     [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
@@ -243,9 +245,9 @@
 - (MDURLConnection *)editGroupWithGroupID:(NSString *)groupID
                                      name:(NSString *)gName
                                    detail:(NSString *)detail
-                                 isHidden:(BOOL)isHidden
-                               isApproval:(BOOL)isApproval
-                                   isPost:(BOOL)isPost
+                                 isHidden:(NSNumber *)isHidden
+                               isApproval:(NSNumber *)isApproval
+                                   isPost:(NSNumber *)isPost
                                   handler:(MDAPIBoolHandler)handler
 {
     
@@ -256,10 +258,21 @@
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"g_id", @"object":groupID}];
-    [parameters addObject:@{@"key":@"g_name", @"object":gName}];
-    [parameters addObject:@{@"key":@"about", @"object":detail}];
-    [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
-    [parameters addObject:@{@"key":@"isApproval", @"object":isApproval?@1:@0}];
+    if (gName) {
+        [parameters addObject:@{@"key":@"g_name", @"object":gName}];
+    }
+    if (detail) {
+        [parameters addObject:@{@"key":@"about", @"object":detail}];
+    }
+    if (isHidden) {
+        [parameters addObject:@{@"key":@"is_hidden", @"object":[isHidden boolValue]?@1:@0}];
+    }
+    if (isApproval) {
+        [parameters addObject:@{@"key":@"isApproval", @"object":[isApproval boolValue]?@1:@0}];
+    }
+    if (isPost) {
+        [parameters addObject:@{@"key":@"isPost", @"object":[isPost boolValue]?@1:@0}];
+    }
 
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [self postWithParameters:parameters withRequest:req];
