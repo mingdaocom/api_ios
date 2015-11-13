@@ -94,9 +94,9 @@
 - (MDURLConnection *)editGroupWithGroupID:(NSString *)groupID
                                      name:(NSString *)gName
                                    detail:(NSString *)detail
-                                 isHidden:(BOOL)isHidden
-                               isApproval:(BOOL)isApproval
-                                   isPost:(BOOL)isPost
+                                 isHidden:(NSNumber *)isHidden
+                               isApproval:(NSNumber *)isApproval
+                                   isPost:(NSNumber *)isPost
                                   handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)inviteUserToGroupWithGroupID:(NSString *)gID
@@ -105,18 +105,6 @@
                                      phoneNumbers:(NSArray *)phoneNumbers
                                           handler:(MDAPINSDictionaryHandler)handler;
 
-/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
- @usage:
- 邀请用户（同事邮箱）加入群组
- @parmas:
- gID        - 群组ID，必须
- 被邀请者邮箱 - 是否开放，必须
- handler    - 处理邀请结果
- -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)inviteUserToGroupWithGroupID:(NSString *)gID
-                                           emails:(NSArray *)emails
-                                       inviteType:(NSInteger)type
-                                          handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)cancelInviteToUserToGroupWithTokens:(NSArray *)tokens
                                                  handler:(MDAPIBoolHandler)handler;
 typedef enum {

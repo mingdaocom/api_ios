@@ -9,7 +9,7 @@
 //100 Bad Request:请求数据不合法
 "10001" = "Bug: Parameters missing, please feedback to us or call our service line:400-021-6464, we will fix as soon as possible.";
 "10002" = "Bug: Invalid parameters, please feedback to us or call our service line:400-021-6464, we will fix as soon as possible.";
-"10003" = "Sorry ,you are not authorized to operate.";
+"10003" = "Sorry, you are not authorized to operate.";
 "10004" = "Sorry, you are not authorized to access this group";
 "10005" = "Bug: Data execution failed. Please feedback to us ,or call our service line:400-021-6464, we will fix it as soon as possible.";
 "10006" = "Sorry, you are not authorized to access this task";

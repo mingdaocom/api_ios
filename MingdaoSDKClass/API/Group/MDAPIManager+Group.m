@@ -218,7 +218,9 @@
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"g_name", @"object":gName}];
-    [parameters addObject:@{@"key":@"about", @"object":detail}];
+    if (detail) {
+        [parameters addObject:@{@"key":@"about", @"object":detail}];
+    }
     [parameters addObject:@{@"key":@"isApproval", @"object":isApproval?@1:@0}];
     [parameters addObject:@{@"key":@"isPost", @"object":isPost?@1:@0}];
     [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
@@ -243,9 +245,9 @@
 - (MDURLConnection *)editGroupWithGroupID:(NSString *)groupID
                                      name:(NSString *)gName
                                    detail:(NSString *)detail
-                                 isHidden:(BOOL)isHidden
-                               isApproval:(BOOL)isApproval
-                                   isPost:(BOOL)isPost
+                                 isHidden:(NSNumber *)isHidden
+                               isApproval:(NSNumber *)isApproval
+                                   isPost:(NSNumber *)isPost
                                   handler:(MDAPIBoolHandler)handler
 {
     
@@ -256,10 +258,21 @@
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"g_id", @"object":groupID}];
-    [parameters addObject:@{@"key":@"g_name", @"object":gName}];
-    [parameters addObject:@{@"key":@"about", @"object":detail}];
-    [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
-    [parameters addObject:@{@"key":@"isApproval", @"object":isApproval?@1:@0}];
+    if (gName) {
+        [parameters addObject:@{@"key":@"g_name", @"object":gName}];
+    }
+    if (detail) {
+        [parameters addObject:@{@"key":@"about", @"object":detail}];
+    }
+    if (isHidden) {
+        [parameters addObject:@{@"key":@"is_hidden", @"object":[isHidden boolValue]?@1:@0}];
+    }
+    if (isApproval) {
+        [parameters addObject:@{@"key":@"isApproval", @"object":[isApproval boolValue]?@1:@0}];
+    }
+    if (isPost) {
+        [parameters addObject:@{@"key":@"isPost", @"object":[isPost boolValue]?@1:@0}];
+    }
 
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [self postWithParameters:parameters withRequest:req];
@@ -295,25 +308,6 @@
     NSURLRequest *req = [MDAPIManager postWithParameters:parameters baseURL:urlString];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         handler(dic, error);
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)inviteUserToGroupWithGroupID:(NSString *)gID
-                                           emails:(NSArray *)emails
-                                       inviteType:(NSInteger)type
-                                          handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/groupinvite/again_inviteuser?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&g_id=%@", gID];
-    [urlString appendFormat:@"&invite_type=%ld", (long)type];
-    [urlString appendFormat:@"&emails=%@", [emails componentsJoinedByString:@","]];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
     }];
     return connection;
 }
