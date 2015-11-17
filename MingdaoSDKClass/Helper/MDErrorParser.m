@@ -14,12 +14,7 @@
 @implementation MDErrorParser
 + (NSString *)errorStringWithErrorCode:(NSString *)errorCode
 {
-    NSString *tempString = MDErrorLocalizedString(errorCode, nil);
-    if ([tempString isEqualToString:errorCode]) {
-        return errorCode;
-    } else {
-        return tempString;
-    }
+    return MDErrorLocalizedString(errorCode, nil);
 }
 
 + (NSError *)errorWithMDDic:(NSDictionary *)dic URLString:(NSString *)urlString
@@ -30,9 +25,8 @@
         if (!errorCode) {
             return nil;
         }
-        int code = [errorCode intValue];
-        NSString *localizedDescription = [self errorStringWithErrorCode:[NSString stringWithFormat:@"%d", code]];
-        if (!localizedDescription) {
+        NSString *localizedDescription = [self errorStringWithErrorCode:errorCode];
+        if ([localizedDescription isEqualToString:errorCode]) {
             localizedDescription = errorMessage;
         }
         
@@ -40,7 +34,7 @@
         [userInfo setObject:localizedDescription forKey:NSLocalizedDescriptionKey];
         [userInfo setObject:urlString forKey:@"NSErrorFailingURLStringKey"];
         
-        NSError *error = [NSError errorWithDomain:MDAPIErrorDomain code:code userInfo:userInfo];
+        NSError *error = [NSError errorWithDomain:MDAPIErrorDomain code:[errorCode intValue] userInfo:userInfo];
         return error;
     }
 

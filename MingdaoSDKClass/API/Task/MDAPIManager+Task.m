@@ -1266,25 +1266,6 @@
     return connection;
 }
 
-- (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
-                                  colorType:(int)colorType
-                                    handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v2/editFolderColor?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&t_folderID=%@", folderID];
-    [urlString appendFormat:@"&color=%d", colorType];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
 - (MDURLConnection *)deleteFolderWithFolderID:(NSString *)folderID
                                 isDeleteTasks:(BOOL)isDeleteTasks
                                       handler:(MDAPIBoolHandler)handler
