@@ -94,9 +94,9 @@
 - (MDURLConnection *)editGroupWithGroupID:(NSString *)groupID
                                      name:(NSString *)gName
                                    detail:(NSString *)detail
-                                 isHidden:(BOOL)isHidden
-                               isApproval:(BOOL)isApproval
-                                   isPost:(BOOL)isPost
+                                 isHidden:(NSNumber *)isHidden
+                               isApproval:(NSNumber *)isApproval
+                                   isPost:(NSNumber *)isPost
                                   handler:(MDAPIBoolHandler)handler;
 
 - (MDURLConnection *)inviteUserToGroupWithGroupID:(NSString *)gID

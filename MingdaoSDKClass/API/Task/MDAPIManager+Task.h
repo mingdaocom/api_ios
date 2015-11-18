@@ -245,10 +245,6 @@
                                      fileID:(NSString *)fileID
                                     handler:(MDAPIBoolHandler)handler;
 
-- (MDURLConnection *)saveFolderWithFolderID:(NSString *)folderID
-                                  colorType:(int)colorType
-                                    handler:(MDAPIBoolHandler)handler;
-
 - (MDURLConnection *)deleteFolderWithFolderID:(NSString *)folderID
                                 isDeleteTasks:(BOOL)isDeleteTasks
                                       handler:(MDAPIBoolHandler)handler;
