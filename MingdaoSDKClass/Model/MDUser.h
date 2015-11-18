@@ -120,5 +120,8 @@ typedef int MDUserFolderType;
 @property (assign, nonatomic) MDUserFolderType folderType;
 @property (assign, nonatomic) BOOL isFolderAdmin;
 
+@property (strong ,nonatomic) NSString *accountID;
+@property (assign, nonatomic) NSInteger kcFolderPermission;
+
 - (MDUser *)initWithDictionary:(NSDictionary *)aDic;
 @end

@@ -68,6 +68,9 @@
         
         self.approveTime = aDic[@"approveTime"];
         self.approveDate = aDic[@"approveDate"];
+        
+        self.accountID = aDic[@"accountid"];
+        self.kcFolderPermission = [aDic[@"permission"] integerValue];
     }
     return self;
 }
@@ -132,6 +135,9 @@
     
     copyObject.folderType = self.folderType;
     copyObject.isFolderAdmin = self.isFolderAdmin;
+    
+    copyObject.accountID = [self.accountID copy];
+    copyObject.kcFolderPermission = self.kcFolderPermission;
     
     return copyObject;
 }
