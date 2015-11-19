@@ -16,9 +16,10 @@
     if (self) {
         self.file_type = [aDic[@"file_type"] intValue];
         self.thumbnail_pic = aDic[@"thumbnail_pic"];
+        self.middle_pic = aDic[@"middle_pic"];
         self.original_pic = aDic[@"original_pic"];
-        self.original_filename = aDic[@"original_filename"];
         
+        self.original_filename = aDic[@"original_filename"];
         self.original_file = aDic[@"original_file"];
         self.allow_down = [aDic[@"allow_down"] boolValue];
         
@@ -33,6 +34,7 @@
     MDTaskReplymentDetail *copyObject = object;
     copyObject.file_type = self.file_type;
     copyObject.thumbnail_pic = [self.thumbnail_pic copy];
+    copyObject.middle_pic = [self.middle_pic copy];
     copyObject.original_pic = [self.original_pic copy];
     copyObject.original_file = [self.original_file copy];
     copyObject.original_filename = [self.original_filename copy];
