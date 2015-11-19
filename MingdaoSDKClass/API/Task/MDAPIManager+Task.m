@@ -1895,7 +1895,7 @@
     [urlString appendString:@"/task/v4/editUserFile.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&fFileID=%@", fileID];
-    [urlString appendFormat:@"&fFileName=%@",fileName];
+    [urlString appendFormat:@"&fFileName=%@", fileName];
     [urlString appendFormat:@"&sort=%ld", (long)sort];
     
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
