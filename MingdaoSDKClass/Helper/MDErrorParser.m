@@ -14,7 +14,8 @@
 @implementation MDErrorParser
 + (NSString *)errorStringWithErrorCode:(NSString *)errorCode
 {
-    return MDErrorLocalizedString(errorCode, nil);
+    NSString *errorString = [NSString stringWithFormat:@"%d", [errorCode intValue]];
+    return MDErrorLocalizedString(errorString, nil);
 }
 
 + (NSError *)errorWithMDDic:(NSDictionary *)dic URLString:(NSString *)urlString
