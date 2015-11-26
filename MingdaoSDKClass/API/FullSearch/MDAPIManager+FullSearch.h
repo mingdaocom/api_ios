@@ -22,5 +22,12 @@
  size - 指定要返回的记录条数
  handler - 包含多个MDPost的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadFullSearchWithKeyWords:(NSString *)keywords filterType:(NSInteger)filterType groupID:(NSString *)gID sinceID:(NSString *)sinceID maxID:(NSString *)maxID pageindex:(NSInteger)page pageSize:(NSInteger)size handler:(MDAPINSDictionaryHandler)handler;
+- (nullable MDURLConnection *)loadFullSearchWithKeyWords:(nonnull NSString *)keywords
+                                              filterType:(nullable NSNumber *)filterType
+                                                 groupID:(nullable NSString *)gID
+                                                 sinceID:(nullable NSString *)sinceID
+                                                   maxID:(nullable NSString *)maxID
+                                               pageindex:(nullable NSNumber *)page
+                                                pageSize:(nullable NSNumber *)size
+                                                 handler:(nonnull MDAPINSDictionaryHandler)handler;
 @end
