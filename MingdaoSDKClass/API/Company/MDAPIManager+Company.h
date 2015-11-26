@@ -10,13 +10,15 @@
 
 @interface MDAPIManager (Company)
 #pragma mark - 企业网络与管理员接口
-- (MDURLConnection *)loadCompanyDetailWithHandler:(MDAPINSDictionaryHandler)handler;
-- (MDURLConnection *)loadCompanyCommonTagsWithPageSize:(int)pageSize
-                                             pageIndex:(int)pageIndex
-                                               handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadCompanyIsDeploymentSetInfo:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)setCompanyName:(NSString *)name handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)addDeparments:(NSArray *)names handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)loadGeoInfo:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadIndustryInfo:(MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadCompanyDetailWithHandler:(nonnull MDAPINSDictionaryHandler)handler;
+- (nullable MDURLConnection *)loadCompanyCommonTagsWithPageSize:(nullable NSNumber *)pageSize
+                                                      pageIndex:(nullable NSNumber *)pageIndex
+                                                        handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadCompanyIsDeploymentSetInfo:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)setCompanyName:(nonnull NSString *)name
+                                     handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)addDeparments:(nonnull NSArray *)names
+                                    handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)loadGeoInfo:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadIndustryInfo:(nonnull MDAPINSArrayHandler)handler;
 @end

@@ -10,7 +10,7 @@
 
 @implementation MDAPIManager (Company)
 #pragma mark - 企业网络与管理员接口
-- (MDURLConnection *)loadCompanyDetailWithHandler:(MDAPINSDictionaryHandler)handler
+- (nullable MDURLConnection *)loadCompanyDetailWithHandler:(nonnull MDAPINSDictionaryHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/company/detail?format=json"];
@@ -26,16 +26,19 @@
     return connection;
 }
 
-- (MDURLConnection *)loadCompanyCommonTagsWithPageSize:(int)pageSize
-                                             pageIndex:(int)pageIndex
-                                               handler:(MDAPINSArrayHandler)handler
+- (nullable MDURLConnection *)loadCompanyCommonTagsWithPageSize:(nullable NSNumber *)pageSize
+                                                      pageIndex:(nullable NSNumber *)pageIndex
+                                                        handler:(nonnull MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/company/get_commonCategory?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&pageindex=%d", pageIndex];
-    [urlString appendFormat:@"&pagesize=%d", pageSize];
-
+    if (pageIndex) {
+        [urlString appendFormat:@"&pageindex=%d", [pageIndex intValue]];
+    }
+    if (pageSize) {
+        [urlString appendFormat:@"&pagesize=%d", [pageSize intValue]];
+    }
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
@@ -57,7 +60,7 @@
     return connection;
 }
 
-- (MDURLConnection *)loadCompanyIsDeploymentSetInfo:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)loadCompanyIsDeploymentSetInfo:(nonnull MDAPIBoolHandler)handler
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@/company/isSetDeployment?access_token=%@&format=json"
                         , self.serverAddress
@@ -71,7 +74,8 @@
 
 }
 
-- (MDURLConnection *)setCompanyName:(NSString *)name handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)setCompanyName:(nonnull NSString *)name
+                                     handler:(nonnull MDAPIBoolHandler)handler
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@/company/setCompanyName?access_token=%@&format=json&pName=%@"
                         , self.serverAddress
@@ -85,7 +89,8 @@
     return connection;
 }
 
-- (MDURLConnection *)addDeparments:(NSArray *)names handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)addDeparments:(nonnull NSArray *)names
+                                    handler:(nonnull MDAPIBoolHandler)handler
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@/company/addProjectDepartment?access_token=%@&format=json&departs=%@"
                         , self.serverAddress
@@ -99,7 +104,7 @@
     return connection;
 }
 
-- (MDURLConnection *)loadGeoInfo:(MDAPINSArrayHandler)handler
+- (nullable MDURLConnection *)loadGeoInfo:(nonnull MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/company/getFixedData?format=json&type=2"];
@@ -120,7 +125,7 @@
     return connection;
 }
 
-- (MDURLConnection *)loadIndustryInfo:(MDAPINSArrayHandler)handler
+- (nullable MDURLConnection *)loadIndustryInfo:(nonnull MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/company/getFixedData?format=json&type=1"];
