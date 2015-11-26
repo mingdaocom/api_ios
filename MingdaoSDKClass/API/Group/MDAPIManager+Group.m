@@ -11,7 +11,8 @@
 @implementation MDAPIManager (Group)
 
 #pragma mark - 群组接口
-- (MDURLConnection *)loadAllGroupsWithKeywords:(NSString *)keywords handler:(MDAPINSArrayHandler)handler
+- (nullable MDURLConnection *)loadAllGroupsWithKeywords:(nullable NSString *)keywords
+                                                handler:(nonnull MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/all?format=json"];
@@ -38,7 +39,7 @@
     return connection;
 }
 
-- (MDURLConnection *)loadCurrentUserCreatedGroupsWithHandler:(MDAPINSArrayHandler)handler
+- (nullable MDURLConnection *)loadCurrentUserCreatedGroupsWithHandler:(nonnull MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/my_created?format=json"];
@@ -63,7 +64,7 @@
     return connection;
 }
 
-- (MDURLConnection *)loadCurrentUserJoinedGroupsWithHandler:(MDAPINSArrayHandler)handler
+- (nullable MDURLConnection *)loadCurrentUserJoinedGroupsWithHandler:(nonnull MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/my_joined?format=json"];
@@ -88,7 +89,7 @@
     return connection;
 }
 
-- (MDURLConnection *)loadGroupsWithGroupID:(NSString *)gID handler:(MDAPIObjectHandler)handler
+- (nullable MDURLConnection *)loadGroupsWithGroupID:(nonnull NSString *)gID handler:(nonnull MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/detail?format=json"];
@@ -107,7 +108,7 @@
     return connection;
 }
 
-- (MDURLConnection *)loadGroupMembersWithGroupID:(NSString *)gID handler:(MDAPINSArrayHandler)handler
+- (nullable MDURLConnection *)loadGroupMembersWithGroupID:(nullable NSString *)gID handler:(nonnull MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/user?format=json"];
@@ -133,7 +134,7 @@
     return connection;
 }
 
-- (MDURLConnection *)exitGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)exitGroupWithGroupID:(nonnull NSString *)gID handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/exit?format=json"];
@@ -147,7 +148,7 @@
     return connection;
 }
 
-- (MDURLConnection *)joinGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)joinGroupWithGroupID:(nonnull NSString *)gID handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/join?format=json"];
@@ -161,7 +162,7 @@
     return connection;
 }
 
-- (MDURLConnection *)closeGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)closeGroupWithGroupID:(nonnull NSString *)gID handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/close?format=json"];
@@ -175,7 +176,7 @@
     return connection;
 }
 
-- (MDURLConnection *)openGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)openGroupWithGroupID:(nonnull NSString *)gID handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/open?format=json"];
@@ -189,7 +190,7 @@
     return connection;
 }
 
-- (MDURLConnection *)deleteGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)deleteGroupWithGroupID:(nonnull NSString *)gID handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/delete?format=json"];
@@ -203,13 +204,13 @@
     return connection;
 }
 
-- (MDURLConnection *)createGroupWithGroupName:(NSString *)gName
-                                       detail:(NSString *)detail
-                                     isHidden:(BOOL)isHidden
-                                   isApproval:(BOOL)isApproval
-                                       isPost:(BOOL)isPost
-                                       deptID:(NSString *)deptID
-                                      handler:(MDAPIObjectHandler)handler
+- (nullable MDURLConnection *)createGroupWithGroupName:(nonnull NSString *)gName
+                                                detail:(nullable NSString *)detail
+                                              isHidden:(nullable NSNumber *)isHidden
+                                            isApproval:(nullable NSNumber *)isApproval
+                                                isPost:(nullable NSNumber *)isPost
+                                                deptID:(nullable NSString *)deptID
+                                               handler:(nonnull MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/create"];
@@ -221,9 +222,15 @@
     if (detail) {
         [parameters addObject:@{@"key":@"about", @"object":detail}];
     }
-    [parameters addObject:@{@"key":@"isApproval", @"object":isApproval?@1:@0}];
-    [parameters addObject:@{@"key":@"isPost", @"object":isPost?@1:@0}];
-    [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
+    if (isHidden) {
+        [parameters addObject:@{@"key":@"is_hidden", @"object":[isHidden boolValue]?@1:@0}];
+    }
+    if (isApproval) {
+        [parameters addObject:@{@"key":@"isApproval", @"object":[isApproval boolValue]?@1:@0}];
+    }
+    if (isPost) {
+        [parameters addObject:@{@"key":@"isPost", @"object":[isPost boolValue]?@1:@0}];
+    }
     if (deptID.length > 0) {
         [parameters addObject:@{@"key":@"deptID", @"object":deptID}];
     }
@@ -242,13 +249,13 @@
     return connection;
 }
 
-- (MDURLConnection *)editGroupWithGroupID:(NSString *)groupID
-                                     name:(NSString *)gName
-                                   detail:(NSString *)detail
-                                 isHidden:(NSNumber *)isHidden
-                               isApproval:(NSNumber *)isApproval
-                                   isPost:(NSNumber *)isPost
-                                  handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)editGroupWithGroupID:(nonnull NSString *)groupID
+                                              name:(nullable NSString *)gName
+                                            detail:(nullable NSString *)detail
+                                          isHidden:(nullable NSNumber *)isHidden
+                                        isApproval:(nullable NSNumber *)isApproval
+                                            isPost:(nullable NSNumber *)isPost
+                                           handler:(nonnull MDAPIBoolHandler)handler
 {
     
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -282,11 +289,11 @@
     return connection;
 }
 
-- (MDURLConnection *)inviteUserToGroupWithGroupID:(NSString *)gID
-                                          userIDs:(NSArray *)userIDs
-                                           emails:(NSArray *)emails
-                                     phoneNumbers:(NSArray *)phoneNumbers
-                                          handler:(MDAPINSDictionaryHandler)handler
+- (nullable MDURLConnection *)inviteUserToGroupWithGroupID:(nonnull NSString *)gID
+                                                   userIDs:(nullable NSArray *)userIDs
+                                                    emails:(nullable NSArray *)emails
+                                              phoneNumbers:(nullable NSArray *)phoneNumbers
+                                                   handler:(nonnull MDAPINSDictionaryHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/v2/invite"];
@@ -312,8 +319,8 @@
     return connection;
 }
 
-- (MDURLConnection *)cancelInviteToUserToGroupWithTokens:(NSArray *)tokens
-                                                 handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)cancelInviteToUserToGroupWithTokens:(nonnull NSArray *)tokens
+                                                          handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/groupinvite/close_inviteuser?format=json"];
@@ -327,9 +334,9 @@
     return connection;
 }
 
-- (MDURLConnection *)loadInvitedUserToGroupListWithType:(MDGroupInviteType)type
-                                                groupID:(NSString *)groupID
-                                                handler:(MDAPINSArrayHandler)handler
+- (nullable MDURLConnection *)loadInvitedUserToGroupListWithType:(MDGroupInviteType)type
+                                                         groupID:(nonnull NSString *)groupID
+                                                         handler:(nonnull MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/groupinvite/invited_user?format=json"];
@@ -349,9 +356,9 @@
     return connection;
 }
 
-- (MDURLConnection *)deleteUserFromGroupID:(NSString *)gID
-                                    userID:(NSString *)userID
-                                   handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)deleteUserFromGroupID:(nonnull NSString *)gID
+                                             userID:(nonnull NSString *)userID
+                                            handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/remove_user?format=json"];
@@ -366,9 +373,9 @@
     return connection;
 }
 
-- (MDURLConnection *)addGroupAdminWithGroupID:(NSString *)gID
-                                       userID:(NSString *)userID
-                                      handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)addGroupAdminWithGroupID:(nonnull NSString *)gID
+                                                userID:(nonnull NSString *)userID
+                                               handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/add_admin?format=json"];
@@ -383,9 +390,9 @@
     return connection;
 }
 
-- (MDURLConnection *)removeGroupAdminWithGroupID:(NSString *)gID
-                                          userID:(NSString *)userID
-                                         handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)removeGroupAdminWithGroupID:(nonnull NSString *)gID
+                                                   userID:(nonnull NSString *)userID
+                                                  handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/remove_admin?format=json"];
@@ -400,8 +407,8 @@
     return connection;
 }
 
-- (MDURLConnection *)loadUnauditedUsersOfGroupID:(NSString *)groupID
-                                         handler:(MDAPINSArrayHandler)handler
+- (nullable MDURLConnection *)loadUnauditedUsersOfGroupID:(nonnull NSString *)groupID
+                                                  handler:(nonnull MDAPINSArrayHandler)handler
 {
     
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -428,9 +435,9 @@
     return connection;
 }
 
-- (MDURLConnection *)passUserID:(NSString *)userID
-                      toGroupID:(NSString *)groupID
-                        handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)passUserID:(nonnull NSString *)userID
+                               toGroupID:(nonnull NSString *)groupID
+                                 handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/pass_unauditedUser?format=json"];
@@ -445,9 +452,9 @@
     return connection;
 }
 
-- (MDURLConnection *)refuseUserID:(NSString *)userID
-                      fromGroupID:(NSString *)groupID
-                          handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)refuseUserID:(nonnull NSString *)userID
+                               fromGroupID:(nonnull NSString *)groupID
+                                   handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/refuse_unauditedUser?format=json"];
@@ -462,7 +469,7 @@
     return connection;
 }
 
-- (MDURLConnection *)loadEGroupUsersListWithHandler:(MDAPINSDictionaryHandler)handler
+- (nullable MDURLConnection *)loadEGroupUsersListWithHandler:(nonnull MDAPINSDictionaryHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/my_withegroupgroup.aspx?format=json"];
@@ -503,8 +510,8 @@
 }
 
 
-- (MDURLConnection *)chatToPostWithChatGroupID:(NSString *)groupID
-                                       handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)chatToPostWithChatGroupID:(nonnull NSString *)groupID
+                                                handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/group/chatToPost.aspx?format=json"];

@@ -18,7 +18,8 @@
  keywords - 包含的关键词，可选
  handler  - 处理包含多个MDGroup的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadAllGroupsWithKeywords:(NSString *)keywords handler:(MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadAllGroupsWithKeywords:(nullable NSString *)keywords
+                                                handler:(nonnull MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -26,7 +27,7 @@
  @parmas:
  handler  - 处理包含多个MDGroup的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadCurrentUserCreatedGroupsWithHandler:(MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadCurrentUserCreatedGroupsWithHandler:(nonnull MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -34,7 +35,7 @@
  @parmas:
  handler  - 处理包含多个MDGroup的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadCurrentUserJoinedGroupsWithHandler:(MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadCurrentUserJoinedGroupsWithHandler:(nonnull MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -43,7 +44,7 @@
  gID      - 群组ID
  handler  - 处理单个MDGroup
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadGroupsWithGroupID:(NSString *)gID handler:(MDAPIObjectHandler)handler;
+- (nullable MDURLConnection *)loadGroupsWithGroupID:(nonnull NSString *)gID handler:(nonnull MDAPIObjectHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -52,7 +53,7 @@
  gID      - 群组ID
  handler  - 处理包含多个MDUser的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadGroupMembersWithGroupID:(NSString *)gID handler:(MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadGroupMembersWithGroupID:(nullable NSString *)gID handler:(nonnull MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -61,11 +62,11 @@
  gID      - 群组ID
  handler  - 处理操作结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)exitGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)joinGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)closeGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)openGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)deleteGroupWithGroupID:(NSString *)gID handler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)exitGroupWithGroupID:(nonnull NSString *)gID handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)joinGroupWithGroupID:(nonnull NSString *)gID handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)closeGroupWithGroupID:(nonnull NSString *)gID handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)openGroupWithGroupID:(nonnull NSString *)gID handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)deleteGroupWithGroupID:(nonnull NSString *)gID handler:(nonnull MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -75,13 +76,13 @@
  isPub - 是否开放，可选
  handler - 处理修改后的结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)createGroupWithGroupName:(NSString *)gName
-                                       detail:(NSString *)detail
-                                     isHidden:(BOOL)isHidden
-                                   isApproval:(BOOL)isApproval
-                                       isPost:(BOOL)isPost
-                                       deptID:(NSString *)deptID
-                                      handler:(MDAPIObjectHandler)handler;
+- (nullable MDURLConnection *)createGroupWithGroupName:(nonnull NSString *)gName
+                                                detail:(nullable NSString *)detail
+                                              isHidden:(nullable NSNumber *)isHidden
+                                            isApproval:(nullable NSNumber *)isApproval
+                                                isPost:(nullable NSNumber *)isPost
+                                                deptID:(nullable NSString *)deptID
+                                               handler:(nonnull MDAPIObjectHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -91,56 +92,56 @@
  isPub - 是否开放，可选
  handler - 处理修改后的结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)editGroupWithGroupID:(NSString *)groupID
-                                     name:(NSString *)gName
-                                   detail:(NSString *)detail
-                                 isHidden:(NSNumber *)isHidden
-                               isApproval:(NSNumber *)isApproval
-                                   isPost:(NSNumber *)isPost
-                                  handler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)editGroupWithGroupID:(nonnull NSString *)groupID
+                                              name:(nullable NSString *)gName
+                                            detail:(nullable NSString *)detail
+                                          isHidden:(nullable NSNumber *)isHidden
+                                        isApproval:(nullable NSNumber *)isApproval
+                                            isPost:(nullable NSNumber *)isPost
+                                           handler:(nonnull MDAPIBoolHandler)handler;
 
-- (MDURLConnection *)inviteUserToGroupWithGroupID:(NSString *)gID
-                                          userIDs:(NSArray *)userIDs
-                                           emails:(NSArray *)emails
-                                     phoneNumbers:(NSArray *)phoneNumbers
-                                          handler:(MDAPINSDictionaryHandler)handler;
+- (nullable MDURLConnection *)inviteUserToGroupWithGroupID:(nonnull NSString *)gID
+                                                   userIDs:(nullable NSArray *)userIDs
+                                                    emails:(nullable NSArray *)emails
+                                              phoneNumbers:(nullable NSArray *)phoneNumbers
+                                                   handler:(nonnull MDAPINSDictionaryHandler)handler;
 
-- (MDURLConnection *)cancelInviteToUserToGroupWithTokens:(NSArray *)tokens
-                                                 handler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)cancelInviteToUserToGroupWithTokens:(nonnull NSArray *)tokens
+                                                          handler:(nonnull MDAPIBoolHandler)handler;
 typedef enum {
     MDGroupInviteTypeAll = 0,
     MDGroupInviteTypeWithOtherCompanyUser = 1,
     MDGroupInviteTypeWithColleagueOlny = 2
 } MDGroupInviteType;
 
-- (MDURLConnection *)loadInvitedUserToGroupListWithType:(MDGroupInviteType)type
-                                                groupID:(NSString *)groupID
-                                                handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)deleteUserFromGroupID:(NSString *)gID
-                                    userID:(NSString *)userID
-                                   handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)addGroupAdminWithGroupID:(NSString *)gID
-                                       userID:(NSString *)userID
-                                      handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)removeGroupAdminWithGroupID:(NSString *)gID
-                                          userID:(NSString *)userID
-                                         handler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)loadInvitedUserToGroupListWithType:(MDGroupInviteType)type
+                                                         groupID:(nonnull NSString *)groupID
+                                                         handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)deleteUserFromGroupID:(nonnull NSString *)gID
+                                             userID:(nonnull NSString *)userID
+                                            handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)addGroupAdminWithGroupID:(nonnull NSString *)gID
+                                                userID:(nonnull NSString *)userID
+                                               handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)removeGroupAdminWithGroupID:(nonnull NSString *)gID
+                                                   userID:(nonnull NSString *)userID
+                                                  handler:(nonnull MDAPIBoolHandler)handler;
 
-- (MDURLConnection *)loadUnauditedUsersOfGroupID:(NSString *)groupID
-                                         handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)passUserID:(NSString *)userID
-                      toGroupID:(NSString *)groupID
-                        handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)refuseUserID:(NSString *)userID
-                      fromGroupID:(NSString *)groupID
-                          handler:(MDAPIBoolHandler)handler;
-
-
-- (MDURLConnection *)loadEGroupUsersListWithHandler:(MDAPINSDictionaryHandler)handler;
+- (nullable MDURLConnection *)loadUnauditedUsersOfGroupID:(nonnull NSString *)groupID
+                                                  handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)passUserID:(nonnull NSString *)userID
+                               toGroupID:(nonnull NSString *)groupID
+                                 handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)refuseUserID:(nonnull NSString *)userID
+                               fromGroupID:(nonnull NSString *)groupID
+                                   handler:(nonnull MDAPIBoolHandler)handler;
 
 
-- (MDURLConnection *)chatToPostWithChatGroupID:(NSString *)groupID
-                                       handler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)loadEGroupUsersListWithHandler:(nonnull MDAPINSDictionaryHandler)handler;
+
+
+- (nullable MDURLConnection *)chatToPostWithChatGroupID:(nonnull NSString *)groupID
+                                                handler:(nonnull MDAPIBoolHandler)handler;
 
 
 @end

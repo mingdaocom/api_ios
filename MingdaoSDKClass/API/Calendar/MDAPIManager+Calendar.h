@@ -188,13 +188,13 @@
 - (nullable MDURLConnection *)loadCurrentUserEventCategory:(nonnull MDAPINSArrayHandler)handler;
 - (nullable MDURLConnection *)addCurrentUserEventCategoryWithCatName:(nonnull NSString *)catName
                                                                color:(nonnull NSNumber *)color
-                                                             handler:(nonnull MDAPIBoolHandler)handler;//--
+                                                             handler:(nonnull MDAPIBoolHandler)handler;//++
 - (nullable MDURLConnection *)editCurrentUserEventCategoryWithCatName:(nonnull NSString *)catName
                                                                 catID:(nonnull NSString *)catID
                                                                 color:(nonnull NSNumber *)color
-                                                              handler:(nonnull MDAPIBoolHandler)handler;//--
+                                                              handler:(nonnull MDAPIBoolHandler)handler;//++
 - (nullable MDURLConnection *)deleteCurrentUserEventCategoryWithCatID:(nonnull NSString *)catID
-                                                              handler:(nonnull MDAPIBoolHandler)handler;//--
+                                                              handler:(nonnull MDAPIBoolHandler)handler;//++
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  根据日程开始和结束时间获取冲突日程列表
@@ -203,7 +203,7 @@
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (nullable MDURLConnection *)loadBusyEventsWithStartTime:(nonnull NSString *)startDateString
                                                   endTime:(nonnull NSString *)endDateString
-                                                  handler:(nonnull MDAPINSArrayHandler)handler;//--
+                                                  handler:(nonnull MDAPINSArrayHandler)handler;//++
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -214,5 +214,5 @@
 - (nullable MDURLConnection *)modifyEventMemberRemindWithObjectID:(nonnull NSString *)objectID
                                                        remindType:(nonnull NSNumber *)remindType
                                                        remindTime:(nonnull NSNumber *)remindTime
-                                                          handler:(nonnull MDAPINSStringHandler)handler;//--
+                                                          handler:(nonnull MDAPINSStringHandler)handler;//++
 @end
