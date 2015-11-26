@@ -17,7 +17,7 @@
  @parmas:
  handler - 处理获取到的包含多个MDMessageAll的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadCurrentUserMessagesWithHandler:(MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadCurrentUserMessagesWithHandler:(nonnull MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -28,10 +28,10 @@
  page     - 私信的页数
  handler  - 处理获取到的包含多个MDMessage的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadMessagesWithUserID:(NSString *)userID
-                                   pageSize:(NSInteger)size
-                                       page:(NSInteger)pages
-                                    handler:(MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadMessagesWithUserID:(nonnull NSString *)userID
+                                            pageSize:(nullable NSNumber *)size
+                                                page:(nullable NSNumber *)pages
+                                             handler:(nonnull MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -41,10 +41,10 @@
  text     - 私信内容
  handler  - 处理发送成功后返回的私信ID
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)sendMessageToUserID:(NSString *)userID
-                                 message:(NSString *)text
-                                  images:(NSArray *)images
-                                 handler:(MDAPINSStringHandler)handler;
+- (nullable MDURLConnection *)sendMessageToUserID:(nonnull NSString *)userID
+                                          message:(nonnull NSString *)text
+                                           images:(nullable NSArray *)images
+                                          handler:(nonnull MDAPINSStringHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -53,8 +53,7 @@
  mID      - 被删除的消息编号
  handler  - 处理删除的结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)deleteMessageWithMessageID:(NSString *)mID handler:(MDAPIBoolHandler)handler;
-
+- (nullable MDURLConnection *)deleteMessageWithMessageID:(nonnull NSString *)mID handler:(nonnull MDAPIBoolHandler)handler;
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  标记某条消息已经阅读
@@ -62,7 +61,7 @@
  mID      - 被阅读的消息编号
  handler  - 处理已读的结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)markMessageAsReadWithMessageID:(NSString *)mID handler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)markMessageAsReadWithMessageID:(nonnull NSString *)mID handler:(nonnull MDAPIBoolHandler)handler;
 
 
 @end

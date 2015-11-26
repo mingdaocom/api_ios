@@ -11,7 +11,7 @@
 
 @implementation MDAPIManager (Message)
 #pragma mark - 私信接口
-- (MDURLConnection *)loadCurrentUserMessagesWithHandler:(MDAPINSArrayHandler)handler
+- (nullable MDURLConnection *)loadCurrentUserMessagesWithHandler:(nonnull MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/message/all?format=json"];
@@ -36,18 +36,21 @@
     return connection;
 }
 
-- (MDURLConnection *)loadMessagesWithUserID:(NSString *)userID
-                                   pageSize:(NSInteger)size
-                                       page:(NSInteger)pages
-                                    handler:(MDAPINSArrayHandler)handler
+- (nullable MDURLConnection *)loadMessagesWithUserID:(nonnull NSString *)userID
+                                   pageSize:(nullable NSNumber *)size
+                                       page:(nullable NSNumber *)pages
+                                    handler:(nonnull MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/message/v2/msg_list?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&u_id=%@", userID];
-    [urlString appendFormat:@"&pageindex=%ld", (long)pages];
-    [urlString appendFormat:@"&pagesize=%ld", (long)size];
-    
+    if (pages) {
+        [urlString appendFormat:@"&pageindex=%ld", [pages longValue]];
+    }
+    if (size) {
+        [urlString appendFormat:@"&pagesize=%ld", [size longValue]];
+    }
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
@@ -67,10 +70,10 @@
     return connection;
 }
 
-- (MDURLConnection *)sendMessageToUserID:(NSString *)userID
-                                 message:(NSString *)text
-                                  images:(NSArray *)images
-                                 handler:(MDAPINSStringHandler)handler
+- (nullable MDURLConnection *)sendMessageToUserID:(nonnull NSString *)userID
+                                          message:(nonnull NSString *)text
+                                           images:(nullable NSArray *)images
+                                          handler:(nonnull MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/message/create?format=json"];
@@ -139,7 +142,7 @@
     return connection;
 }
 
-- (MDURLConnection *)deleteMessageWithMessageID:(NSString *)mID handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)deleteMessageWithMessageID:(nonnull NSString *)mID handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/message/delete?format=json"];
@@ -153,7 +156,7 @@
     return connection;
 }
 
-- (MDURLConnection *)markMessageAsReadWithMessageID:(NSString *)mID handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)markMessageAsReadWithMessageID:(nonnull NSString *)mID handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/message/read?format=json"];
