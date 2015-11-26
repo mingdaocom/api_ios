@@ -17,7 +17,7 @@
  @parmas:
  handler - 处理返回的地址结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)subscribeCalendar:(MDAPINSStringHandler)handler;
+- (nullable MDURLConnection *)subscribeCalendar:(nonnull MDAPINSStringHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -34,26 +34,26 @@
  emails - 指定的日程成员邮件 (多个成员用逗号隔开)。注：非明道用户
  handler - 创建成功返回日程编号
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)createEventWithEventName:(NSString *)name
-                              startDateString:(NSString *)sDateString
-                                endDateString:(NSString *)eDateString
-                                   remindType:(NSInteger)remindType
-                                   remindTime:(NSInteger)remindTime
-                                   categoryID:(NSString *)categoryID
-                                     isAllDay:(BOOL)isAllday
-                                      address:(NSString *)address
-                                  description:(NSString *)des
-                                    isPrivate:(BOOL)isPrivate
-                              visibleGroupIDs:(NSArray *)visibleGroupIDs
-                                      userIDs:(NSArray *)uIDs
-                                       emails:(NSArray *)emails
-                                      isRecur:(BOOL)isRecur
-                                    frequency:(NSInteger)frequency
-                                     interval:(NSInteger)interval
-                                     weekDays:(NSString *)weekDays
-                                   recurCount:(NSInteger)recurCount
-                                    untilDate:(NSString *)untilDate
-                                      handler:(MDAPINSStringHandler)handler;
+- (nullable MDURLConnection *)createEventWithEventName:(nonnull NSString *)name
+                                       startDateString:(nonnull NSString *)sDateString
+                                         endDateString:(nonnull NSString *)eDateString
+                                            remindType:(nullable NSNumber *)remindType
+                                            remindTime:(nullable NSNumber *)remindTime
+                                            categoryID:(nullable NSString *)categoryID
+                                              isAllDay:(BOOL)isAllday
+                                               address:(nullable NSString *)address
+                                           description:(nullable NSString *)des
+                                             isPrivate:(BOOL)isPrivate
+                                       visibleGroupIDs:(nullable NSArray *)visibleGroupIDs
+                                               userIDs:(nullable NSArray *)uIDs
+                                                emails:(nullable NSArray *)emails
+                                               isRecur:(BOOL)isRecur
+                                             frequency:(nullable NSNumber *)frequency
+                                              interval:(nonnull NSNumber *)interval
+                                              weekDays:(nullable NSString *)weekDays
+                                            recurCount:(nullable NSNumber *)recurCount
+                                             untilDate:(nullable NSString *)untilDate
+                                               handler:(nonnull MDAPINSStringHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -69,24 +69,24 @@
  isPrivate - 是否私人日程。1表示私人，0表示非私人
  handler - 处理编辑结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                     name:(NSString *)name
-                          startDateString:(NSString *)sDateString
-                            endDateString:(NSString *)eDateString
-                               remindType:(NSInteger)remindType
-                               remindTime:(NSInteger)remindTime
-                               categoryID:(NSString *)categoryID
-                                 isAllDay:(BOOL)isAllday
-                                  address:(NSString *)address
-                              description:(NSString *)des
-                                isPrivate:(BOOL)isPrivate
-                                  isRecur:(BOOL)isRecur
-                                frequency:(NSInteger)frequency
-                                 interval:(NSInteger)interval
-                                 weekDays:(NSString *)weekDays
-                               recurCount:(NSInteger)recurCount
-                                untilDate:(NSString *)untilDate
-                                  handler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)saveEventWithEventID:(nonnull NSString *)eID
+                                              name:(nonnull NSString *)name
+                                   startDateString:(nonnull NSString *)sDateString
+                                     endDateString:(nonnull NSString *)eDateString
+                                        remindType:(nullable NSNumber *)remindType
+                                        remindTime:(nullable NSNumber *)remindTime
+                                        categoryID:(nullable NSString *)categoryID
+                                          isAllDay:(BOOL)isAllday
+                                           address:(nullable NSString *)address
+                                       description:(nullable NSString *)des
+                                         isPrivate:(BOOL)isPrivate
+                                           isRecur:(BOOL)isRecur
+                                         frequency:(nonnull NSNumber *)frequency
+                                          interval:(nullable NSNumber *)interval
+                                          weekDays:(nullable NSString *)weekDays
+                                        recurCount:(nullable NSNumber *)recurCount
+                                         untilDate:(nullable NSString *)untilDate
+                                           handler:(nonnull MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -96,9 +96,18 @@
  emails - 被邀请的用户们的email
  handler - 处理结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)addUsersWithUserIDs:(NSArray *)uIDs emails:(NSArray *)emails toEventID:(NSString *)eID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)deleteUserWithUserIDs:(NSArray *)uIDs emails:(NSArray *)emails fromEventID:(NSString *)eID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)reinviteUserWithUserIDs:(NSArray *)uIDs emails:(NSArray *)emails toEventID:(NSString *)eID handler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)addUsersWithUserIDs:(nullable NSArray *)uIDs
+                                           emails:(nullable NSArray *)emails
+                                        toEventID:(nonnull NSString *)eID
+                                          handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)deleteUserWithUserIDs:(nullable NSArray *)uIDs
+                                             emails:(nullable NSArray *)emails
+                                        fromEventID:(nonnull NSString *)eID
+                                            handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)reinviteUserWithUserIDs:(nullable NSArray *)uIDs
+                                               emails:(nullable NSArray *)emails
+                                            toEventID:(nonnull NSString *)eID
+                                              handler:(nonnull MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -110,39 +119,39 @@
  yearMonthAndDay - date	false	string	日期字符串。默认值为今天。如：2013-05-05。
  handler - 处理包含多个MDEvent的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
-                            isWorkCalendar:(NSInteger)isWorkCalendar
-                         isPrivateCalendar:(NSInteger)isPrivateCalendar
-                            isTaskCalendar:(NSInteger)isTaskCalendar
-                            categorys:(NSString *)categorys
-                                   handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
-                                    forDay:(NSString *)yearMonthAndDay
-                            isWorkCalendar:(NSInteger)isWorkCalendar
-                         isPrivateCalendar:(NSInteger)isPrivateCalendar
-                            isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSString *)categorys
-                                   handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
-                                   forWeek:(NSInteger)week
-                                      year:(NSInteger)year
-                            isWorkCalendar:(NSInteger)isWorkCalendar
-                         isPrivateCalendar:(NSInteger)isPrivateCalendar
-                            isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSString *)categorys
-                                   handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadEventsWithUserIDs:(NSArray *)userIDs
-                                  forMonth:(NSString *)yearAndMonth
-                            isWorkCalendar:(NSInteger)isWorkCalendar
-                         isPrivateCalendar:(NSInteger)isPrivateCalendar
-                            isTaskCalendar:(NSInteger)isTaskCalendar
-                                 categorys:(NSString *)categorys
-                                   handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadUnconfirmedEventsWithPageSize:(int)pageSize
-                                                  page:(int)page
-                                               handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadUpComingEventsForChatCardWithKeywors:(NSString *)keywords
-                                                      handler:(MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadEventsWithUserIDs:(nullable NSArray *)userIDs
+                                     isWorkCalendar:(nonnull NSNumber *)isWorkCalendar
+                                  isPrivateCalendar:(nonnull NSNumber *)isPrivateCalendar
+                                     isTaskCalendar:(nonnull NSNumber *)isTaskCalendar
+                                          categorys:(nullable NSString *)categorys
+                                            handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadEventsWithUserIDs:(nullable NSArray *)userIDs
+                                             forDay:(nullable NSString *)yearMonthAndDay
+                                     isWorkCalendar:(nonnull NSNumber *)isWorkCalendar
+                                  isPrivateCalendar:(nonnull NSNumber *)isPrivateCalendar
+                                     isTaskCalendar:(nonnull NSNumber *)isTaskCalendar
+                                          categorys:(nullable NSString *)categorys
+                                            handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadEventsWithUserIDs:(nullable NSArray *)userIDs
+                                            forWeek:(nullable NSNumber *)week
+                                               year:(nullable NSNumber *)year
+                                     isWorkCalendar:(nonnull NSNumber *)isWorkCalendar
+                                  isPrivateCalendar:(nonnull NSNumber *)isPrivateCalendar
+                                     isTaskCalendar:(nonnull NSNumber *)isTaskCalendar
+                                          categorys:(nullable NSString *)categorys
+                                            handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadEventsWithUserIDs:(nullable NSArray *)userIDs
+                                           forMonth:(nullable NSString *)yearAndMonth
+                                     isWorkCalendar:(nonnull NSNumber *)isWorkCalendar
+                                  isPrivateCalendar:(nonnull NSNumber *)isPrivateCalendar
+                                     isTaskCalendar:(nonnull NSNumber *)isTaskCalendar
+                                          categorys:(nullable NSString *)categorys
+                                            handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadUnconfirmedEventsWithPageSize:(nullable NSNumber *)pageSize
+                                                           page:(nullable NSNumber *)page
+                                                        handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadUpComingEventsForChatCardWithKeywors:(nullable NSString *)keywords
+                                                               handler:(nonnull MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -151,7 +160,8 @@
  objectID - 日程编号
  handler - 处理MDEvent
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadEventWithObjectID:(NSString *)objectID handler:(MDAPIObjectHandler)handler;
+- (nullable MDURLConnection *)loadEventWithObjectID:(nonnull NSString *)objectID
+                                            handler:(nonnull MDAPIObjectHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -160,10 +170,14 @@
  objectID - 日程编号
  handler - 处理结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)deleteEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)exitEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)acceptEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)rejectEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)deleteEventWithObjectID:(nonnull NSString *)objectID
+                                              handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)exitEventWithObjectID:(nonnull NSString *)objectID
+                                            handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)acceptEventWithObjectID:(nonnull NSString *)objectID
+                                              handler:(nonnull MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)rejectEventWithObjectID:(nonnull NSString *)objectID
+                                              handler:(nonnull MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -171,17 +185,25 @@
 
  handler - 处理MDEvent
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadCurrentUserEventCategory:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)addCurrentUserEventCategoryWithCatName:(NSString *)catName color:(NSInteger)color handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)editCurrentUserEventCategoryWithCatName:(NSString *)catName catID:(NSString *)catID color:(NSInteger)color handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)deleteCurrentUserEventCategoryWithCatID:(NSString *)catID handler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)loadCurrentUserEventCategory:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)addCurrentUserEventCategoryWithCatName:(nonnull NSString *)catName
+                                                               color:(nonnull NSNumber *)color
+                                                             handler:(nonnull MDAPIBoolHandler)handler;//--
+- (nullable MDURLConnection *)editCurrentUserEventCategoryWithCatName:(nonnull NSString *)catName
+                                                                catID:(nonnull NSString *)catID
+                                                                color:(nonnull NSNumber *)color
+                                                              handler:(nonnull MDAPIBoolHandler)handler;//--
+- (nullable MDURLConnection *)deleteCurrentUserEventCategoryWithCatID:(nonnull NSString *)catID
+                                                              handler:(nonnull MDAPIBoolHandler)handler;//--
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  根据日程开始和结束时间获取冲突日程列表
  @parmas:
  handler - 处理MDEvent
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadBusyEventsWithStartTime:(NSString *)startDateString endTime:(NSString *)endDateString handler:(MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadBusyEventsWithStartTime:(nonnull NSString *)startDateString
+                                                  endTime:(nonnull NSString *)endDateString
+                                                  handler:(nonnull MDAPINSArrayHandler)handler;//--
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -189,6 +211,8 @@
  @parmas:
  handler - 处理结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)modifyEventMemberRemindWithObjectID:(NSString *)objectID remindType:(NSInteger)remindType remindTime:(NSInteger)remindTime handler:(MDAPINSStringHandler)handler;
-
+- (nullable MDURLConnection *)modifyEventMemberRemindWithObjectID:(nonnull NSString *)objectID
+                                                       remindType:(nonnull NSNumber *)remindType
+                                                       remindTime:(nonnull NSNumber *)remindTime
+                                                          handler:(nonnull MDAPINSStringHandler)handler;//--
 @end
