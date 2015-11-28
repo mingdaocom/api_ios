@@ -1,10 +1,10 @@
-/* 
-  ErrorMessage.strings
-  MingdaoV2
-
-  Created by Wee Tom on 14/12/9.
-  Copyright (c) 2014年 Mingdao. All rights reserved.
-*/
+/*
+ ErrorMessage.strings
+ MingdaoV2
+ 
+ Created by Wee Tom on 14/12/9.
+ Copyright (c) 2014年 Mingdao. All rights reserved.
+ */
 "0" = "抱歉，服务端没有响应，您可以拨打客服电话：400-021-6464，我们会尽快为您解决";
 //100 Bad Request:请求数据不合法
 "10001" = "活捉一个bug：缺少参数，您可以提交到bug反馈中，或者您拨打客服电话：400-021-6464告诉我们，我们会尽快修复";
