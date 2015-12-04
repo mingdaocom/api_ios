@@ -15,7 +15,7 @@
     if (self) {
         self.objectID = [aDic objectForKey:@"id"];
         self.objectName = [aDic objectForKey:@"name"];
-        self.avatar = [aDic objectForKey:@"logo"];
+        self.avatar = aDic[@"avatar"];
         self.about = [aDic objectForKey:@"about"];
         if (![self.about isKindOfClass:[NSString class]]) {
             self.about = @"";

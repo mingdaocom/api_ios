@@ -81,6 +81,7 @@
                                    isApproval:(BOOL)isApproval
                                        isPost:(BOOL)isPost
                                        deptID:(NSString *)deptID
+                                    memberIDs:(NSArray *)memberIDs
                                       handler:(MDAPIObjectHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-

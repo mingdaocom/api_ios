@@ -209,6 +209,7 @@
                                    isApproval:(BOOL)isApproval
                                        isPost:(BOOL)isPost
                                        deptID:(NSString *)deptID
+                                    memberIDs:(NSArray *)memberIDs
                                       handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -226,6 +227,9 @@
     [parameters addObject:@{@"key":@"is_hidden", @"object":isHidden?@1:@0}];
     if (deptID.length > 0) {
         [parameters addObject:@{@"key":@"deptID", @"object":deptID}];
+    }
+    if (memberIDs) {
+        [parameters addObject:@{@"key":@"u_ids", @"object":[memberIDs componentsJoinedByString:@","]}];
     }
 
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
