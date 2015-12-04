@@ -18,10 +18,10 @@
  @parmas:
  handler - 处理MDUser结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadCurrentUserDetailWithHandler:(MDAPIObjectHandler)handler;
+- (nullable MDURLConnection *)loadCurrentUserDetailWithHandler:(nonnull MDAPIObjectHandler)handler;
 
-- (MDURLConnection *)loadCurrentUserSettingWithHandler:(MDAPIObjectHandler)handler;
-- (MDURLConnection *)setCurrentUserSettingWithMentionMeOn:(NSNumber *)mentionOn replymeOn:(NSNumber *)replyOn sysOn:(NSNumber *)sysOn Handler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)loadCurrentUserSettingWithHandler:(nonnull MDAPIObjectHandler)handler;
+- (nullable MDURLConnection *)setCurrentUserSettingWithMentionMeOn:(nullable NSNumber *)mentionOn replymeOn:(nullable NSNumber *)replyOn sysOn:(nullable NSNumber *)sysOn Handler:(nonnull MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -34,7 +34,7 @@
 #define MDAPIResultKeyUnreadAtme    @"atme"
 #define MDAPIResultKeyUnreadMessage @"message"
 #define MDAPIResultKeyUnreadTask    @"task"
-- (MDURLConnection *)loadCurrentUserUnreadCountWithHandler:(MDAPINSDictionaryHandler)handler;
+- (nullable MDURLConnection *)loadCurrentUserUnreadCountWithHandler:(nonnull MDAPINSDictionaryHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -42,7 +42,7 @@
  @parmas:
  handler - 处理登出后的结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)logoutWithHandler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)logoutWithHandler:(nonnull MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -57,14 +57,14 @@
  gender可选   - 性别
  handler - 处理修改后的结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)saveUserWithName:(NSString *)name
-                           department:(NSString *)dep
-                                  job:(NSString *)job
-                    mobilePhoneNumber:(NSString *)mpn
-                      workPhoneNumber:(NSString *)wpn
-                             birthday:(NSString *)birthday
-                               gender:(NSInteger)gender
-                              handler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)saveUserWithName:(nonnull NSString *)name
+                                    department:(nonnull NSString *)dep
+                                           job:(nonnull NSString *)job
+                             mobilePhoneNumber:(nullable NSString *)mpn
+                               workPhoneNumber:(nullable NSString *)wpn
+                                      birthday:(nullable NSString *)birthday
+                                        gender:(nullable NSNumber *)gender
+                                       handler:(nonnull MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -73,7 +73,7 @@
  avatarImg - 头像图片，不超过5MB
  handler - 处理修改后的结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)saveUserWithAvatar:(UIImage *)avatarImg handler:(MDAPIBoolHandler)handler;
+- (nullable MDURLConnection *)saveUserWithAvatar:(nonnull UIImage *)avatarImg handler:(nonnull MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -81,6 +81,6 @@
  @parmas:
  handler - 处理包含多个MDTag的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadCurrentUserCommonTagsWithHandler:(MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadCurrentUserCommonTagsWithHandler:(nonnull MDAPINSArrayHandler)handler;
 
 @end

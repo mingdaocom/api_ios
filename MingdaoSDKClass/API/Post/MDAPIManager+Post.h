@@ -23,79 +23,79 @@
  size - 指定要返回的记录条数
  handler - 包含多个MDPost的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadPostsWithTagName:(NSString *)tagName
-                                 keywords:(NSString *)keywords
-                                    maxID:(NSString *)maxID
-                                 pageSize:(int)size
-                                  handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadAllPostsWithKeywords:(NSString *)keywords
-                                     postType:(MDPostType)type
-                                      sinceID:(NSString *)sinceID
-                                        maxID:(NSString *)maxID
-                                     pagesize:(int)size
-                                      handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadFavouritedPostsWithKeywords:(NSString *)keywords
-                                            postType:(MDPostType)type
-                                             sinceID:(NSString *)sinceID
-                                               maxID:(NSString *)maxID
-                                            pagesize:(int)size
-                                             handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadReplyMePostsWithKeywords:(NSString *)keywords
-                                            maxID:(NSString *)maxID
-                                         pagesize:(int)size
-                                          handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadMyReplyWithKeywords:(NSString *)keywords
-                                       maxID:(NSString *)maxID
-                                    pagesize:(int)size
-                                     handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadAtMePostsWithKeywords:(NSString *)keywords
-                                      postType:(MDPostType)type
-                                     pageindex:(int)pageindex
-                                      pagesize:(int)size
-                                       handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadMyPostsWithKeywords:(NSString *)keywords
-                                    postType:(MDPostType)type
-                                       maxID:(NSString *)maxID
-                                    pagesize:(int)size
-                                     handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadUserPostsWithUserID:(NSString *)userID
-                                       maxID:(NSString *)maxID
-                                    pagesize:(int)size
-                                     handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadGroupPostsWithGroupID:(NSString *)groupID
-                                      Keywords:(NSString *)keywords
-                                         maxID:(NSString *)maxID
-                                      pagesize:(int)size
-                                       handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadDocumentPostsWithGroupID:(NSString *)groupID
-                                         Keywords:(NSString *)keywords
-                                       filterType:(int)filterType
-                                          sinceID:(NSString *)sinceID
-                                            maxID:(NSString *)maxID
-                                         pagesize:(int)size
-                                          handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadImagePostsWithGroupID:(NSString *)groupID
-                                      Keywords:(NSString *)keywords
-                                    filterType:(int)filterType
-                                       sinceID:(NSString *)sinceID
-                                         maxID:(NSString *)maxID
-                                      pagesize:(int)size
-                                       handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadFAQPostsWithGroupID:(NSString *)groupID
-                                    Keywords:(NSString *)keywords
-                                  filterType:(int)filterType
-                                     sinceID:(NSString *)sinceID
-                                       maxID:(NSString *)maxID
-                                    pagesize:(int)size
-                                     handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadVideoPostsWithGroupID:(NSString *)groupID
-                                      Keywords:(NSString *)keywords
-                                    filterType:(int)filterType
-                                       sinceID:(NSString *)sinceID
-                                         maxID:(NSString *)maxID
-                                      pagesize:(int)size
-                                       handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadToppedPostsWithHandler:(MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadPostsWithTagName:(nonnull NSString *)tagName
+                                          keywords:(nullable NSString *)keywords
+                                             maxID:(nullable NSString *)maxID
+                                          pageSize:(nullable NSNumber *)size
+                                           handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadAllPostsWithKeywords:(nullable NSString *)keywords
+                                              postType:(MDPostType)type
+                                               sinceID:(nullable NSString *)sinceID
+                                                 maxID:(nullable NSString *)maxID
+                                              pagesize:(nullable NSNumber *)size
+                                               handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadFavouritedPostsWithKeywords:(nullable NSString *)keywords
+                                                     postType:(MDPostType)type
+                                                      sinceID:(nullable NSString *)sinceID
+                                                        maxID:(nullable NSString *)maxID
+                                                     pagesize:(nullable NSNumber *)size
+                                                      handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadReplyMePostsWithKeywords:(nullable NSString *)keywords
+                                                     maxID:(nullable NSString *)maxID
+                                                  pagesize:(nullable NSNumber *)size
+                                                   handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadMyReplyWithKeywords:(nullable NSString *)keywords
+                                                maxID:(nullable NSString *)maxID
+                                             pagesize:(nullable NSNumber *)size
+                                              handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadAtMePostsWithKeywords:(nullable NSString *)keywords
+                                               postType:(MDPostType)type
+                                              pageindex:(nullable NSNumber *)pageindex
+                                               pagesize:(nullable NSNumber *)size
+                                                handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadMyPostsWithKeywords:(nullable NSString *)keywords
+                                             postType:(MDPostType)type
+                                                maxID:(nullable NSString *)maxID
+                                             pagesize:(nullable NSNumber *)size
+                                              handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadUserPostsWithUserID:(nonnull NSString *)userID
+                                                maxID:(nullable NSString *)maxID
+                                             pagesize:(nullable NSNumber *)size
+                                              handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadGroupPostsWithGroupID:(nonnull NSString *)groupID
+                                               Keywords:(nullable NSString *)keywords
+                                                  maxID:(nullable NSString *)maxID
+                                               pagesize:(nullable NSNumber *)size
+                                                handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadDocumentPostsWithGroupID:(nullable NSString *)groupID
+                                                  Keywords:(nullable NSString *)keywords
+                                                filterType:(nullable NSNumber *)filterType
+                                                   sinceID:(nullable NSString *)sinceID
+                                                     maxID:(nullable NSString *)maxID
+                                                  pagesize:(nullable NSNumber *)size
+                                                   handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadImagePostsWithGroupID:(nullable NSString *)groupID
+                                               Keywords:(nullable NSString *)keywords
+                                             filterType:(nullable NSNumber *)filterType
+                                                sinceID:(nullable NSString *)sinceID
+                                                  maxID:(nullable NSString *)maxID
+                                               pagesize:(nullable NSNumber *)size
+                                                handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadFAQPostsWithGroupID:(nullable NSString *)groupID
+                                             Keywords:(nullable NSString *)keywords
+                                           filterType:(nullable NSNumber *)filterType
+                                              sinceID:(nullable NSString *)sinceID
+                                                maxID:(nullable NSString *)maxID
+                                             pagesize:(nullable NSNumber *)size
+                                              handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadVideoPostsWithGroupID:(nullable NSString *)groupID
+                                               Keywords:(nullable NSString *)keywords
+                                             filterType:(nullable NSNumber *)filterType
+                                                sinceID:(nullable NSString *)sinceID
+                                                  maxID:(nullable NSString *)maxID
+                                               pagesize:(nullable NSNumber *)size
+                                                handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadToppedPostsWithHandler:(nonnull MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -104,7 +104,7 @@
  pID - 动态编号
  handler - 处理MDpost
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadPostWithPostID:(NSString *)pID handler:(MDAPIObjectHandler)handler;
+- (nullable MDURLConnection *)loadPostWithPostID:(nonnull NSString *)pID handler:(nonnull MDAPIObjectHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
@@ -113,8 +113,8 @@
  pID - 动态编号
  handler - 处理包含多个MDPostReplyment的NSArray
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadPostReplymentsWithPostID:(NSString *)pID handler:(MDAPINSArrayHandler)handler;
-- (MDURLConnection *)loadFAQPostBestAnsewerCommentWithPostID:(NSString *)pID handler:(MDAPIObjectHandler)handler;
+- (nullable MDURLConnection *)loadPostReplymentsWithPostID:(nonnull NSString *)pID handler:(nonnull MDAPINSArrayHandler)handler;
+- (nullable MDURLConnection *)loadFAQPostBestAnsewerCommentWithPostID:(nonnull NSString *)pID handler:(nonnull MDAPIObjectHandler)handler;
 
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -126,26 +126,26 @@
  shareType - int -1表示系统分享；2表示群内分享；3表示分享给自己；其他表示分享给关注的人
  handler - 返回创建后的编号
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)createTextPostWithText:(NSString *)text
-                                   groupIDs:(NSArray *)groupIDs
-                                  shareType:(int)shareType
-                                    handler:(MDAPINSStringHandler)handler;
-- (MDURLConnection *)createURLPostWithText:(NSString *)text
-                                  urlTitle:(NSString *)title
-                                   urlLink:(NSString *)link
-                                  groupIDs:(NSArray *)groupIDs
-                                 shareType:(int)shareType
-                                   handler:(MDAPINSStringHandler)handler;
-- (MDURLConnection *)createFAQPostWithText:(NSString *)text
-                                  groupIDs:(NSArray *)groupIDs
-                                 shareType:(int)shareType
-                                   handler:(MDAPINSStringHandler)handler;
-- (MDURLConnection *)createImagePostWithText:(NSString *)text
-                                      images:(NSArray *)images
-                                    groupIDs:(NSArray *)groupIDs
-                                   shareType:(int)shareType
-                                    toCenter:(BOOL)toCenter
-                                     handler:(MDAPINSStringHandler)handler;
+- (nullable MDURLConnection *)createTextPostWithText:(nonnull NSString *)text
+                                            groupIDs:(nullable NSArray *)groupIDs
+                                           shareType:(nullable NSNumber *)shareType
+                                             handler:(nonnull MDAPINSStringHandler)handler;
+- (nullable MDURLConnection *)createURLPostWithText:(nullable NSString *)text
+                                           urlTitle:(nullable NSString *)title
+                                            urlLink:(nullable NSString *)link
+                                           groupIDs:(nullable NSArray *)groupIDs
+                                          shareType:(nullable NSNumber *)shareType
+                                            handler:(nonnull MDAPINSStringHandler)handler;
+- (nullable MDURLConnection *)createFAQPostWithText:(nullable NSString *)text
+                                           groupIDs:(nullable NSArray *)groupIDs
+                                          shareType:(nullable NSNumber *)shareType
+                                            handler:(nonnull MDAPINSStringHandler)handler;
+- (nullable MDURLConnection *)createImagePostWithText:(nullable NSString *)text
+                                               images:(nullable NSArray *)images
+                                             groupIDs:(nullable NSArray *)groupIDs
+                                            shareType:(int)shareType
+                                             toCenter:(BOOL)toCenter
+                                              handler:(nonnull MDAPINSStringHandler)handler;
 - (MDURLConnection *)createFilePostWithText:(NSString *)text
                                    fileName:(NSString *)fileName
                                        file:(NSData *)fileData

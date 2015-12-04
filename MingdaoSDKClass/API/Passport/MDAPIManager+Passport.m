@@ -12,7 +12,7 @@
 @implementation MDAPIManager (Passport)
 
 #pragma mark - 账号接口
-- (MDURLConnection *)loadCurrentUserDetailWithHandler:(MDAPIObjectHandler)handler
+- (nullable MDURLConnection *)loadCurrentUserDetailWithHandler:(nonnull MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/passport/detail?format=json"];
@@ -30,7 +30,7 @@
     return connection;
 }
 
-- (MDURLConnection *)loadCurrentUserSettingWithHandler:(MDAPIObjectHandler)handler
+- (nullable MDURLConnection *)loadCurrentUserSettingWithHandler:(nonnull MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/passport/get_setting?format=json"];
@@ -47,7 +47,7 @@
     return connection;
 }
 
-- (MDURLConnection *)setCurrentUserSettingWithMentionMeOn:(NSNumber *)mentionOn replymeOn:(NSNumber *)replyOn sysOn:(NSNumber *)sysOn Handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)setCurrentUserSettingWithMentionMeOn:(nullable NSNumber *)mentionOn replymeOn:(nullable NSNumber *)replyOn sysOn:(nullable NSNumber *)sysOn Handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/passport/setuserpush?format=json"];
@@ -67,7 +67,7 @@
     return connection;
 }
 
-- (MDURLConnection *)loadCurrentUserUnreadCountWithHandler:(MDAPINSDictionaryHandler)handler
+- (nullable MDURLConnection *)loadCurrentUserUnreadCountWithHandler:(nonnull MDAPINSDictionaryHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/passport/unreadcount?format=json"];
@@ -84,7 +84,7 @@
     return connection;
 }
 
-- (MDURLConnection *)logoutWithHandler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)logoutWithHandler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/passport/logout?format=json"];
@@ -96,14 +96,14 @@
     return connection;
 }
 
-- (MDURLConnection *)saveUserWithName:(NSString *)name
-                           department:(NSString *)dep
-                                  job:(NSString *)job
-                    mobilePhoneNumber:(NSString *)mpn
-                      workPhoneNumber:(NSString *)wpn
-                             birthday:(NSString *)birthday
-                               gender:(NSInteger)gender
-                              handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)saveUserWithName:(nonnull NSString *)name
+                                    department:(nonnull NSString *)dep
+                                           job:(nonnull NSString *)job
+                             mobilePhoneNumber:(nullable NSString *)mpn
+                               workPhoneNumber:(nullable NSString *)wpn
+                                      birthday:(nullable NSString *)birthday
+                                        gender:(nullable NSNumber *)gender
+                                       handler:(nonnull MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/passport/edit"];
@@ -123,8 +123,8 @@
         [parameters addObject:@{@"key":@"work_phone", @"object":wpn}];
     if (birthday && birthday.length > 0)
         [parameters addObject:@{@"key":@"birth", @"object":birthday}];
-    if (gender != 0)
-        [parameters addObject:@{@"key":@"gender", @"object":[NSNumber numberWithInteger:gender]}];
+    if (gender)
+        [parameters addObject:@{@"key":@"gender", @"object":[NSNumber numberWithInteger:[gender integerValue]]}];
     
     NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     [self postWithParameters:parameters withRequest:req];
@@ -135,7 +135,7 @@
     return connection;
 }
 
-- (MDURLConnection *)saveUserWithAvatar:(UIImage *)avatarImg handler:(MDAPIBoolHandler)handler
+- (nullable MDURLConnection *)saveUserWithAvatar:(nonnull UIImage *)avatarImg handler:(nonnull MDAPIBoolHandler)handler
 {
     NSString *boundary = @"-----------------MINGDAO-----------------";
     NSString *filename = @"photo.jpg";
@@ -171,7 +171,7 @@
     return connection;
 }
 
-- (MDURLConnection *)loadCurrentUserCommonTagsWithHandler:(MDAPINSArrayHandler)handler
+- (nullable MDURLConnection *)loadCurrentUserCommonTagsWithHandler:(nonnull MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/passport/get_commonCategory?format=json"];
