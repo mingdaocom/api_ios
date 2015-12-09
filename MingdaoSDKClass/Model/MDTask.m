@@ -84,6 +84,25 @@
     return (self.finishedDateString && self.finishedDateString.length > 0);
 }
 
+- (BOOL)finishedOnTime
+{
+    if (self.finished) {
+        if (self.expiredDateString) {
+            NSDateFormatter *fm = [[NSDateFormatter alloc] init];
+            [fm setDateFormat:@"yyyy-MM-dd"];
+            NSDate *finishDate = [fm dateFromString:self.finishedDateString];
+            NSDate *expDate = [fm dateFromString:self.expiredDateString];
+            if (finishDate && expDate) {
+                return [expDate compare:finishDate] == NSOrderedDescending;
+            } else {
+                return YES;
+            }
+        }
+        return YES;
+    }
+    return NO;
+}
+
 - (BOOL)isEqual:(id)object
 {
     if ([object isKindOfClass:[self class]]) {

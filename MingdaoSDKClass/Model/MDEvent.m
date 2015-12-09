@@ -160,7 +160,8 @@
 
 - (NSDate *)dateFromString:(NSString *)dateString
 {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"Asia/Shanghai"]];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     
     NSDate *date = [formatter dateFromString:dateString];

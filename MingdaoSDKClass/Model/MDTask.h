@@ -70,7 +70,7 @@
 @property (strong, nonatomic) MDTaskFolder *folder;
 @property (strong, nonatomic) MDTaskFolderStage *stage;
 
-@property (readonly, nonatomic) BOOL finished, expired;
+@property (readonly, nonatomic) BOOL finished, expired, finishedOnTime;
 
 @property (assign, nonatomic) BOOL isFavorite;
 @property (assign, nonatomic) BOOL isNewTask;
