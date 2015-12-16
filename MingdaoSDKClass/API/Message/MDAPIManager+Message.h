@@ -71,6 +71,6 @@
                                            pagesize:(NSNumber *)size
                                           sinceTime:(NSString *)time
                                           direction:(NSNumber *)direction
-                                            handler:(MDAPINSDictionaryHandler)handler;
+                                            handler:(MDAPINSArrayHandler)handler;
 
 @end

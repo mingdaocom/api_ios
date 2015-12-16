@@ -191,7 +191,7 @@
                                            pagesize:(NSNumber *)size
                                           sinceTime:(NSString *)time
                                           direction:(NSNumber *)direction
-                                            handler:(MDAPINSDictionaryHandler)handler
+                                            handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/message/webchat/getofficalmessages.aspx?format=json"];
