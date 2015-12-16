@@ -64,5 +64,13 @@
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)markMessageAsReadWithMessageID:(NSString *)mID handler:(MDAPIBoolHandler)handler;
 
+- (MDURLConnection *)loadOfficalCountWithHandler:(MDAPIObjectHandler)handler;
+
+- (MDURLConnection *)getOfficalMessafesWithKeyWords:(NSString *)keywords
+                                          pageindex:(NSNumber *)pages
+                                           pagesize:(NSNumber *)size
+                                          sinceTime:(NSString *)time
+                                          direction:(NSNumber *)direction
+                                            handler:(MDAPINSDictionaryHandler)handler;
 
 @end

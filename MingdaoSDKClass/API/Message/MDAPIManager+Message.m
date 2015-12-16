@@ -167,4 +167,59 @@
     return connection;
 }
 
+- (MDURLConnection *)loadOfficalCountWithHandler:(MDAPIObjectHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/message/webchat/getofficalmessagecount.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&o_id=%@",@"000000000"];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        NSNumber *objectID = [dic objectForKey:@"count"];
+        handler(objectID, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)getOfficalMessafesWithKeyWords:(NSString *)keywords
+                                          pageindex:(NSNumber *)pages
+                                           pagesize:(NSNumber *)size
+                                          sinceTime:(NSString *)time
+                                          direction:(NSNumber *)direction
+                                            handler:(MDAPINSDictionaryHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/message/webchat/getofficalmessages.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&o_id=%@",@"000000000"];
+    if (keywords) {
+        [urlString appendFormat:@"&keywords=%@",keywords];
+    }
+    if (pages) {
+        [urlString appendFormat:@"&pageindex=%d",[pages intValue]];
+    }
+    if (size) {
+        [urlString appendFormat:@"&pagesize=%d",[size intValue]];
+    }
+    if (time) {
+        [urlString appendFormat:@"&since_time=%@",time];
+    }
+    if (direction) {
+        [urlString appendFormat:@"&direction=%@",direction];
+    }
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        handler(dic, error);
+    }];
+    return connection;
+}
 @end
