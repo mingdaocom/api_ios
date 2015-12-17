@@ -213,6 +213,24 @@
         [urlString appendFormat:@"&direction=%@",direction];
     }
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSArray *array, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        handler(array, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)getOfficialDetail:(MDAPIObjectHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/message/webchat/getofficaldetail.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&o_id=%@",@"000000000"];
+    
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
@@ -222,4 +240,5 @@
     }];
     return connection;
 }
+
 @end

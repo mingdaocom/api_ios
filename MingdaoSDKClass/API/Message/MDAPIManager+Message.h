@@ -73,4 +73,6 @@
                                           direction:(NSNumber *)direction
                                             handler:(MDAPINSArrayHandler)handler;
 
+- (MDURLConnection *)getOfficialDetail:(MDAPIObjectHandler)handler;
+
 @end
