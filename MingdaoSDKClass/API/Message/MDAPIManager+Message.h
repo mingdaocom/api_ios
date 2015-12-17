@@ -64,15 +64,20 @@
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)markMessageAsReadWithMessageID:(NSString *)mID handler:(MDAPIBoolHandler)handler;
 
+
+/**
+ *  公众号接口
+ */
 - (MDURLConnection *)loadOfficalCountWithHandler:(MDAPIObjectHandler)handler;
 
-- (MDURLConnection *)getOfficalMessafesWithKeyWords:(NSString *)keywords
-                                          pageindex:(NSNumber *)pages
-                                           pagesize:(NSNumber *)size
-                                          sinceTime:(NSString *)time
-                                          direction:(NSNumber *)direction
-                                            handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)getOfficalMessafesWithOfficialID:(NSString *)officialID
+                                             KeyWords:(NSString *)keywords
+                                            pageindex:(NSNumber *)pages
+                                             pagesize:(NSNumber *)size
+                                            sinceTime:(NSString *)time
+                                            direction:(NSNumber *)direction
+                                              handler:(MDAPINSArrayHandler)handler;
 
-- (MDURLConnection *)getOfficialDetail:(MDAPIObjectHandler)handler;
-
+- (MDURLConnection *)getOfficialDetailWithOfficialID:(NSString *)officialID
+                                             handler:(MDAPIObjectHandler)handler;
 @end
