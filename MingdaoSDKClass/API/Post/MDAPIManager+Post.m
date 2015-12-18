@@ -653,19 +653,22 @@
                                    handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/update?format=json"];
-    [urlString appendFormat:@"&access_token=%@&p_type=1", self.accessToken];
+    [urlString appendString:@"/post/update"];
+    
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"p_type", @"object":@"1"}];
     if (groupIDs && groupIDs.count > 0)
-        [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&s_type=%d", shareType];
+        [parameters addObject:@{@"key":@"g_id", @"object":[groupIDs componentsJoinedByString:@","]}];
+    [parameters addObject:@{@"key":@"s_type", @"object":@(shareType)}];
+    [parameters addObject:@{@"key":@"p_msg", @"object":text}];
+    [parameters addObject:@{@"key":@"l_title", @"object":title}];
+    [parameters addObject:@{@"key":@"l_uri", @"object":link}];
+
     
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [req setHTTPMethod:@"POST"];
-    
-    NSString *str = [NSString stringWithFormat:@"p_msg=%@&l_title=%@&l_uri=%@", [self localEncode:text], [self localEncode:title], [self localEncode:link]];
-    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-    [req setHTTPBody:data];
-    
+    [self postWithParameters:parameters withRequest:req];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
