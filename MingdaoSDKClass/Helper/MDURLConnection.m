@@ -47,6 +47,7 @@ NSString *MDURLConnectionErrorOccurred = @"MDURLConnectionErrorOccurred";
     if (!session) {
         session = [NSURLSession sharedSession];
     }
+    
     self.task = [session dataTaskWithRequest:self.req completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         dispatch_queue_t    mainQueue = dispatch_get_main_queue();
         dispatch_async(mainQueue, ^{
@@ -105,6 +106,11 @@ NSString *MDURLConnectionErrorOccurred = @"MDURLConnectionErrorOccurred";
 #ifdef DEBUG
         NSLog(@"%@", [self.req.URL absoluteString]);
 #endif
+        
+#pragma mark Test for API
+        if ([self.req.HTTPMethod isEqualToString:@"POST"]) {
+            NSLog(@"%@",[[NSString alloc] initWithData:self.req.HTTPBody encoding:NSUTF8StringEncoding]);
+        }
         [self.task resume];
     }
 }
