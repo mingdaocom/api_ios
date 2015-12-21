@@ -167,12 +167,13 @@
     return connection;
 }
 
-- (MDURLConnection *)loadOfficalCountWithHandler:(MDAPIObjectHandler)handler
+- (MDURLConnection *)loadOfficalCountWithOfficialID:(NSString *)officialID
+                                            handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/message/webchat/getofficalmessagecount.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&o_id=%@",@"000000000"];
+    [urlString appendFormat:@"&o_id=%@",officialID];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {

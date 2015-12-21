@@ -68,7 +68,8 @@
 /**
  *  公众号接口
  */
-- (MDURLConnection *)loadOfficalCountWithHandler:(MDAPIObjectHandler)handler;
+- (MDURLConnection *)loadOfficalCountWithOfficialID:(NSString *)officialID
+                                            handler:(MDAPIObjectHandler)handler;
 
 - (MDURLConnection *)getOfficalMessafesWithOfficialID:(NSString *)officialID
                                              KeyWords:(NSString *)keywords
