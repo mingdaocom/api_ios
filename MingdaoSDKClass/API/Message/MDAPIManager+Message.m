@@ -243,4 +243,41 @@
     return connection;
 }
 
+- (MDURLConnection *)sendAccountVerifyCodeWithMailOrPhone:(NSString *)string
+                                                  handler:(MDAPIObjectHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/message/webchat/sendaccountverifycode.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&account=%@",string];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(dic,error);
+            return ;
+        }
+        handler(dic,error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)ValidateAccountCodeWithMailOrPhone:(NSString *)string
+                                                   code:(NSString *)code
+                                                  handler:(MDAPIObjectHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/message/webchat/validateaccountcode.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&account=%@",string];
+    [urlString appendFormat:@"&code=%@",code];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(dic,error);
+            return ;
+        }
+        handler(dic,error);
+    }];
+    return connection;
+}
 @end

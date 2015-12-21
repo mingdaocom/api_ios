@@ -80,4 +80,12 @@
 
 - (MDURLConnection *)getOfficialDetailWithOfficialID:(NSString *)officialID
                                              handler:(MDAPIObjectHandler)handler;
+
+- (MDURLConnection *)sendAccountVerifyCodeWithMailOrPhone:(NSString *)string
+                                                  handler:(MDAPIObjectHandler)handler;
+
+- (MDURLConnection *)ValidateAccountCodeWithMailOrPhone:(NSString *)string
+                                                   code:(NSString *)code
+                                                handler:(MDAPIObjectHandler)handler;
+
 @end

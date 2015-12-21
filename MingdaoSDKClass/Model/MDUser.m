@@ -42,6 +42,8 @@
         } else {
             self.isMobilePhoneNumberVisible = NO;
         }
+        self.accounteMail = [aDic objectForKey:@"accountemail"];
+        self.accountPhone = [aDic objectForKey:@"accountphone"];
         self.workPhoneNumber = [aDic objectForKey:@"work_phone"];
         self.isFollowed = [[aDic objectForKey:@"followed_status"] boolValue];
         self.egroup = [[aDic objectForKey:@"egroup"] boolValue];

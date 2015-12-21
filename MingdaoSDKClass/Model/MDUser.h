@@ -99,6 +99,8 @@ typedef int MDUserFolderType;
 @property (strong, nonatomic) NSString *job;
 @property (strong, nonatomic) NSString *mobilePhoneNumber;
 @property (strong, nonatomic) NSString *workPhoneNumber;
+@property (strong, nonatomic) NSString *accounteMail;
+@property (strong, nonatomic) NSString *accountPhone;
 @property (assign, nonatomic) BOOL isMobilePhoneNumberVisible;
 @property (assign, nonatomic) BOOL isFollowed;
 @property (assign, nonatomic) BOOL egroup;
