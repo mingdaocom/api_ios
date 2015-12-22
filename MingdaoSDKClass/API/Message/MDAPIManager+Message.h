@@ -69,15 +69,15 @@
  *  公众号接口
  */
 - (MDURLConnection *)loadOfficalCountWithOfficialID:(NSString *)officialID
-                                            handler:(MDAPIObjectHandler)handler;
+                                            handler:(MDAPINSIntegerHandler)handler;
 
-- (MDURLConnection *)getOfficalMessafesWithOfficialID:(NSString *)officialID
-                                             KeyWords:(NSString *)keywords
-                                            pageindex:(NSNumber *)pages
-                                             pagesize:(NSNumber *)size
-                                            sinceTime:(NSString *)time
-                                            direction:(NSNumber *)direction
-                                              handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadOfficalMessafesWithOfficialID:(NSString *)officialID
+                                              KeyWords:(NSString *)keywords
+                                             pageindex:(NSNumber *)pages
+                                              pagesize:(NSNumber *)size
+                                             sinceTime:(NSString *)time
+                                         beforeOrAfter:(BOOL)beforeOrAfter
+                                               handler:(MDAPINSArrayHandler)handler;
 
 - (MDURLConnection *)getOfficialDetailWithOfficialID:(NSString *)officialID
                                              handler:(MDAPIObjectHandler)handler;
@@ -88,5 +88,10 @@
 - (MDURLConnection *)ValidateAccountCodeWithMailOrPhone:(NSString *)string
                                                    code:(NSString *)code
                                                 handler:(MDAPIObjectHandler)handler;
+
+- (MDURLConnection *)loadOfficialMessageContextWithOfficialID:(NSString *)officialID
+                                                 ofMessageID:(NSString *)messageID
+                                                     handler:(MDAPINSArrayHandler)handler;
+
 
 @end

@@ -168,7 +168,7 @@
 }
 
 - (MDURLConnection *)loadOfficalCountWithOfficialID:(NSString *)officialID
-                                            handler:(MDAPIObjectHandler)handler
+                                            handler:(MDAPINSIntegerHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/message/webchat/getofficalmessagecount.aspx?format=json"];
@@ -178,21 +178,20 @@
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
-            handler(nil, error);
+            handler(0, error);
             return ;
         }
-        NSNumber *objectID = [dic objectForKey:@"count"];
-        handler(objectID, error);
+        handler([[dic objectForKey:@"count"] integerValue], error);
     }];
     return connection;
 }
 
-- (MDURLConnection *)getOfficalMessafesWithOfficialID:(NSString *)officialID
+- (MDURLConnection *)loadOfficalMessafesWithOfficialID:(NSString *)officialID
                                              KeyWords:(NSString *)keywords
                                             pageindex:(NSNumber *)pages
                                              pagesize:(NSNumber *)size
                                             sinceTime:(NSString *)time
-                                            direction:(NSNumber *)direction
+                                        beforeOrAfter:(BOOL)beforeOrAfter
                                               handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
@@ -211,9 +210,7 @@
     if (time) {
         [urlString appendFormat:@"&since_time=%@",time];
     }
-    if (direction) {
-        [urlString appendFormat:@"&direction=%@",direction];
-    }
+    [urlString appendFormat:@"&direction=%d",!beforeOrAfter];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSArray *array, NSError *error) {
         if (error) {
@@ -278,6 +275,26 @@
             return ;
         }
         handler(dic,error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)loadOfficialMessageContextWithOfficialID:(NSString *)officialID
+                                                  ofMessageID:(NSString *)messageID
+                                                      handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/message/webchat/officalmessages_byid.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&o_id=%@",officialID];
+    [urlString appendFormat:@"&m_id=%@",messageID];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSArray *array, NSError *error) {
+        if (error) {
+            handler(nil,error);
+            return ;
+        }
+        handler(array,error);
     }];
     return connection;
 }
