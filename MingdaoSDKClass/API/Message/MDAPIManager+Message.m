@@ -247,8 +247,10 @@
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/message/webchat/sendaccountverifycode.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&account=%@",string];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"account", @"object":string}];
+    [self postWithParameters:parameters withRequest:req];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(dic,error);
@@ -266,9 +268,11 @@
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/message/webchat/validateaccountcode.aspx?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&account=%@",string];
-    [urlString appendFormat:@"&code=%@",code];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"account", @"object":string}];
+    [parameters addObject:@{@"key":@"code", @"object":code}];
+    [self postWithParameters:parameters withRequest:req];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(dic,error);
