@@ -70,6 +70,10 @@
         self.approveDate = aDic[@"approveDate"];
         
         self.accountID = aDic[@"accountid"];
+        if (!self.accountID) {
+           self.accountID = aDic[@"accountId"];
+        }
+
         self.kcFolderPermission = [aDic[@"permission"] integerValue];
     }
     return self;
