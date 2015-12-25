@@ -167,8 +167,8 @@
     return connection;
 }
 
-- (MDURLConnection *)loadOfficalCountWithOfficialID:(NSString *)officialID
-                                            handler:(MDAPINSIntegerHandler)handler
+- (MDURLConnection *)loadOfficialCountWithOfficialID:(NSString *)officialID
+                                             handler:(MDAPINSIntegerHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/message/webchat/getofficalmessagecount.aspx?format=json"];
@@ -186,13 +186,13 @@
     return connection;
 }
 
-- (MDURLConnection *)loadOfficalMessafesWithOfficialID:(NSString *)officialID
-                                             KeyWords:(NSString *)keywords
-                                            pageindex:(NSNumber *)pages
-                                             pagesize:(NSNumber *)size
-                                            sinceTime:(NSString *)time
-                                        beforeOrAfter:(BOOL)beforeOrAfter
-                                              handler:(MDAPINSArrayHandler)handler
+- (MDURLConnection *)loadOfficialMessafesWithOfficialID:(NSString *)officialID
+                                               KeyWords:(NSString *)keywords
+                                              pageindex:(NSNumber *)pages
+                                               pagesize:(NSNumber *)size
+                                              sinceTime:(NSString *)time
+                                          beforeOrAfter:(BOOL)beforeOrAfter
+                                                handler:(MDAPINSArrayHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/message/webchat/getofficalmessages.aspx?format=json"];
@@ -263,7 +263,7 @@
 
 - (MDURLConnection *)ValidateAccountCodeWithMailOrPhone:(NSString *)string
                                                    code:(NSString *)code
-                                                  handler:(MDAPIObjectHandler)handler
+                                                handler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/message/webchat/validateaccountcode.aspx?format=json"];

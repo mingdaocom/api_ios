@@ -68,16 +68,16 @@
 /**
  *  公众号接口
  */
-- (MDURLConnection *)loadOfficalCountWithOfficialID:(NSString *)officialID
-                                            handler:(MDAPINSIntegerHandler)handler;
+- (MDURLConnection *)loadOfficialCountWithOfficialID:(NSString *)officialID
+                                             handler:(MDAPINSIntegerHandler)handler;
 
-- (MDURLConnection *)loadOfficalMessafesWithOfficialID:(NSString *)officialID
-                                              KeyWords:(NSString *)keywords
-                                             pageindex:(NSNumber *)pages
-                                              pagesize:(NSNumber *)size
-                                             sinceTime:(NSString *)time
-                                         beforeOrAfter:(BOOL)beforeOrAfter
-                                               handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadOfficialMessafesWithOfficialID:(NSString *)officialID
+                                               KeyWords:(NSString *)keywords
+                                              pageindex:(NSNumber *)pages
+                                               pagesize:(NSNumber *)size
+                                              sinceTime:(NSString *)time
+                                          beforeOrAfter:(BOOL)beforeOrAfter
+                                                handler:(MDAPINSArrayHandler)handler;
 
 - (MDURLConnection *)getOfficialDetailWithOfficialID:(NSString *)officialID
                                              handler:(MDAPIObjectHandler)handler;
