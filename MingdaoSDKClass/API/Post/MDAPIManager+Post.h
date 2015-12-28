@@ -159,7 +159,7 @@
                                  groupIDs:(NSArray *)groupIDs
                                 shareType:(int)shareType
                     commentToOriginalPost:(BOOL)yesOrNo
-                                  handler:(MDAPINSStringHandler)handler;
+                                  handler:(MDAPINSStringHandler)handler __deprecated;
 
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
