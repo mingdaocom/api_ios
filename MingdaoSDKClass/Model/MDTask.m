@@ -75,6 +75,8 @@
             }
         }
         self.subTasks = subTasks;
+        
+        self.taskAuth = [aDic[@"taskAuth"] integerValue];
     }
     return self;
 }
@@ -142,6 +144,7 @@
     copyObject.colorType = self.colorType;
     copyObject.isNoticed = self.isNoticed;
     copyObject.isNewTask = self.isNewTask;
+    copyObject.taskAuth = self.taskAuth;
     
     if (self.subTasks.count > 0) {
         copyObject.subTasks = [self.subTasks copy];
