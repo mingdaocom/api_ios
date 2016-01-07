@@ -75,6 +75,9 @@
         }
 
         self.kcFolderPermission = [aDic[@"permission"] integerValue];
+        
+        self.versionPublishTime = aDic[@"versions_time"];
+        self.userRegisterTime = aDic[@"create_time"];
     }
     return self;
 }
@@ -142,6 +145,9 @@
     
     copyObject.accountID = [self.accountID copy];
     copyObject.kcFolderPermission = self.kcFolderPermission;
+    
+    copyObject.userRegisterTime = [self.userRegisterTime copy];
+    copyObject.versionPublishTime = [self.versionPublishTime copy];
     
     return copyObject;
 }

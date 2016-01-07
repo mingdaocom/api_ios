@@ -123,5 +123,8 @@ typedef int MDUserFolderType;
 @property (strong ,nonatomic) NSString *accountID;
 @property (assign, nonatomic) NSInteger kcFolderPermission;
 
+@property (strong, nonatomic) NSString *userRegisterTime;
+@property (strong, nonatomic) NSString *versionPublishTime;
+
 - (MDUser *)initWithDictionary:(NSDictionary *)aDic;
 @end
