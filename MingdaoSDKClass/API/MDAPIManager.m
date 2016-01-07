@@ -279,7 +279,7 @@ static MDAPIManager *sharedManager = nil;
         NSString *key = paraDic[@"key"];
         NSString *object = paraDic[@"object"];
         if (![object isKindOfClass:[NSString class]]) {
-            NSLog(@"error paramters");
+//            NSLog(@"error paramters");
             continue;
         }
         [fullURL appendFormat:@"%@=%@", key, object];

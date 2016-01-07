@@ -103,14 +103,13 @@ NSString *MDURLConnectionErrorOccurred = @"MDURLConnectionErrorOccurred";
         });
     }];
     if (self.task) {
+#pragma mark Test for API
 #ifdef DEBUG
         NSLog(@"%@", [self.req.URL absoluteString]);
-#endif
-        
-#pragma mark Test for API
         if ([self.req.HTTPMethod isEqualToString:@"POST"]) {
-            NSLog(@"%@",[[NSString alloc] initWithData:self.req.HTTPBody encoding:NSUTF8StringEncoding]);
+            NSLog(@"%@", [[NSString alloc] initWithData:self.req.HTTPBody encoding:NSUTF8StringEncoding]);
         }
+#endif
         [self.task resume];
     }
 }
