@@ -393,5 +393,23 @@
                                      handler:(MDAPIBoolHandler)handler;
 
 
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ V5获取带有任务阶段的我的任务列表
+ 
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)loadMyTaskListWithKeywords:(NSString *)keywords
+                                  folderID:(NSString *)folderID
+                                   stageID:(NSString *)stageID
+                                filterType:(int)filterType
+                                 colorType:(int)colorType
+                                 orderType:(int)orderType
+                                  finished:(int)finishedStatus
+                               categortIDs:(NSString *)categortIDs
+                                    userID:(NSString *)userID
+                                 pageIndex:(int)pageIndex
+                                  pageSize:(int)pageSize
+                                   handler:(MDAPINSArrayHandler)handler;
+
 
 @end

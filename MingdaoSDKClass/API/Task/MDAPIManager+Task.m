@@ -1974,4 +1974,87 @@
 }
 
 
+- (MDURLConnection *)loadMyTaskListWithKeywords:(NSString *)keywords
+                                       folderID:(NSString *)folderID
+                                        stageID:(NSString *)stageID
+                                     filterType:(int)filterType
+                                      colorType:(int)colorType
+                                      orderType:(int)orderType
+                                       finished:(int)finishedStatus
+                                    categortIDs:(NSString *)categortIDs
+                                         userID:(NSString *)userID
+                                      pageIndex:(int)pageIndex
+                                       pageSize:(int)pageSize
+                                        handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v5/get_task_list.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords && keywords.length > 0){
+        [urlString appendFormat:@"&keywords=%@", keywords];
+    }
+    if (folderID) {
+        [urlString appendFormat:@"&t_folderID=%@", folderID];
+        if (stageID) {
+            [urlString appendFormat:@"&t_sid=%@", stageID];
+        }
+    }
+    [urlString appendFormat:@"&filter_type=%d", filterType];
+    if (colorType >= 0 && colorType <= 5) {
+        [urlString appendFormat:@"&color=%d", colorType];
+    }
+    [urlString appendFormat:@"&status=%d", finishedStatus];
+    if (categortIDs) {
+        [urlString appendFormat:@"&categoryIDs=%@", categortIDs];
+    }
+    if (userID) {
+        [urlString appendFormat:@"&u_id=%@", userID];
+    }
+    if (pageSize > 0)
+        [urlString appendFormat:@"&pagesize=%d", pageSize];
+    if (pageIndex > 0)
+        [urlString appendFormat:@"&pageindex=%d", pageIndex];
+    
+    [urlString appendFormat:@"&sort=%d", orderType];
+    
+    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        
+        if (orderType == 4) {
+            NSArray *folderDics = dic[@"tasks"];
+            NSMutableArray *folders = [NSMutableArray array];
+            for (NSDictionary *folderDic in folderDics) {
+                NSArray *taskDics = [folderDic objectForKey:@"tasks"];
+                NSMutableArray *tasks = [NSMutableArray array];
+                for (NSDictionary *taskDic in taskDics) {
+                    if (![taskDic isKindOfClass:[NSDictionary class]])
+                        continue;
+                    MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
+                    [tasks addObject:task];
+                }
+                
+                NSDictionary *tempDic = @{[folderDic[@"folderName"] isEqualToString:@""]?@"未关联项目":folderDic[@"folderName"]:tasks};
+                [folders addObject:tempDic];
+            }
+            handler(folders,error);
+        } else {
+            NSArray *taskDics = [dic objectForKey:@"tasks"];
+            NSMutableArray *tasks = [NSMutableArray array];
+            for (NSDictionary *taskDic in taskDics) {
+                if (![taskDic isKindOfClass:[NSDictionary class]])
+                    continue;
+                MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
+                [tasks addObject:task];
+            }
+            handler(tasks, error);
+        }
+    }];
+    return connection;
+
+}
+
 @end
