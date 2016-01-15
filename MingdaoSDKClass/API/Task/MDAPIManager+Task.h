@@ -412,4 +412,17 @@
                                    handler:(MDAPINSArrayHandler)handler;
 
 
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ @usage:
+ V5更改任务阶段
+ callssify:1.今天要做2.最近要做3.之后再做
+ 
+ -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+- (MDURLConnection *)modifyMyTaskStageWithID:(NSString *)taskID
+                                   callssify:(NSNumber *)callssify
+                                     handler:(MDAPIBoolHandler)handler;
+
+
 @end

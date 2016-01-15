@@ -2057,4 +2057,24 @@
 
 }
 
+
+- (MDURLConnection *)modifyMyTaskStageWithID:(NSString *)taskID
+                                   callssify:(NSNumber *)callssify
+                                     handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/task/v5/edit_task_member_classify.aspx?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"&t_id=%@", taskID];
+    if (0 < [callssify integerValue] && [callssify integerValue] < 4) {
+        [urlString appendFormat:@"&callssify=%@", callssify];
+    }
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+
+}
+
+
 @end
