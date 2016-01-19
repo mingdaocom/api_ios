@@ -2024,34 +2024,22 @@
             return ;
         }
         
-        if (orderType == 4) {
-            NSArray *folderDics = dic[@"tasks"];
-            NSMutableArray *folders = [NSMutableArray array];
-            for (NSDictionary *folderDic in folderDics) {
-                NSArray *taskDics = [folderDic objectForKey:@"tasks"];
-                NSMutableArray *tasks = [NSMutableArray array];
-                for (NSDictionary *taskDic in taskDics) {
-                    if (![taskDic isKindOfClass:[NSDictionary class]])
-                        continue;
-                    MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
-                    [tasks addObject:task];
-                }
-                
-                NSDictionary *tempDic = @{[folderDic[@"folderName"] isEqualToString:@""]?@"未关联项目":folderDic[@"folderName"]:tasks};
-                [folders addObject:tempDic];
+        NSArray *taskDics = [dic objectForKey:@"tasks"];
+        NSMutableArray *tasks = [NSMutableArray array];
+        for (NSDictionary *taskDic in taskDics) {
+            if (![taskDic isKindOfClass:[NSDictionary class]])
+                continue;
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] init];
+            NSMutableArray *tempArr = [[NSMutableArray alloc] init];
+            for (NSDictionary *d in taskDic[@"tasks"]) {
+                MDTask *task = [[MDTask alloc] initWithDictionary:d];
+                [tempArr addObject:task];
             }
-            handler(folders,error);
-        } else {
-            NSArray *taskDics = [dic objectForKey:@"tasks"];
-            NSMutableArray *tasks = [NSMutableArray array];
-            for (NSDictionary *taskDic in taskDics) {
-                if (![taskDic isKindOfClass:[NSDictionary class]])
-                    continue;
-                MDTask *task = [[MDTask alloc] initWithDictionary:taskDic];
-                [tasks addObject:task];
-            }
-            handler(tasks, error);
+            [tempDic setObject:tempArr forKey:@"tasks"];
+            [tempDic setObject:taskDic[@"num"] forKey:@"num"];
+            [tasks addObject:tempDic];
         }
+        handler(tasks, error);
     }];
     return connection;
 
