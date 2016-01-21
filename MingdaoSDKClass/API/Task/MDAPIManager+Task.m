@@ -2031,12 +2031,17 @@
                 continue;
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] init];
             NSMutableArray *tempArr = [[NSMutableArray alloc] init];
+            NSInteger unreadCount = 0;
             for (NSDictionary *d in taskDic[@"tasks"]) {
                 MDTask *task = [[MDTask alloc] initWithDictionary:d];
                 [tempArr addObject:task];
+                if (task.unreadDiscussCount > 0) {
+                    unreadCount ++;
+                }
             }
             [tempDic setObject:tempArr forKey:@"tasks"];
             [tempDic setObject:taskDic[@"num"] forKey:@"num"];
+            [tempDic setObject:[NSNumber numberWithInteger:unreadCount] forKey:@"unreadCount"];
             [tasks addObject:tempDic];
         }
         handler(tasks, error);
