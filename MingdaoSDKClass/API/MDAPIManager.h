@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import "MDAPIHandler.h"
 #import "MDErrorParser.h"
+#import "NSMutableArray+MDURLRequestParamsGenerator.h"
+#import "NSURLRequest+MDURLRequestGenerator.h"
 
 #define MDAPIVersion @"58"
 #define MDAPIDefaultServerAddress @"https://api.mingdao.com"
@@ -71,17 +72,6 @@ extern NSString * const MDAPIManagerNewTokenSetNotification;
                              projectID:(NSString *)projectID
                                handler:(MDAPINSDictionaryHandler)handler;
 
-- (MDURLConnection *)loginWithAppKey:(NSString *)appKey
-                           appSecret:(NSString *)appSecret
-                                code:(NSString *)code
-                         redirectURL:(NSString *)redirectURL
-                             handler:(MDAPINSDictionaryHandler)handler;
-
 - (MDURLConnection *)refreshTokenWithRefreshToken:(NSString *)refreshToken
                                           handler:(MDAPINSDictionaryHandler)handler;
-
-- (void)postWithParameters:(NSArray *)parameters withRequest:(NSMutableURLRequest *)req;
-
-+ (NSURLRequest *)postWithParameters:(NSArray *)parameters baseURL:(NSString *)baseURL;
-+ (NSURLRequest *)getWithParameters:(NSArray *)parameters baseURL:(NSString *)baseURL;
 @end

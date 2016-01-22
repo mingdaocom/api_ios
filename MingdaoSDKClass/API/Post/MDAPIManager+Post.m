@@ -9,6 +9,10 @@
 #import "MDAPIManager+Post.h"
 #import <UIKit/UIKit.h>
 
+NSString * const MDAPIPostUpdate = @"/post/update";
+NSString * const MDAPIPostUpload = @"/post/upload";
+NSString * const MDAPIPostAddReply = @"/post/add_reply";
+
 @implementation MDAPIManager (Post)
 #pragma mark -
 - (MDURLConnection *)loadPostsWithTagName:(NSString *)tagName
@@ -618,21 +622,16 @@
                                   shareType:(int)shareType
                                     handler:(MDAPINSStringHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/update?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (groupIDs && groupIDs.count > 0)
-        [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&s_type=%d", shareType];
-    
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    
-    NSMutableArray *parameters = [NSMutableArray array];
+    NSMutableArray *parameters = [[NSMutableArray alloc] init];
+    [parameters addParamWithObject:@"json" forKey:@"format"];
+    [parameters addParamWithObject:self.accessToken forKey:@"access_token"];
+    [parameters addParamWithObject:[groupIDs componentsJoinedByString:@","] forKey:@"g_id"];
+    [parameters addParamWithObject:@(shareType) forKey:@"s_type"];
     if (text) {
-        [parameters addObject:@{@"key":@"p_msg", @"object":text}];
+        [parameters addParamWithObject:text forKey:@"p_msg"];
     }
-    [self postWithParameters:parameters withRequest:req];
-    
+
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPIPostUpdate parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
@@ -652,9 +651,6 @@
                                  shareType:(int)shareType
                                    handler:(MDAPINSStringHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/update"];
-    
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
@@ -666,46 +662,13 @@
     [parameters addObject:@{@"key":@"l_title", @"object":title}];
     [parameters addObject:@{@"key":@"l_uri", @"object":link}];
 
-    
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPIPostUpdate parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
         }
         
-        NSString *postID = [dic objectForKey:@"post"];
-        handler(postID, error);
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)createFAQPostWithText:(NSString *)text
-                                  groupIDs:(NSArray *)groupIDs
-                                 shareType:(int)shareType
-                                   handler:(MDAPINSStringHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/update?format=json"];
-    [urlString appendFormat:@"&access_token=%@&p_type=4&is_reward=1", self.accessToken];
-    if (groupIDs && groupIDs.count > 0)
-        [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&s_type=%d", shareType];
-    
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSMutableArray *parameters = [NSMutableArray array];
-    if (text) {
-        [parameters addObject:@{@"key":@"p_msg", @"object":text}];
-    }
-    [self postWithParameters:parameters withRequest:req];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-
         NSString *postID = [dic objectForKey:@"post"];
         handler(postID, error);
     }];
@@ -719,10 +682,6 @@
                                     toCenter:(BOOL)toCenter
                                      handler:(MDAPINSStringHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/upload"];
-    
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
@@ -750,8 +709,7 @@
             }
         }
     }
-    [self postWithParameters:parameters withRequest:req];
-    
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPIPostUpload parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
@@ -774,25 +732,23 @@
                                    toCenter:(BOOL)toCenter
                                     handler:(MDAPINSStringHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/upload?format=json"];
-    [urlString appendFormat:@"&access_token=%@&f_type=document", self.accessToken];
-    if (groupIDs && groupIDs.count > 0)
-        [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&s_type=%d", shareType];
-    if (toCenter) {
-        [urlString appendFormat:@"&is_center=%d", 1];
-    }
-    
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"f_type", @"object":@"document"}];
+    [parameters addObject:@{@"key":@"s_type", @"object":@(shareType)}];
+    if (groupIDs && groupIDs.count > 0) {
+        [parameters addObject:@{@"key":@"g_id", @"object":[groupIDs componentsJoinedByString:@","]}];
+    }
+    if (toCenter) {
+        [parameters addObject:@{@"key":@"is_center", @"object":@(1)}];
+    }
     if (text) {
         [parameters addObject:@{@"key":@"p_msg", @"object":text}];
     }
     if (fileName && fileData) {
         [parameters addObject:@{@"key":@"p_doc", @"object":fileData, @"fileName":fileName}];
     }
-    [self postWithParameters:parameters withRequest:req];
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPIPostUpload parameters:parameters];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
@@ -804,63 +760,6 @@
         handler(postID, error);
     }];
     connection.timeOut = 24*60*60;
-    
-    return connection;
-}
-
-- (MDURLConnection *)createRepostWithText:(NSString *)text
-                                   images:(NSArray *)images
-                                   postID:(NSString *)postID
-                                 groupIDs:(NSArray *)groupIDs
-                                shareType:(int)shareType
-                    commentToOriginalPost:(BOOL)yesOrNo
-                                  handler:(MDAPINSStringHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/repost?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    if (groupIDs && groupIDs.count > 0)
-        [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-    [urlString appendFormat:@"&re_p_id=%@", postID];
-    [urlString appendFormat:@"&s_type=%d", shareType];
-    if (images.count > 0) {
-        [urlString appendFormat:@"&f_type=%@", @"picture"];
-    }
-    if (yesOrNo) {
-        [urlString appendString:@"&withComment=1"];
-    }
-
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSMutableArray *parameters = [NSMutableArray array];
-    if (text) {
-        [parameters addObject:@{@"key":@"p_msg", @"object":text}];
-    }
-    if (images.count > 0) {
-        for (int i = 0; i < images.count; i++) {
-            UIImage *image = images[i];
-            NSString *fileName = [NSString stringWithFormat:@"photo%d.jpg", i+1];
-            NSMutableString *parameter = [NSMutableString string];
-            [parameter appendString:@"p_img"];
-            if (i > 0) {
-                [parameter appendFormat:@"%d", i];
-            }
-            if (parameter && image && fileName) {
-                [parameters addObject:@{@"key":parameter, @"object":image, @"fileName":fileName}];
-            }
-        }
-    }
-    [self postWithParameters:parameters withRequest:req];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-
-        NSString *postID = [dic objectForKey:@"post"];
-        handler(postID, error);
-    }];
-    connection.timeOut = 30 + 30*images.count;
     
     return connection;
 }
@@ -940,27 +839,22 @@
                                                shareType:(int)shareType
                                                  handler:(MDAPINSStringHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/post/add_reply?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&p_id=%@", pID];
+    NSMutableArray *parameters = [[NSMutableArray alloc] init];
+    [parameters addParamWithObject:@"json" forKey:@"format"];
+    [parameters addParamWithObject:self.accessToken forKey:@"access_token"];
+    [parameters addParamWithObject:pID forKey:@"p_id"];
     if (rID && rID.length > 0)
-        [urlString appendFormat:@"&r_id=%@", rID];
-    if (images.count > 0) {
-        [urlString appendFormat:@"&f_type=%@", @"picture"];
-    }
+        [parameters addParamWithObject:rID forKey:@"r_id"];
+    if (images.count > 0)
+        [parameters addParamWithObject:@"picture" forKey:@"f_type"];
     if (yesOrNo) {
-        [urlString appendString:@"&isReshared=1"];
+        [parameters addParamWithObject:@(1) forKey:@"isReshared"];
+        [parameters addParamWithObject:@(shareType) forKey:@"s_type"];
         if (groupIDs && groupIDs.count > 0)
-            [urlString appendFormat:@"&g_id=%@", [groupIDs componentsJoinedByString:@","]];
-        [urlString appendFormat:@"&s_type=%d", shareType];
+            [parameters addParamWithObject:[groupIDs componentsJoinedByString:@","] forKey:@"g_id"];
     }
-    
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSMutableArray *parameters = [NSMutableArray array];
-    if (msg) {
-        [parameters addObject:@{@"key":@"r_msg", @"object":msg}];
-    }
+    if (msg)
+        [parameters addParamWithObject:msg forKey:@"r_msg"];
     if (images.count > 0) {
         for (int i = 0; i < images.count; i++) {
             UIImage *image = images[i];
@@ -971,12 +865,12 @@
                 [parameter appendFormat:@"%d", i];
             }
             if (parameter && image && fileName) {
-                [parameters addObject:@{@"key":parameter, @"object":image, @"fileName":fileName}];
+                [parameters addParamWithObject:image forKey:parameter fileName:fileName];
             }
         }
     }
-    [self postWithParameters:parameters withRequest:req];
     
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPIPostAddReply parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);

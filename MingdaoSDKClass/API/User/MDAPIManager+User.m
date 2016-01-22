@@ -8,6 +8,8 @@
 
 #import "MDAPIManager+User.h"
 
+NSString * const MDAPIUserInvite = @"/user/v2/invite";
+
 @implementation MDAPIManager (User)
 #pragma mark - 用户接口
 - (MDURLConnection *)loadAllUsersWithHandler:(MDAPINSArrayHandler)handler
@@ -197,9 +199,6 @@
                                             phones:(NSString *)phones
                                            handler:(MDAPINSDictionaryHandler)handler;
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/user/v2/invite"];
-    
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
@@ -207,10 +206,8 @@
         [parameters addObject:@{@"key":@"emails", @"object":emails}];
     if (phones && phones.length > 0)
         [parameters addObject:@{@"key":@"mobilePhones", @"object":phones}];
-    
-    NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
-    
+ 
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPIUserInvite parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);

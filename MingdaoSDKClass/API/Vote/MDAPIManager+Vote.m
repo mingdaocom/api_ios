@@ -9,6 +9,8 @@
 #import "MDAPIManager+Vote.h"
 #import <UIKit/UIKit.h>
 
+NSString * const MDAPIVoteCreate = @"/vote/create";
+
 @implementation MDAPIManager (Vote)
 #pragma mark - 投票接口
 - (MDURLConnection *)loadCurrentUserJoinedVotesWithPageIndex:(NSInteger)page
@@ -168,9 +170,6 @@
                                   shareType:(NSInteger)shareType
                                     handler:(MDAPINSStringHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/vote/create?format=json"];
-    
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"", @"object":@""}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
@@ -204,9 +203,7 @@
         }
     }
     
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
-    
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPIVoteCreate parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);

@@ -9,6 +9,9 @@
 #import "MDAPIManager+Task.h"
 #import <UIKit/UIKit.h>
 
+NSString * const MDAPITaskAddReply = @"/task/addreply";
+NSString * const MDAPITaskAddFolder = @"/task/v4/addFolderV4";
+
 @implementation MDAPIManager (Task)
 #pragma mark -
 - (MDURLConnection *)loadProjectsWithKeywords:(NSString *)keywords handler:(MDAPINSArrayHandler)handler
@@ -161,19 +164,14 @@
                                                   images:(NSArray *)images
                                                  handler:(MDAPINSStringHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/addreply?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&t_id=%@", tID];
-    if (rID && rID.length > 0)
-        [urlString appendFormat:@"&r_id=%@", rID];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
     NSMutableArray *parameters = [NSMutableArray array];
-    if (message) {
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"t_id", @"object":tID}];
+    if (rID && rID.length > 0)
+        [parameters addObject:@{@"key":@"r_id", @"object":rID}];
+    if (message)
         [parameters addObject:@{@"key":@"r_msg", @"object":message}];
-    }
     if (images.count > 0) {
         for (int i = 0; i < images.count; i++) {
             UIImage *image = images[i];
@@ -188,8 +186,7 @@
             }
         }
     }
-    [self postWithParameters:parameters withRequest:req];
-    
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPITaskAddReply parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
@@ -1036,9 +1033,6 @@
                                    fileID:(NSString *)fileID
                                   handler:(MDAPINSStringHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/v4/addFolderV4"];
-
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
@@ -1061,7 +1055,8 @@
         [parameters addObject:@{@"key":@"deadline", @"object":deadLine}];
     }
     
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[MDAPIManager postWithParameters:parameters baseURL:urlString] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPITaskAddFolder parameters:parameters];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;

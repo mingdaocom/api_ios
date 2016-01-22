@@ -9,6 +9,8 @@
 #import "MDAPIManager+Passport.h"
 #import <UIKit/UIKit.h>
 
+NSString * const MDAPIPassportEdit = @"/passport/edit";
+
 @implementation MDAPIManager (Passport)
 
 #pragma mark - 账号接口
@@ -105,9 +107,6 @@
                                gender:(NSInteger)gender
                               handler:(MDAPIBoolHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/passport/edit"];
-    
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
@@ -126,11 +125,9 @@
     if (gender != 0)
         [parameters addObject:@{@"key":@"gender", @"object":[NSNumber numberWithInteger:gender]}];
     
-    NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
-    
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPIPassportEdit parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+        [self handleBoolData:dic error:error URLString:req.URL.absoluteString handler:handler];
     }];
     return connection;
 }

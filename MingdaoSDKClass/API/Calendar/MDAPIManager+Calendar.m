@@ -8,6 +8,9 @@
 
 #import "MDAPIManager+Calendar.h"
 
+NSString * const MDAPICalendarCreate = @"/calendar/create";
+NSString * const MDAPICalendarEdit = @"/calendar/edit";
+
 @implementation MDAPIManager (Calendar)
 #pragma mark - 日程中心
 - (MDURLConnection *)subscribeCalendar:(MDAPINSStringHandler)handler
@@ -51,8 +54,6 @@
                                     untilDate:(NSString *)untilDate
                                       handler:(MDAPINSStringHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/create"];
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
@@ -94,8 +95,7 @@
         }
     }
     
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPICalendarCreate parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
@@ -127,8 +127,6 @@
                                 untilDate:(NSString *)untilDate
                                   handler:(MDAPIBoolHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/edit"];
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
@@ -162,10 +160,9 @@
         }
     }
     
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPICalendarEdit parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+        [self handleBoolData:dic error:error URLString:req.URL.absoluteString handler:handler];
     }];
     return connection;
 }
