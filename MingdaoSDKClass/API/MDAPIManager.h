@@ -72,6 +72,12 @@ extern NSString * const MDAPIManagerNewTokenSetNotification;
                              projectID:(NSString *)projectID
                                handler:(MDAPINSDictionaryHandler)handler;
 
+- (MDURLConnection *)loginWithAppKey:(NSString *)appKey
+                           appSecret:(NSString *)appSecret
+                                code:(NSString *)code
+                         redirectURL:(NSString *)redirectURL
+                             handler:(MDAPINSDictionaryHandler)handler;
+
 - (MDURLConnection *)refreshTokenWithRefreshToken:(NSString *)refreshToken
                                           handler:(MDAPINSDictionaryHandler)handler;
 @end

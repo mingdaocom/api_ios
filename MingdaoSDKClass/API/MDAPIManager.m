@@ -163,6 +163,29 @@ static MDAPIManager *sharedManager = nil;
 
 }
 
+- (MDURLConnection *)loginWithAppKey:(NSString *)appKey
+                           appSecret:(NSString *)appSecret
+                                code:(NSString *)code
+                         redirectURL:(NSString *)redirectURL
+                             handler:(MDAPINSDictionaryHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/oauth2/access_token?format=json"];
+    [urlString appendFormat:@"&app_key=%@&app_secret=%@&redirect_uri=%@&code=%@", appKey, appSecret, redirectURL, code];
+    [urlString appendString:@"&grant_type=authorization_code"];
+    
+    NSString *urlStr = urlString;
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        
+        handler(dic, error);
+    }];
+    return connection;
+}
+
 - (MDURLConnection *)refreshTokenWithRefreshToken:(NSString *)refreshToken
                                           handler:(MDAPINSDictionaryHandler)handler;
 {
