@@ -172,8 +172,8 @@
     [urlString appendString:@"/vote/create?format=json"];
     
     NSMutableArray *parameters = [NSMutableArray array];
-    [parameters addObject:@{@"key":@"", @"object":@""}];
-    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    //[parameters addObject:@{@"key":@"", @"object":@""}];
+   // [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"p_msg", @"object":text}];
     [parameters addObject:@{@"key":@"vote_options", @"object":options}];
