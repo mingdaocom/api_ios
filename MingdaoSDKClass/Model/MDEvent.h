@@ -43,6 +43,7 @@
 @property (assign, nonatomic) BOOL isBusy;
 
 @property (assign, nonatomic) BOOL isRecur;
+@property (strong, nonatomic) NSString *recurTime;
 @property (assign, nonatomic) BOOL isShare;
 @property (strong, nonatomic) NSString *shareUrl;
 @property (assign, nonatomic) int frequency, interval, recurCount;

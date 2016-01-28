@@ -135,6 +135,7 @@
             self.recurCount = [[dic objectForKey:@"recur_count"] intValue];
             self.untilDateString = [dic objectForKey:@"until_date"];
         }
+        self.recurTime = [aDic objectForKey:@"recur_time"];
         
         
         NSMutableArray *memebers = [NSMutableArray array];
@@ -533,6 +534,7 @@
     copyObject.isAllday = self.isAllday;
     copyObject.isPrivate = self.isPrivate;
     copyObject.isBusy = self.isBusy;
+    copyObject.recurTime = [self.recurTime copy];
     copyObject.members = [self.members copy];
     copyObject.eventMails = [self.eventMails copy];
     copyObject.thirdMembers = [self.thirdMembers copy];

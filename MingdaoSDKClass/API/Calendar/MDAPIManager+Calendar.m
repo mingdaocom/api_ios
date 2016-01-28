@@ -455,12 +455,15 @@
     return connection;
 }
 
-- (MDURLConnection *)loadEventWithObjectID:(NSString *)objectID handler:(MDAPIObjectHandler)handler
+- (MDURLConnection *)loadEventWithObjectID:(NSString *)objectID
+                                 recurTime:(NSString *)recurTime
+                                   handler:(MDAPIObjectHandler)handler
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/detail?u_key=%@&c_id=%@&format=json"
+    NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/detail?format=json&u_key=%@&c_id=%@&recur_time=%@"
                         , self.serverAddress
                         , self.accessToken
-                        , objectID];
+                        , objectID
+                        , recurTime];
     
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {

@@ -149,10 +149,12 @@
  根据日程编号获取单条日程内容
  @parmas:
  objectID - 日程编号
+ recurTime - 重复时间
  handler - 处理MDEvent
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadEventWithObjectID:(NSString *)objectID handler:(MDAPIObjectHandler)handler;
-
+- (MDURLConnection *)loadEventWithObjectID:(NSString *)objectID
+                                 recurTime:(NSString *)recurTime
+                                   handler:(MDAPIObjectHandler)handler;
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  删除/接受/拒绝/退出日程
