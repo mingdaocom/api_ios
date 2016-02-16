@@ -77,6 +77,8 @@
         self.subTasks = subTasks;
         
         self.taskAuth = [aDic[@"taskAuth"] integerValue];
+
+        self.classify = [aDic[@"classify"] integerValue];
     }
     return self;
 }
@@ -145,6 +147,7 @@
     copyObject.isNoticed = self.isNoticed;
     copyObject.isNewTask = self.isNewTask;
     copyObject.taskAuth = self.taskAuth;
+    copyObject.classify = self.classify;
     
     if (self.subTasks.count > 0) {
         copyObject.subTasks = [self.subTasks copy];
