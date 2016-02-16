@@ -22,6 +22,9 @@
 {
     if ([dic isKindOfClass:[NSDictionary class]]) {
         NSString *errorCode = [dic objectForKey:@"error_code"];
+        if (![errorCode isKindOfClass:[NSString class]]) {
+            errorCode = [NSString stringWithFormat:@"%d", [errorCode intValue]];
+        }
         NSString *errorMessage = [dic objectForKey:@"error_msg"];
         if (!errorCode) {
             return nil;
