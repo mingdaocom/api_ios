@@ -77,5 +77,7 @@
 @property (assign, nonatomic) BOOL isFavorite;
 @property (assign, nonatomic) BOOL isNewTask;
 
+@property (assign, nonatomic) NSInteger classify;
+
 - (MDTask *)initWithDictionary:(NSDictionary *)aDic;
 @end
