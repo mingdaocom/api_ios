@@ -53,18 +53,18 @@
             self.stage = [[MDTaskFolderStage alloc] initWithDictionary:aDic[@"stage"]];
         }
         
-        NSMutableArray *memebers = [NSMutableArray array];
-        NSDictionary *userDics = [aDic objectForKey:@"members"];
+        NSMutableArray *members = [NSMutableArray array];
+        NSArray *userDics = [aDic objectForKey:@"members"];
         for (NSDictionary *userDic in userDics) {
             if ([userDic isKindOfClass:[NSDictionary class]]) {
                 MDUser *aUser = [[MDUser alloc] initWithDictionary:userDic];
                 if ([aUser isEqual:self.charger]) {
                     continue;
                 }
-                [memebers addObject:aUser];
+                [members addObject:aUser];
             }
         }
-        self.members = memebers;
+        self.members = members;
         
         NSMutableArray *subTasks = [NSMutableArray array];
         NSDictionary *taskDics = [aDic objectForKey:@"c_task"];
