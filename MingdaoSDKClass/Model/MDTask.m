@@ -53,18 +53,18 @@
             self.stage = [[MDTaskFolderStage alloc] initWithDictionary:aDic[@"stage"]];
         }
         
-        NSMutableArray *memebers = [NSMutableArray array];
-        NSDictionary *userDics = [aDic objectForKey:@"members"];
+        NSMutableArray *members = [NSMutableArray array];
+        NSArray *userDics = [aDic objectForKey:@"members"];
         for (NSDictionary *userDic in userDics) {
             if ([userDic isKindOfClass:[NSDictionary class]]) {
                 MDUser *aUser = [[MDUser alloc] initWithDictionary:userDic];
                 if ([aUser isEqual:self.charger]) {
                     continue;
                 }
-                [memebers addObject:aUser];
+                [members addObject:aUser];
             }
         }
-        self.members = memebers;
+        self.members = members;
         
         NSMutableArray *subTasks = [NSMutableArray array];
         NSDictionary *taskDics = [aDic objectForKey:@"c_task"];
@@ -77,6 +77,8 @@
         self.subTasks = subTasks;
         
         self.taskAuth = [aDic[@"taskAuth"] integerValue];
+
+        self.classify = [aDic[@"classify"] integerValue];
     }
     return self;
 }
@@ -145,6 +147,7 @@
     copyObject.isNoticed = self.isNoticed;
     copyObject.isNewTask = self.isNewTask;
     copyObject.taskAuth = self.taskAuth;
+    copyObject.classify = self.classify;
     
     if (self.subTasks.count > 0) {
         copyObject.subTasks = [self.subTasks copy];
