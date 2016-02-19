@@ -65,18 +65,48 @@
  handler - 处理编辑结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                              allCalendar:(BOOL)allCalendar
                                      name:(NSString *)name
-                                recurTime:(NSString *)recurTime
                                   handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                              allCalendar:(BOOL)allCalendar
                                      des:(NSString *)des
-                                recurTime:(NSString *)recurTime
                                   handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                 address:(NSString *)address
                                 recurTime:(NSString *)recurTime
+                              allCalendar:(BOOL)allCalendar
+                                 address:(NSString *)address
                                   handler:(MDAPIBoolHandler)handler;
-
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                              allCalendar:(BOOL)allCalendar
+                               remindType:(NSInteger)remindType
+                               remindTime:(NSInteger)remindTime
+                                  handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                              allCalendar:(BOOL)allCalendar
+                          startDateString:(NSString *)sDateString
+                            endDateString:(NSString *)eDateString
+                                isAllDay:(BOOL)isAllday
+                                  handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                              allCalendar:(BOOL)allCalendar
+                               categoryID:(NSString *)categoryID
+                                isPrivate:(BOOL)isPrivate
+                                  handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                                  isRecur:(BOOL)isRecur
+                                frequency:(NSInteger)frequency
+                                 interval:(NSInteger)interval
+                                 weekDays:(NSString *)weekDays
+                               recurCount:(NSInteger)recurCount
+                                untilDate:(NSString *)untilDate
+                                  handler:(MDAPIBoolHandler)handler;
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  邀请/取消邀请/再次邀请用户加入日程
