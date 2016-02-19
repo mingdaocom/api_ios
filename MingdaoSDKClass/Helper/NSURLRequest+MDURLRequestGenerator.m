@@ -36,7 +36,7 @@
             NSString *text = [object stringValue];
             [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
             [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", text] dataUsingEncoding:NSUTF8StringEncoding]];
-        } else if ([object isKindOfClass:[UIImage class]]) {
+        } else if ([object isKindOfClass:[UIImage class]]) { // should be replaced by nsdata type!
             UIImage *image = object;
             
             [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
