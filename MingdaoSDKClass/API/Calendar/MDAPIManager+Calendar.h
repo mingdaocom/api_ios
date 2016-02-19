@@ -61,31 +61,20 @@
  @parmas:
  eID     - 被修改日程编号
  name    - 日程名称
- sDateString - 日程开始时间，精确到分。如：2013-05-05 10:25
- eDateString - 日程结束时间，精确到分。如：2013-05-05 10:25
- isAllday - 是否全天日程。0表示非全天，1表示全天
- address - 日程地点
- des - 日程描述
- isPrivate - 是否私人日程。1表示私人，0表示非私人
+ recurTime - 重复时间
  handler - 处理编辑结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                      name:(NSString *)name
-                          startDateString:(NSString *)sDateString
-                            endDateString:(NSString *)eDateString
-                               remindType:(NSInteger)remindType
-                               remindTime:(NSInteger)remindTime
-                               categoryID:(NSString *)categoryID
-                                 isAllDay:(BOOL)isAllday
-                                  address:(NSString *)address
-                              description:(NSString *)des
-                                isPrivate:(BOOL)isPrivate
-                                  isRecur:(BOOL)isRecur
-                                frequency:(NSInteger)frequency
-                                 interval:(NSInteger)interval
-                                 weekDays:(NSString *)weekDays
-                               recurCount:(NSInteger)recurCount
-                                untilDate:(NSString *)untilDate
+                                recurTime:(NSString *)recurTime
+                                  handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                     des:(NSString *)des
+                                recurTime:(NSString *)recurTime
+                                  handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                 address:(NSString *)address
+                                recurTime:(NSString *)recurTime
                                   handler:(MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-

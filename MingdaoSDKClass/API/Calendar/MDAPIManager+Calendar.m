@@ -109,59 +109,103 @@
 }
 
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                     name:(NSString *)name
-                          startDateString:(NSString *)sDateString
-                            endDateString:(NSString *)eDateString
-                               remindType:(NSInteger)remindType
-                               remindTime:(NSInteger)remindTime
-                               categoryID:(NSString *)categoryID
-                                 isAllDay:(BOOL)isAllday
-                                  address:(NSString *)address
-                              description:(NSString *)des
-                                isPrivate:(BOOL)isPrivate
-                                  isRecur:(BOOL)isRecur
-                                frequency:(NSInteger)frequency
-                                 interval:(NSInteger)interval
-                                 weekDays:(NSString *)weekDays
-                               recurCount:(NSInteger)recurCount
-                                untilDate:(NSString *)untilDate
-                                  handler:(MDAPIBoolHandler)handler
+                                         name:(NSString *)name
+                                    recurTime:(NSString *)recurTime
+                                      handler:(MDAPIBoolHandler)handler;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/edit"];
+    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"c_id", @"object":eID}];
-    [parameters addObject:@{@"key":@"c_name", @"object":name}];
-    [parameters addObject:@{@"key":@"c_stime", @"object":sDateString}];
-    [parameters addObject:@{@"key":@"c_etime", @"object":eDateString}];
-    [parameters addObject:@{@"key":@"c_remindType", @"object":@(remindType)}];
-    [parameters addObject:@{@"key":@"c_remindTime", @"object":@(remindTime)}];
-    [parameters addObject:@{@"key":@"c_categoryID", @"object":categoryID}];
-    [parameters addObject:@{@"key":@"c_allday", @"object":isAllday?@1:@0}];
-    [parameters addObject:@{@"key":@"c_private", @"object":isPrivate?@0:@1}];
+    if (name.length) {
+        [parameters addObject:@{@"key":@"c_name", @"object":name}];
+    }
+    if (recurTime.length) {
+        [parameters addObject:@{@"key":@"recurTime", @"object":recurTime}];
+    }
+//    if (sDateString.length) {
+//        [parameters addObject:@{@"key":@"c_stime", @"object":sDateString}];
+//    }
+//    if (eDateString.length) {
+//        [parameters addObject:@{@"key":@"c_etime", @"object":eDateString}];
+//    }
+//    if (remindType) {
+//        [parameters addObject:@{@"key":@"c_remindType", @"object":@([remindType intValue])}];
+//    }
+//    if (remindTime) {
+//        [parameters addObject:@{@"key":@"c_remindTime", @"object":@([remindTime intValue])}];
+//    }
+//    if (categoryID.length) {
+//        [parameters addObject:@{@"key":@"c_categoryID", @"object":categoryID}];
+//    }
+//    [parameters addObject:@{@"key":@"c_allday", @"object":isAllday?@1:@0}];
+//    [parameters addObject:@{@"key":@"c_private", @"object":isPrivate?@0:@1}];
+//    
+
+
+//    if (isRecur) {
+//        [parameters addObject:@{@"key":@"is_recur", @"object":@1}];
+//        [parameters addObject:@{@"key":@"frequency", @"object":@([frequency intValue])}];
+//        [parameters addObject:@{@"key":@"interval", @"object":@([interval intValue])}];
+//        if ([frequency intValue] == 2) {
+//            NSString *finalWeekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
+//            [parameters addObject:@{@"key":@"week_day", @"object":finalWeekDays}];
+//        }
+//        if (recurCount > 0) {
+//            [parameters addObject:@{@"key":@"recur_count", @"object":@([recurCount intValue])}];
+//        }
+//        if (untilDate && untilDate.length > 0) {
+//            [parameters addObject:@{@"key":@"until_date", @"object":untilDate}];
+//        }
+//    }
     
-    if (address && address.length > 0)
-        [parameters addObject:@{@"key":@"c_address", @"object":address}];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [self postWithParameters:parameters withRequest:req];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                      des:(NSString *)des
+                                recurTime:(NSString *)recurTime
+                                  handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
     if (des && des.length > 0)
         [parameters addObject:@{@"key":@"c_des", @"object":des}];
-    if (isRecur) {
-        [parameters addObject:@{@"key":@"is_recur", @"object":@1}];
-        [parameters addObject:@{@"key":@"frequency", @"object":@(frequency)}];
-        [parameters addObject:@{@"key":@"interval", @"object":@(interval)}];
-        if (frequency == 2) {
-            NSString *finalWeekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
-            [parameters addObject:@{@"key":@"week_day", @"object":finalWeekDays}];
-        }
-        if (recurCount > 0) {
-            [parameters addObject:@{@"key":@"recur_count", @"object":@(recurCount)}];
-        }
-        if (untilDate && untilDate.length > 0) {
-            [parameters addObject:@{@"key":@"until_date", @"object":untilDate}];
-        }
-    }
-    
+    if (recurTime.length)
+        [parameters addObject:@{@"key":@"recurTime", @"object":recurTime}];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [self postWithParameters:parameters withRequest:req];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                 address:(NSString *)address
+                                recurTime:(NSString *)recurTime
+                                  handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
+    if (address && address.length > 0)
+        [parameters addObject:@{@"key":@"c_address", @"object":address}];
+    if (recurTime.length)
+        [parameters addObject:@{@"key":@"recurTime", @"object":recurTime}];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [self postWithParameters:parameters withRequest:req];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
