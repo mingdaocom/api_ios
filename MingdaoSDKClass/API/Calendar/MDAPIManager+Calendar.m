@@ -111,7 +111,8 @@
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
-                                     name:(NSString *)name handler:(MDAPIBoolHandler)handler;
+                                     name:(NSString *)name
+                                  handler:(MDAPIBoolHandler)handler;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
@@ -126,7 +127,6 @@
         [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
     }
     [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
-    
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [self postWithParameters:parameters withRequest:req];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
@@ -310,6 +310,28 @@
     [self postWithParameters:parameters withRequest:req];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                                  isShare:(BOOL)isShare
+                                  handler:(MDAPINSDictionaryHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/calendar/update_calendar_share.aspx"];
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
+    if (recurTime.length)
+        [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
+    [parameters addObject:@{@"key":@"is_share", @"object":BoolStr(isShare)}];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [self postWithParameters:parameters withRequest:req];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        handler(dic, error);
     }];
     return connection;
 }

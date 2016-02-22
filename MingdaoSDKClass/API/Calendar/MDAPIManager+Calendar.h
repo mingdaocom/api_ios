@@ -107,6 +107,10 @@
                                recurCount:(NSInteger)recurCount
                                 untilDate:(NSString *)untilDate
                                   handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                                  isShare:(BOOL)isShare
+                                  handler:(MDAPINSDictionaryHandler)handler;
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  邀请/取消邀请/再次邀请用户加入日程
