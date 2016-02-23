@@ -119,10 +119,25 @@
  emails - 被邀请的用户们的email
  handler - 处理结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)addUsersWithUserIDs:(NSArray *)uIDs emails:(NSArray *)emails toEventID:(NSString *)eID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)deleteUserWithUserIDs:(NSArray *)uIDs emails:(NSArray *)emails fromEventID:(NSString *)eID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)reinviteUserWithUserIDs:(NSArray *)uIDs emails:(NSArray *)emails toEventID:(NSString *)eID handler:(MDAPIBoolHandler)handler;
-
+- (MDURLConnection *)addUsersWithEventID:(NSString *)eID
+                               recurTime:(NSString *)recurTime
+                             allCalendar:(BOOL)allCalendar
+                                 UserIDs:(NSArray *)uIDs
+                                  emails:(NSArray *)emails
+                                 handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)deleteUserWithEventID:(NSString *)eID
+                                 recurTime:(NSString *)recurTime
+                               allCalendar:(BOOL)allCalendar
+                                   UserIDs:(NSArray *)uIDs
+                                    emails:(NSArray *)emails
+                                   thirdID:(NSString *)thirdID
+                                   handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)reinviteUserWithEventID:(NSString *)eID
+                                   recurTime:(NSString *)recurTime
+                                 allCalendar:(BOOL)allCalendar
+                                     UserIDs:(NSArray *)uIDs
+                                      emails:(NSArray *)emails
+                                     handler:(MDAPIBoolHandler)handler;
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  按需求获取日程列表
