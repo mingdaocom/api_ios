@@ -130,6 +130,41 @@
 }
 
 - (MDURLConnection *)loadReplyMePostsWithKeywords:(NSString *)keywords
+                                        pageIndex:(int)pageIndex
+                                         pagesize:(int)size
+                                          handler:(MDAPINSArrayHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/post/v2/replyme?format=json"];
+    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    if (keywords && keywords.length > 0) {
+        [urlString appendFormat:@"&keywords=%@", [keywords stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    }
+    [urlString appendFormat:@"&pageindex=%d", pageIndex];
+    if (size > 0) {
+        [urlString appendFormat:@"&pagesize=%d", size];
+    }
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        
+        NSArray *postRepliesDics = [dic objectForKey:@"replyments"];
+        NSMutableArray *postReplyments = [NSMutableArray array];
+        for (NSDictionary *postReplyDic in postRepliesDics) {
+            if (![postReplyDic isKindOfClass:[NSDictionary class]])
+                continue;
+            MDPostReplyment *postReplyment = [[MDPostReplyment alloc] initWithDictionary:postReplyDic];
+            [postReplyments addObject:postReplyment];
+        }
+        handler(postReplyments, error);
+    }];
+    return connection;
+}
+
+#pragma temp hold
+- (MDURLConnection *)loadReplyMePostsWithKeywords:(NSString *)keywords
                                             maxID:(NSString *)maxID
                                          pagesize:(int)size
                                           handler:(MDAPINSArrayHandler)handler
@@ -161,7 +196,10 @@
         handler(postReplyments, error);
     }];
     return connection;
+
+
 }
+
 
 - (MDURLConnection *)loadMyReplyWithKeywords:(NSString *)keywords
                                        maxID:(NSString *)maxID
