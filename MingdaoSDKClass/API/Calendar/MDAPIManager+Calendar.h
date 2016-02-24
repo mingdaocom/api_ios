@@ -200,8 +200,14 @@
  objectID - 日程编号
  handler - 处理结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)deleteEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)exitEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)deleteEventWithObjectID:(NSString *)objectID
+                                   recurTime:(NSString *)recurTime
+                                 allCalendar:(BOOL)allCalendar
+                                     handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)exitEventWithObjectID:(NSString *)objectID
+                                 recurTime:(NSString *)recurTime
+                               allCalendar:(BOOL)allCalendar
+                                   handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)acceptEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)rejectEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
 
@@ -229,6 +235,11 @@
  @parmas:
  handler - 处理结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)modifyEventMemberRemindWithObjectID:(NSString *)objectID remindType:(NSInteger)remindType remindTime:(NSInteger)remindTime handler:(MDAPINSStringHandler)handler;
+- (MDURLConnection *)modifyEventMemberRemindWithObjectID:(NSString *)objectID
+                                               recurTime:(NSString *)recurTime
+                                             allCalendar:(BOOL)allCalendar
+                                              remindType:(NSInteger)remindType
+                                              remindTime:(NSInteger)remindTime
+                                                 handler:(MDAPINSStringHandler)handler;
 
 @end
