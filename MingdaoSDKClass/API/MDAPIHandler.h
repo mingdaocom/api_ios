@@ -30,6 +30,8 @@
 #import "MDTaskFolderFile.h"
 #import "MDKnowledgeNode.h"
 
+#define BoolStr(BOOL) BOOL?@"true":@"false"
+
 typedef void (^MDAPIBoolHandler)(BOOL success, NSError *error);
 typedef void (^MDAPIObjectHandler)(id object, NSError *error);
 typedef void (^MDAPINSIntegerHandler)(NSInteger count, NSError *error);
