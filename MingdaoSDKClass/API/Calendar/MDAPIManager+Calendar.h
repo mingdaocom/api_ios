@@ -100,6 +100,11 @@
                                   handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
+                              allCalendar:(BOOL)allCalendar
+                          visibleGroupIDs:(NSArray *)visibleGroupIDs
+                                  handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
                                   isRecur:(BOOL)isRecur
                                 frequency:(NSInteger)frequency
                                  interval:(NSInteger)interval
