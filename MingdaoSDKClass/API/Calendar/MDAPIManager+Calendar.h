@@ -67,27 +67,32 @@
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
+                                   isPush:(BOOL)isPush
                                      name:(NSString *)name
                                   handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
+                                   isPush:(BOOL)isPush
                                      des:(NSString *)des
                                   handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
+                                   isPush:(BOOL)isPush
                                  address:(NSString *)address
                                   handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
+                                   isPush:(BOOL)isPush
                                remindType:(NSInteger)remindType
                                remindTime:(NSInteger)remindTime
                                   handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
+                                   isPush:(BOOL)isPush
                           startDateString:(NSString *)sDateString
                             endDateString:(NSString *)eDateString
                                 isAllDay:(BOOL)isAllday
@@ -95,17 +100,20 @@
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
+                                   isPush:(BOOL)isPush
                                categoryID:(NSString *)categoryID
                                 isPrivate:(BOOL)isPrivate
                                   handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
+                                   isPush:(BOOL)isPush
                           visibleGroupIDs:(NSArray *)visibleGroupIDs
                                   handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                                   isRecur:(BOOL)isRecur
+                                   isPush:(BOOL)isPush
                                 frequency:(NSInteger)frequency
                                  interval:(NSInteger)interval
                                  weekDays:(NSString *)weekDays
