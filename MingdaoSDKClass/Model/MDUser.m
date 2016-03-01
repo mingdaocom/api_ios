@@ -56,7 +56,7 @@
             self.project = [[MDCompany alloc] initWithDictionary:[aDic objectForKey:@"project"]];
         }
         
-        self.taskMemberType = [[aDic objectForKey:@"member_type"] intValue] + 1;
+        self.taskMemberType = [[aDic objectForKey:@"member_type"] intValue];
         self.taskApplyStatus = [[aDic objectForKey:@"apply_status"] intValue];
         self.folderType = [aDic[@"type"] intValue];
         self.isFolderAdmin = [aDic[@"isAdmin"] boolValue];
