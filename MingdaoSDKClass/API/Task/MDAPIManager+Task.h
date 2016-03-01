@@ -153,6 +153,7 @@
                                       stageID:(NSString *)stageID
                                     parentID:(NSString *)parentID
                                    colorType:(int)colorType
+                                   isFavorite:(int)isFavorite
                                        postID:(NSString *)postID
                                      handler:(MDAPINSStringHandler)handler;
 
