@@ -108,6 +108,17 @@
         if (![aDic objectForKey:@"private"]) {
             self.isPrivate = 0;
         }
+        NSArray *groupsArray = [aDic objectForKey:@"groups"];
+        self.groups = [[NSMutableArray alloc] init];
+        if (groupsArray.count) {
+            for (NSDictionary *subDic in groupsArray) {
+                MDGroup *group = [[MDGroup alloc] init];
+                group.objectID = subDic[@"group_id"];
+                group.objectName = subDic[@"group_name"];
+                [self.groups addObject:group];
+            }
+        }
+
         self.isShare = [[aDic objectForKey:@"isShare"] boolValue];
         if (self.isShare) {
             self.shareUrl = [aDic objectForKey:@"url"];
@@ -531,6 +542,7 @@
     copyObject.endDateString = [self.endDateString copy];
     copyObject.createTime = [self.createTime copy];
     copyObject.des = [self.des copy];
+    copyObject.isShare = self.isShare;
     copyObject.isAllday = self.isAllday;
     copyObject.isPrivate = self.isPrivate;
     copyObject.isBusy = self.isBusy;
@@ -539,6 +551,7 @@
     copyObject.eventMails = [self.eventMails copy];
     copyObject.thirdMembers = [self.thirdMembers copy];
     copyObject.isRecur = self.isRecur;
+    copyObject.groups = [self.groups mutableCopy];
     copyObject.frequency = self.frequency;
     copyObject.interval = self.interval;
     copyObject.recurCount = self.recurCount;

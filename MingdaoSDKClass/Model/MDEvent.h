@@ -50,6 +50,7 @@
 @property (strong, nonatomic) NSString *untilDateString, *weekDay;
 
 @property (strong, nonatomic) MDCalendarCategory *calendarCategory;
+@property (strong, nonatomic) NSMutableArray *groups;
 @property (assign, nonatomic) NSInteger isTask;
 
 @property (readonly, nonatomic) BOOL isInOneDay;
