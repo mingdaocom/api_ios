@@ -209,7 +209,6 @@
                                    handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)acceptEventWithObjectID:(NSString *)objectID
                                    recurTime:(NSString *)recurTime
-                                 allCalendar:(BOOL)allCalendar
                                      handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)rejectEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
 

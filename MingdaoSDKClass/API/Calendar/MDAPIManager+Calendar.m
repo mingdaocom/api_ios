@@ -575,7 +575,6 @@
 
 - (MDURLConnection *)acceptEventWithObjectID:(NSString *)objectID
                                    recurTime:(NSString *)recurTime
-                                 allCalendar:(BOOL)allCalendar
                                      handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlStr = [NSMutableString stringWithFormat:@"%@/calendar/join?u_key=%@&c_id=%@&format=json"
@@ -584,7 +583,6 @@
                                , objectID];
     if (recurTime.length)
         [urlStr appendFormat:@"&recur_time=%@",recurTime];
-    [urlStr appendFormat:@"&is_allCalendar=%@",[NSNumber numberWithBool:allCalendar]];
     urlStr = [[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] mutableCopy];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlStr handler:handler];
