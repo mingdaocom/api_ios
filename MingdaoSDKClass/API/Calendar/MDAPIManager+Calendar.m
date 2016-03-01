@@ -113,212 +113,15 @@
                               allCalendar:(BOOL)allCalendar
                                    isPush:(BOOL)isPush
                                      name:(NSString *)name
-                                  handler:(MDAPIBoolHandler)handler;
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
-    NSMutableArray *parameters = [NSMutableArray array];
-    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
-    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
-    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
-    if (name.length) {
-        [parameters addObject:@{@"key":@"c_name", @"object":name}];
-    }
-    if (recurTime.length) {
-        [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
-    }
-    [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
-    [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
-                              allCalendar:(BOOL)allCalendar
-                                   isPush:(BOOL)isPush
                                       des:(NSString *)des
-                                  handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
-    NSMutableArray *parameters = [NSMutableArray array];
-    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
-    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
-    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
-    if (des && des.length > 0)
-        [parameters addObject:@{@"key":@"c_des", @"object":des}];
-    if (recurTime.length)
-        [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
-    [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
-    [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
-                              allCalendar:(BOOL)allCalendar
-                                   isPush:(BOOL)isPush
                                   address:(NSString *)address
-                                  handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
-    NSMutableArray *parameters = [NSMutableArray array];
-    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
-    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
-    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
-    if (address && address.length > 0)
-        [parameters addObject:@{@"key":@"c_address", @"object":address}];
-    if (recurTime.length)
-        [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
-    [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
-    [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
-                              allCalendar:(BOOL)allCalendar
-                                   isPush:(BOOL)isPush
-                               remindType:(NSInteger)remindType
-                               remindTime:(NSInteger)remindTime
-                                  handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
-    NSMutableArray *parameters = [NSMutableArray array];
-    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
-    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
-    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
-    [parameters addObject:@{@"key":@"c_remindType", @"object":@(remindType)}];
-    [parameters addObject:@{@"key":@"c_remindTime", @"object":@(remindTime)}];
-    if (recurTime.length)
-        [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
-    [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
-    [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
-                              allCalendar:(BOOL)allCalendar
-                                   isPush:(BOOL)isPush
                           startDateString:(NSString *)sDateString
                             endDateString:(NSString *)eDateString
                                  isAllDay:(BOOL)isAllday
-                                  handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
-    NSMutableArray *parameters = [NSMutableArray array];
-    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
-    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
-    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
-    if (sDateString.length) {
-        [parameters addObject:@{@"key":@"c_stime", @"object":sDateString}];
-    }
-    if (eDateString.length) {
-        [parameters addObject:@{@"key":@"c_etime", @"object":eDateString}];
-    }
-    [parameters addObject:@{@"key":@"c_allday", @"object":isAllday?@1:@0}];
-    if (recurTime.length)
-        [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
-    [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
-    [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
-                              allCalendar:(BOOL)allCalendar
-                                   isPush:(BOOL)isPush
                                categoryID:(NSString *)categoryID
                                 isPrivate:(BOOL)isPrivate
-                                  handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
-    NSMutableArray *parameters = [NSMutableArray array];
-    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
-    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
-    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
-    if (categoryID.length) {
-        [parameters addObject:@{@"key":@"c_categoryID", @"object":categoryID}];
-    }
-    [parameters addObject:@{@"key":@"c_private", @"object":isPrivate?@0:@1}];
-    
-    if (recurTime.length)
-        [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
-    [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
-    [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
-                              allCalendar:(BOOL)allCalendar
-                                   isPush:(BOOL)isPush
                           visibleGroupIDs:(NSArray *)visibleGroupIDs
-                                  handler:(MDAPIBoolHandler)handler
-{
-    
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
-    NSMutableArray *parameters = [NSMutableArray array];
-    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
-    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
-    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
-    
-    NSString *groupIDsString = [visibleGroupIDs componentsJoinedByString:@","];
-    if (groupIDsString) {
-        [parameters addObject:@{@"key":@"g_ids", @"object":groupIDsString}];
-    }
-    
-    if (recurTime.length)
-        [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
-    [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
-    [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
                                   isRecur:(BOOL)isRecur
-                                   isPush:(BOOL)isPush
                                 frequency:(NSInteger)frequency
                                  interval:(NSInteger)interval
                                  weekDays:(NSString *)weekDays
@@ -332,6 +135,29 @@
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"c_id", @"object":eID}];
+    if (name.length) {
+        [parameters addObject:@{@"key":@"c_name", @"object":name}];
+    }
+    if (des && des.length > 0)
+        [parameters addObject:@{@"key":@"c_des", @"object":des}];
+    if (address && address.length > 0)
+        [parameters addObject:@{@"key":@"c_address", @"object":address}];
+    if (sDateString.length) {
+        [parameters addObject:@{@"key":@"c_stime", @"object":sDateString}];
+    }
+    if (eDateString.length) {
+        [parameters addObject:@{@"key":@"c_etime", @"object":eDateString}];
+    }
+    [parameters addObject:@{@"key":@"c_allday", @"object":isAllday?@1:@0}];
+    if (categoryID.length) {
+        [parameters addObject:@{@"key":@"c_categoryID", @"object":categoryID}];
+    }
+    [parameters addObject:@{@"key":@"c_private", @"object":isPrivate?@0:@1}];
+    
+    NSString *groupIDsString = [visibleGroupIDs componentsJoinedByString:@","];
+    if (groupIDsString) {
+        [parameters addObject:@{@"key":@"g_ids", @"object":groupIDsString}];
+    }
     
     [parameters addObject:@{@"key":@"is_recur", @"object":[NSNumber numberWithBool:isRecur]}];
     if (isRecur) {

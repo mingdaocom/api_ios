@@ -56,70 +56,56 @@
                                       handler:(MDAPINSStringHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
- @usage:
  编辑日程
- @parmas:
- eID     - 被修改日程编号
- name    - 日程名称
- recurTime - 重复时间
- handler - 处理编辑结果
+
+ @param eID             日程ID
+ @param recurTime       重复日程的单个日程时间
+ @param allCalendar     是否更改所有重复日程
+ @param isPush          是否要求成员重新确认
+ @param name            日程名字
+ @param des             日程摘要
+ @param address         日程地点
+ @param sDateString     日程开始时间
+ @param eDateString     日程结束时间
+ @param isAllday        是否全天
+ @param categoryID      日程分类
+ @param isPrivate       是否是私密日程
+ @param visibleGroupIDs 可见范围
+ @param frequency       重复类型
+ @param interval
+ @param weekDays        
+ @param recurCount
+ @param untilDate
+ @param handler         处理编辑结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
                                    isPush:(BOOL)isPush
                                      name:(NSString *)name
-                                  handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
-                              allCalendar:(BOOL)allCalendar
-                                   isPush:(BOOL)isPush
                                      des:(NSString *)des
-                                  handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
-                              allCalendar:(BOOL)allCalendar
-                                   isPush:(BOOL)isPush
                                  address:(NSString *)address
-                                  handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
-                              allCalendar:(BOOL)allCalendar
-                                   isPush:(BOOL)isPush
-                               remindType:(NSInteger)remindType
-                               remindTime:(NSInteger)remindTime
-                                  handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
-                              allCalendar:(BOOL)allCalendar
-                                   isPush:(BOOL)isPush
                           startDateString:(NSString *)sDateString
                             endDateString:(NSString *)eDateString
                                 isAllDay:(BOOL)isAllday
-                                  handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
-                              allCalendar:(BOOL)allCalendar
-                                   isPush:(BOOL)isPush
                                categoryID:(NSString *)categoryID
                                 isPrivate:(BOOL)isPrivate
-                                  handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
-                              allCalendar:(BOOL)allCalendar
-                                   isPush:(BOOL)isPush
                           visibleGroupIDs:(NSArray *)visibleGroupIDs
-                                  handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
-                                recurTime:(NSString *)recurTime
                                   isRecur:(BOOL)isRecur
-                                   isPush:(BOOL)isPush
                                 frequency:(NSInteger)frequency
                                  interval:(NSInteger)interval
                                  weekDays:(NSString *)weekDays
                                recurCount:(NSInteger)recurCount
                                 untilDate:(NSString *)untilDate
                                   handler:(MDAPIBoolHandler)handler;
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ 日程分享开关
+
+ @param eID       日程ID
+ @param recurTime 重复日程的单个时间
+ @param isShare   是否可以分享
+ @param handler   处理编辑结果
+-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                                   isShare:(BOOL)isShare
