@@ -1083,6 +1083,7 @@
                                       stageID:(NSString *)stageID
                                     parentID:(NSString *)parentID
                                    colorType:(int)colorType
+                                   isFavorite:(int)isFavorite
                                        postID:(NSString *)postID
                                 handler:(MDAPINSStringHandler)handler
 {
@@ -1153,6 +1154,10 @@
         [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"p_id"]dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", postID] dataUsingEncoding:NSUTF8StringEncoding]];
     }
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"isFavorite"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", (long)isFavorite] dataUsingEncoding:NSUTF8StringEncoding]];
     
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
