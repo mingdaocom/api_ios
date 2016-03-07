@@ -107,7 +107,43 @@
     }];
     return connection;
 }
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                              allCalendar:(BOOL)allCalendar
+                                   isPush:(BOOL)isPush
+                               categoryID:(NSString *)categoryID
+                                isPrivate:(BOOL)isPrivate
+                          visibleGroupIDs:(NSArray *)visibleGroupIDs
+                                  handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
 
+    if (categoryID.length) {
+        [parameters addObject:@{@"key":@"c_categoryID", @"object":categoryID}];
+    }
+    [parameters addObject:@{@"key":@"c_private", @"object":isPrivate?@0:@1}];
+    
+    NSString *groupIDsString = [visibleGroupIDs componentsJoinedByString:@","];
+    if (groupIDsString) {
+        [parameters addObject:@{@"key":@"g_ids", @"object":groupIDsString}];
+    }
+    
+    if (recurTime.length)
+        [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
+    [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
+    [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [self postWithParameters:parameters withRequest:req];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
