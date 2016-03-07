@@ -44,18 +44,18 @@
 #pragma mark -
 - (MDURLConnection *)loadTaskReplymentsWithTaskID:(NSString *)tID
                                          onlyFile:(BOOL)onlyFile
-                                            maxID:(NSString *)maxTID
-                                         pageSize:(NSInteger)size
-                                          handler:(MDAPINSArrayHandler)handler
+                                        pageIndex:(NSNumber *)pageIndex
+                                         pageSize:(NSNumber *)pageSize
+                                          handler:(MDAPINSArrayHandler)handler;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/v4/getTopicListByTaskID?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
-    if (maxTID)
-        [urlString appendFormat:@"&max_id=%@", maxTID];
-    if (size > 0)
-        [urlString appendFormat:@"&pagesize=%ld", (long)size];
+    if (pageIndex)
+        [urlString appendFormat:@"&pageindex=%d", [pageIndex intValue]];
+    if (pageSize)
+        [urlString appendFormat:@"&pagesize=%d", [pageSize intValue]];
     if (onlyFile) {
         [urlString appendFormat:@"&is_onlyFile=%d", 1];
     }

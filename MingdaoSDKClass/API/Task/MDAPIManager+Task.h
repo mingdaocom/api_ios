@@ -24,14 +24,14 @@
  根据任务编号获取单条任务的讨论列表信息
  @parmas:
  tID - 任务编号
- maxTID - 若指定此参数，则只返回ID比max_id小的动态更新（即比max_id发表时间早的动态更新）
+ pageIndex - 当前加载页数
  size - 指定要返回的记录条数 int默认值20，最大值100
  handler - 处理MDTask
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)loadTaskReplymentsWithTaskID:(NSString *)tID
                                          onlyFile:(BOOL)onlyFile
-                                            maxID:(NSString *)maxTID
-                                         pageSize:(NSInteger)size
+                                        pageIndex:(NSNumber *)pageIndex
+                                         pageSize:(NSNumber *)pageSize
                                           handler:(MDAPINSArrayHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
