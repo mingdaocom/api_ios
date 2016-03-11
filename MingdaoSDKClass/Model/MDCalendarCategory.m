@@ -20,8 +20,8 @@
     if (self) {
         self.catID = aDic[@"catID"];
         self.catName = aDic[@"catName"];
-        self.displayOrder = [aDic[@"displayOrder"] integerValue];
-        self.color = [aDic[@"color"] integerValue];
+        self.displayOrder = [aDic[@"displayOrder"] intValue];
+        self.color = [aDic[@"color"] intValue];
     }
     return self;
 }
