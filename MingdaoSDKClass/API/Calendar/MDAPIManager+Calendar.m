@@ -285,7 +285,7 @@
                         , emails.count > 0 ? [emails componentsJoinedByString:@","] : @""
                         ];
     if (thirdID.length)
-        [urlStr appendFormat:@"c_third_id=%@",thirdID];
+        [urlStr appendFormat:@"&c_third_id=%@",thirdID];
     if (recurTime.length)
         [urlStr appendFormat:@"&recur_time=%@",recurTime];
     [urlStr appendFormat:@"&is_allCalendar=%@",[NSNumber numberWithBool:allCalendar]];
