@@ -550,13 +550,14 @@
                                  recurTime:(NSString *)recurTime
                                    handler:(MDAPIObjectHandler)handler
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/detail?format=json&u_key=%@&c_id=%@&recur_time=%@"
+    NSMutableString *urlStr = [NSMutableString stringWithFormat:@"%@/calendar/detail?format=json&u_key=%@&c_id=%@"
                         , self.serverAddress
                         , self.accessToken
-                        , objectID
-                        , recurTime];
-    
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                        , objectID];
+    if (recurTime.length) {
+        [urlStr appendFormat:@"&recur_time=%@",recurTime];
+    }
+    urlStr = [[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] mutableCopy];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
