@@ -11,5 +11,5 @@
 
 @interface MDPostAt : MDPost
 @property (assign, nonatomic) BOOL mentionedInPost;
-@property (strong, nonatomic) NSArray *replyments;
+@property (strong, nonatomic) NSArray<MDPostReplyment *> *replyments;
 @end
