@@ -111,6 +111,7 @@
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
                                    isPush:(BOOL)isPush
+                                frequency:(NSInteger)frequency
                                categoryID:(NSString *)categoryID
                                 isPrivate:(BOOL)isPrivate
                           visibleGroupIDs:(NSArray *)visibleGroupIDs
@@ -122,6 +123,7 @@
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"c_id", @"object":eID}];
+    [parameters addObject:@{@"key":@"frequency", @"object":@(frequency)}];
 
     if (categoryID.length) {
         [parameters addObject:@{@"key":@"c_categoryID", @"object":categoryID}];
@@ -144,6 +146,7 @@
     }];
     return connection;
 }
+
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar

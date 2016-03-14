@@ -82,6 +82,7 @@
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
                                    isPush:(BOOL)isPush
+                                frequency:(NSInteger)frequency
                                categoryID:(NSString *)categoryID
                                 isPrivate:(BOOL)isPrivate
                           visibleGroupIDs:(NSArray *)visibleGroupIDs
