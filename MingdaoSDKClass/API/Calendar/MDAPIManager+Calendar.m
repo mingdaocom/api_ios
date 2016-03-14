@@ -111,7 +111,6 @@
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
                                    isPush:(BOOL)isPush
-                                frequency:(NSInteger)frequency
                                categoryID:(NSString *)categoryID
                                 isPrivate:(BOOL)isPrivate
                           visibleGroupIDs:(NSArray *)visibleGroupIDs
@@ -123,7 +122,6 @@
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"c_id", @"object":eID}];
-    [parameters addObject:@{@"key":@"frequency", @"object":@(frequency)}];
 
     if (categoryID.length) {
         [parameters addObject:@{@"key":@"c_categoryID", @"object":categoryID}];
@@ -199,8 +197,8 @@
     }
     
     [parameters addObject:@{@"key":@"is_recur", @"object":[NSNumber numberWithBool:isRecur]}];
-    [parameters addObject:@{@"key":@"frequency", @"object":@(frequency)}];
     if (isRecur) {
+        [parameters addObject:@{@"key":@"frequency", @"object":@(frequency)}];
         [parameters addObject:@{@"key":@"interval", @"object":@(interval)}];
         if (frequency == 2) {
             NSString *finalWeekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
