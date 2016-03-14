@@ -191,13 +191,13 @@
     [parameters addObject:@{@"key":@"c_private", @"object":isPrivate?@0:@1}];
     
     NSString *groupIDsString = [visibleGroupIDs componentsJoinedByString:@","];
-    if (groupIDsString) {
+    if (groupIDsString.length) {
         [parameters addObject:@{@"key":@"g_ids", @"object":groupIDsString}];
     }
     
     [parameters addObject:@{@"key":@"is_recur", @"object":[NSNumber numberWithBool:isRecur]}];
+    [parameters addObject:@{@"key":@"frequency", @"object":@(frequency)}];
     if (isRecur) {
-        [parameters addObject:@{@"key":@"frequency", @"object":@(frequency)}];
         [parameters addObject:@{@"key":@"interval", @"object":@(interval)}];
         if (frequency == 2) {
             NSString *finalWeekDays = [weekDays stringByReplacingOccurrencesOfString:@"0" withString:@"7"];
