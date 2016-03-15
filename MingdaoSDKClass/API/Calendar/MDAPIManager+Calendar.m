@@ -111,6 +111,8 @@
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
                                    isPush:(BOOL)isPush
+                          startDateString:(NSString *)sDateString
+                            endDateString:(NSString *)eDateString
                                categoryID:(NSString *)categoryID
                                 isPrivate:(BOOL)isPrivate
                           visibleGroupIDs:(NSArray *)visibleGroupIDs
@@ -133,6 +135,12 @@
         [parameters addObject:@{@"key":@"g_ids", @"object":groupIDsString}];
     }
     
+    if (sDateString.length) {
+        [parameters addObject:@{@"key":@"c_stime", @"object":sDateString}];
+    }
+    if (eDateString.length) {
+        [parameters addObject:@{@"key":@"c_etime", @"object":eDateString}];
+    }
     if (recurTime.length)
         [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
     [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
@@ -144,6 +152,7 @@
     }];
     return connection;
 }
+
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
@@ -191,7 +200,7 @@
     [parameters addObject:@{@"key":@"c_private", @"object":isPrivate?@0:@1}];
     
     NSString *groupIDsString = [visibleGroupIDs componentsJoinedByString:@","];
-    if (groupIDsString) {
+    if (groupIDsString.length) {
         [parameters addObject:@{@"key":@"g_ids", @"object":groupIDsString}];
     }
     

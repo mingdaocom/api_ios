@@ -124,6 +124,7 @@
             self.shareUrl = [aDic objectForKey:@"url"];
         }
         
+        self.isChildCalendar = [[aDic objectForKey:@"is_child_calendar"] boolValue];
         self.remindType = [[aDic objectForKey:@"remindType"] intValue];
         self.remindTime = [[aDic objectForKey:@"remindTime"] intValue];
         self.isTask  = [[aDic objectForKey:@"isTask"] integerValue];
@@ -145,6 +146,9 @@
             
             self.recurCount = [[dic objectForKey:@"recur_count"] intValue];
             self.untilDateString = [dic objectForKey:@"until_date"];
+            
+            self.oldStartDateString = [aDic objectForKey:@"old_start_time"];
+            self.oldEndDateString = [aDic objectForKey:@"old_end_time"];
         }
         self.recurTime = [aDic objectForKey:@"recur_time"];
         
@@ -298,6 +302,16 @@
 - (NSDate *)endDate
 {
     return [self dateFromString:self.endDateString];
+}
+
+- (NSDate *)oldEndDate
+{
+    return [self dateFromString:self.oldEndDateString];
+}
+
+- (NSDate *)oldStartDate
+{
+    return [self dateFromString:self.oldStartDateString];
 }
 
 - (NSDateComponents *)startDateComponents
@@ -541,11 +555,14 @@
     copyObject.startDateString = [self.startDateString copy];
     copyObject.endDateString = [self.endDateString copy];
     copyObject.createTime = [self.createTime copy];
+    copyObject.isChildCalendar = self.isChildCalendar;
     copyObject.des = [self.des copy];
     copyObject.isShare = self.isShare;
     copyObject.isAllday = self.isAllday;
     copyObject.isPrivate = self.isPrivate;
     copyObject.isBusy = self.isBusy;
+    copyObject.oldStartDateString = [self.oldStartDateString copy];
+    copyObject.oldEndDateString = [self.oldEndDateString copy];
     copyObject.recurTime = [self.recurTime copy];
     copyObject.members = [self.members copy];
     copyObject.eventMails = [self.eventMails copy];

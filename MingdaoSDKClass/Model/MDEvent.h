@@ -30,6 +30,9 @@
 @property (strong, nonatomic) NSString *address;
 @property (strong, nonatomic) NSString *startDateString;
 @property (strong, nonatomic) NSString *endDateString;
+@property (strong, nonatomic) NSString *oldStartDateString;
+@property (strong, nonatomic) NSString *oldEndDateString;
+
 @property (assign, nonatomic) NSInteger remindType;
 @property (assign, nonatomic) NSInteger remindTime;
 @property (strong, nonatomic) NSString *createTime;
@@ -41,6 +44,7 @@
 @property (strong, nonatomic) NSArray *eventMails;
 @property (strong, nonatomic) NSArray *thirdMembers;
 @property (assign, nonatomic) BOOL isBusy;
+@property (assign, nonatomic) BOOL isChildCalendar;
 
 @property (assign, nonatomic) BOOL isRecur;
 @property (strong, nonatomic) NSString *recurTime;
@@ -59,6 +63,8 @@
 @property (readonly, nonatomic) NSArray *thirdMemberIDs;
 @property (readonly, nonatomic) NSDate *startDate;
 @property (readonly, nonatomic) NSDate *endDate;
+@property (readonly, nonatomic) NSDate *oldStartDate;
+@property (readonly, nonatomic) NSDate *oldEndDate;
 @property (readonly, nonatomic) NSDateComponents *startDateComponents, *endDateComponents;
 @property (readonly, nonatomic) NSArray *accetpedMembers, *rejectedMembers, *penddingMembers;
 @property (readonly, nonatomic) NSArray *accetpedEmails, *rejectedEmails, *penddingEmails;

@@ -82,10 +82,13 @@
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
                                    isPush:(BOOL)isPush
+                          startDateString:(NSString *)sDateString
+                            endDateString:(NSString *)eDateString
                                categoryID:(NSString *)categoryID
                                 isPrivate:(BOOL)isPrivate
                           visibleGroupIDs:(NSArray *)visibleGroupIDs
                                   handler:(MDAPIBoolHandler)handler;
+
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
                                 recurTime:(NSString *)recurTime
                               allCalendar:(BOOL)allCalendar
