@@ -44,6 +44,7 @@
 @property (strong, nonatomic) NSArray *eventMails;
 @property (strong, nonatomic) NSArray *thirdMembers;
 @property (assign, nonatomic) BOOL isBusy;
+@property (assign, nonatomic) BOOL isChildCalendar;
 
 @property (assign, nonatomic) BOOL isRecur;
 @property (strong, nonatomic) NSString *recurTime;
