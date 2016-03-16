@@ -50,28 +50,28 @@
 		F7C63F2D1B42600D00D028E7 /* MDErrorParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EE41B42600D00D028E7 /* MDErrorParser.m */; };
 		F7C63F2E1B42600D00D028E7 /* MDURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EE61B42600D00D028E7 /* MDURLConnection.m */; };
 		F7C63F2F1B42600D00D028E7 /* MDURLConnectionQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C63EE81B42600D00D028E7 /* MDURLConnectionQueue.m */; };
-		F7C781F81BBBC46800A9C29F /* MDCalendarCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781CF1BBBC46800A9C29F /* MDCalendarCategory.m */; settings = {ASSET_TAGS = (); }; };
-		F7C781F91BBBC46800A9C29F /* MDCompany.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781D11BBBC46800A9C29F /* MDCompany.m */; settings = {ASSET_TAGS = (); }; };
-		F7C781FA1BBBC46800A9C29F /* MDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781D31BBBC46800A9C29F /* MDEvent.m */; settings = {ASSET_TAGS = (); }; };
-		F7C781FB1BBBC46800A9C29F /* MDGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781D51BBBC46800A9C29F /* MDGroup.m */; settings = {ASSET_TAGS = (); }; };
-		F7C781FC1BBBC46800A9C29F /* MDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781D71BBBC46800A9C29F /* MDMessage.m */; settings = {ASSET_TAGS = (); }; };
-		F7C781FD1BBBC46800A9C29F /* MDMessageAll.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781D91BBBC46800A9C29F /* MDMessageAll.m */; settings = {ASSET_TAGS = (); }; };
-		F7C781FE1BBBC46800A9C29F /* MDPost.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781DB1BBBC46800A9C29F /* MDPost.m */; settings = {ASSET_TAGS = (); }; };
-		F7C781FF1BBBC46800A9C29F /* MDPostAt.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781DD1BBBC46800A9C29F /* MDPostAt.m */; settings = {ASSET_TAGS = (); }; };
-		F7C782001BBBC46800A9C29F /* MDPostReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781DF1BBBC46800A9C29F /* MDPostReplyment.m */; settings = {ASSET_TAGS = (); }; };
-		F7C782011BBBC46800A9C29F /* MDTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781E11BBBC46800A9C29F /* MDTag.m */; settings = {ASSET_TAGS = (); }; };
-		F7C782021BBBC46800A9C29F /* MDTask.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781E31BBBC46800A9C29F /* MDTask.m */; settings = {ASSET_TAGS = (); }; };
-		F7C782031BBBC46800A9C29F /* MDTaskActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781E51BBBC46800A9C29F /* MDTaskActivity.m */; settings = {ASSET_TAGS = (); }; };
-		F7C782041BBBC46800A9C29F /* MDTaskFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781E71BBBC46800A9C29F /* MDTaskFolder.m */; settings = {ASSET_TAGS = (); }; };
-		F7C782051BBBC46800A9C29F /* MDTaskFolderFile.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781E91BBBC46800A9C29F /* MDTaskFolderFile.m */; settings = {ASSET_TAGS = (); }; };
-		F7C782061BBBC46800A9C29F /* MDTaskFolderStage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781EB1BBBC46800A9C29F /* MDTaskFolderStage.m */; settings = {ASSET_TAGS = (); }; };
-		F7C782071BBBC46800A9C29F /* MDTaskMentionedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781ED1BBBC46800A9C29F /* MDTaskMentionedMessage.m */; settings = {ASSET_TAGS = (); }; };
-		F7C782081BBBC46800A9C29F /* MDTaskMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781EF1BBBC46800A9C29F /* MDTaskMessage.m */; settings = {ASSET_TAGS = (); }; };
-		F7C782091BBBC46800A9C29F /* MDTaskReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781F11BBBC46800A9C29F /* MDTaskReplyment.m */; settings = {ASSET_TAGS = (); }; };
-		F7C7820A1BBBC46800A9C29F /* MDTaskReplyMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781F31BBBC46800A9C29F /* MDTaskReplyMessage.m */; settings = {ASSET_TAGS = (); }; };
-		F7C7820B1BBBC46800A9C29F /* MDTaskSystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781F51BBBC46800A9C29F /* MDTaskSystemMessage.m */; settings = {ASSET_TAGS = (); }; };
-		F7C7820C1BBBC46800A9C29F /* MDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781F71BBBC46800A9C29F /* MDUser.m */; settings = {ASSET_TAGS = (); }; };
-		F7C7820F1BBBC49800A9C29F /* MDDepartment.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C7820E1BBBC49800A9C29F /* MDDepartment.m */; settings = {ASSET_TAGS = (); }; };
+		F7C781F81BBBC46800A9C29F /* MDCalendarCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781CF1BBBC46800A9C29F /* MDCalendarCategory.m */; };
+		F7C781F91BBBC46800A9C29F /* MDCompany.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781D11BBBC46800A9C29F /* MDCompany.m */; };
+		F7C781FA1BBBC46800A9C29F /* MDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781D31BBBC46800A9C29F /* MDEvent.m */; };
+		F7C781FB1BBBC46800A9C29F /* MDGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781D51BBBC46800A9C29F /* MDGroup.m */; };
+		F7C781FC1BBBC46800A9C29F /* MDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781D71BBBC46800A9C29F /* MDMessage.m */; };
+		F7C781FD1BBBC46800A9C29F /* MDMessageAll.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781D91BBBC46800A9C29F /* MDMessageAll.m */; };
+		F7C781FE1BBBC46800A9C29F /* MDPost.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781DB1BBBC46800A9C29F /* MDPost.m */; };
+		F7C781FF1BBBC46800A9C29F /* MDPostAt.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781DD1BBBC46800A9C29F /* MDPostAt.m */; };
+		F7C782001BBBC46800A9C29F /* MDPostReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781DF1BBBC46800A9C29F /* MDPostReplyment.m */; };
+		F7C782011BBBC46800A9C29F /* MDTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781E11BBBC46800A9C29F /* MDTag.m */; };
+		F7C782021BBBC46800A9C29F /* MDTask.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781E31BBBC46800A9C29F /* MDTask.m */; };
+		F7C782031BBBC46800A9C29F /* MDTaskActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781E51BBBC46800A9C29F /* MDTaskActivity.m */; };
+		F7C782041BBBC46800A9C29F /* MDTaskFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781E71BBBC46800A9C29F /* MDTaskFolder.m */; };
+		F7C782051BBBC46800A9C29F /* MDTaskFolderFile.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781E91BBBC46800A9C29F /* MDTaskFolderFile.m */; };
+		F7C782061BBBC46800A9C29F /* MDTaskFolderStage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781EB1BBBC46800A9C29F /* MDTaskFolderStage.m */; };
+		F7C782071BBBC46800A9C29F /* MDTaskMentionedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781ED1BBBC46800A9C29F /* MDTaskMentionedMessage.m */; };
+		F7C782081BBBC46800A9C29F /* MDTaskMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781EF1BBBC46800A9C29F /* MDTaskMessage.m */; };
+		F7C782091BBBC46800A9C29F /* MDTaskReplyment.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781F11BBBC46800A9C29F /* MDTaskReplyment.m */; };
+		F7C7820A1BBBC46800A9C29F /* MDTaskReplyMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781F31BBBC46800A9C29F /* MDTaskReplyMessage.m */; };
+		F7C7820B1BBBC46800A9C29F /* MDTaskSystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781F51BBBC46800A9C29F /* MDTaskSystemMessage.m */; };
+		F7C7820C1BBBC46800A9C29F /* MDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C781F71BBBC46800A9C29F /* MDUser.m */; };
+		F7C7820F1BBBC49800A9C29F /* MDDepartment.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C7820E1BBBC49800A9C29F /* MDDepartment.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,7 +156,6 @@
 		F7C63EE61B42600D00D028E7 /* MDURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDURLConnection.m; sourceTree = "<group>"; };
 		F7C63EE71B42600D00D028E7 /* MDURLConnectionQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDURLConnectionQueue.h; sourceTree = "<group>"; };
 		F7C63EE81B42600D00D028E7 /* MDURLConnectionQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDURLConnectionQueue.m; sourceTree = "<group>"; };
-		F7C63EE91B42600D00D028E7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ErrorMessage.strings"; sourceTree = "<group>"; };
 		F7C63EEA1B42600D00D028E7 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/ErrorMessage.strings"; sourceTree = "<group>"; };
 		F7C63EEB1B42600D00D028E7 /* MDAPICategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAPICategory.h; sourceTree = "<group>"; };
 		F7C781CE1BBBC46800A9C29F /* MDCalendarCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCalendarCategory.h; sourceTree = "<group>"; };
@@ -203,6 +202,7 @@
 		F7C781F71BBBC46800A9C29F /* MDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDUser.m; sourceTree = "<group>"; };
 		F7C7820D1BBBC49800A9C29F /* MDDepartment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDDepartment.h; sourceTree = "<group>"; };
 		F7C7820E1BBBC49800A9C29F /* MDDepartment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDDepartment.m; sourceTree = "<group>"; };
+		F7FBA8CA1C99384D0082ED49 /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/ErrorMessage.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -635,8 +635,8 @@
 			knownRegions = (
 				en,
 				Base,
-				"zh-Hans",
 				"zh-Hant",
+				zh,
 			);
 			mainGroup = F7B3F4E41886204800F186DB;
 			productRefGroup = F7B3F4EE1886204800F186DB /* Products */;
@@ -779,8 +779,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				F7C63EE21B42600D00D028E7 /* en */,
-				F7C63EE91B42600D00D028E7 /* zh-Hans */,
 				F7C63EEA1B42600D00D028E7 /* zh-Hant */,
+				F7FBA8CA1C99384D0082ED49 /* zh */,
 			);
 			name = ErrorMessage.strings;
 			sourceTree = "<group>";

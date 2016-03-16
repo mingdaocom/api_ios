@@ -28,7 +28,6 @@
 #import "MDCalendarCategory.h"
 #import "MDTaskActivity.h"
 #import "MDTaskFolderFile.h"
-#import "MDKnowledgeNode.h"
 
 #define BoolStr(BOOL) BOOL?@"true":@"false"
 
