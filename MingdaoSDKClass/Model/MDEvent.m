@@ -146,9 +146,6 @@
             
             self.recurCount = [[dic objectForKey:@"recur_count"] intValue];
             self.untilDateString = [dic objectForKey:@"until_date"];
-            
-            self.oldStartDateString = [aDic objectForKey:@"old_start_time"];
-            self.oldEndDateString = [aDic objectForKey:@"old_end_time"];
         }
         self.recurTime = [aDic objectForKey:@"recur_time"];
         
@@ -302,16 +299,6 @@
 - (NSDate *)endDate
 {
     return [self dateFromString:self.endDateString];
-}
-
-- (NSDate *)oldEndDate
-{
-    return [self dateFromString:self.oldEndDateString];
-}
-
-- (NSDate *)oldStartDate
-{
-    return [self dateFromString:self.oldStartDateString];
 }
 
 - (NSDateComponents *)startDateComponents
@@ -561,8 +548,6 @@
     copyObject.isAllday = self.isAllday;
     copyObject.isPrivate = self.isPrivate;
     copyObject.isBusy = self.isBusy;
-    copyObject.oldStartDateString = [self.oldStartDateString copy];
-    copyObject.oldEndDateString = [self.oldEndDateString copy];
     copyObject.recurTime = [self.recurTime copy];
     copyObject.members = [self.members copy];
     copyObject.eventMails = [self.eventMails copy];

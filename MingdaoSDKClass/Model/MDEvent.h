@@ -30,8 +30,6 @@
 @property (strong, nonatomic) NSString *address;
 @property (strong, nonatomic) NSString *startDateString;
 @property (strong, nonatomic) NSString *endDateString;
-@property (strong, nonatomic) NSString *oldStartDateString;
-@property (strong, nonatomic) NSString *oldEndDateString;
 
 @property (assign, nonatomic) NSInteger remindType;
 @property (assign, nonatomic) NSInteger remindTime;
@@ -63,8 +61,6 @@
 @property (readonly, nonatomic) NSArray *thirdMemberIDs;
 @property (readonly, nonatomic) NSDate *startDate;
 @property (readonly, nonatomic) NSDate *endDate;
-@property (readonly, nonatomic) NSDate *oldStartDate;
-@property (readonly, nonatomic) NSDate *oldEndDate;
 @property (readonly, nonatomic) NSDateComponents *startDateComponents, *endDateComponents;
 @property (readonly, nonatomic) NSArray *accetpedMembers, *rejectedMembers, *penddingMembers;
 @property (readonly, nonatomic) NSArray *accetpedEmails, *rejectedEmails, *penddingEmails;
