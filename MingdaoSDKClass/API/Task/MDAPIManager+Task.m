@@ -131,30 +131,6 @@
 }
 
 #pragma mark -
-- (MDURLConnection *)createProjectWithName:(NSString *)name handler:(MDAPINSStringHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/add_project?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&title=%@", name];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
-    [req setHTTPMethod:@"POST"];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        
-        NSString *projectID = [dic objectForKey:@"project"];
-        handler(projectID, nil);
-    }];
-    return connection;
-}
-
-#pragma mark -
 - (MDURLConnection *)createTaskReplymentOnTaskWithTaskID:(NSString *)tID
                                                  message:(NSString *)message
                                  replyToReplymentWithRID:(NSString *)rID
@@ -1043,9 +1019,13 @@
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"name", @"object":folderName}];
-    [parameters addObject:@{@"key":@"chargeUserID", @"object":userID}];
+    if (userID) {
+        [parameters addObject:@{@"key":@"chargeUserID", @"object":userID}];
+    }
     [parameters addObject:@{@"key":@"isTop", @"object":@(isTop)}];
-    [parameters addObject:@{@"key":@"members", @"object":members}];
+    if (members) {
+        [parameters addObject:@{@"key":@"members", @"object":members}];
+    }
     if (admins) {
         [parameters addObject:@{@"key":@"admins", @"object":admins}];
     }
