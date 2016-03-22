@@ -56,30 +56,49 @@
                                       handler:(MDAPINSStringHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
- @usage:
  编辑日程
- @parmas:
- eID     - 被修改日程编号
- name    - 日程名称
- sDateString - 日程开始时间，精确到分。如：2013-05-05 10:25
- eDateString - 日程结束时间，精确到分。如：2013-05-05 10:25
- isAllday - 是否全天日程。0表示非全天，1表示全天
- address - 日程地点
- des - 日程描述
- isPrivate - 是否私人日程。1表示私人，0表示非私人
- handler - 处理编辑结果
+
+ @param eID             日程ID
+ @param recurTime       重复日程的单个日程时间
+ @param allCalendar     是否更改所有重复日程
+ @param isPush          是否要求成员重新确认
+ @param name            日程名字
+ @param des             日程摘要
+ @param address         日程地点
+ @param sDateString     日程开始时间
+ @param eDateString     日程结束时间
+ @param isAllday        是否全天
+ @param categoryID      日程分类
+ @param isPrivate       是否是私密日程
+ @param visibleGroupIDs 可见范围
+ @param frequency       重复类型
+ @param interval
+ @param weekDays        
+ @param recurCount
+ @param untilDate
+ @param handler         处理编辑结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                              allCalendar:(BOOL)allCalendar
+                                   isPush:(BOOL)isPush
+                               categoryID:(NSString *)categoryID
+                                isPrivate:(BOOL)isPrivate
+                          visibleGroupIDs:(NSArray *)visibleGroupIDs
+                                  handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                              allCalendar:(BOOL)allCalendar
+                                   isPush:(BOOL)isPush
                                      name:(NSString *)name
+                                     des:(NSString *)des
+                                 address:(NSString *)address
                           startDateString:(NSString *)sDateString
                             endDateString:(NSString *)eDateString
-                               remindType:(NSInteger)remindType
-                               remindTime:(NSInteger)remindTime
+                                isAllDay:(BOOL)isAllday
                                categoryID:(NSString *)categoryID
-                                 isAllDay:(BOOL)isAllday
-                                  address:(NSString *)address
-                              description:(NSString *)des
                                 isPrivate:(BOOL)isPrivate
+                          visibleGroupIDs:(NSArray *)visibleGroupIDs
                                   isRecur:(BOOL)isRecur
                                 frequency:(NSInteger)frequency
                                  interval:(NSInteger)interval
@@ -87,7 +106,18 @@
                                recurCount:(NSInteger)recurCount
                                 untilDate:(NSString *)untilDate
                                   handler:(MDAPIBoolHandler)handler;
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
+ 日程分享开关
 
+ @param eID       日程ID
+ @param recurTime 重复日程的单个时间
+ @param isShare   是否可以分享
+ @param handler   处理编辑结果
+-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                                  isShare:(BOOL)isShare
+                                  handler:(MDAPINSDictionaryHandler)handler;
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  邀请/取消邀请/再次邀请用户加入日程
@@ -96,10 +126,25 @@
  emails - 被邀请的用户们的email
  handler - 处理结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)addUsersWithUserIDs:(NSArray *)uIDs emails:(NSArray *)emails toEventID:(NSString *)eID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)deleteUserWithUserIDs:(NSArray *)uIDs emails:(NSArray *)emails fromEventID:(NSString *)eID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)reinviteUserWithUserIDs:(NSArray *)uIDs emails:(NSArray *)emails toEventID:(NSString *)eID handler:(MDAPIBoolHandler)handler;
-
+- (MDURLConnection *)addUsersWithEventID:(NSString *)eID
+                               recurTime:(NSString *)recurTime
+                             allCalendar:(BOOL)allCalendar
+                                 UserIDs:(NSArray *)uIDs
+                                  emails:(NSArray *)emails
+                                 handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)deleteUserWithEventID:(NSString *)eID
+                                 recurTime:(NSString *)recurTime
+                               allCalendar:(BOOL)allCalendar
+                                   UserIDs:(NSArray *)uIDs
+                                    emails:(NSArray *)emails
+                                   thirdID:(NSString *)thirdID
+                                   handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)reinviteUserWithEventID:(NSString *)eID
+                                   recurTime:(NSString *)recurTime
+                                 allCalendar:(BOOL)allCalendar
+                                     UserIDs:(NSArray *)uIDs
+                                      emails:(NSArray *)emails
+                                     handler:(MDAPIBoolHandler)handler;
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  按需求获取日程列表
@@ -149,10 +194,12 @@
  根据日程编号获取单条日程内容
  @parmas:
  objectID - 日程编号
+ recurTime - 重复时间
  handler - 处理MDEvent
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)loadEventWithObjectID:(NSString *)objectID handler:(MDAPIObjectHandler)handler;
-
+- (MDURLConnection *)loadEventWithObjectID:(NSString *)objectID
+                                 recurTime:(NSString *)recurTime
+                                   handler:(MDAPIObjectHandler)handler;
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
  删除/接受/拒绝/退出日程
@@ -160,9 +207,17 @@
  objectID - 日程编号
  handler - 处理结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)deleteEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)exitEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)acceptEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)deleteEventWithObjectID:(NSString *)objectID
+                                   recurTime:(NSString *)recurTime
+                                 allCalendar:(BOOL)allCalendar
+                                     handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)exitEventWithObjectID:(NSString *)objectID
+                                 recurTime:(NSString *)recurTime
+                               allCalendar:(BOOL)allCalendar
+                                   handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)acceptEventWithObjectID:(NSString *)objectID
+                                   recurTime:(NSString *)recurTime
+                                     handler:(MDAPIBoolHandler)handler;
 - (MDURLConnection *)rejectEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -189,6 +244,11 @@
  @parmas:
  handler - 处理结果
  -*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-- (MDURLConnection *)modifyEventMemberRemindWithObjectID:(NSString *)objectID remindType:(NSInteger)remindType remindTime:(NSInteger)remindTime handler:(MDAPINSStringHandler)handler;
+- (MDURLConnection *)modifyEventMemberRemindWithObjectID:(NSString *)objectID
+                                               recurTime:(NSString *)recurTime
+                                             allCalendar:(BOOL)allCalendar
+                                              remindType:(NSInteger)remindType
+                                              remindTime:(NSInteger)remindTime
+                                                 handler:(MDAPINSStringHandler)handler;
 
 @end

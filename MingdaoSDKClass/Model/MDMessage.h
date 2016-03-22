@@ -24,7 +24,8 @@ typedef enum {
     MDMessageEventTypeGroupApply = 3,
     MDMessageEventTypeCalendarPush = 4,
     MDMessageEventTypeTaskOperate = 5,
-    MDMessageEventTypeJoinApply = 6
+    MDMessageEventTypeJoinApply = 6,
+    MDMessageEventTypeNetAdminApply = 9
 } MDMessageEventType;
 
 @interface MDMessageDetail : NSObject

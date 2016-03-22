@@ -9,6 +9,44 @@
 #import "MDEvent.h"
 #import "MDTaskReplyment.h"
 
+@implementation MDEventThird
+- (MDEventThird *)initWithDictionary:(NSDictionary *)aDic
+{
+    if (!aDic || ![aDic isKindOfClass:[NSDictionary class]]) {
+        return nil;
+    }
+    
+    self = [super init];
+    if (self) {
+        self.objectID = [aDic objectForKey:@"id"];
+        self.objectName = [aDic objectForKey:@"name"];
+        self.avatar = [aDic objectForKey:@"avatar"];
+    }
+    return self;
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if ([object isKindOfClass:[MDEventThird class]]) {
+        MDEventThird *third = (MDEventThird *)object;
+        if ([third.objectID isEqualToString:self.objectID]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (id)copy
+{
+    id object = [[[self class] alloc] init];
+    MDEventThird *copyObject = object;
+    copyObject.objectID = [self.objectID copy];
+    copyObject.objectName = [self.objectName copy];
+    copyObject.avatar = [self.avatar copy];
+    return copyObject;
+}
+@end
+
 @implementation MDEventEmail
 - (MDEventEmail *)initWithDictionary:(NSDictionary *)aDic
 {
@@ -70,7 +108,23 @@
         if (![aDic objectForKey:@"private"]) {
             self.isPrivate = 0;
         }
+        NSArray *groupsArray = [aDic objectForKey:@"groups"];
+        self.groups = [[NSMutableArray alloc] init];
+        if (groupsArray.count) {
+            for (NSDictionary *subDic in groupsArray) {
+                MDGroup *group = [[MDGroup alloc] init];
+                group.objectID = subDic[@"group_id"];
+                group.objectName = subDic[@"group_name"];
+                [self.groups addObject:group];
+            }
+        }
+
+        self.isShare = [[aDic objectForKey:@"isShare"] boolValue];
+        if (self.isShare) {
+            self.shareUrl = [aDic objectForKey:@"url"];
+        }
         
+        self.isChildCalendar = [[aDic objectForKey:@"is_child_calendar"] boolValue];
         self.remindType = [[aDic objectForKey:@"remindType"] intValue];
         self.remindTime = [[aDic objectForKey:@"remindTime"] intValue];
         self.isTask  = [[aDic objectForKey:@"isTask"] integerValue];
@@ -93,6 +147,7 @@
             self.recurCount = [[dic objectForKey:@"recur_count"] intValue];
             self.untilDateString = [dic objectForKey:@"until_date"];
         }
+        self.recurTime = [aDic objectForKey:@"recur_time"];
         
         
         NSMutableArray *memebers = [NSMutableArray array];
@@ -116,9 +171,20 @@
             }
         }
         
+        NSMutableArray *thirdMembers = [NSMutableArray array];
+        NSArray *tUsers = [aDic objectForKey:@"third_members"];
+        if ([tUsers isKindOfClass:[NSArray class]]) {
+            for (NSDictionary *userDic in tUsers) {
+                if ([userDic isKindOfClass:[NSDictionary class]]) {
+                    MDEventThird *aUser = [[MDEventThird alloc] initWithDictionary:userDic];
+                    [thirdMembers addObject:aUser];
+                }
+            }
+        }
         
         self.members = memebers;
         self.eventMails = emailMembers;
+        self.thirdMembers = thirdMembers;
         
         NSDictionary *creatorDic = [aDic objectForKey:@"user"];
         if ([creatorDic isKindOfClass:[NSDictionary class]]) {
@@ -258,10 +324,21 @@
 
 - (NSArray *)memberEmails
 {
-    NSMutableArray *ma = [NSMutableArray arrayWithCapacity:self.members.count];
+    NSMutableArray *ma = [NSMutableArray arrayWithCapacity:self.eventMails.count];
     if (ma) {
         for (MDEventEmail *u in self.eventMails) {
             [ma addObject:u.memail];
+        }
+    }
+    return ma;
+}
+
+- (NSArray *)thirdMemberIDs
+{
+    NSMutableArray *ma = [NSMutableArray arrayWithCapacity:self.thirdMembers.count];
+    if (ma) {
+        for (MDEventThird *u in self.thirdMembers) {
+            [ma addObject:u.objectID];
         }
     }
     return ma;
@@ -465,13 +542,18 @@
     copyObject.startDateString = [self.startDateString copy];
     copyObject.endDateString = [self.endDateString copy];
     copyObject.createTime = [self.createTime copy];
+    copyObject.isChildCalendar = self.isChildCalendar;
     copyObject.des = [self.des copy];
+    copyObject.isShare = self.isShare;
     copyObject.isAllday = self.isAllday;
     copyObject.isPrivate = self.isPrivate;
     copyObject.isBusy = self.isBusy;
+    copyObject.recurTime = [self.recurTime copy];
     copyObject.members = [self.members copy];
     copyObject.eventMails = [self.eventMails copy];
+    copyObject.thirdMembers = [self.thirdMembers copy];
     copyObject.isRecur = self.isRecur;
+    copyObject.groups = [self.groups mutableCopy];
     copyObject.frequency = self.frequency;
     copyObject.interval = self.interval;
     copyObject.recurCount = self.recurCount;

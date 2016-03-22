@@ -10,6 +10,13 @@
 #import "MDUser.h"
 #import "MDCalendarCategory.h"
 
+@interface MDEventThird : NSObject
+@property (strong, nonatomic) NSString *objectID;
+@property (strong, nonatomic) NSString *objectName;
+@property (strong, nonatomic) NSString *avatar;
+- (MDEventThird *)initWithDictionary:(NSDictionary *)aDic;
+@end
+
 @interface MDEventEmail : NSObject
 @property (strong, nonatomic) NSString *memail;
 @property (assign, nonatomic) int status;
@@ -23,6 +30,7 @@
 @property (strong, nonatomic) NSString *address;
 @property (strong, nonatomic) NSString *startDateString;
 @property (strong, nonatomic) NSString *endDateString;
+
 @property (assign, nonatomic) NSInteger remindType;
 @property (assign, nonatomic) NSInteger remindTime;
 @property (strong, nonatomic) NSString *createTime;
@@ -32,18 +40,25 @@
 @property (assign, nonatomic) BOOL isPrivate;
 @property (strong, nonatomic) NSArray *members;
 @property (strong, nonatomic) NSArray *eventMails;
+@property (strong, nonatomic) NSArray *thirdMembers;
 @property (assign, nonatomic) BOOL isBusy;
+@property (assign, nonatomic) BOOL isChildCalendar;
 
 @property (assign, nonatomic) BOOL isRecur;
+@property (strong, nonatomic) NSString *recurTime;
+@property (assign, nonatomic) BOOL isShare;
+@property (strong, nonatomic) NSString *shareUrl;
 @property (assign, nonatomic) int frequency, interval, recurCount;
 @property (strong, nonatomic) NSString *untilDateString, *weekDay;
 
 @property (strong, nonatomic) MDCalendarCategory *calendarCategory;
+@property (strong, nonatomic) NSMutableArray *groups;
 @property (assign, nonatomic) NSInteger isTask;
 
-@property (readonly ,nonatomic) BOOL isInOneDay;
+@property (readonly, nonatomic) BOOL isInOneDay;
 @property (readonly, nonatomic) NSArray *memberIDs;
 @property (readonly, nonatomic) NSArray *memberEmails;
+@property (readonly, nonatomic) NSArray *thirdMemberIDs;
 @property (readonly, nonatomic) NSDate *startDate;
 @property (readonly, nonatomic) NSDate *endDate;
 @property (readonly, nonatomic) NSDateComponents *startDateComponents, *endDateComponents;

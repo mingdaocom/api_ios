@@ -12,8 +12,8 @@
 
 @property (strong, nonatomic) NSString *catID;
 @property (strong, nonatomic) NSString *catName;
-@property (assign, nonatomic) NSInteger displayOrder;
-@property (assign, nonatomic) NSInteger color;
+@property (assign, nonatomic) int displayOrder;
+@property (assign, nonatomic) int color;
 
 - (MDCalendarCategory *)initWithDictionary:(NSDictionary *)aDic;
 

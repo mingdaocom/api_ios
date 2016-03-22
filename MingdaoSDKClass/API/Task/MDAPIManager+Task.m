@@ -44,18 +44,18 @@
 #pragma mark -
 - (MDURLConnection *)loadTaskReplymentsWithTaskID:(NSString *)tID
                                          onlyFile:(BOOL)onlyFile
-                                            maxID:(NSString *)maxTID
-                                         pageSize:(NSInteger)size
-                                          handler:(MDAPINSArrayHandler)handler
+                                        pageIndex:(NSNumber *)pageIndex
+                                         pageSize:(NSNumber *)pageSize
+                                          handler:(MDAPINSArrayHandler)handler;
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
     [urlString appendString:@"/task/v4/getTopicListByTaskID?format=json"];
     [urlString appendFormat:@"&access_token=%@", self.accessToken];
     [urlString appendFormat:@"&t_id=%@", tID];
-    if (maxTID)
-        [urlString appendFormat:@"&max_id=%@", maxTID];
-    if (size > 0)
-        [urlString appendFormat:@"&pagesize=%ld", (long)size];
+    if (pageIndex)
+        [urlString appendFormat:@"&pageindex=%d", [pageIndex intValue]];
+    if (pageSize)
+        [urlString appendFormat:@"&pagesize=%d", [pageSize intValue]];
     if (onlyFile) {
         [urlString appendFormat:@"&is_onlyFile=%d", 1];
     }
@@ -126,30 +126,6 @@
         
         NSString *taskID = [dic objectForKey:@"task"];
         handler(taskID, nil);
-    }];
-    return connection;
-}
-
-#pragma mark -
-- (MDURLConnection *)createProjectWithName:(NSString *)name handler:(MDAPINSStringHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/task/add_project?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
-    [urlString appendFormat:@"&title=%@", name];
-    
-    NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
-    [req setHTTPMethod:@"POST"];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        
-        NSString *projectID = [dic objectForKey:@"project"];
-        handler(projectID, nil);
     }];
     return connection;
 }
@@ -1043,9 +1019,13 @@
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"name", @"object":folderName}];
-    [parameters addObject:@{@"key":@"chargeUserID", @"object":userID}];
+    if (userID) {
+        [parameters addObject:@{@"key":@"chargeUserID", @"object":userID}];
+    }
     [parameters addObject:@{@"key":@"isTop", @"object":@(isTop)}];
-    [parameters addObject:@{@"key":@"members", @"object":members}];
+    if (members) {
+        [parameters addObject:@{@"key":@"members", @"object":members}];
+    }
     if (admins) {
         [parameters addObject:@{@"key":@"admins", @"object":admins}];
     }
@@ -1083,6 +1063,7 @@
                                       stageID:(NSString *)stageID
                                     parentID:(NSString *)parentID
                                    colorType:(int)colorType
+                                   isFavorite:(int)isFavorite
                                        postID:(NSString *)postID
                                 handler:(MDAPINSStringHandler)handler
 {
@@ -1153,6 +1134,10 @@
         [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"p_id"]dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", postID] dataUsingEncoding:NSUTF8StringEncoding]];
     }
+    
+    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"isFavorite"]dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", (long)isFavorite] dataUsingEncoding:NSUTF8StringEncoding]];
     
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -1768,14 +1753,13 @@
         [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", postID] dataUsingEncoding:NSUTF8StringEncoding]];
     }
     
-    [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
-    
-
     [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",@"isFavorite"]dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithFormat:@"%ld\r\n", (long)isFavorite] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
     [req setValue:contentType forHTTPHeaderField:@"Content-type"];

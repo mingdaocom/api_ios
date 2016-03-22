@@ -39,7 +39,7 @@
         
         self.isNewTask = [[aDic objectForKey:@"isNewTask"] boolValue];
         
-        self.currentUserType = [[aDic objectForKey:@"currentUserType"] intValue] + 1;
+        self.currentUserType = [[aDic objectForKey:@"currentUserType"] intValue];
         
         if ([[aDic objectForKey:@"parent_task"] isKindOfClass:[NSDictionary class]]) {
             self.parentTask = [[MDTask alloc] initWithDictionary:[aDic objectForKey:@"parent_task"]];

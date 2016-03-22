@@ -107,18 +107,57 @@
     }];
     return connection;
 }
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                              allCalendar:(BOOL)allCalendar
+                                   isPush:(BOOL)isPush
+                               categoryID:(NSString *)categoryID
+                                isPrivate:(BOOL)isPrivate
+                          visibleGroupIDs:(NSArray *)visibleGroupIDs
+                                  handler:(MDAPIBoolHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
+
+    if (categoryID.length) {
+        [parameters addObject:@{@"key":@"c_categoryID", @"object":categoryID}];
+    }
+    [parameters addObject:@{@"key":@"c_private", @"object":isPrivate?@0:@1}];
+    
+    NSString *groupIDsString = [visibleGroupIDs componentsJoinedByString:@","];
+    if (groupIDsString) {
+        [parameters addObject:@{@"key":@"g_ids", @"object":groupIDsString}];
+    }
+
+    if (recurTime.length)
+        [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
+    [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
+    [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [self postWithParameters:parameters withRequest:req];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+    }];
+    return connection;
+}
 
 - (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                              allCalendar:(BOOL)allCalendar
+                                   isPush:(BOOL)isPush
                                      name:(NSString *)name
+                                      des:(NSString *)des
+                                  address:(NSString *)address
                           startDateString:(NSString *)sDateString
                             endDateString:(NSString *)eDateString
-                               remindType:(NSInteger)remindType
-                               remindTime:(NSInteger)remindTime
-                               categoryID:(NSString *)categoryID
                                  isAllDay:(BOOL)isAllday
-                                  address:(NSString *)address
-                              description:(NSString *)des
+                               categoryID:(NSString *)categoryID
                                 isPrivate:(BOOL)isPrivate
+                          visibleGroupIDs:(NSArray *)visibleGroupIDs
                                   isRecur:(BOOL)isRecur
                                 frequency:(NSInteger)frequency
                                  interval:(NSInteger)interval
@@ -128,26 +167,37 @@
                                   handler:(MDAPIBoolHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/edit"];
+    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
     [parameters addObject:@{@"key":@"c_id", @"object":eID}];
-    [parameters addObject:@{@"key":@"c_name", @"object":name}];
-    [parameters addObject:@{@"key":@"c_stime", @"object":sDateString}];
-    [parameters addObject:@{@"key":@"c_etime", @"object":eDateString}];
-    [parameters addObject:@{@"key":@"c_remindType", @"object":@(remindType)}];
-    [parameters addObject:@{@"key":@"c_remindTime", @"object":@(remindTime)}];
-    [parameters addObject:@{@"key":@"c_categoryID", @"object":categoryID}];
-    [parameters addObject:@{@"key":@"c_allday", @"object":isAllday?@1:@0}];
-    [parameters addObject:@{@"key":@"c_private", @"object":isPrivate?@0:@1}];
-    
-    if (address && address.length > 0)
-        [parameters addObject:@{@"key":@"c_address", @"object":address}];
+    if (name.length) {
+        [parameters addObject:@{@"key":@"c_name", @"object":name}];
+    }
     if (des && des.length > 0)
         [parameters addObject:@{@"key":@"c_des", @"object":des}];
+    if (address && address.length > 0)
+        [parameters addObject:@{@"key":@"c_address", @"object":address}];
+    if (sDateString.length) {
+        [parameters addObject:@{@"key":@"c_stime", @"object":sDateString}];
+    }
+    if (eDateString.length) {
+        [parameters addObject:@{@"key":@"c_etime", @"object":eDateString}];
+    }
+    [parameters addObject:@{@"key":@"c_allday", @"object":isAllday?@1:@0}];
+    if (categoryID.length) {
+        [parameters addObject:@{@"key":@"c_categoryID", @"object":categoryID}];
+    }
+    [parameters addObject:@{@"key":@"c_private", @"object":isPrivate?@0:@1}];
+    
+    NSString *groupIDsString = [visibleGroupIDs componentsJoinedByString:@","];
+    if (groupIDsString.length) {
+        [parameters addObject:@{@"key":@"g_ids", @"object":groupIDsString}];
+    }
+    
+    [parameters addObject:@{@"key":@"is_recur", @"object":[NSNumber numberWithBool:isRecur]}];
     if (isRecur) {
-        [parameters addObject:@{@"key":@"is_recur", @"object":@1}];
         [parameters addObject:@{@"key":@"frequency", @"object":@(frequency)}];
         [parameters addObject:@{@"key":@"interval", @"object":@(interval)}];
         if (frequency == 2) {
@@ -160,8 +210,12 @@
         if (untilDate && untilDate.length > 0) {
             [parameters addObject:@{@"key":@"until_date", @"object":untilDate}];
         }
+        
+        if (recurTime.length)
+            [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
+        [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
     }
-    
+    [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [self postWithParameters:parameters withRequest:req];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
@@ -170,59 +224,97 @@
     return connection;
 }
 
-- (MDURLConnection *)addUsersWithUserIDs:(NSArray *)uIDs
+- (MDURLConnection *)saveEventWithEventID:(NSString *)eID
+                                recurTime:(NSString *)recurTime
+                                  isShare:(BOOL)isShare
+                                  handler:(MDAPINSDictionaryHandler)handler
+{
+    NSMutableString *urlString = [self.serverAddress mutableCopy];
+    [urlString appendString:@"/calendar/update_calendar_share.aspx"];
+    NSMutableArray *parameters = [NSMutableArray array];
+    [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
+    [parameters addObject:@{@"key":@"format", @"object":@"json"}];
+    [parameters addObject:@{@"key":@"c_id", @"object":eID}];
+    if (recurTime.length)
+        [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
+    [parameters addObject:@{@"key":@"is_share", @"object":BoolStr(isShare)}];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [self postWithParameters:parameters withRequest:req];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        handler(dic, error);
+    }];
+    return connection;
+}
+
+- (MDURLConnection *)addUsersWithEventID:(NSString *)eID
+                               recurTime:(NSString *)recurTime
+                             allCalendar:(BOOL)allCalendar
+                                 UserIDs:(NSArray *)uIDs
                                   emails:(NSArray *)emails
-                               toEventID:(NSString *)eID
                                  handler:(MDAPIBoolHandler)handler
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/add_member?u_key=%@&c_id=%@&c_mids=%@&c_memails=%@&format=json"
+    NSMutableString *urlStr = [NSMutableString stringWithFormat:@"%@/calendar/add_member?u_key=%@&c_id=%@&c_mids=%@&c_memails=%@&format=json"
                         , self.serverAddress
                         , self.accessToken
                         , eID
                         , uIDs.count > 0 ? [uIDs componentsJoinedByString:@","] : @""
                         , emails.count > 0 ? [emails componentsJoinedByString:@","] : @""
                         ];
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    if (recurTime.length)
+        [urlStr appendFormat:@"&recur_time=%@",recurTime];
+    [urlStr appendFormat:@"&is_allCalendar=%@",[NSNumber numberWithBool:allCalendar]];
+    urlStr = [[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] mutableCopy];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlStr handler:handler];
     }];
     return connection;
 }
 
-- (MDURLConnection *)deleteUserWithUserIDs:(NSArray *)uIDs
+- (MDURLConnection *)deleteUserWithEventID:(NSString *)eID
+                                 recurTime:(NSString *)recurTime
+                               allCalendar:(BOOL)allCalendar
+                                   UserIDs:(NSArray *)uIDs
                                     emails:(NSArray *)emails
-                               fromEventID:(NSString *)eID
+                                   thirdID:(NSString *)thirdID
                                    handler:(MDAPIBoolHandler)handler
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/delete_member?u_key=%@&c_id=%@&c_mids=%@&c_memails=%@&format=json"
+    NSMutableString *urlStr = [NSMutableString stringWithFormat:@"%@/calendar/delete_member?u_key=%@&c_id=%@&c_mids=%@&c_memails=%@&format=json"
                         , self.serverAddress
                         , self.accessToken
                         , eID
                         , uIDs.count > 0 ? [uIDs componentsJoinedByString:@","] : @""
                         , emails.count > 0 ? [emails componentsJoinedByString:@","] : @""
                         ];
-    
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    if (thirdID.length)
+        [urlStr appendFormat:@"&c_third_id=%@",thirdID];
+    if (recurTime.length)
+        [urlStr appendFormat:@"&recur_time=%@",recurTime];
+    [urlStr appendFormat:@"&is_allCalendar=%@",[NSNumber numberWithBool:allCalendar]];
+    urlStr = [[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] mutableCopy];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlStr handler:handler];
     }];
     return connection;
 }
 
-- (MDURLConnection *)reinviteUserWithUserIDs:(NSArray *)uIDs
+- (MDURLConnection *)reinviteUserWithEventID:(NSString *)eID
+                                   recurTime:(NSString *)recurTime
+                                 allCalendar:(BOOL)allCalendar
+                                     UserIDs:(NSArray *)uIDs
                                       emails:(NSArray *)emails
-                                   toEventID:(NSString *)eID
                                      handler:(MDAPIBoolHandler)handler
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/reinvite_member?u_key=%@&c_id=%@&c_mids=%@&c_memails=%@&format=json"
+    NSMutableString *urlStr = [NSMutableString stringWithFormat:@"%@/calendar/reinvite_member?u_key=%@&c_id=%@&c_mids=%@&c_memails=%@&format=json"
                         , self.serverAddress
                         , self.accessToken
                         , eID
                         , uIDs.count > 0 ? [uIDs componentsJoinedByString:@","] : @""
                         , emails.count > 0 ? [emails componentsJoinedByString:@","] : @""
                         ];
-    
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    if (recurTime.length)
+        [urlStr appendFormat:@"&recur_time=%@",recurTime];
+    [urlStr appendFormat:@"&is_allCalendar=%@",[NSNumber numberWithBool:allCalendar]];
+    urlStr = [[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] mutableCopy];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlStr handler:handler];
     }];
@@ -455,14 +547,18 @@
     return connection;
 }
 
-- (MDURLConnection *)loadEventWithObjectID:(NSString *)objectID handler:(MDAPIObjectHandler)handler
+- (MDURLConnection *)loadEventWithObjectID:(NSString *)objectID
+                                 recurTime:(NSString *)recurTime
+                                   handler:(MDAPIObjectHandler)handler
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/detail?u_key=%@&c_id=%@&format=json"
+    NSMutableString *urlStr = [NSMutableString stringWithFormat:@"%@/calendar/detail?format=json&u_key=%@&c_id=%@"
                         , self.serverAddress
                         , self.accessToken
                         , objectID];
-    
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    if (recurTime.length) {
+        [urlStr appendFormat:@"&recur_time=%@",recurTime];
+    }
+    urlStr = [[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] mutableCopy];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
@@ -476,42 +572,56 @@
     return connection;
 }
 
-- (MDURLConnection *)deleteEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler
+- (MDURLConnection *)deleteEventWithObjectID:(NSString *)objectID
+                                   recurTime:(NSString *)recurTime
+                                 allCalendar:(BOOL)allCalendar
+                                     handler:(MDAPIBoolHandler)handler
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/destroy?u_key=%@&c_id=%@&format=json"
+    NSMutableString *urlStr = [NSMutableString stringWithFormat:@"%@/calendar/destroy?u_key=%@&c_id=%@"
                         , self.serverAddress
                         , self.accessToken
                         , objectID];
-    
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    if (recurTime.length)
+        [urlStr appendFormat:@"&recur_time=%@",recurTime];
+    [urlStr appendFormat:@"&is_allCalendar=%@",[NSNumber numberWithBool:allCalendar]];
+    [urlStr appendString:@"&format=json"];
+    urlStr = [[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] mutableCopy];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlStr handler:handler];
     }];
     return connection;
 }
 
-- (MDURLConnection *)exitEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler
+- (MDURLConnection *)exitEventWithObjectID:(NSString *)objectID
+                                 recurTime:(NSString *)recurTime
+                               allCalendar:(BOOL)allCalendar
+                                   handler:(MDAPIBoolHandler)handler
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/exit?u_key=%@&c_id=%@&format=json"
+    NSMutableString *urlStr = [NSMutableString stringWithFormat:@"%@/calendar/exit?u_key=%@&c_id=%@&format=json"
                         , self.serverAddress
                         , self.accessToken
                         , objectID];
-    
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    if (recurTime.length)
+        [urlStr appendFormat:@"&recur_time=%@",recurTime];
+    [urlStr appendFormat:@"&is_allCalendar=%@",[NSNumber numberWithBool:allCalendar]];
+    urlStr = [[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] mutableCopy];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlStr handler:handler];
     }];
     return connection;
 }
 
-- (MDURLConnection *)acceptEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler
+- (MDURLConnection *)acceptEventWithObjectID:(NSString *)objectID
+                                   recurTime:(NSString *)recurTime
+                                     handler:(MDAPIBoolHandler)handler
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/join?u_key=%@&c_id=%@&format=json"
-                        , self.serverAddress
-                        , self.accessToken
-                        , objectID];
-    
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableString *urlStr = [NSMutableString stringWithFormat:@"%@/calendar/join?u_key=%@&c_id=%@&format=json"
+                               , self.serverAddress
+                               , self.accessToken
+                               , objectID];
+    if (recurTime.length)
+        [urlStr appendFormat:@"&recur_time=%@",recurTime];
+    urlStr = [[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] mutableCopy];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlStr handler:handler];
     }];
@@ -630,7 +740,12 @@
     return connection;
 }
 
-- (MDURLConnection *)modifyEventMemberRemindWithObjectID:(NSString *)objectID remindType:(NSInteger)remindType remindTime:(NSInteger)remindTime handler:(MDAPINSStringHandler)handler
+- (MDURLConnection *)modifyEventMemberRemindWithObjectID:(NSString *)objectID
+                                               recurTime:(NSString *)recurTime
+                                             allCalendar:(BOOL)allCalendar
+                                              remindType:(NSInteger)remindType
+                                              remindTime:(NSInteger)remindTime
+                                                 handler:(MDAPINSStringHandler)handler
 {
     NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/calendar/upCalRemind?u_key=%@&format=json"
                                   , self.serverAddress
@@ -638,6 +753,9 @@
     [urlString appendFormat:@"&c_id=%@",objectID];
     [urlString appendFormat:@"&c_remindType=%ld", (long)remindType];
     [urlString appendFormat:@"&c_remindTime=%ld", (long)remindTime];
+    if (recurTime.length)
+        [urlString appendFormat:@"&recur_time=%@",recurTime];
+    [urlString appendFormat:@"&is_allCalendar=%@",[NSNumber numberWithBool:allCalendar]];
     NSString *urlStr = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
@@ -649,8 +767,6 @@
         handler(urlstring, nil);
     }];
     return connection;
-
-    
 }
 
 

@@ -41,9 +41,13 @@
                                             pagesize:(int)size
                                              handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadReplyMePostsWithKeywords:(NSString *)keywords
-                                            maxID:(NSString *)maxID
+                                            pageIndex:(int)pageIndex
                                          pagesize:(int)size
                                           handler:(MDAPINSArrayHandler)handler;
+- (MDURLConnection *)loadReplyMePostsWithKeywords:(NSString *)keywords
+                                       maxID:(NSString *)maxID
+                                    pagesize:(int)size
+                                     handler:(MDAPINSArrayHandler)handler;
 - (MDURLConnection *)loadMyReplyWithKeywords:(NSString *)keywords
                                        maxID:(NSString *)maxID
                                     pagesize:(int)size
