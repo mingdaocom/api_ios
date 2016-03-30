@@ -8,6 +8,10 @@
 
 #import "MDAPIManager+Group.h"
 
+NSString * const MDAPIGroupCreate = @"/group/create";
+NSString * const MDAPIGroupSetting = @"/group/setting";
+NSString * const MDAPIGroupInvite = @"/group/v2/invite";
+
 @implementation MDAPIManager (Group)
 
 #pragma mark - 群组接口
@@ -212,9 +216,6 @@
                                     memberIDs:(NSArray *)memberIDs
                                       handler:(MDAPIObjectHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/group/create"];
-    
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
@@ -231,9 +232,8 @@
     if (memberIDs) {
         [parameters addObject:@{@"key":@"u_ids", @"object":[memberIDs componentsJoinedByString:@","]}];
     }
-
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
+    
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPIGroupCreate parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
@@ -254,10 +254,6 @@
                                    isPost:(NSNumber *)isPost
                                   handler:(MDAPIBoolHandler)handler
 {
-    
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/group/setting"];
-
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
@@ -278,10 +274,9 @@
         [parameters addObject:@{@"key":@"isPost", @"object":[isPost boolValue]?@1:@0}];
     }
 
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPIGroupSetting parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+        [self handleBoolData:dic error:error URLString:req.URL.absoluteString handler:handler];
     }];
     return connection;
 }
@@ -292,9 +287,6 @@
                                      phoneNumbers:(NSArray *)phoneNumbers
                                           handler:(MDAPINSDictionaryHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/group/v2/invite"];
-
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
@@ -309,7 +301,7 @@
         [parameters addObject:@{@"key":@"eGroupMobilePhone", @"object":[phoneNumbers componentsJoinedByString:@","]}];
     }
     
-    NSURLRequest *req = [MDAPIManager postWithParameters:parameters baseURL:urlString];
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPIGroupInvite parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         handler(dic, error);
     }];

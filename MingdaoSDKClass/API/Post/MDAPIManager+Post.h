@@ -140,10 +140,6 @@
                                   groupIDs:(NSArray *)groupIDs
                                  shareType:(int)shareType
                                    handler:(MDAPINSStringHandler)handler;
-- (MDURLConnection *)createFAQPostWithText:(NSString *)text
-                                  groupIDs:(NSArray *)groupIDs
-                                 shareType:(int)shareType
-                                   handler:(MDAPINSStringHandler)handler;
 - (MDURLConnection *)createImagePostWithText:(NSString *)text
                                       images:(NSArray *)images
                                     groupIDs:(NSArray *)groupIDs
@@ -157,13 +153,6 @@
                                   shareType:(int)shareType
                                    toCenter:(BOOL)toCenter
                                     handler:(MDAPINSStringHandler)handler;
-- (MDURLConnection *)createRepostWithText:(NSString *)text
-                                   images:(NSArray *)images
-                                   postID:(NSString *)postID
-                                 groupIDs:(NSArray *)groupIDs
-                                shareType:(int)shareType
-                    commentToOriginalPost:(BOOL)yesOrNo
-                                  handler:(MDAPINSStringHandler)handler __deprecated;
 
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-

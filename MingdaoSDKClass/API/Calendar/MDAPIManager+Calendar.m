@@ -8,6 +8,11 @@
 
 #import "MDAPIManager+Calendar.h"
 
+NSString * const MDAPICalendarCreate = @"/calendar/create";
+NSString * const MDAPICalendarEdit = @"/calendar/edit";
+NSString * const MDAPICalendarUpdateCalendarShare = @"/calendar/update_calendar_share.aspx";
+NSString * const MDAPICalendarUpdateCalendarAttribute = @"/calendar/update_calender_attribute.aspx";
+
 @implementation MDAPIManager (Calendar)
 #pragma mark - 日程中心
 - (MDURLConnection *)subscribeCalendar:(MDAPINSStringHandler)handler
@@ -51,8 +56,6 @@
                                     untilDate:(NSString *)untilDate
                                       handler:(MDAPINSStringHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/create"];
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
@@ -94,8 +97,7 @@
         }
     }
     
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPICalendarCreate parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
@@ -116,8 +118,6 @@
                           visibleGroupIDs:(NSArray *)visibleGroupIDs
                                   handler:(MDAPIBoolHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
@@ -137,10 +137,10 @@
         [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
     [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
     [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
+    
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPICalendarUpdateCalendarAttribute parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+        [self handleBoolData:dic error:error URLString:req.URL.absoluteString handler:handler];
     }];
     return connection;
 }
@@ -165,9 +165,7 @@
                                recurCount:(NSInteger)recurCount
                                 untilDate:(NSString *)untilDate
                                   handler:(MDAPIBoolHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/update_calender_attribute.aspx"];
+{    
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
@@ -216,10 +214,10 @@
         [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
     }
     [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
+    
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPICalendarEdit parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        [self handleBoolData:dic error:error URLString:urlString handler:handler];
+        [self handleBoolData:dic error:error URLString:req.URL.absoluteString handler:handler];
     }];
     return connection;
 }
@@ -229,8 +227,6 @@
                                   isShare:(BOOL)isShare
                                   handler:(MDAPINSDictionaryHandler)handler
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/calendar/update_calendar_share.aspx"];
     NSMutableArray *parameters = [NSMutableArray array];
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     [parameters addObject:@{@"key":@"format", @"object":@"json"}];
@@ -238,8 +234,8 @@
     if (recurTime.length)
         [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
     [parameters addObject:@{@"key":@"is_share", @"object":BoolStr(isShare)}];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self postWithParameters:parameters withRequest:req];
+    
+    NSURLRequest *req = [NSURLRequest postWithHost:self.serverAddress api:MDAPICalendarUpdateCalendarShare parameters:parameters];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         handler(dic, error);
     }];

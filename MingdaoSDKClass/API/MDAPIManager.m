@@ -8,7 +8,11 @@
 
 #import "MDAPIManager.h"
 
+// Notification
 NSString * const MDAPIManagerNewTokenSetNotification = @"MDAPIManagerNewTokenSetNotification";
+
+// API
+NSString * const MDAPILogin = @"/oauth2/access_token";
 
 @interface MDAPIManager ()
 @property (strong, nonatomic) NSString *appKey, *appSecret;
@@ -90,21 +94,17 @@ static MDAPIManager *sharedManager = nil;
                       projectHandler:(MDAPINSArrayHandler)pHandler
                              handler:(MDAPINSDictionaryHandler)sHandler
 {
-    
-    NSMutableString *urlString = [serverAddress mutableCopy];
-    [urlString appendString:@"/oauth2/access_token?format=json"];
-    [urlString appendFormat:@"&app_key=%@&app_secret=%@",  self.appKey, self.appSecret];
-    
+    NSMutableArray *parmas = [[NSMutableArray alloc] init];
+    [parmas addParamWithObject:@"json" forKey:@"format"];
+    [parmas addParamWithObject:self.appKey forKey:@"app_key"];
+    [parmas addParamWithObject:self.appSecret forKey:@"app_secret"];
+    [parmas addParamWithObject:@"password" forKey:@"grant_type"];
     //生成UserName令牌签名,首先处理用户名和密码中的特殊字符
-    NSString *userNameTmp = [self localEncode:username];
-    NSString *passwordTmp = [self localEncode:password];
-    
-    
-    [urlString appendFormat:@"&grant_type=password&username=%@&password=%@", userNameTmp, passwordTmp];
-    
-    
-    NSString *urlStr = urlString;
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    [parmas addParamWithObject:[self localEncode:username] forKey:@"username"];
+    [parmas addParamWithObject:[self localEncode:password] forKey:@"password"];
+    NSURLRequest *req = [NSURLRequest getWithHost:serverAddress api:MDAPILogin parameters:parmas];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             sHandler(nil, error);
             return ;
@@ -140,23 +140,18 @@ static MDAPIManager *sharedManager = nil;
 
 - (MDURLConnection *)loginWithServer:(NSString *)serverAddress username:(NSString *)username password:(NSString *)password projectID:(NSString *)projectID handler:(MDAPINSDictionaryHandler)handler
 {
-    
-    NSMutableString *urlString = [serverAddress mutableCopy];
-    [urlString appendString:@"/oauth2/access_token?format=json"];
-    [urlString appendFormat:@"&app_key=%@&app_secret=%@", self.appKey, self.appSecret];
+    NSMutableArray *parmas = [[NSMutableArray alloc] init];
+    [parmas addParamWithObject:@"json" forKey:@"format"];
+    [parmas addParamWithObject:self.appKey forKey:@"app_key"];
+    [parmas addParamWithObject:self.appSecret forKey:@"app_secret"];
+    [parmas addParamWithObject:@"password" forKey:@"grant_type"];
     //生成UserName令牌签名,首先处理用户名和密码中的特殊字符
-    NSString *userNameTmp = [self localEncode:username];
-    NSString *passwordTmp = [self localEncode:password];
+    [parmas addParamWithObject:[self localEncode:username] forKey:@"username"];
+    [parmas addParamWithObject:[self localEncode:password] forKey:@"password"];
+    [parmas addParamWithObject:projectID forKey:@"p_signature"];
+    NSURLRequest *req = [NSURLRequest getWithHost:serverAddress api:MDAPILogin parameters:parmas];
     
-    [urlString appendFormat:@"&grant_type=password&username=%@&password=%@", userNameTmp, passwordTmp];    if (projectID && projectID.length > 0)
-    {
-        [urlString appendFormat:@"&p_signature=%@", projectID];
-    } else {
-//        NSLog(@"[error]ProjectID can not be nil![error]");
-    }
-    
-    NSString *urlStr = urlString;
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -194,13 +189,15 @@ static MDAPIManager *sharedManager = nil;
 - (MDURLConnection *)refreshTokenWithRefreshToken:(NSString *)refreshToken
                                           handler:(MDAPINSDictionaryHandler)handler;
 {
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/oauth2/access_token?format=json"];
-    [urlString appendFormat:@"&app_key=%@&app_secret=%@&refresh_token=%@", self.appKey, self.appSecret, refreshToken];
-    [urlString appendString:@"&grant_type=refresh_token"];
-    
-    NSString *urlStr = urlString;
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    NSMutableArray *parmas = [[NSMutableArray alloc] init];
+    [parmas addParamWithObject:@"json" forKey:@"format"];
+    [parmas addParamWithObject:self.appKey forKey:@"app_key"];
+    [parmas addParamWithObject:self.appSecret forKey:@"app_secret"];
+    [parmas addParamWithObject:@"refresh_token" forKey:@"grant_type"];
+    [parmas addParamWithObject:refreshToken forKey:@"refresh_token"];
+    NSURLRequest *req = [NSURLRequest getWithHost:self.serverAddress api:MDAPILogin parameters:parmas];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {
             handler(nil, error);
             return ;
@@ -209,84 +206,6 @@ static MDAPIManager *sharedManager = nil;
         handler(dic, error);
     }];
     return connection;
-}
-
-- (void)postWithParameters:(NSArray *)parameters withRequest:(NSMutableURLRequest *)req
-{
-    [req setHTTPMethod:@"POST"];
-
-    NSString *boundary = @"__MINGDAO__";
-    NSString *boundaryPrefix = @"--";
-    
-    NSMutableData *postBody = [NSMutableData data];
-    
-    for (NSDictionary *dic in parameters) {
-        [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        id object = dic[@"object"];
-        NSString *key = dic[@"key"];
-        NSString *fileName = dic[@"fileName"];
-
-        if ([object isKindOfClass:[NSString class]]) {
-            NSString *text = object;
-            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", text] dataUsingEncoding:NSUTF8StringEncoding]];
-        } else if ([object isKindOfClass:[NSNumber class]]) {
-            NSString *text = [object stringValue];
-            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[[NSString stringWithFormat:@"%@\r\n", text] dataUsingEncoding:NSUTF8StringEncoding]];
-        } else if ([object isKindOfClass:[UIImage class]]) {
-            UIImage *image = object;
-            
-            [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\";\r\n\r\n", key, fileName] dataUsingEncoding:NSUTF8StringEncoding]];
-            NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-            [postBody appendData:imageData];
-            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        } else if ([object isKindOfClass:[NSData class]]) {
-            [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\";\r\n\r\n", key, fileName] dataUsingEncoding:NSUTF8StringEncoding]];
-            [postBody appendData:object];
-            [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        }
-    }
-    
-    [postBody appendData:[[NSString stringWithFormat:@"%@", boundaryPrefix] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"%@", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[@"--" dataUsingEncoding:NSUTF8StringEncoding]];
-    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", boundary];
-    [req setValue:contentType forHTTPHeaderField:@"Content-type"];
-    [req setHTTPBody:postBody];
-}
-
-+ (NSURLRequest *)postWithParameters:(NSArray *)parameters baseURL:(NSString *)baseURL
-{
-    // temp
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:baseURL]];
-    [[MDAPIManager sharedManager] postWithParameters:parameters withRequest:req];
-    return req;
-}
-
-+ (NSURLRequest *)getWithParameters:(NSArray *)parameters baseURL:(NSString *)baseURL
-{
-    NSMutableString *fullURL = [NSMutableString stringWithString:baseURL];
-    [fullURL appendString:@"?"];
-    for (int i = 0; i < parameters.count; i++) {
-        NSDictionary *paraDic = parameters[i];
-        NSString *key = paraDic[@"key"];
-        NSString *object = paraDic[@"object"];
-        if (![object isKindOfClass:[NSString class]]) {
-//            NSLog(@"error paramters");
-            continue;
-        }
-        [fullURL appendFormat:@"%@=%@", key, object];
-        [fullURL appendString:@"&"];
-    }
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:fullURL]];
-    return req;
 }
 
 - (NSString *)localEncode:(NSString *)string
