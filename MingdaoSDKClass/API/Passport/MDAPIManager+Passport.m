@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 
 NSString * const MDAPIPassportEdit = @"/passport/edit";
+NSString * const MDAPIPassportDetail = @"/v1/passport/get_passport_detail";
 
 @implementation MDAPIManager (Passport)
 
@@ -17,8 +18,8 @@ NSString * const MDAPIPassportEdit = @"/passport/edit";
 - (MDURLConnection *)loadCurrentUserDetailWithHandler:(MDAPIObjectHandler)handler
 {
     NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/passport/detail?format=json"];
-    [urlString appendFormat:@"&access_token=%@", self.accessToken];
+    [urlString appendFormat:@"%@?", MDAPIPassportDetail];
+    [urlString appendFormat:@"access_token=%@", self.accessToken];
     
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         if (error) {

@@ -31,7 +31,9 @@
         }
         NSString *localizedDescription = [self errorStringWithErrorCode:errorCode];
         if ([localizedDescription isEqualToString:errorCode]) {
-            localizedDescription = errorMessage;
+            if (errorMessage) {
+                localizedDescription = errorMessage;   
+            }
         }
         
         NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];

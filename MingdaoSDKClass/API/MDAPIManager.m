@@ -78,136 +78,6 @@ static MDAPIManager *sharedManager = nil;
     }
 }
 
-
-#pragma mark - 登录/验证接口
-- (MDURLConnection *)loginWithUsername:(NSString *)username
-                              password:(NSString *)password
-                        projectHandler:(MDAPINSArrayHandler)pHandler
-                               handler:(MDAPINSDictionaryHandler)sHandler
-{
-    return [self loginWithServer:[MDAPIManager sharedManager].serverAddress username:username password:password projectHandler:pHandler handler:sHandler];
-}
-
-- (MDURLConnection *)loginWithServer:(NSString *)serverAddress
-                            username:(NSString *)username
-                            password:(NSString *)password
-                      projectHandler:(MDAPINSArrayHandler)pHandler
-                             handler:(MDAPINSDictionaryHandler)sHandler
-{
-    NSMutableArray *parmas = [[NSMutableArray alloc] init];
-    [parmas addParamWithObject:@"json" forKey:@"format"];
-    [parmas addParamWithObject:self.appKey forKey:@"app_key"];
-    [parmas addParamWithObject:self.appSecret forKey:@"app_secret"];
-    [parmas addParamWithObject:@"password" forKey:@"grant_type"];
-    //生成UserName令牌签名,首先处理用户名和密码中的特殊字符
-    [parmas addParamWithObject:[self localEncode:username] forKey:@"username"];
-    [parmas addParamWithObject:[self localEncode:password] forKey:@"password"];
-    NSURLRequest *req = [NSURLRequest getWithHost:serverAddress api:MDAPILogin parameters:parmas];
-
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        if (error) {
-            sHandler(nil, error);
-            return ;
-        }
-        
-        NSArray *projectsDic = [dic objectForKey:@"projects"];
-        if ([projectsDic isKindOfClass:[NSArray class]]) {
-            NSMutableArray *projects = [NSMutableArray array];
-            for(NSDictionary *projectDic in projectsDic) {
-                if (![projectDic isKindOfClass:[NSDictionary class]])
-                    continue;
-                
-                MDCompany *p = [[MDCompany alloc] initWithDictionary:projectDic];
-                [projects addObject:p];
-            }
-            pHandler(projects, error);
-            return;
-        }
-        
-        sHandler(dic, error);
-    }];
-    return connection;
-
-}
-
-- (MDURLConnection *)loginWithUsername:(NSString *)username
-                              password:(NSString *)password
-                             projectID:(NSString *)projectID
-                               handler:(MDAPINSDictionaryHandler)handler
-{
-    return [self loginWithServer:[MDAPIManager sharedManager].serverAddress username:username password:password projectID:projectID handler:handler];
-}
-
-- (MDURLConnection *)loginWithServer:(NSString *)serverAddress username:(NSString *)username password:(NSString *)password projectID:(NSString *)projectID handler:(MDAPINSDictionaryHandler)handler
-{
-    NSMutableArray *parmas = [[NSMutableArray alloc] init];
-    [parmas addParamWithObject:@"json" forKey:@"format"];
-    [parmas addParamWithObject:self.appKey forKey:@"app_key"];
-    [parmas addParamWithObject:self.appSecret forKey:@"app_secret"];
-    [parmas addParamWithObject:@"password" forKey:@"grant_type"];
-    //生成UserName令牌签名,首先处理用户名和密码中的特殊字符
-    [parmas addParamWithObject:[self localEncode:username] forKey:@"username"];
-    [parmas addParamWithObject:[self localEncode:password] forKey:@"password"];
-    [parmas addParamWithObject:projectID forKey:@"p_signature"];
-    NSURLRequest *req = [NSURLRequest getWithHost:serverAddress api:MDAPILogin parameters:parmas];
-    
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        
-        handler(dic, error);
-    }];
-    return connection;
-
-}
-
-- (MDURLConnection *)loginWithAppKey:(NSString *)appKey
-                           appSecret:(NSString *)appSecret
-                                code:(NSString *)code
-                         redirectURL:(NSString *)redirectURL
-                             handler:(MDAPINSDictionaryHandler)handler
-{
-    NSMutableString *urlString = [self.serverAddress mutableCopy];
-    [urlString appendString:@"/oauth2/access_token?format=json"];
-    [urlString appendFormat:@"&app_key=%@&app_secret=%@&redirect_uri=%@&code=%@", appKey, appSecret, redirectURL, code];
-    [urlString appendString:@"&grant_type=authorization_code"];
-    
-    NSString *urlStr = urlString;
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        
-        handler(dic, error);
-    }];
-    return connection;
-}
-
-- (MDURLConnection *)refreshTokenWithRefreshToken:(NSString *)refreshToken
-                                          handler:(MDAPINSDictionaryHandler)handler;
-{
-    NSMutableArray *parmas = [[NSMutableArray alloc] init];
-    [parmas addParamWithObject:@"json" forKey:@"format"];
-    [parmas addParamWithObject:self.appKey forKey:@"app_key"];
-    [parmas addParamWithObject:self.appSecret forKey:@"app_secret"];
-    [parmas addParamWithObject:@"refresh_token" forKey:@"grant_type"];
-    [parmas addParamWithObject:refreshToken forKey:@"refresh_token"];
-    NSURLRequest *req = [NSURLRequest getWithHost:self.serverAddress api:MDAPILogin parameters:parmas];
-
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
-        if (error) {
-            handler(nil, error);
-            return ;
-        }
-        
-        handler(dic, error);
-    }];
-    return connection;
-}
-
 - (NSString *)localEncode:(NSString *)string
 {
     NSMutableString *passwordTmp = [string mutableCopy];
@@ -250,5 +120,63 @@ static MDAPIManager *sharedManager = nil;
         [passwordTmp replaceOccurrencesOfString:@"\\" withString:@"%5C" options:NSLiteralSearch range:NSMakeRange(0, [passwordTmp length])];
     }
     return passwordTmp;
+}
+
+#pragma mark - 登录/验证接口
+- (MDURLConnection *)loginWithUsername:(NSString *)username
+                              password:(NSString *)password
+                               handler:(MDAPINSDictionaryHandler)handler
+{
+    return [self loginWithServer:[MDAPIManager sharedManager].serverAddress username:username password:password handler:handler];
+}
+
+- (MDURLConnection *)loginWithServer:(NSString *)serverAddress
+                            username:(NSString *)username
+                            password:(NSString *)password
+                             handler:(MDAPINSDictionaryHandler)handler
+{
+    NSMutableArray *parmas = [[NSMutableArray alloc] init];
+    [parmas addParamWithObject:@"json" forKey:@"format"];
+    [parmas addParamWithObject:self.appKey forKey:@"app_key"];
+    [parmas addParamWithObject:self.appSecret forKey:@"app_secret"];
+    [parmas addParamWithObject:@"password" forKey:@"grant_type"];
+    [parmas addParamWithObject:@"true" forKey:@"account"];
+    //生成UserName令牌签名,首先处理用户名和密码中的特殊字符
+    [parmas addParamWithObject:[self localEncode:username] forKey:@"username"];
+    [parmas addParamWithObject:[self localEncode:password] forKey:@"password"];
+    NSURLRequest *req = [NSURLRequest getWithHost:serverAddress api:MDAPILogin parameters:parmas];
+
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        
+        handler(dic, error);
+    }];
+    return connection;
+
+}
+
+- (MDURLConnection *)refreshTokenWithRefreshToken:(NSString *)refreshToken
+                                          handler:(MDAPINSDictionaryHandler)handler;
+{
+    NSMutableArray *parmas = [[NSMutableArray alloc] init];
+    [parmas addParamWithObject:@"json" forKey:@"format"];
+    [parmas addParamWithObject:self.appKey forKey:@"app_key"];
+    [parmas addParamWithObject:self.appSecret forKey:@"app_secret"];
+    [parmas addParamWithObject:@"refresh_token" forKey:@"grant_type"];
+    [parmas addParamWithObject:refreshToken forKey:@"refresh_token"];
+    NSURLRequest *req = [NSURLRequest getWithHost:self.serverAddress api:MDAPILogin parameters:parmas];
+    
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+        if (error) {
+            handler(nil, error);
+            return ;
+        }
+        
+        handler(dic, error);
+    }];
+    return connection;
 }
 @end
