@@ -27,7 +27,7 @@ NSString * const MDAPIPassportDetail = @"/v1/passport/get_passport_detail";
             return ;
         }
         
-        MDUser *aUser = [[MDUser alloc] initWithDictionary:[dic objectForKey:@"user"]];
+        MDUser *aUser = [[MDUser alloc] initWithDictionary:[dic objectForKey:@"data"]];
         handler(aUser, error);
     }];
     return connection;
@@ -102,8 +102,8 @@ NSString * const MDAPIPassportDetail = @"/v1/passport/get_passport_detail";
 - (MDURLConnection *)saveUserWithName:(NSString *)name
                            department:(NSString *)dep
                                   job:(NSString *)job
-                    mobilePhoneNumber:(NSString *)mpn
-                      workPhoneNumber:(NSString *)wpn
+                    mobile_phone:(NSString *)mpn
+                      work_phone:(NSString *)wpn
                              birthday:(NSString *)birthday
                                gender:(NSInteger)gender
                               handler:(MDAPIBoolHandler)handler

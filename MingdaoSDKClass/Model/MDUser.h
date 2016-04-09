@@ -6,55 +6,16 @@
 //  Copyright (c) 2013年 WeeTomProduct. All rights reserved.
 //
 
-/*
- @sample:
- {
- "user": {
- "id": "用户编号",
- "name": "用户姓名",
- "avstar": "用户头像地址",
- "email": "用户邮箱",
- "grade": "用户等级",
- "mark": "用户积分",
- "birth": "生日：yyyy-MM-dd",
- "gender": "性别：0表示未选；1表示男性；2表示女性",
- "company": "公司",
- "department": "所属部门",
- "job": "职位",
- "mobile_phone": "移动电话",
- "work_phone": "工作电话",
- "followed_status": "当前登录用户与该用户的关注关系：0表示未关注；1表示已关注",
- "license": "当前用户的权限：-1表示普通用户；0表示既是管理员又是广播员；1表示管理员；2表示广播员",
- "status": "用户状态：0为删除；1为正常；",
- "jobs": [{
- "description": "工作内容",
- "endDate": "结束年月",
- "name": "公司名称",
- "startDate": "开始年月",
- "title": "职位"
- }],
- "educations": [{
- "description": "核心课程",
- "endDate": "结束年月",
- "name": "学校名称",
- "startDate": "开始年月",
- "title": "学位或学历",
- "egroup":"是否外部用户0 为否 1为是"
- }]
- }
- }
- */
-
 #import <Foundation/Foundation.h>
-#import "MDCompany.h"
+@class MDOrgnization;
 
 enum {
-    MDUserLicenceNomalUser = -1,
-    MDUserLicenceAdminAndAnnouncer = 0,
-    MDUserLicenceAdmin = 1,
-    MDUserLicenceAnnouncer = 2
+    MDUserLicenseNomalUser = -1,
+    MDUserLicenseAdminAndAnnouncer = 0,
+    MDUserLicenseAdmin = 1,
+    MDUserLicenseAnnouncer = 2
 };
-typedef int MDUserLicence;
+typedef int MDUserLicense;
 
 enum {
     MDUserGenderUnknown = 0,
@@ -77,6 +38,12 @@ enum {
 };
 typedef int MDUserTaskApplyStatus;
 
+typedef enum : int {
+    MDUserStatusDeleted = 0,
+    MDUserStatusNormal = 1,
+    MDUserStatusError = 2,
+} MDUserStatus;
+
 enum {
     MDUserFolderTypeNone = 0,
     MDUserFolderTypeMember = 1,
@@ -86,45 +53,58 @@ enum {
 typedef int MDUserFolderType;
 
 @interface MDUser : NSObject
-@property (strong, nonatomic) NSString *objectID;
-@property (strong, nonatomic) NSString *objectName;
-@property (strong, nonatomic) NSString *avatar, *avatar100;
-@property (strong, nonatomic) NSString *email;
-@property (strong, nonatomic) NSString *grade;
-@property (strong, nonatomic) NSString *mark;
-@property (strong, nonatomic) NSString *birth;
-@property (assign, nonatomic) MDUserGender gender;
-@property (strong, nonatomic) NSString *company;
-@property (strong, nonatomic) NSString *department;
-@property (strong, nonatomic) NSString *job;
-@property (strong, nonatomic) NSString *mobilePhoneNumber;
-@property (strong, nonatomic) NSString *workPhoneNumber;
-@property (assign, nonatomic) BOOL isMobilePhoneNumberVisible;
-@property (assign, nonatomic) BOOL isFollowed;
+// unknown
+@property (strong, nonatomic, nullable) NSString *user_id, *project_id, *unit_name;
 @property (assign, nonatomic) BOOL egroup;
-@property (assign, nonatomic) MDUserLicence licence;
-@property (assign, nonatomic) int status;
+
+// basic
+@property (strong, nonatomic, nonnull) NSString *account_id;
+@property (strong, nonatomic, nonnull) NSString *full_name;
+@property (strong, nonatomic, nullable) NSString *avatar;
+
+// social
+@property (strong, nonatomic, nullable) NSString *followed_status;
+
+// contacts
+@property (strong, nonatomic, nullable) NSString *email, *mobile_phone, *work_phone;
+
+// private information
+@property (strong, nonatomic, nullable) NSString *birth, *city;
+@property (assign, nonatomic) MDUserGender gender;
+
+// Mingdao information
+@property (strong, nonatomic, nullable) NSString *mark, *grade, *create_time;
+@property (assign, nonatomic) MDUserLicense license;
+@property (assign, nonatomic) MDUserStatus status;
+
+// job information
+@property (strong, nonatomic, nullable) NSString *company, *department, *job, *work_site, *job_number;
+@property (strong, nonatomic, nullable) NSArray<NSDictionary *> *jobs;
+
+// education information
+@property (strong, nonatomic, nullable) NSArray<NSDictionary *> *educations;
+
+// orgnizations
+@property (strong, nonatomic, nullable) NSArray<MDOrgnization *> *orgnizations;
+
+- (nonnull MDUser *)initWithDictionary:(nullable NSDictionary *)aDic;
+
+// old stuff DEPRECATED!
 @property (assign, nonatomic) int unreadMessageCount, messageCount;
-@property (strong, nonatomic) NSArray *jobs;
-@property (strong, nonatomic) NSArray *educations;
-@property (strong, nonatomic) MDCompany *project;
-@property (strong, nonatomic) NSString *joinDateString;
-@property (strong, nonatomic) NSString *lastLoginDate;
-@property (strong, nonatomic) NSString *workSite;
-@property (strong, nonatomic) NSString *operateUserName;
-@property (strong, nonatomic) NSString *approveDate;
-@property (strong, nonatomic) NSString *approveTime;
+@property (strong, nonatomic, nullable) NSString *joinDateString;
+@property (strong, nonatomic, nullable) NSString *lastLoginDate;
+@property (strong, nonatomic, nullable) NSString *workSite;
+@property (strong, nonatomic, nullable) NSString *operateUserName;
+@property (strong, nonatomic, nullable) NSString *approveDate;
+@property (strong, nonatomic, nullable) NSString *approveTime;
 
 @property (assign, nonatomic) MDUserTaskMemberType taskMemberType;
 @property (assign, nonatomic) MDUserTaskApplyStatus taskApplyStatus;
 @property (assign, nonatomic) MDUserFolderType folderType;
 @property (assign, nonatomic) BOOL isFolderAdmin;
 
-@property (strong ,nonatomic) NSString *accountID;
 @property (assign, nonatomic) NSInteger kcFolderPermission;
 
-@property (strong, nonatomic) NSString *userRegisterTime;
-@property (strong, nonatomic) NSString *versionPublishTime;
-
-- (MDUser *)initWithDictionary:(NSDictionary *)aDic;
+@property (strong, nonatomic, nullable) NSString *userRegisterTime;
+@property (strong, nonatomic, nullable) NSString *versionPublishTime;
 @end

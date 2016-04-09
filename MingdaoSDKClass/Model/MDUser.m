@@ -7,149 +7,38 @@
 //
 
 #import "MDUser.h"
+#import "MDOrgnization.h"
 
 @implementation MDUser
 - (MDUser *)initWithDictionary:(NSDictionary *)aDic
 {
     self = [super init];
     if (self) {
-        self.objectID = [aDic objectForKey:@"id"];
-        self.objectName = [aDic objectForKey:@"name"];
-        self.avatar = [aDic objectForKey:@"avatar"];
-        self.avatar100 = [aDic objectForKey:@"avatar100"];
-        if (!self.avatar && !self.avatar100) {
-            self.avatar = [aDic objectForKey:@"avstar"];
-            self.avatar100 = [aDic objectForKey:@"avstar100"];
-        }
-        self.email = [aDic objectForKey:@"email"];
-        self.grade = [aDic objectForKey:@"grade"];
-        self.mark = [aDic objectForKey:@"mark"];
-        self.birth = [aDic objectForKey:@"birth"];
-        self.gender = [[aDic objectForKey:@"gender"] intValue];
-        self.company = [aDic objectForKey:@"company"];
-        self.department = [aDic objectForKey:@"department"];
-        self.job = [aDic objectForKey:@"job"];
-        self.mobilePhoneNumber = [aDic objectForKey:@"mobilephone"];
-        if (!self.mobilePhoneNumber) {
-            self.mobilePhoneNumber = [aDic objectForKey:@"mobile_phone"];
-        }
-        NSRange range = [self.mobilePhoneNumber rangeOfString:@"*"];
-        if (((range.location + range.length )< self.mobilePhoneNumber.length)
-            && range.location > 0) {
-            self.isMobilePhoneNumberVisible = NO;
-        } else if (self.mobilePhoneNumber.length > 0) {
-            self.isMobilePhoneNumberVisible = YES;
-        } else {
-            self.isMobilePhoneNumberVisible = NO;
-        }
-        self.workPhoneNumber = [aDic objectForKey:@"work_phone"];
-        self.isFollowed = [[aDic objectForKey:@"followed_status"] boolValue];
-        self.egroup = [[aDic objectForKey:@"egroup"] boolValue];
-        self.licence = [[aDic objectForKey:@"license"] intValue];
-        self.status = [[aDic objectForKey:@"status"] intValue];
+        self.user_id = aDic[@"user_id"];
+        self.full_name = aDic[@"full_name"];
+        self.account_id = aDic[@"account_id"];
+        self.project_id = aDic[@"project_id"];
+        self.avatar = aDic[@"avatar"];
+        self.email = aDic[@"email"];
+        self.grade = aDic[@"grade"];
+        self.mark = aDic[@"mark"];
+        self.birth = aDic[@"birth"];
+        self.company = aDic[@"company"];
+        self.department = aDic[@"department"];
+        self.job = aDic[@"job"];
+        self.city = aDic[@"city"];
+        self.job_number = aDic[@"job_number"];
+        self.workSite = aDic[@"work_site"];
+        self.mobile_phone = aDic[@"mobile_phone"];
+        self.work_phone = aDic[@"work_phone"];
+        self.create_time = aDic[@"create_time"];
+        self.egroup = [aDic[@"egroup"] boolValue];
+        self.license = [aDic[@"license"] intValue];
+        self.status = [aDic[@"status"] intValue];
+        self.unit_name = aDic[@"unit_name"];
         self.jobs = [aDic objectForKey:@"jobs"];
         self.educations = [aDic objectForKey:@"educations"];
-        self.unreadMessageCount = [[aDic objectForKey:@"unreadmessage_count"] intValue];
-        self.messageCount = [[aDic objectForKey:@"message_count"] intValue];
-        
-        if ([aDic objectForKey:@"project"]) {
-            self.project = [[MDCompany alloc] initWithDictionary:[aDic objectForKey:@"project"]];
-        }
-        
-        self.taskMemberType = [[aDic objectForKey:@"member_type"] intValue];
-        self.taskApplyStatus = [[aDic objectForKey:@"apply_status"] intValue];
-        self.folderType = [aDic[@"type"] intValue];
-        self.isFolderAdmin = [aDic[@"isAdmin"] boolValue];
-        
-        self.lastLoginDate = aDic[@"lastLoginTime"];
-        self.joinDateString = aDic[@"enterDay"];
-        self.workSite = aDic[@"work_site"];
-        self.operateUserName = aDic[@"operateUserName"];
-        
-        self.approveTime = aDic[@"approveTime"];
-        self.approveDate = aDic[@"approveDate"];
-        
-        self.accountID = aDic[@"accountid"];
-        if (!self.accountID) {
-           self.accountID = aDic[@"accountId"];
-        }
-
-        self.kcFolderPermission = [aDic[@"permission"] integerValue];
-        
-        self.versionPublishTime = aDic[@"versions_time"];
-        self.userRegisterTime = aDic[@"create_time"];
     }
     return self;
 }
-
-- (NSString *)avatar100
-{
-    if (!_avatar100) {
-        return _avatar;
-    }
-    return _avatar100;
-}
-
-- (BOOL)isEqual:(id)object
-{
-    if ([object isKindOfClass:[self class]]) {
-        MDUser *aUser = (MDUser *)object;
-        if ([[self.objectID lowercaseString] isEqualToString:[aUser.objectID lowercaseString]]) {
-            return YES;
-        }
-    }
-    
-    return NO;
-}
-
-- (id)copy
-{
-    id object = [[[self class] alloc] init];
-    MDUser *copyObject = object;
-    copyObject.objectID = [self.objectID copy];
-    copyObject.objectName = [self.objectName copy];
-    copyObject.avatar = [self.avatar copy];
-    copyObject.avatar100 = [self.avatar100 copy];
-    copyObject.email = [self.email copy];
-    copyObject.grade = [self.grade copy];
-    copyObject.mark = [self.mark copy];
-    copyObject.gender = self.gender;
-    copyObject.birth = [self.birth copy];
-    copyObject.company = [self.company copy];
-    copyObject.department = [self.department copy];
-    copyObject.job = [self.job copy];
-    copyObject.mobilePhoneNumber = [self.mobilePhoneNumber copy];
-    copyObject.workPhoneNumber = [self.workPhoneNumber copy];
-    copyObject.isMobilePhoneNumberVisible = self.isMobilePhoneNumberVisible;
-    copyObject.isFollowed = self.isFollowed;
-    copyObject.licence = self.licence;
-    copyObject.status = self.status;
-    copyObject.unreadMessageCount = self.unreadMessageCount;
-    copyObject.messageCount = self.messageCount;
-    copyObject.jobs = [self.jobs copy];
-    copyObject.educations = [self.educations copy];
-    copyObject.project = [self.project copy];
-    
-    copyObject.taskMemberType = self.taskMemberType;
-    copyObject.taskApplyStatus = self.taskApplyStatus;
-
-    copyObject.joinDateString = [self.joinDateString copy];
-    copyObject.workSite = [self.workSite copy];
-    copyObject.lastLoginDate = [self.lastLoginDate copy];
-    copyObject.operateUserName = [self.operateUserName copy];
-    copyObject.approveDate = [self.approveDate copy];
-    copyObject.approveTime = [self.approveTime copy];
-    
-    copyObject.folderType = self.folderType;
-    copyObject.isFolderAdmin = self.isFolderAdmin;
-    
-    copyObject.accountID = [self.accountID copy];
-    copyObject.kcFolderPermission = self.kcFolderPermission;
-    
-    copyObject.userRegisterTime = [self.userRegisterTime copy];
-    copyObject.versionPublishTime = [self.versionPublishTime copy];
-    
-    return copyObject;
-}
-
 @end

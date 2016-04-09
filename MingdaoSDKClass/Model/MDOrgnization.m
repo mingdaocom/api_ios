@@ -6,10 +6,10 @@
 //  Copyright (c) 2013年 WeeTomProduct. All rights reserved.
 //
 
-#import "MDCompany.h"
+#import "MDOrgnization.h"
 
-@implementation MDCompany
-- (MDCompany *)initWithDictionary:(NSDictionary *)aDic
+@implementation MDOrgnization
+- (MDOrgnization *)initWithDictionary:(NSDictionary *)aDic
 {
     self = [super init];
     if (self) {
@@ -26,7 +26,7 @@
 - (id)copy
 {
     id object = [[[self class] alloc] init];
-    MDCompany *copyObject = object;
+    MDOrgnization *copyObject = object;
     copyObject.objectID = [self.objectID copy];
     copyObject.objectName = [self.objectName copy];
     copyObject.nameEn = [self.nameEn copy];

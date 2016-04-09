@@ -316,7 +316,7 @@
     NSMutableArray *ma = [NSMutableArray arrayWithCapacity:self.members.count];
     if (ma) {
         for (MDUser *u in self.members) {
-            [ma addObject:u.objectID];
+            [ma addObject:u.account_id];
         }
     }
     return ma;

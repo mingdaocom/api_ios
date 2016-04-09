@@ -9,16 +9,16 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    MDCompanyTypeFree = 0,
-    MDCompanyTypeTrial = 1,
-    MDCompanyTypePremium = 2
-} MDCompanyType;
+    MDOrgnizationTypeFree = 0,
+    MDOrgnizationTypeTrial = 1,
+    MDOrgnizationTypePremium = 2
+} MDOrgnizationType;
 
-@interface MDCompany : NSObject
+@interface MDOrgnization : NSObject
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *objectName;
 @property (strong, nonatomic) NSString *nameEn, *logo;
-@property (assign, nonatomic) MDCompanyType type;
+@property (assign, nonatomic) MDOrgnizationType type;
 @property (strong, nonatomic) NSString *expireDays;
-- (MDCompany *)initWithDictionary:(NSDictionary *)aDic;
+- (MDOrgnization *)initWithDictionary:(NSDictionary *)aDic;
 @end

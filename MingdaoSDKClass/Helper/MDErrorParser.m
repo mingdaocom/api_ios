@@ -21,29 +21,38 @@
 + (NSError *)errorWithMDDic:(NSDictionary *)dic URLString:(NSString *)urlString
 {
     if ([dic isKindOfClass:[NSDictionary class]]) {
-        NSString *errorCode = [dic objectForKey:@"error_code"];
-        if (errorCode && ![errorCode isKindOfClass:[NSString class]]) {
-            errorCode = [NSString stringWithFormat:@"%d", [errorCode intValue]];
-        }
-        NSString *errorMessage = [dic objectForKey:@"error_msg"];
-        if (!errorCode) {
+        BOOL success = [dic[@"success"] boolValue];
+        if (success) {
             return nil;
         }
-        NSString *localizedDescription = [self errorStringWithErrorCode:errorCode];
-        if ([localizedDescription isEqualToString:errorCode]) {
-            if (errorMessage) {
-                localizedDescription = errorMessage;   
+        else { // if not success, the API MUST return error_code AND error_msg
+            NSNumber *errorCode = [dic objectForKey:@"error_code"];
+            NSString *errorMessage = [dic objectForKey:@"error_msg"];
+            if (!errorCode || !errorMessage) {
+                return [self mysteryError:urlString];
             }
+            
+            NSString *localizedDescription = [self errorStringWithErrorCode:[errorCode stringValue]];
+            if ([localizedDescription isEqualToString:[errorCode stringValue]]) {
+                if (errorMessage) {
+                    localizedDescription = errorMessage;
+                }
+            }
+            
+            NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+            [userInfo setObject:localizedDescription forKey:NSLocalizedDescriptionKey];
+            [userInfo setObject:urlString forKey:@"NSErrorFailingURLStringKey"];
+            
+            NSError *error = [NSError errorWithDomain:MDAPIErrorDomain code:[errorCode intValue] userInfo:userInfo];
+            return error;
         }
-        
-        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-        [userInfo setObject:localizedDescription forKey:NSLocalizedDescriptionKey];
-        [userInfo setObject:urlString forKey:@"NSErrorFailingURLStringKey"];
-        
-        NSError *error = [NSError errorWithDomain:MDAPIErrorDomain code:[errorCode intValue] userInfo:userInfo];
-        return error;
     }
 
+    return [self mysteryError:urlString];
+}
+
++ (NSError *)mysteryError:(NSString *)urlString
+{
     NSString *errorString = [MDErrorParser errorStringWithErrorCode:@"0"];
     return [NSError errorWithDomain:MDAPIErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey:errorString, @"NSErrorFailingURLStringKey":urlString}];
 }

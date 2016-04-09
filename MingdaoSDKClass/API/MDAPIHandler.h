@@ -8,7 +8,7 @@
 
 #import "MDURLConnection.h"
 #import "MDURLConnectionQueue.h"
-#import "MDCompany.h"
+#import "MDOrgnization.h"
 #import "MDUser.h"
 #import "MDMessageAll.h"
 #import "MDMessage.h"

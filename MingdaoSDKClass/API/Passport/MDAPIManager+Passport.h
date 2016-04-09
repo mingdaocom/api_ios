@@ -60,8 +60,8 @@
 - (MDURLConnection *)saveUserWithName:(NSString *)name
                            department:(NSString *)dep
                                   job:(NSString *)job
-                    mobilePhoneNumber:(NSString *)mpn
-                      workPhoneNumber:(NSString *)wpn
+                    mobile_phone:(NSString *)mpn
+                      work_phone:(NSString *)wpn
                              birthday:(NSString *)birthday
                                gender:(NSInteger)gender
                               handler:(MDAPIBoolHandler)handler;
