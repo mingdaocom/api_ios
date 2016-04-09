@@ -545,6 +545,7 @@
     copyObject.isChildCalendar = self.isChildCalendar;
     copyObject.des = [self.des copy];
     copyObject.isShare = self.isShare;
+    copyObject.shareUrl = [self.shareUrl copy];
     copyObject.isAllday = self.isAllday;
     copyObject.isPrivate = self.isPrivate;
     copyObject.isBusy = self.isBusy;
