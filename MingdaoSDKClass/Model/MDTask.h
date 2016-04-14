@@ -72,7 +72,7 @@
 
 @property (readonly, nonatomic) BOOL finished, expired, finishedOnTime;
 
-@property (assign, nonatomic) NSInteger taskAuth;
+@property (assign, nonatomic) MDTaskAuth taskAuth;
 
 @property (assign, nonatomic) BOOL isFavorite;
 @property (assign, nonatomic) BOOL isNewTask;
