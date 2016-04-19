@@ -628,15 +628,18 @@
     return connection;
 }
 
-- (MDURLConnection *)rejectEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler
+- (MDURLConnection *)rejectEventWithObjectID:(NSString *)objectID
+                                   recurTime:(NSString *)recurTime
+                                     handler:(MDAPIBoolHandler)handler
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@/calendar/deny?u_key=%@&c_id=%@&format=json"
-                        , self.serverAddress
-                        , self.accessToken
-                        , objectID];
-    
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
+    NSMutableString *urlStr = [NSMutableString stringWithFormat:@"%@/calendar/deny?u_key=%@&c_id=%@&format=json"
+                               , self.serverAddress
+                               , self.accessToken
+                               , objectID];
+    if (recurTime.length)
+        [urlStr appendFormat:@"&recur_time=%@",recurTime];
+    NSString *urlString = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
         [self handleBoolData:dic error:error URLString:urlStr handler:handler];
     }];
     return connection;

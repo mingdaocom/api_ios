@@ -218,7 +218,9 @@
 - (MDURLConnection *)acceptEventWithObjectID:(NSString *)objectID
                                    recurTime:(NSString *)recurTime
                                      handler:(MDAPIBoolHandler)handler;
-- (MDURLConnection *)rejectEventWithObjectID:(NSString *)objectID handler:(MDAPIBoolHandler)handler;
+- (MDURLConnection *)rejectEventWithObjectID:(NSString *)objectID
+                                   recurTime:(NSString *)recurTime
+                                     handler:(MDAPIBoolHandler)handler;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-
  @usage:
