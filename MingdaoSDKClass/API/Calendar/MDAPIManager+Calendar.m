@@ -136,7 +136,7 @@
     if (recurTime.length)
         [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
     [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
-    [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
+    [parameters addObject:@{@"key":@"is_reconfirm", @"object":[NSNumber numberWithBool:isPush]}];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [self postWithParameters:parameters withRequest:req];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
@@ -215,7 +215,7 @@
             [parameters addObject:@{@"key":@"recur_time", @"object":recurTime}];
         [parameters addObject:@{@"key":@"is_allCalendar", @"object":[NSNumber numberWithBool:allCalendar]}];
     }
-    [parameters addObject:@{@"key":@"push_message", @"object":[NSNumber numberWithBool:isPush]}];
+    [parameters addObject:@{@"key":@"is_reconfirm", @"object":[NSNumber numberWithBool:isPush]}];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [self postWithParameters:parameters withRequest:req];
     MDURLConnection *connection = [[MDURLConnection alloc] initWithRequest:req handler:^(MDURLConnection *theConnection, NSDictionary *dic, NSError *error) {
