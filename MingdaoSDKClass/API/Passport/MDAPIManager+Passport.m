@@ -113,15 +113,15 @@
     [parameters addObject:@{@"key":@"access_token", @"object":self.accessToken}];
     if (name && name.length > 0)
         [parameters addObject:@{@"key":@"name", @"object":name}];
-    if (dep && dep.length > 0)
+    if (dep)
         [parameters addObject:@{@"key":@"dep", @"object":dep}];
-    if (job && job.length > 0)
+    if (job)
         [parameters addObject:@{@"key":@"job", @"object":job}];
-    if (mpn && mpn.length > 0)
+    if (mpn)
         [parameters addObject:@{@"key":@"mobile_phone", @"object":mpn}];
-    if (wpn && wpn.length > 0)
+    if (wpn)
         [parameters addObject:@{@"key":@"work_phone", @"object":wpn}];
-    if (birthday && birthday.length > 0)
+    if (birthday)
         [parameters addObject:@{@"key":@"birth", @"object":birthday}];
     if (gender != 0)
         [parameters addObject:@{@"key":@"gender", @"object":[NSNumber numberWithInteger:gender]}];
