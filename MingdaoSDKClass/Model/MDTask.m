@@ -96,8 +96,9 @@
             [fm setDateFormat:@"yyyy-MM-dd"];
             NSDate *finishDate = [fm dateFromString:self.finishedDateString];
             NSDate *expDate = [fm dateFromString:self.expiredDateString];
+            
             if (finishDate && expDate) {
-                return [expDate compare:finishDate] == NSOrderedDescending;
+                return !([finishDate compare:expDate] == NSOrderedDescending);
             } else {
                 return YES;
             }

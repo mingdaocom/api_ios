@@ -15,7 +15,8 @@
 + (NSString *)errorStringWithErrorCode:(NSString *)errorCode
 {
     NSString *errorString = [NSString stringWithFormat:@"%d", [errorCode intValue]];
-    return MDErrorLocalizedString(errorString, nil);
+    NSString *returnString = [[NSBundle mainBundle] localizedStringForKey:errorString value:@"" table:@"ErrorMessage"];
+    return returnString;
 }
 
 + (NSError *)errorWithMDDic:(NSDictionary *)dic URLString:(NSString *)urlString
