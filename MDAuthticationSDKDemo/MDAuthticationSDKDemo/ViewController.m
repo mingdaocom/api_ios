@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "MDAuthenticator.h"
 #import "MDAuthPanel.h"
-#import "MDAPICategory.h"
+#import "MDAPIManager.h"
 
 #warning keys
 #define AppKey @"E122D74997594DF274C41722732D25C"
@@ -92,20 +92,5 @@
 - (void)newTokenSet:(NSNotification *)notification
 {
     self.tokenLabel.text = notification.object;
-    
-    // 开始获取用户信息并展示
-    [self.indicator startAnimating];
-    __weak __block typeof(self) weakSelf = self;
-    
-    [[[MDAPIManager sharedManager] loadCurrentUserDetailWithHandler:^(MDUser *user, NSError *error){
-        [weakSelf.indicator stopAnimating];
-        if (error) {
-            weakSelf.nameLabel.text = error.userInfo[NSLocalizedDescriptionKey];
-            return ;
-        }
-        weakSelf.nameLabel.text = user.objectName;
-        weakSelf.titleLabel.text = user.job;
-        weakSelf.birthLabel.text = user.birth;
-    }] start];
 }
 @end

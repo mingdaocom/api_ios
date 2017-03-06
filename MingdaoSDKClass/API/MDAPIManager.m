@@ -112,15 +112,7 @@ static MDAPIManager *sharedManager = nil;
         
         NSArray *projectsDic = [dic objectForKey:@"projects"];
         if ([projectsDic isKindOfClass:[NSArray class]]) {
-            NSMutableArray *projects = [NSMutableArray array];
-            for(NSDictionary *projectDic in projectsDic) {
-                if (![projectDic isKindOfClass:[NSDictionary class]])
-                    continue;
-                
-                MDCompany *p = [[MDCompany alloc] initWithDictionary:projectDic];
-                [projects addObject:p];
-            }
-            pHandler(projects, error);
+            pHandler(projectsDic, error);
             return;
         }
         
